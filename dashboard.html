@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | JBS Ethics System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+        <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Ethics Clearance Dashboard – JBS</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <h2>Welcome, JBS Student 👋</h2>
+
+    <!-- Form Selection -->
+    <section>
+      <h4>Select a Form to Start</h4>
+      <div class="form-card-grid">
+        <div class="form-card" onclick="location.href='form-a.html'">
+          <h5>Form A</h5>
+          <p>Primary Data Collection (Human Interaction)</p>
+        </div>
+        <div class="form-card" onclick="location.href='form-b.html'">
+          <h5>Form B</h5>
+          <p>Secondary Data (No Human Interaction)</p>
+        </div>
+        <div class="form-card" onclick="location.href='form-c.html'">
+          <h5>Form C</h5>
+          <p>Public Data – Clearance Exemption</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Submission Status Table -->
+    <section style="margin-top: 2rem;">
+      <h4>Your Submissions</h4>
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Form Type</th>
+            <th>Date Submitted</th>
+            <th>Status</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Form A</td>
+            <td>2025-04-15</td>
+            <td>Awaiting Supervisor</td>
+            <td><a href="feedback.html?form=A">View</a></td>
+          </tr>
+          <tr>
+            <td>Form B</td>
+            <td>—</td>
+            <td>Not Started</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Notifications -->
+    <section class="notification-box">
+      <h4>Notifications</h4>
+      <ul>
+        <li>✅ Supervisor returned Form A for corrections</li>
+        <li>📬 Ethics Office received Form A</li>
+      </ul>
+    </section>
+
+    <!-- Logout -->
+    <div style="text-align: right; margin-top: 2rem;">
+      <a href="logout.html" class="btn-logout">Logout</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+  </footer>
+
+</body>
+</html>

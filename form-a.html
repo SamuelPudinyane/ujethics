@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form A - Ethics Clearance | JBS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form A – Human Research Application</span>
+    </div>
+  </header>
+
+  <!-- Main Form Content -->
+  <main class="main-content">
+    <h2>Form A: Research Involving Human Participants</h2>
+    <p>Please complete all fields below and upload the required documents.</p>
+
+    <!-- SECTION 1: Complete the Form -->
+    <form id="formA">
+      <h4>1. Research Details</h4>
+      <input type="text" placeholder="Research Title" required>
+      <textarea placeholder="Purpose of the Study" rows="4" required></textarea>
+      <textarea placeholder="Target Participants Description" rows="3" required></textarea>
+      <textarea placeholder="Data Collection Methods (e.g., interviews, surveys)" rows="3" required></textarea>
+
+      <label for="riskLevel">Risk Level:</label>
+      <select id="riskLevel" required>
+        <option value="">-- Select Risk Level --</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <h4>2. Supervisor Information</h4>
+      <input type="text" placeholder="Supervisor Full Name" required>
+      <input type="email" placeholder="Supervisor UJ Email" required>
+      <label>
+        <input type="checkbox" id="digitalSignature" required>
+        I confirm my supervisor has approved this submission.
+      </label>
+
+      <!-- SECTION 2: Upload Required Documents -->
+      <h4 style="margin-top: 2rem;">3. Upload Supporting Documents</h4>
+      <label>Upload Completed Form A:</label>
+      <input type="file" required>
+
+      <label>Informed Consent Form:</label>
+      <input type="file" required>
+
+      <label>Interview or Survey Questions:</label>
+      <input type="file" required>
+
+      <label>Company Permission / Waiver:</label>
+      <input type="file" required>
+
+      <label>Full Research Proposal:</label>
+      <input type="file" required>
+
+      <!-- CHECKLIST -->
+      <h4 style="margin-top: 2rem;">4. Submission Checklist</h4>
+      <label><input type="checkbox" class="check-item"> All required fields above are completed</label><br>
+      <label><input type="checkbox" class="check-item"> All 5 supporting documents are uploaded</label><br>
+      <label><input type="checkbox" class="check-item"> Supervisor approval is confirmed</label><br>
+
+      <!-- SUBMIT BUTTON -->
+      <button id="submitBtn" type="submit" disabled>Submit Form A</button>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+  </footer>
+
+  <!-- Confirmation Popup Modal -->
+<div id="confirmationModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Form A Submitted Successfully!</h3>
+      <p>Your application has been received and will be sent to your supervisor.</p>
+      <button id="closeModalBtn">Return to Dashboard</button>
+    </div>
+  </div>
+  
+
+  <!-- SCRIPT: Enable Submit if All Validated -->
+<script>
+    const form = document.getElementById("formA");
+    const checkItems = document.querySelectorAll(".check-item");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("input", () => {
+        const filledInputs = Array.from(form.querySelectorAll("input, textarea, select"))
+            .filter(el => el.type !== "checkbox" && el.value.trim() !== "").length;
+
+        const checkAll = Array.from(checkItems).every(chk => chk.checked);
+
+        const requiredFiles = Array.from(form.querySelectorAll('input[type="file"]')).every(f => f.files.length > 0);
+
+        if (filledInputs >= 7 && requiredFiles && checkAll && document.getElementById("digitalSignature").checked) {
+            submitBtn.disabled = false;
+        } else {
+            submitBtn.disabled = true;
+        }
+    });
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        document.getElementById("confirmationModal").style.display = "flex";
+    });
+
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+        window.location.href = "dashboard.html";
+    });
+
+</script>
+
+</body>
+</html>

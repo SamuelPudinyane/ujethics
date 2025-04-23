@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Assign Reviewer | Ethics Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="img/image.png" class="sidebar-logo" />
+      <h3>JBS Ethics</h3>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="admin-dashboard.html">📋 Dashboard</a>
+        <a href="view-changes.html">🔄 Submission Timeline</a>
+        <a href="reviewer-list.html">👤 Reviewer List</a>
+        <a href="admin-reviewer-edit.html?mode=add">➕ Add Reviewer</a>
+        <a href="assign-reviewers.html">📤 Assign Reviewers</a>
+      </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>Assign Reviewer</h2>
+    </header>
+
+    <section class="admin-content">
+      <p><strong>Form:</strong> A | <strong>Student:</strong> 216018061</p>
+
+      <label>Risk Level</label>
+      <select id="riskLevel" required>
+        <option value="">-- Select Risk Level --</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <label>Select Reviewer</label>
+      <select id="reviewerSelect" required>
+        <option value="">-- Select Reviewer --</option>
+        <option value="rev001">Dr. Lerato Mokoena (Low)</option>
+        <option value="rev002">Prof. Naidoo (Medium)</option>
+        <option value="rev003">Dr. J. Singh (High)</option>
+      </select>
+
+      <button class="approve-btn" onclick="assignReviewer()">Assign Reviewer</button>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 JBS Ethics Admin</p>
+    </footer>
+  </main>
+
+</div>
+
+<script>
+  function assignReviewer() {
+    const reviewer = document.getElementById("reviewerSelect").value;
+    if (!reviewer) return alert("Please select a reviewer.");
+    alert(`✅ Reviewer assigned: ${reviewer}`);
+    window.location.href = "admin-dashboard.html";
+  }
+</script>
+
+</body>
+</html>

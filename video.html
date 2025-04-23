@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Watch Ethics Videos | JBS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-content">
+        <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Ethics Clearance System – JBS Students</span>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h2>Step 2: Ethics Training Videos</h2>
+
+    <div class="video-box">
+      <h4>Lecture 1: Introduction</h4>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/fQaykWNLwmc" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="video-box">
+      <h4>Lecture 2: Application Process</h4>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/_JlAwVsVgok" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <label class="confirm-check">
+      <input type="checkbox" id="confirmCheckbox">
+      I confirm I have watched both videos.
+    </label>
+    <button id="continueBtn" disabled>Continue</button>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+  </footer>
+
+  <script>
+    const checkbox = document.getElementById("confirmCheckbox");
+    const continueBtn = document.getElementById("continueBtn");
+    checkbox.addEventListener("change", () => {
+      continueBtn.disabled = !checkbox.checked;
+    });
+    continueBtn.addEventListener("click", () => {
+      window.location.href = "dashboard.html";
+    });
+  </script>
+
+</body>
+</html>

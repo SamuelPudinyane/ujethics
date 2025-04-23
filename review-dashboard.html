@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Review Submissions | JBS Ethics Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj" />
+      <span class="nav-title">Admin Review – Ethics Submissions</span>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h2>Submitted Forms Review</h2>
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Form</th>
+          <th>Date Submitted</th>
+          <th>Status</th>
+          <th>Last Modified</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example row; you’ll populate from backend -->
+        <tr>
+          <td>216018061</td>
+          <td>Form A</td>
+          <td>2025-04-23</td>
+          <td>Awaiting Admin</td>
+          <td>2025-04-23 09:12</td>
+          <td>
+            <button class="view-btn" onclick="openModal()">View</button>
+          </td>
+        </tr>
+        <!-- More rows -->
+      </tbody>
+    </table>
+  </main>
+
+  <!-- View Modal -->
+  <div id="reviewModal" class="modal-overlay">
+    <div class="modal-content" style="max-width:600px;">
+      <h3>Form A Submission – 216018061</h3>
+      <p><strong>Research Title:</strong> The Impact of AI on Sustainability</p>
+      <p><strong>Supervisor:</strong> Prof. J. Smith (jsmith@uj.ac.za)</p>
+      <p><strong>Date Collection:</strong> Surveys & Interviews</p>
+      <!-- Show file links if stored; here is a placeholder -->
+      <p><strong>Attachments:</strong> <a href="#">Download Proposal</a> | <a href="#">Consent Form</a></p>
+
+      <!-- Comments/Feedback Section -->
+      <h4>Feedback / Comments</h4>
+      <div class="comment-thread">
+        <div><strong>Admin</strong> (2025-04-23 09:30): Please clarify your data storage procedure.</div>
+        <!-- New comments appear here -->
+      </div>
+      <textarea id="adminComment" rows="3" placeholder="Add your comment"></textarea>
+      <button id="saveComment">Save Comment</button>
+
+      <!-- Change History Log -->
+      <h4 style="margin-top:1.5rem;">Change Log</h4>
+      <ul class="change-log">
+        <li>2025-04-23 09:30 – Comment added by Admin</li>
+        <li>2025-04-23 09:25 – Status changed to 'Awaiting Admin'</li>
+        <li>2025-04-23 09:12 – Submission uploaded by student</li>
+      </ul>
+
+      <!-- Actions -->
+      <div style="margin-top:1.2rem;">
+        <button class="approve-btn">Approve</button>
+        <button class="revise-btn">Request Revision</button>
+        <button class="reject-btn">Reject</button>
+        <button id="closeModalBtn" style="float:right;background:#939598;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+  </footer>
+
+  <!-- Modal and Interaction JS -->
+  <script>
+    function openModal() {
+      document.getElementById("reviewModal").style.display = "flex";
+    }
+    document.getElementById("closeModalBtn").onclick = function() {
+      document.getElementById("reviewModal").style.display = "none";
+    };
+
+    document.getElementById("saveComment").onclick = function() {
+      const comment = document.getElementById("adminComment").value.trim();
+      if (comment) {
+        const now = new Date().toLocaleString();
+        const thread = document.querySelector(".comment-thread");
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>Admin</strong> (${now}): ${comment}`;
+        thread.appendChild(div);
+
+        // Log the comment action in the change log
+        const log = document.querySelector(".change-log");
+        const li = document.createElement("li");
+        li.textContent = `${now} – Comment added by Admin`;
+        log.insertBefore(li, log.firstChild);
+
+        document.getElementById("adminComment").value = "";
+      }
+    };
+
+    // Actions (placeholder; connect to backend as needed)
+    document.querySelector(".approve-btn").onclick = function() {
+      alert("Form approved!");
+      document.getElementById("reviewModal").style.display = "none";
+    };
+    document.querySelector(".revise-btn").onclick = function() {
+      alert("Revision requested!");
+      document.getElementById("reviewModal").style.display = "none";
+    };
+    document.querySelector(".reject-btn").onclick = function() {
+      alert("Form rejected!");
+      document.getElementById("reviewModal").style.display = "none";
+    };
+  </script>
+
+</body>
+</html>

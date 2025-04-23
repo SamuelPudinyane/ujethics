@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reviewer List | Ethics Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="img/image.png" class="sidebar-logo" />
+      <h3>JBS Ethics</h3>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="admin-dashboard.html">📋 Dashboard</a>
+        <a href="view-changes.html">🔄 Submission Timeline</a>
+        <a href="reviewer-list.html">👤 Reviewer List</a>
+        <a href="admin-reviewer-edit.html?mode=add">➕ Add Reviewer</a>
+        <a href="assign-reviewers.html">📤 Assign Reviewers</a>
+      </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>Reviewer List</h2>
+    </header>
+
+    <section class="admin-content">
+      <a href="admin-reviewer-edit.html?mode=add" class="approve-btn" style="margin-bottom: 1rem;">+ Add Reviewer</a>
+
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Specialization</th>
+            <th>Risk Level</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dr. Lerato Mokoena</td>
+            <td>lerato@uj.ac.za</td>
+            <td>Business Research</td>
+            <td>Low</td>
+            <td><a href="admin-reviewer-edit.html?mode=edit&id=rev001" class="revise-btn">Edit</a></td>
+          </tr>
+          <tr>
+            <td>Prof. Naidoo</td>
+            <td>naidoo@uj.ac.za</td>
+            <td>Data Ethics</td>
+            <td>Medium</td>
+            <td><a href="admin-reviewer-edit.html?mode=edit&id=rev002" class="revise-btn">Edit</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 JBS Ethics Admin</p>
+    </footer>
+  </main>
+</div>
+
+</body>
+</html>

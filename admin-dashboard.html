@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Ethics Clearance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="img/image.png" class="sidebar-logo" />
+      <h3>JBS Ethics</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="admin-reviewer-edit.html?mode=add">➕ Add Reviewer</a>
+      <a href="assign-reviewers.html">📤 Assign Reviewers</a>
+    </nav>
+  </aside>
+
+  <!-- Main Dashboard Content -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>Ethics Admin Dashboard</h2>
+    </header>
+
+    <section class="admin-content">
+      <h3>Submitted Forms Overview</h3>
+
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Form</th>
+            <th>Status</th>
+            <th>Risk Level</th>
+            <th>Last Modified</th>
+            <th>Changes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>216018061</td>
+            <td>Form A</td>
+            <td>Supervisor Approved</td>
+            <td>High</td>
+            <td>2025-04-23</td>
+            <td><a href="view-changes.html?form=A&student=216018061">View</a></td>
+            <td>
+              <a href="admin-assign-reviewers.html?form=A&student=216018061" class="view-btn">Assign Reviewer</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 JBS Ethics Admin</p>
+    </footer>
+  </main>
+
+</div>
+
+</body>
+</html>
