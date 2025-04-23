@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reviewer Dashboard | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="img/image.png" class="sidebar-logo" />
+      <h3>Reviewer Panel</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="reviewer-dashboard.html">📋 My Reviews</a>
+      <a href="logout.html">🔒 Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>Reviewer Dashboard</h2>
+    </header>
+
+    <section class="admin-content">
+      <h3>Assigned Submissions</h3>
+
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Form</th>
+            <th>Risk Level</th>
+            <th>Date Assigned</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>216018061</td>
+            <td>Form A</td>
+            <td><span class="badge status-high">High</span></td>
+            <td>2025-04-24</td>
+            <td><span class="badge status-pending">Pending Review</span></td>
+            <td>
+              <a href="review-form.html?student_id=216018061&form=A" class="view-btn">Review</a>
+            </td>
+          </tr>
+          <tr>
+            <td>219024788</td>
+            <td>Form B</td>
+            <td><span class="badge status-medium">Medium</span></td>
+            <td>2025-04-23</td>
+            <td><span class="badge status-reviewed">Reviewed</span></td>
+            <td>
+              <a href="review-form.html?student_id=219024788&form=B" class="view-btn">View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 JBS Ethics Review Board</p>
+    </footer>
+  </main>
+
+</div>
+
+</body>
+</html>

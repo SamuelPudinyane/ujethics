@@ -1,68 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Supervisor Dashboard | JBS Ethics</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <title>Supervisor Dashboard | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/review.css" />
 </head>
-
 <body>
 
-    <!-- Navbar -->
-    <header class="navbar">
-        <div class="nav-content">
-            <img src="img/image.png" class="logo uj" />
-            <span class="nav-title">Supervisor Dashboard – JBS Students</span>
-        </div>
+<div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="img/image.png" alt="UJ Logo" class="sidebar-logo" />
+      <h3>Supervisor Portal</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="supervisor-dashboard.html">🏠 Dashboard</a>
+      <a href="logout.html">🔒 Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>Supervisor Dashboard</h2>
     </header>
 
-    <!-- Main Table -->
-    <main class="main-content">
-        <h2>Students' Submissions</h2>
-        <table class="status-table">
-            <thead>
-                <tr>
-                    <th>Student</th>
-                    <th>Form</th>
-                    <th>Status</th>
-                    <th>Submitted On</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Example Row -->
-                <tr>
-                    <td>216018061</td>
-                    <td>Form A</td>
-                    <td>Waiting Supervisor</td>
-                    <td>2025-04-23</td>
-                    <td>
-                        <button class="view-btn"><a href="edit-form.html?student_id=216018061&form=A" class="view-btn">View/Edit</a>
-                       
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+    <section class="admin-content">
+      <h3>Student Submissions</h3>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Form</th>
+            <th>Status</th>
+            <th>Submitted On</th>
+            <th>Documents</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>216018061</td>
+            <td>Form A</td>
+            <td><span class="badge status-pending">Waiting Review</span></td>
+            <td>2025-04-23</td>
+            <td>
+              <a href="docs/consent-form-216018061.pdf" target="_blank" class="doc-link">Consent</a> |
+              <a href="docs/proposal-216018061.pdf" target="_blank" class="doc-link">Proposal</a>
+            </td>
+            <td>
+              <a href="edit-form.html?student_id=216018061&form=A" class="view-btn">View/Edit</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-
-
-    <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+      <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>
-      
+  </main>
+
+</div>
+
+<br>
+<br>
 
 </body>
-
 </html>

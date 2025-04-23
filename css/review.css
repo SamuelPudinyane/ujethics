@@ -158,5 +158,34 @@
   .admin-content {
     padding: 2rem;
   }
+
+  .filter-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  
+  .filter-row input,
+  .filter-row select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #DCDDDE;
+    font-size: 1rem;
+  }
+  
+  .filter-row button {
+    background-color: #022169;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .filter-row button:hover {
+    background-color: #00B6B5;
+  }
+  
   
   

@@ -23,6 +23,7 @@
       <a href="reviewer-list.html">👤 Reviewer List</a>
       <a href="admin-reviewer-edit.html?mode=add">➕ Add Reviewer</a>
       <a href="assign-reviewers.html">📤 Assign Reviewers</a>
+      <a href="user-list.html">👥 User Management</a>
     </nav>
   </aside>
 
@@ -34,41 +35,117 @@
 
     <section class="admin-content">
       <h3>Submitted Forms Overview</h3>
+    
+      <!-- Filters -->
+      <div class="filter-row">
+        <input type="text" id="filterName" placeholder="Filter by Name" />
+        <input type="text" id="filterStudent" placeholder="Filter by Student Number" />
+        <select id="filterStatus">
+          <option value="">All Statuses</option>
+          <option value="Supervisor Approved">Supervisor Approved</option>
+          <option value="Returned">Returned</option>
+          <option value="Pending">Pending</option>
+        </select>
+        <button onclick="applyFilters()">🔍 Apply Filters</button>
+      </div>
+    
+      <!-- Table -->
+      <form id="bulkAssignForm">
+        <table class="status-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="selectAll" onclick="toggleAll(this)" /></th>
+              <th>Student Number</th>
+              <th>Student Name</th>
+              <th>Form</th>
+              <th>Status</th>
+              <th>Forms Submitted</th>
+              <th>Risk Level</th>
+              <th>Last Modified</th>
+              <th>Changes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="submissionTable">
+            <tr>
+              <td><input type="checkbox" class="select-student" value="216018061" /></td>
+              <td>216018061</td>
+              <td>Musawenkosi Nyathi</td>
+              <td>Form A</td>
+              <td>Supervisor Approved</td>
+              <td>✅ All Submitted</td>
+              <td>High</td>
+              <td>2025-04-23</td>
+              <td><a href="view-changes.html?form=A&student=216018061">View</a></td>
+              <td><a href="assign-reviewers.html?form=A&student=216018061" class="view-btn">Assign</a></td>
+            </tr>
 
-      <table class="status-table">
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Form</th>
-            <th>Status</th>
-            <th>Risk Level</th>
-            <th>Last Modified</th>
-            <th>Changes</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>216018061</td>
-            <td>Form A</td>
-            <td>Supervisor Approved</td>
-            <td>High</td>
-            <td>2025-04-23</td>
-            <td><a href="view-changes.html?form=A&student=216018061">View</a></td>
-            <td>
-              <a href="admin-assign-reviewers.html?form=A&student=216018061" class="view-btn">Assign Reviewer</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td><input type="checkbox" class="select-student" value="216018061" /></td>
+              <td>216056789</td>
+              <td>Jane Doe</td>
+              <td>Form A</td>
+              <td>Supervisor Approved</td>
+              <td>✅ All Submitted</td>
+              <td>High</td>
+              <td>2025-04-22</td>
+              <td><a href="view-changes.html?form=A&student=216018061">View</a></td>
+              <td><a href="assign-reviewers.html?form=A&student=216018061" class="view-btn">Assign</a></td>
+            </tr>
+            <!-- More student rows can be added here -->
+          </tbody>
+        </table>
+    
+        <!-- Bulk Assign Button -->
+        <div style="margin-top: 1.5rem;">
+          <button type="button" onclick="bulkAssign()" class="approve-btn">Bulk Assign Reviewer</button>
+        </div>
+      </form>
     </section>
-
+    
     <footer class="footer">
       <p>&copy; 2025 JBS Ethics Admin</p>
     </footer>
   </main>
 
 </div>
+
+<script>
+  function applyFilters() {
+    const name = document.getElementById("filterName").value.toLowerCase();
+    const student = document.getElementById("filterStudent").value.toLowerCase();
+    const status = document.getElementById("filterStatus").value.toLowerCase();
+
+    const rows = document.querySelectorAll("#submissionTable tr");
+
+    rows.forEach(row => {
+      const nameCell = row.cells[2].textContent.toLowerCase();
+      const studentCell = row.cells[1].textContent.toLowerCase();
+      const statusCell = row.cells[4].textContent.toLowerCase();
+
+      const show = (!name || nameCell.includes(name)) &&
+                   (!student || studentCell.includes(student)) &&
+                   (!status || statusCell.includes(status));
+
+      row.style.display = show ? "" : "none";
+    });
+  }
+
+  function toggleAll(source) {
+    document.querySelectorAll('.select-student').forEach(cb => {
+      cb.checked = source.checked;
+    });
+  }
+
+  function bulkAssign() {
+    const selected = Array.from(document.querySelectorAll('.select-student:checked')).map(cb => cb.value);
+    if (selected.length === 0) return alert("Please select at least one student.");
+    alert(`✅ Selected students: ${selected.join(", ")}\nRedirecting to bulk assign...`);
+    // You could POST this to backend or redirect to:
+    // window.location.href = `bulk-assign.html?ids=${selected.join(",")}`;
+  }
+</script>
+
 
 </body>
 </html>
