@@ -1,36 +1,42 @@
 <!-- register.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Register | JBS Ethics Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
   <!-- Include layout.html navbar -->
   <header class="navbar">
     <div class="nav-content">
-        <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Ethics Clearance System</span>
     </div>
   </header>
 
   <!-- Page-specific content -->
   <main class="main-content">
-    <h2>Register</h2>
-    <form id="registerForm">
-      <input type="text" placeholder="Full Name" required>
-      <input type="text" placeholder="Student Number" required>
-      <input type="email" placeholder="UJ Email" required>
-      <input type="password" placeholder="Password" required>
+    <h2 class="centered-text">Register</h2>
+    <p id="message" style="color: red;"></p>
+    <form action="#" id="registerForm">
+      <input id="full-name" type="text" placeholder="Enter Full Name" required>
+      <input id="student-number" type="text" placeholder="Enter Student Number" required>
+      <input id="email" type="email" placeholder="Enter UJ Email" required>
+      <input id="password" type="password" placeholder="Create password" required>
 
-      <h4>Supervisor Details</h4>
-      <input type="text" placeholder="Supervisor Name" required>
-      <input type="email" placeholder="Supervisor Email" required>
+      <h4 class="centered-text">Supervisor Details</h4>
+      <label for="supervisors">Choose supervisor from list:</label>
+      <select id="supervisors" name="supervisors" required>
+        <option value="" disabled selected>-- Click to select --</option>
+      </select>
+      <input id="sup-email" type="email" placeholder="Supervisor Email" required disabled>
 
-      <button type="submit"><a href="login.html">Register</a></button>
+      <button type="submit">Register</button>
     </form>
     <p class="switch-link">Already have an account? <a href="login.html">Login</a></p>
   </main>
@@ -40,5 +46,78 @@
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
 
+  <script>
+    const BASE_URL = 'http://127.0.0.1:5000';
+
+    // Create a list of supervisors on page load
+    async function loadSupervisors() {
+      try {
+        const response = await fetch(BASE_URL + '/api/supervisors');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const supervisors = await response.json();
+
+        const select = document.getElementById('supervisors');
+        // Clear existing options except the first placeholder
+        select.length = 1;
+
+        supervisors.forEach(sup => {
+          const option = document.createElement('option');
+          option.value = sup.user_id;
+          option.textContent = sup.full_name;
+          option.setAttribute('data-email', sup.email)
+          select.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Failed to load supervisors:', error);
+      }
+    }
+
+    // Auto populate the supervisor email field
+    document.getElementById('supervisors').addEventListener('change', function () {
+      const selectedOption = this.options[this.selectedIndex];
+      const email = selectedOption.getAttribute('data-email') || '';
+      console.log(email)
+      document.getElementById('sup-email').value = email;
+    });
+
+    // Form submission
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const full_name = document.getElementById('full-name').value;
+      const student_number = document.getElementById('student-number').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const supervisor_id = document.getElementById('supervisors').value;
+
+      try {
+        const response = await fetch(BASE_URL + '/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ full_name, student_number, email, password, supervisor_id })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('message').textContent = 'Login successful!';
+          // redirect or store token if available
+          window.location.href = 'login.html';
+        } else {
+          document.getElementById('message').textContent = data.message || 'Login failed';
+        }
+      } catch (error) {
+        console.log(error)
+        document.getElementById('message').textContent = 'An error occurred';
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', loadSupervisors);
+  </script>
 </body>
+
 </html>
