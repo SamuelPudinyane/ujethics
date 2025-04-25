@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Watch Ethics Videos | JBS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    #video2 {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .step-buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      margin-right: 10px;
+    }
+  </style>
+
 </head>
+
 <body>
 
   <header class="navbar">
     <div class="nav-content">
-        <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Ethics Clearance System – JBS Students</span>
     </div>
   </header>
@@ -18,21 +38,63 @@
   <main class="main-content">
     <h2>Ethics Training Videos</h2>
 
-    <div class="video-box">
+    <div id="video1" class="video-box">
       <h4>Lecture 1: Introduction</h4>
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/fQaykWNLwmc" frameborder="0" allowfullscreen></iframe>
+      <div>
+        <h5>Video 1 Summary</h5>
+        <summary>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque at fugiat quae quisquam expedita
+          consequuntur atque facilis, inventore optio quo quidem! Officiis totam explicabo ab, ex voluptatibus
+          asperiores earum labore, inventore iure harum accusantium ut blanditiis necessitatibus corrupti illo tempore
+          neque itaque amet ipsam distinctio? Culpa eum dicta inventore exercitationem iste fuga numquam laudantium
+          doloribus sint, impedit possimus aliquam asperiores eaque reprehenderit cupiditate, vitae saepe, consequatur
+          fugit error sunt magnam dolore voluptatum. Ex id cumque dolorum amet ut hic quo aut beatae pariatur minima.
+          Facilis ullam exercitationem maxime deserunt, velit ducimus veritatis. Suscipit provident excepturi animi,
+          nostrum consectetur itaque illo.
+        </summary>
+      </div>
+      <br>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/fQaykWNLwmc" frameborder="0"
+        allowfullscreen></iframe>
+      <label for="confirm-video1" class="confirm-check" style="cursor: pointer;">
+        I confirm I have watched lecture 1 video.
+      </label>
+      <br>
+      <input type="checkbox" id="confirm-video1" name="confirm-video1" hidden>
+      <button id="nextBtn" disabled>Next Lesson</button>
     </div>
 
-    <div class="video-box">
+    <div id="video2" class="video-box">
       <h4>Lecture 2: Application Process</h4>
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/_JlAwVsVgok" frameborder="0" allowfullscreen></iframe>
+      <div>
+        <h5>Video 1 Summary</h5>
+        <summary>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque at fugiat quae quisquam expedita
+          consequuntur atque facilis, inventore optio quo quidem! Officiis totam explicabo ab, ex voluptatibus
+          asperiores earum labore, inventore iure harum accusantium ut blanditiis necessitatibus corrupti illo tempore
+          neque itaque amet ipsam distinctio? Culpa eum dicta inventore exercitationem iste fuga numquam laudantium
+          doloribus sint, impedit possimus aliquam asperiores eaque reprehenderit cupiditate, vitae saepe, consequatur
+          fugit error sunt magnam dolore voluptatum. Ex id cumque dolorum amet ut hic quo aut beatae pariatur minima.
+          Facilis ullam exercitationem maxime deserunt, velit ducimus veritatis. Suscipit provident excepturi animi,
+          nostrum consectetur itaque illo.
+        </summary>
+      </div>
+      <br>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/_JlAwVsVgok" frameborder="0"
+        allowfullscreen></iframe>
+      <label for="confirm-video2" class="confirm-check" style="cursor: pointer;">
+        <input type="checkbox" id="confirm-video2" name="confirm-video2" hidden>
+        I confirm I have watched lecture 2 video.
+      </label>
+      <br>
+      <button id="continueBtn" disabled>Continue</button>
+      <br>
+      <br>
+      <button id="prevBtn">Previos Video</button>
     </div>
 
-    <label class="confirm-check">
-      <input type="checkbox" id="confirmCheckbox">
-      I confirm I have watched both videos.
-    </label>
-    <button id="continueBtn" disabled>Continue</button>
+
+
   </main>
 
   <footer class="footer">
@@ -40,15 +102,37 @@
   </footer>
 
   <script>
-    const checkbox = document.getElementById("confirmCheckbox");
+    const confirmVideo1 = document.getElementById("confirm-video1");
+    const confirmVideo2 = document.getElementById("confirm-video2");
+    const nextBtn = document.getElementById("nextBtn");
     const continueBtn = document.getElementById("continueBtn");
-    checkbox.addEventListener("change", () => {
-      continueBtn.disabled = !checkbox.checked;
+    const prevBtn = document.getElementById("prevBtn");
+
+    confirmVideo1.addEventListener("change", () => {
+      nextBtn.disabled = !confirmVideo1.checked;
     });
+
+    confirmVideo2.addEventListener("change", () => {
+      continueBtn.disabled = !confirmVideo2.checked;
+    });
+
+    nextBtn.addEventListener("click", () => {
+      document.getElementById("video1").style.display = "none"
+      document.getElementById("video2").style.display = "block"
+    });
+
+    prevBtn.addEventListener("click", () => {
+      document.getElementById("video1").style.display = "block"
+      document.getElementById("video2").style.display = "none"
+    });
+
     continueBtn.addEventListener("click", () => {
       window.location.href = "dashboard.html";
     });
+
+
   </script>
 
 </body>
+
 </html>

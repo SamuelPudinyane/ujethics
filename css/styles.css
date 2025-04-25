@@ -11,6 +11,7 @@ body {
   color: #022169;
   /* JBS Navy */
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* === NAVBAR === */
@@ -158,6 +159,7 @@ button:disabled {
   position: absolute;
   bottom: 0;
   width: 100%;
+  position: sticky;
 }
 
 /* === RESPONSIVENESS === */
