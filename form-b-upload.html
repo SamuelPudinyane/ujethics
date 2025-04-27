@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form B – Upload Documents | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/form_b.css" />
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj" />
+      <span class="nav-title">Form B – Upload Required Documents</span>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <form action="form-b-section1.html" method="GET" enctype="multipart/form-data">
+      <h2>Upload Required Documents</h2>
+
+      <p>Please upload the following supporting documents:</p>
+      <ul class="upload-instructions">
+        <li>✓ Approved Research Proposal (PDF)</li>
+        <li>✓ Prior Ethical Clearance Proof (PDF)</li>
+        <li>✓ Consent Forms / Permission Letters (if applicable)</li>
+        <li>✓ Evidence Original Data Met Ethical Standards</li>
+      </ul>
+
+      <label>Upload Proposal</label>
+      <input type="file" name="proposal" required accept=".pdf">
+
+      <label>Upload Prior Ethical Clearance</label>
+      <input type="file" name="clearance" required accept=".pdf">
+
+      <label>Upload Consent/Permission Letters (if applicable)</label>
+      <input type="file" name="permissions" accept=".pdf">
+
+      <label>Upload Evidence of Original Ethics Compliance</label>
+      <input type="file" name="evidence" accept=".pdf">
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <a href="dashboard.html" class="revise-btn">⬅ Back</a>
+        <button type="submit" class="approve-btn">Next ➔ Research Details</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

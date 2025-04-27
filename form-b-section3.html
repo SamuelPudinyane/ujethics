@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form B – Ethical Considerations & Declaration | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj" />
+      <span class="nav-title">Form B – Ethical Considerations & Declaration</span>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress" style="width: 100%;">Section 3 of 3</div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <form action="thank-you.html" method="GET">
+      <h2>Ethical Considerations</h2>
+
+      <div class="question-block">
+        <label>3.1 Was ethical clearance granted for the original data gathering phase?</label>
+        <div class="yes-no">
+          <input type="radio" name="original_clearance" value="Yes" required> Yes
+          <input type="radio" name="original_clearance" value="No" required> No
+          <input type="radio" name="original_clearance" value="Unknown" required> Unknown
+        </div>
+      </div>
+
+      <div class="question-block">
+        <label>3.2 Did participants in the original study grant permission for future use of the data?</label>
+        <div class="yes-no">
+          <input type="radio" name="participant_permission" value="Yes" required> Yes
+          <input type="radio" name="participant_permission" value="No" required> No
+          <input type="radio" name="participant_permission" value="Unknown" required> Unknown
+        </div>
+      </div>
+
+      <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:</label>
+      <textarea name="data_safekeeping" rows="4"></textarea>
+
+      <hr>
+
+      <h2>Risk Assessment</h2>
+
+      <div class="question-block">
+        <label>The study presents:</label>
+        <div class="yes-no">
+          <input type="radio" name="risk_level" value="Minimal Risk" required> Minimal Risk
+          <input type="radio" name="risk_level" value="More than Minimal Risk" required> More than Minimal Risk
+        </div>
+      </div>
+
+      <label>Comments:</label>
+      <textarea name="risk_comments" rows="3"></textarea>
+
+      <hr>
+
+      <h2>Declaration</h2>
+
+      <p class="form-note">
+        I, <strong>(full name of applicant)</strong>, declare that I have read the Policy on Research Ethics of UJ and confirm that the contents of this application are true and correct. I will comply with UJ policies on Research Ethics, Copyright, and Plagiarism. I undertake to notify the JBSREC of any changes or issues related to the study and ensure data confidentiality and integrity.
+      </p>
+
+      <label>Full Name</label>
+      <input type="text" name="full_name" required placeholder="Enter your full name">
+
+      <label>Date</label>
+      <input type="date" name="declaration_date" required>
+
+      <p class="form-note">
+        By submitting electronically, you agree to the terms stated above.
+      </p>
+
+    <!-- Navigation and Action Buttons -->
+    <div class="form-navigation">
+        <a href="form-b-section2.html" class="revise-btn">⬅ Back</a>
+    
+        <div style="display: flex; gap: 1rem;">
+            <button type="button" class="revise-btn" onclick="saveDraft()">💾 Save Draft</button>
+            <button type="submit" class="approve-btn" onclick="submitForm(event)">✅ Submit Form B</button>
+        </div>
+    </div>
+  
+
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
+  </footer>
+
+</div>
+
+<script>
+    function saveDraft() {
+      alert('✅ Your draft has been saved temporarily.');
+      // You could extend this to localStorage or backend save if needed later
+    }
+  
+    function submitForm(e) {
+      e.preventDefault();
+      alert('🎉 Submission Successful! Redirecting you to Dashboard...');
+      // Simulate a delay then redirect
+      setTimeout(() => {
+        window.location.href = "dashboard.html";  // change if needed
+      }, 2000); // 2-second delay for user to read the success message
+    }
+  </script>
+  
+
+</body>
+</html>
