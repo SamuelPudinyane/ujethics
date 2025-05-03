@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <title>Review Form | JBS Ethics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/supervisor.css" />
   <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/review.css" />
 </head>
 <body>
 
@@ -15,10 +15,11 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <img src="img/image.png" class="sidebar-logo" />
-      <h3>Reviewer Panel</h3>
+      <h3>REC Committee</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="reviewer-dashboard.html">📋 My Reviews</a>
+      <a href="rec-dashboard.html">📋 Dashboard</a>
+      <a href="assigned-reviews.html">✅ Assigned Reviews</a>
       <a href="logout.html">🔒 Logout</a>
     </nav>
   </aside>
@@ -26,11 +27,11 @@
   <!-- Main Content -->
   <main class="admin-main">
     <header class="topbar">
-      <h2>Review Form A – Student 216018061</h2>
+      <h2>Review Form – Student 216018061</h2>
     </header>
 
     <section class="admin-content">
-      <h3>Submission Details</h3>
+      <h3>Submission Overview</h3>
 
       <label>Research Title</label>
       <p class="review-field">The Role of AI in Green Tech</p>
@@ -44,7 +45,7 @@
       <label>Data Collection Method</label>
       <p class="review-field">Semi-structured interviews, online surveys</p>
 
-      <label>Submitted Documents</label>
+      <label>Documents Submitted</label>
       <ul class="download-list">
         <li><a href="docs/proposal-216018061.pdf" target="_blank">📄 Proposal</a></li>
         <li><a href="docs/consent-form-216018061.pdf" target="_blank">📄 Informed Consent</a></li>
@@ -52,40 +53,25 @@
       </ul>
 
       <hr>
+      <br>
 
-      <h3>Reviewer Feedback</h3>
-      <label>Write your comments for the Ethics Office or Supervisor</label>
-      <textarea id="reviewFeedback" rows="5" placeholder="Enter your review feedback here..."></textarea>
+  
 
-      <div style="margin-top: 1rem;">
-        <button class="approve-btn" onclick="submitReview()">Submit Review</button>
-        <button class="revise-btn" onclick="requestMoreInfo()">Request More Info</button>
-        <a href="reviewer-dashboard.html" class="btn-logout" style="float:right;">⬅ Back to Dashboard</a>
+      <div class="button-row">
+        <button><a href="rec-checklist.html">Submit Checklist</a></button>
+        <a href="rec-dashboard.html" class="btn-logout" style="float:right;">⬅ Back to Dashboard</a>
       </div>
+      <br>
+      <br>
     </section>
 
     <footer class="footer">
-      <p>&copy; 2025 JBS Ethics Review Board</p>
+      <p>&copy; 2025 Johannesburg Business School | REC Committee</p>
     </footer>
   </main>
 
 </div>
 
-<script>
-  function submitReview() {
-    const feedback = document.getElementById("reviewFeedback").value.trim();
-    if (!feedback) return alert("Please enter your feedback before submitting.");
-    alert("✅ Your review has been submitted.");
-    window.location.href = "reviewer-dashboard.html";
-  }
-
-  function requestMoreInfo() {
-    const feedback = document.getElementById("reviewFeedback").value.trim();
-    if (!feedback) return alert("Please include a reason for requesting more info.");
-    alert("🔁 Request for more information sent.");
-    window.location.href = "reviewer-dashboard.html";
-  }
-</script>
 
 </body>
 </html>

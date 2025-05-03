@@ -22,6 +22,8 @@
     button {
       margin-right: 10px;
     }
+
+
   </style>
 
 </head>
@@ -31,7 +33,12 @@
   <header class="navbar">
     <div class="nav-content">
       <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
-      <span class="nav-title">Ethics Clearance System – JBS Students</span>
+      <span class="nav-title">Ethics Application System</span>
+                     <!-- Logout -->
+    <div style="text-align: right;">
+
+      <a href="logout.html" class="btn-logout">Logout</a>
+    </div>
     </div>
   </header>
 
@@ -56,11 +63,12 @@
       <br>
       <iframe width="100%" height="315" src="https://www.youtube.com/embed/fQaykWNLwmc" frameborder="0"
         allowfullscreen></iframe>
-      <label for="confirm-video1" class="confirm-check" style="cursor: pointer;">
-        I confirm I have watched lecture 1 video.
-      </label>
-      <br>
-      <input type="checkbox" id="confirm-video1" name="confirm-video1" hidden>
+        <div class="confirm-check">
+          <input type="checkbox" id="confirm-video1" name="confirm-video1">
+          <label for="confirm-video1">I confirm I have watched lecture 1 video.</label>
+        </div>
+        
+        
       <button id="nextBtn" disabled>Next Lesson</button>
     </div>
 
@@ -82,15 +90,16 @@
       <br>
       <iframe width="100%" height="315" src="https://www.youtube.com/embed/_JlAwVsVgok" frameborder="0"
         allowfullscreen></iframe>
-      <label for="confirm-video2" class="confirm-check" style="cursor: pointer;">
-        <input type="checkbox" id="confirm-video2" name="confirm-video2" hidden>
-        I confirm I have watched lecture 2 video.
-      </label>
+        <div class="confirm-check">
+          <input type="checkbox" id="confirm-video2" name="confirm-video2">
+          <label for="confirm-video2">I confirm I have watched lecture 2 video.</label>
+        </div>
+        
       <br>
       <button id="continueBtn" disabled>Continue</button>
       <br>
       <br>
-      <button id="prevBtn">Previos Video</button>
+      <button id="prevBtn">Previous Video</button>
     </div>
 
 
@@ -127,7 +136,7 @@
     });
 
     continueBtn.addEventListener("click", () => {
-      window.location.href = "dashboard.html";
+      window.location.href = "ethics_app.html";
     });
 
 

@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <title>Supervisor Dashboard | JBS Ethics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/review.css" />
+  <link rel="stylesheet" href="css/supervisor.css" />
 </head>
 <body>
 
@@ -18,7 +17,8 @@
       <h3>Supervisor Portal</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="supervisor-dashboard.html">🏠 Dashboard</a>
+      <a href="supervisor-dashboard.html" class="active">🏠 Dashboard</a>
+      <a href="students.html">👥 My Students</a>
       <a href="logout.html">🔒 Logout</a>
     </nav>
   </aside>
@@ -35,6 +35,7 @@
       <table class="status-table">
         <thead>
           <tr>
+            <th>Name</th>
             <th>Student</th>
             <th>Form</th>
             <th>Status</th>
@@ -45,16 +46,26 @@
         </thead>
         <tbody>
           <tr>
+            <td>Thabo Mokoena</td>
             <td>216018061</td>
             <td>Form A</td>
             <td><span class="badge status-pending">Waiting Review</span></td>
             <td>2025-04-23</td>
             <td>
-              <a href="docs/consent-form-216018061.pdf" target="_blank" class="doc-link">Consent</a> |
-              <a href="docs/proposal-216018061.pdf" target="_blank" class="doc-link">Proposal</a>
+              <ul class="doc-link">
+                <li><a href="docs/consent-form-216018061.pdf" target="_blank">Consent Form</a></li>
+                <li><a href="docs/proposal-216018061.pdf" target="_blank">Proposal</a></li>
+                <li><a href="docs/checklist-216018061.pdf" target="_blank">Impact Form</a></li>
+                <li><a href="docs/permission-letter-216018061.pdf" target="_blank">Permission Letter</a></li>
+                <li><a href="docs/ethics-clearance-216018061.pdf" target="_blank">Ethics Clearance</a></li>
+                <li><a href="docs/other-docs-216018061.pdf" target="_blank">Survey</a></li>
+                <br>
+                <button class="upload-btn">📤 Re-upload</button>
+              </ul>
             </td>
             <td>
-              <a href="edit-form.html?student_id=216018061&form=A" class="view-btn">View/Edit</a>
+              <a href="a-section6-supervisor.html" class="view-btn">📝 View/Edit</a><br>
+             
             </td>
           </tr>
         </tbody>
@@ -67,9 +78,6 @@
   </main>
 
 </div>
-
-<br>
-<br>
 
 </body>
 </html>

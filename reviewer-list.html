@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reviewer List | Ethics Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/supervisor.css" />
     <link rel="stylesheet" href="css/review.css" />
 </head>
 <body>
@@ -18,11 +18,10 @@
       <h3>JBS Ethics</h3>
     </div>
     <nav class="sidebar-nav">
-        <a href="admin-dashboard.html">📋 Dashboard</a>
-        <a href="view-changes.html">🔄 Submission Timeline</a>
-        <a href="reviewer-list.html">👤 Reviewer List</a>
-        <a href="admin-reviewer-edit.html?mode=add">➕ Add Reviewer</a>
-        <a href="assign-reviewers.html">📤 Assign Reviewers</a>
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="user-list.html">👥 User Management</a>
       </nav>
   </aside>
 
@@ -33,7 +32,8 @@
     </header>
 
     <section class="admin-content">
-      <a href="admin-reviewer-edit.html?mode=add" class="approve-btn" style="margin-bottom: 1rem;">+ Add Reviewer</a>
+      <button class="approve-btn" style="margin-bottom: 1rem;" onclick="openReviewerModal()">+ Add Reviewer</button>
+
 
       <table class="status-table">
         <thead>
@@ -51,14 +51,21 @@
             <td>lerato@uj.ac.za</td>
             <td>Business Research</td>
             <td>Low</td>
-            <td><a href="admin-reviewer-edit.html?mode=edit&id=rev001" class="revise-btn">Edit</a></td>
+            <td>
+              <a href="#" class="revise-btn" onclick="editReviewer('rev001')">Edit</a>
+              <button class="delete-btn" onclick="deleteReviewer('rev001')">Delete</button>
+            </td>
           </tr>
           <tr>
             <td>Prof. Naidoo</td>
             <td>naidoo@uj.ac.za</td>
             <td>Data Ethics</td>
             <td>Medium</td>
-            <td><a href="admin-reviewer-edit.html?mode=edit&id=rev002" class="revise-btn">Edit</a></td>
+            <td>
+              <a href="#" class="revise-btn" onclick="editReviewer('rev001')">Edit</a>
+              <button class="delete-btn" onclick="deleteReviewer('rev001')">Delete</button>
+            </td>
+            
           </tr>
         </tbody>
       </table>
@@ -69,6 +76,66 @@
     </footer>
   </main>
 </div>
+
+<!-- Reviewer Modal -->
+<div id="reviewerModal" class="modal-overlay">
+  <div class="modal-content wide">
+    <h3>Add New Reviewer</h3>
+    <form id="addReviewerForm">
+      <label>Full Name</label>
+      <input type="text" name="reviewer_name" required>
+
+      <label>Email Address</label>
+      <input type="email" name="reviewer_email" required>
+
+      <label>Specialization</label>
+      <input type="text" name="reviewer_specialization" required>
+
+      <label>Risk Level</label>
+      <select name="reviewer_risk" required>
+        <option value="">Select...</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <div class="form-navigation">
+        <button type="submit" class="approve-btn">✅ Save Reviewer</button>
+        <button type="button" onclick="closeReviewerModal()" class="revise-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openReviewerModal() {
+    document.getElementById("reviewerModal").style.display = "flex";
+  }
+
+  function closeReviewerModal() {
+    document.getElementById("reviewerModal").style.display = "none";
+  }
+
+  document.getElementById("addReviewerForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("✅ Reviewer added successfully!");
+    closeReviewerModal();
+    // Extend: Save to backend via AJAX or form post
+  });
+
+  function editReviewer(id) {
+    alert("✏️ Edit reviewer with ID: " + id);
+    // Optionally open modal and pre-fill fields
+  }
+
+  function deleteReviewer(id) {
+    if (confirm("Are you sure you want to delete this reviewer?")) {
+      alert("🗑️ Reviewer " + id + " deleted!");
+      // Extend: Call backend to remove reviewer
+    }
+  }
+</script>
+
 
 </body>
 </html>

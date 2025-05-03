@@ -4,20 +4,35 @@
   <meta charset="UTF-8" />
   <title>Form C – Researcher's Details | JBS Ethics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/review.css" />
+  <link rel="stylesheet" href="css/form_a.css" />
 </head>
 <body>
 
 <div class="form-wrapper">
 
+  <!-- Navbar -->
   <header class="navbar">
     <div class="nav-content">
       <img src="img/image.png" alt="UJ JBS Logo" class="logo uj" />
       <span class="nav-title">Form C – Researcher's Details</span>
+      <div style="text-align: right;">
+        <a href="logout.html" class="btn-logout">Logout</a>
+      </div>
     </div>
   </header>
 
+  <!-- Top Bar -->
+  <div class="form-header">
+    <button class="approve-btn">💾 Save Draft</button>
+    <strong>Step 1 of 4</strong>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" style="width: 25%;">25%</div>
+  </div>
+
+  <!-- Main Content -->
   <main class="main-content">
     <form action="form-c-section2.html" method="GET">
       <h2>SECTION 1: Researcher's Details</h2>
@@ -52,17 +67,10 @@
       <label>Supervisor Email(s)</label>
       <input type="email" name="supervisor_email" required>
 
-      <p class="form-note">
-        <strong>Note:</strong> When applying for exemption, you should also upload:
-        <ul class="upload-instructions">
-          <li>✓ This completed application</li>
-          <li>✓ Approved Research Proposal</li>
-          <li>✓ Evidence that data is public domain / anonymized</li>
-          <li>✓ Any permission letters needed</li>
-        </ul>
-      </p>
-
-      <button type="submit" class="approve-btn">Next ➔ Section 2</button>
+      <div class="form-navigation">
+        <a href="dashboard.html" class="revise-btn">⬅ Back</a>
+        <button type="submit" class="approve-btn">Next ➔ Section 2</button>
+      </div>
     </form>
   </main>
 

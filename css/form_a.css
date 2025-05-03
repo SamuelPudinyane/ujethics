@@ -1,0 +1,239 @@
+:root {
+    --jbs-navy: #000000;
+    --jbs-teal: #022169;
+    --jbs-purple: #4F2365;
+    --jbs-yellow: #FFCB05;
+    --jbs-grey: #939598;
+    --jbs-lightgrey: #DCDDDE;
+    --white: #ffffff;
+    --black: #000000;
+    --accent: #F26522;
+  }
+  
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--jbs-lightgrey);
+    color: var(--jbs-navy);
+  }
+  
+  /* Navbar */
+  .navbar {
+    background-color: var(--jbs-navy);
+    color: var(--white);
+    padding: 1rem;
+  }
+  .nav-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .logo.uj {
+    height: 60px;
+  }
+  .nav-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  /* Progress Bar */
+  .progress-bar-container {
+    width: 100%;
+    background-color: var(--jbs-lightgrey);
+    padding: 0.5rem;
+  }
+  .progress-bar {
+    height: 16px;
+    background-color: var(--jbs-grey);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent);
+    transition: width 0.3s ease-in-out;
+  }
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .progress-bar {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+
+  .progress-fill {
+    height: 20px;
+    background-color: var(--jbs-teal);
+    width: 14.28%; /* 1 out of 7 steps */
+    color: white;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 20px;
+  }
+
+  .form-section label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+
+  .form-navigation {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Main content styling */
+  .main-content {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(2, 33, 105, 0.1);
+  }
+  .main-content h2, h3 {
+    color: var(--jbs-teal);
+  }
+  .main-content label {
+    display: block;
+    font-weight: bold;
+    margin-top: 1.5rem;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="file"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--jbs-grey);
+    font-size: 1rem;
+  }
+  
+  /* Radio and checkbox inline */
+  .radio-group, .checkbox-group {
+    display: flex;
+    gap: 2rem;
+    margin-top: 0.5rem;
+  }
+  .radio-group label, .checkbox-group label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  /* Table Style for Section 6.9 */
+  .table-style {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  .table-style th, .table-style td {
+    padding: 0.6rem;
+    border: 1px solid var(--jbs-grey);
+  }
+  .table-style th {
+    background-color: var(--jbs-teal);
+    color: var(--white);
+    text-align: left;
+  }
+  
+  /* Buttons */
+  button, .revise-btn, .approve-btn {
+    background-color: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+  }
+  button:hover, .revise-btn:hover, .approve-btn:hover {
+    background-color: var(--jbs-purple);
+    color: var(--white);
+  }
+  .revise-btn {
+    text-decoration: none;
+    background-color: var(--jbs-grey);
+    margin-right: 1rem;
+  }
+  
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 1rem;
+    background-color: var(--jbs-grey);
+    color: var(--white);
+  }
+  
+  /* Small devices */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 1rem;
+    }
+    .radio-group, .checkbox-group {
+      flex-direction: column;
+    }
+  }
+
+    /* === LOGOUT BUTTON === */
+    .btn-logout {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #CE0F46;
+      /* JBS Deep Pink */
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+    
+    .btn-logout:hover {
+      background-color: #a50c38;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+  
