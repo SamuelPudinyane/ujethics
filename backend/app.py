@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole
+from models import db_session, User, UserRole, FormB, FormC
 from utils.helpers import generate_reset_token, send_email, validate_password
 import os
 import secrets
@@ -158,6 +158,135 @@ def get_supervisors():
     ]
     
     return jsonify(result), 200
+
+# =====================================================================================================
+# THIS SECTION IS FOR HANDLING FORMS
+# =====================================================================================================
+
+# FORM A =====================================================================================================
+
+
+
+
+
+# FORM B =====================================================================================================
+@app.route('/api/form-b/<form_id>', methods=['GET'])
+def get_form_b(form_id):
+    form_b = db_session.query(FormB).filter_by(form_id=form_id).first()
+    if not form_b:
+        return jsonify({"message": "Form not found"}), 404
+    return jsonify(form_b.to_dict()), 200
+
+
+
+@app.route('/api/form-b', methods=['POST'])
+def submit_form_b():
+    data = request.get_json()
+    required_fields = [
+        "applicant_name", "student_number", "institution", "department", "degree",
+        "project_title", "mobile_number", "email_address", "supervisor_name",
+        "supervisor_email", "declaration_full_name", "declaration_date"
+    ]
+
+    # Validate required fields
+    if not all(field in data for field in required_fields):
+        return jsonify({"message": "Missing required fields"}), 400
+
+    try:
+        form_b = FormB(
+            applicant_name=data["applicant_name"],
+            student_number=data["student_number"],
+            institution=data["institution"],
+            department=data["department"],
+            degree=data["degree"],
+            project_title=data["project_title"],
+            mobile_number=data["mobile_number"],
+            email_address=data["email_address"],
+            supervisor_name=data["supervisor_name"],
+            supervisor_email=data["supervisor_email"],
+            project_description=data.get("project_description"),
+            data_nature=data.get("data_nature"),
+            data_origin=data.get("data_origin"),
+            data_public=data.get("data_public"),
+            public_evidence=data.get("public_evidence"),
+            access_conditions=data.get("access_conditions"),
+            personal_info=data.get("personal_info"),
+            data_anonymized=data.get("data_anonymized"),
+            anonymization_comment=data.get("anonymization_comment"),
+            private_permission=data.get("private_permission"),
+            permission_details=data.get("permission_details"),
+            shortcomings_reported=data.get("shortcomings_reported"),
+            limitations_reporting=data.get("limitations_reporting"),
+            methodology_alignment=data.get("methodology_alignment"),
+            data_acknowledgment=data.get("data_acknowledgment"),
+            original_clearance=data.get("original_clearance"),
+            participant_permission=data.get("participant_permission"),
+            data_safekeeping=data.get("data_safekeeping"),
+            risk_level=data.get("risk_level"),
+            risk_comments=data.get("risk_comments"),
+            declaration_full_name=data["declaration_full_name"],
+            declaration_date=datetime.strptime(data["declaration_date"], "%Y-%m-%d")
+        )
+        db_session.add(form_b)
+        db_session.commit()
+        return jsonify({"message": "Form B submitted successfully"}), 201
+    except Exception as e:
+        db_session.rollback()
+        return jsonify({"message": f"Error: {str(e)}"}), 500
+    
+
+# FORM C =====================================================================================================
+@app.route('/api/form-c', methods=['POST'])
+def submit_form_c():
+    data = request.get_json()
+    required_fields = [
+        "applicant_name", "student_number", "institution", "department", "degree",
+        "project_title", "mobile_number", "email_address", "supervisor_name",
+        "supervisor_email", "declaration_full_name", "declaration_date"
+    ]
+
+    # Validate required fields
+    if not all(field in data for field in required_fields):
+        return jsonify({"message": "Missing required fields"}), 400
+
+    try:
+        form_c = FormC(
+            applicant_name=data["applicant_name"],
+            student_number=data["student_number"],
+            institution=data["institution"],
+            department=data["department"],
+            degree=data["degree"],
+            project_title=data["project_title"],
+            mobile_number=data["mobile_number"],
+            email_address=data["email_address"],
+            supervisor_name=data["supervisor_name"],
+            supervisor_email=data["supervisor_email"],
+            ethical_clearance=data.get("ethical_clearance"),
+            clearance_details=data.get("clearance_details"),
+            participant_consent=data.get("participant_consent"),
+            consent_details=data.get("consent_details"),
+            risk_assessment=data.get("risk_assessment"),
+            declaration_full_name=data["declaration_full_name"],
+            declaration_date=datetime.strptime(data["declaration_date"], "%Y-%m-%d")
+        )
+        db_session.add(form_c)
+        db_session.commit()
+        return jsonify({"message": "Form C submitted successfully"}), 201
+    except Exception as e:
+        db_session.rollback()
+        return jsonify({"message": f"Error: {str(e)}"}), 500
+    
+
+@app.route('/api/form-c/<form_id>', methods=['GET'])
+def get_form_c(form_id):
+    form_c = db_session.query(FormC).filter_by(form_id=form_id).first()
+    if not form_c:
+        return jsonify({"message": "Form not found"}), 404
+    return jsonify(form_c.to_dict()), 200
+
+# =====================================================================================================
+# END OF FORMS
+# =====================================================================================================
 
 if __name__ == '__main__':
     port = int(os.getenv("PORT", 5000))  

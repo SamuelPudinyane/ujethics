@@ -1,0 +1,20 @@
+CREATE TABLE form_c (
+    form_id VARCHAR(36) NOT NULL PRIMARY KEY,
+    applicant_name VARCHAR(255) NOT NULL,
+    student_number INTEGER NOT NULL,
+    institution VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL,
+    degree VARCHAR(255) NOT NULL,
+    project_title VARCHAR(255) NOT NULL,
+    mobile_number VARCHAR(15) NOT NULL,
+    email_address VARCHAR(255) NOT NULL,
+    supervisor_name VARCHAR(255) NOT NULL,
+    supervisor_email VARCHAR(255) NOT NULL,
+    ethical_clearance BOOLEAN,
+    clearance_details TEXT,
+    participant_consent BOOLEAN,
+    consent_details TEXT,
+    risk_assessment TEXT,
+    declaration_full_name VARCHAR(255) NOT NULL,
+    declaration_date DATETIME NOT NULL
+);
