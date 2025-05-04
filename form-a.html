@@ -78,47 +78,7 @@
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
 
-  <!-- Confirmation Popup Modal -->
-<div id="confirmationModal" class="modal-overlay">
-    <div class="modal-content">
-      <h3>Form A Submitted Successfully!</h3>
-      <p>Your application has been received and will be sent to your supervisor.</p>
-      <button id="closeModalBtn">Return to Dashboard</button>
-    </div>
-  </div>
-  
 
-  <!-- SCRIPT: Enable Submit if All Validated -->
-<script>
-    const form = document.getElementById("formA");
-    const checkItems = document.querySelectorAll(".check-item");
-    const submitBtn = document.getElementById("submitBtn");
-
-    form.addEventListener("input", () => {
-        const filledInputs = Array.from(form.querySelectorAll("input, textarea, select"))
-            .filter(el => el.type !== "checkbox" && el.value.trim() !== "").length;
-
-        const checkAll = Array.from(checkItems).every(chk => chk.checked);
-
-        const requiredFiles = Array.from(form.querySelectorAll('input[type="file"]')).every(f => f.files.length > 0);
-
-        if (filledInputs >= 7 && requiredFiles && checkAll && document.getElementById("digitalSignature").checked) {
-            submitBtn.disabled = false;
-        } else {
-            submitBtn.disabled = true;
-        }
-    });
-
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        document.getElementById("confirmationModal").style.display = "flex";
-    });
-
-    document.getElementById("closeModalBtn").addEventListener("click", () => {
-        window.location.href = "dashboard.html";
-    });
-
-</script>
 
 </body>
 </html>

@@ -16,7 +16,7 @@ body {
 
 /* === NAVBAR === */
 .navbar {
-  background-color: #939598;
+  background-color: #000000;
   /* JBS Navy */
   padding: 1rem;
   color: white;
@@ -32,7 +32,7 @@ body {
 }
 
 .logo {
-  height: 50px;
+  height: 60px;
   object-fit: contain;
 }
 
@@ -125,12 +125,16 @@ button:disabled {
 }
 
 .confirm-check {
-  margin-top: 1rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  /* gap: 0.5rem; */
   font-weight: 500;
+  margin: 1rem 0;
+  /* padding-left: 0.1rem; */
+  color: var(--jbs-navy); /* Optional: match your theme */
 }
+
+
 
 /* === SWITCH LINKS === */
 .switch-link {
@@ -366,7 +370,8 @@ button:disabled {
 /* Button Styles (Reuse Existing) */
 .approve-btn,
 .revise-btn,
-.btn-logout {
+.btn-logout,
+.reject-btn {
   display: inline-block;
   margin-top: 1rem;
   margin-right: 0.5rem;

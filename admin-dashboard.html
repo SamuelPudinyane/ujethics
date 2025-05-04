@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Admin Dashboard | Ethics Clearance</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/supervisor.css" />
     <link rel="stylesheet" href="css/review.css" />
 </head>
 <body>
@@ -15,14 +15,12 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <img src="img/image.png" class="sidebar-logo" />
-      <h3>JBS Ethics</h3>
+      <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
       <a href="admin-dashboard.html">📋 Dashboard</a>
       <a href="view-changes.html">🔄 Submission Timeline</a>
       <a href="reviewer-list.html">👤 Reviewer List</a>
-      <a href="admin-reviewer-edit.html?mode=add">➕ Add Reviewer</a>
-      <a href="assign-reviewers.html">📤 Assign Reviewers</a>
       <a href="user-list.html">👥 User Management</a>
     </nav>
   </aside>
@@ -58,11 +56,9 @@
               <th>Student Number</th>
               <th>Student Name</th>
               <th>Form</th>
-              <th>Status</th>
-              <th>Forms Submitted</th>
               <th>Risk Level</th>
-              <th>Last Modified</th>
-              <th>Changes</th>
+              <th>Date Received</th>
+              <th>View Supporting Documents</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -72,12 +68,12 @@
               <td>216018061</td>
               <td>Musawenkosi Nyathi</td>
               <td>Form A</td>
-              <td>Supervisor Approved</td>
-              <td>✅ All Submitted</td>
               <td>High</td>
               <td>2025-04-23</td>
-              <td><a href="view-changes.html?form=A&student=216018061">View</a></td>
-              <td><a href="assign-reviewers.html?form=A&student=216018061" class="view-btn">Assign</a></td>
+              <td><a href="view-changes.html?form=A&student=216018061">Download</a></td>
+              <td><a href="#" class="view-btn assign-btn" data-student="216018061">Assign</a>
+                <a href="#" class="view-btn return-btn" data-student="216018061">Return</a>
+                </td>
             </tr>
 
             <tr>
@@ -85,12 +81,25 @@
               <td>216056789</td>
               <td>Jane Doe</td>
               <td>Form A</td>
-              <td>Supervisor Approved</td>
-              <td>✅ All Submitted</td>
-              <td>High</td>
+              <td>Medium</td>
               <td>2025-04-22</td>
-              <td><a href="view-changes.html?form=A&student=216018061">View</a></td>
-              <td><a href="assign-reviewers.html?form=A&student=216018061" class="view-btn">Assign</a></td>
+              <td><a href="view-changes.html?form=A&student=216018061">Download</a></td>
+              <td><a href="#" class="view-btn assign-btn" data-student="216018061">Assign</a>
+                <a href="#" class="view-btn return-btn" data-student="216018061">Return</a>
+                </td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="select-student" value="216018061" /></td>
+              <td>224526875</td>
+              <td>Hope Lotriet</td>
+              <td>Form B</td>
+              <td>Low</td>
+              <td>2025-04-22</td>
+              <td><a href="view-changes.html?form=A&student=216018061">Download</a></td>
+              <td><a href="#" class="view-btn issue-btn" data-student="216018061">Issue Certificate</a>
+                <a href="#" class="view-btn return-btn" data-student="216018061">Return</a>
+                </td>
             </tr>
             <!-- More student rows can be added here -->
           </tbody>
@@ -98,7 +107,7 @@
     
         <!-- Bulk Assign Button -->
         <div style="margin-top: 1.5rem;">
-          <button type="button" onclick="bulkAssign()" class="approve-btn">Bulk Assign Reviewer</button>
+          <button type="button" onclick="bulkAssign()" class="assign-btn">Bulk Assign Reviewer</button>
         </div>
       </form>
     </section>
@@ -109,6 +118,58 @@
   </main>
 
 </div>
+
+<!-- Modal for Assign Reviewers -->
+<div id="assignModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Assign Reviewer</h3>
+    <form id="assignReviewerForm">
+      <label>Select Reviewer:</label>
+      <select name="reviewer" required>
+        <option value="">-- Select Reviewer --</option>
+        <option value="rev001">Dr. Lerato Mokoena</option>
+        <option value="rev002">Prof. Naidoo</option>
+        <option value="rev003">Dr. J. Singh</option>
+      </select>
+      <input type="hidden" id="assignStudentId" name="student_id" />
+      <div style="margin-top: 1rem;">
+        <button type="submit" class="approve-btn">Assign</button>
+        <button type="button" class="revise-btn" onclick="closeModal('assignModal')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal for Return to Student & Supervisor -->
+<div id="returnModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Return Submission</h3>
+    <form id="returnForm">
+      <label>Return Reason / Comments:</label>
+      <textarea name="return_reason" rows="4" required></textarea>
+      <input type="hidden" id="returnStudentId" name="student_id" />
+      <div style="margin-top: 1rem;">
+        <button type="submit" class="approve-btn">Return</button>
+        <button type="button" class="revise-btn" onclick="closeModal('returnModal')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal for Issuing Certificate -->
+<div id="issueModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Issue Clearance Certificate</h3>
+    <p>Are you sure all documents are complete and valid for this low-risk study?</p>
+    <input type="hidden" id="issueStudentId" name="student_id" />
+    <div style="margin-top: 1rem;">
+      <button class="approve-btn" onclick="confirmIssue()">✅ Yes, Issue</button>
+      <button class="revise-btn" onclick="closeModal('issueModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
 
 <script>
   function applyFilters() {
@@ -144,6 +205,57 @@
     // You could POST this to backend or redirect to:
     // window.location.href = `bulk-assign.html?ids=${selected.join(",")}`;
   }
+
+  function openAssignModal(studentId) {
+    document.getElementById("assignStudentId").value = studentId;
+    document.getElementById("assignModal").style.display = "flex";
+  }
+
+  function openReturnModal(studentId) {
+    document.getElementById("returnStudentId").value = studentId;
+    document.getElementById("returnModal").style.display = "flex";
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  // Hook into assign and return button clicks dynamically
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".assign-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        openAssignModal(btn.dataset.student);
+      });
+    });
+
+    document.querySelectorAll(".return-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        openReturnModal(btn.dataset.student);
+      });
+    });
+  });
+
+  function openIssueModal(studentId) {
+  document.getElementById("issueStudentId").value = studentId;
+  document.getElementById("issueModal").style.display = "flex";
+}
+
+function confirmIssue() {
+  const studentId = document.getElementById("issueStudentId").value;
+  alert(`Certificate issued for student ${studentId}`);
+  closeModal('issueModal');
+  // Optional: Send request to backend to record the issuance
+}
+
+document.querySelectorAll(".issue-btn").forEach(btn => {
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    openIssueModal(btn.dataset.student);
+  });
+});
+
 </script>
 
 
