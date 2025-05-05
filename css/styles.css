@@ -249,7 +249,7 @@ button:disabled {
 
 /* === LOGOUT BUTTON === */
 .btn-logout {
-  display: inline-block;
+  /* display: inline-block; */
   padding: 12px 24px;
   background-color: #CE0F46;
   /* JBS Deep Pink */

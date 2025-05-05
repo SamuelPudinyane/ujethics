@@ -21,6 +21,9 @@
     </div>
   </header>
 
+    <!-- Main Content -->
+    <main class="main-content">
+
   <!-- Top Bar -->
   <div class="form-header">
     <button class="approve-btn">💾 Save Draft</button>
@@ -32,76 +35,67 @@
     <div class="progress-fill" style="width: 50%;">50%</div>
   </div>
 
-  <!-- Main Content -->
-  <main class="main-content">
+
     <form action="form-c-section3.html" method="GET">
 
       <h2>SECTION 2: Risk Assessment</h2>
 
-      <h4>2.1 Does your research involve the following participants?</h4>
-      <div class="question-block">
-        <label>Communities that may be considered vulnerable:</label>
-        <div class="yes-no">
-          <input type="radio" name="q1" value="Yes" required> Yes
-          <input type="radio" name="q1" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>People under the age of 18 or over 65:</label>
-        <div class="yes-no">
-          <input type="radio" name="q2" value="Yes" required> Yes
-          <input type="radio" name="q2" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>UJ employees or students:</label>
-        <div class="yes-no">
-          <input type="radio" name="q3" value="Yes" required> Yes
-          <input type="radio" name="q3" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Persons contextually vulnerable in this study:</label>
-        <div class="yes-no">
-          <input type="radio" name="q4" value="Yes" required> Yes
-          <input type="radio" name="q4" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Non-English-speaking participants:</label>
-        <div class="yes-no">
-          <input type="radio" name="q5" value="Yes" required> Yes
-          <input type="radio" name="q5" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Researcher's own students:</label>
-        <div class="yes-no">
-          <input type="radio" name="q6" value="Yes" required> Yes
-          <input type="radio" name="q6" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>People living in poverty:</label>
-        <div class="yes-no">
-          <input type="radio" name="q7" value="Yes" required> Yes
-          <input type="radio" name="q7" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>People with little or no education:</label>
-        <div class="yes-no">
-          <input type="radio" name="q8" value="Yes" required> Yes
-          <input type="radio" name="q8" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Other (please describe):</label>
-        <div class="yes-no">
-          <input type="radio" name="q9" value="Yes" required> Yes
-          <input type="radio" name="q9" value="No" required> No
-        </div>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>2.1 Does your research include the direct involvement of any of the following groups of participants?</th>
+            <th>YES</th>
+            <th>NO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Communities that may be considered as vulnerable</td>
+            <td><input type="radio" name="age_range" value="yes"></td>
+            <td><input type="radio" name="age_range" value="no"></td>
+          </tr>
+          <tr>
+            <td>People under the age of 18 or over 65</td>
+            <td><input type="radio" name="non_english" value="yes"></td>
+            <td><input type="radio" name="non_english" value="no"></td>
+          </tr>
+          <tr>
+            <td>UJ employees or students</td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+          <tr>
+            <td>Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this research project</td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+          <tr>
+            <td>Non-English-speaking participants</td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+          <tr>
+            <td>A researcher’s own students</td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+          <tr>
+            <td>People living in poverty</td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+          <tr>
+            <td>People with little or no education  </td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+          <tr>
+            <td>Other: Provide a description</td>
+            <td><input type="radio" name="uj_employees" value="yes"></td>
+            <td><input type="radio" name="uj_employees" value="no"></td>
+          </tr>
+        </tbody>
+      </table>
       <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
 
       <hr>
