@@ -4,9 +4,13 @@ import enum
 import uuid
 import bcrypt
 import datetime
+import os
 
 mySQL_string = 'mysql+pymysql://root:password@localhost/ethics'
 sqlite_string = "sqlite+pysqlite:///ethics.db"
+# updated the path so that the database gets created in backend/ethics.db using absolute path, not relative
+# db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
+# sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
 engine = create_engine(sqlite_string, echo=False)
 
@@ -78,3 +82,73 @@ Base.metadata.create_all(engine)
 #     db_session.commit()
 # except Exception as e:
 #     print("Failed to store user. \n", e)
+
+
+
+
+
+
+# FORMS 
+class FormB(Base):
+    __tablename__ = "form_b"
+    form_id = Column(String, primary_key=True, default=generate_uuid)
+    applicant_name = Column(String, nullable=False)
+    student_number = Column(Integer, nullable=False)
+    institution = Column(String, nullable=False)
+    department = Column(String, nullable=False)
+    degree = Column(String, nullable=False)
+    project_title = Column(String, nullable=False)
+    mobile_number = Column(String, nullable=False)
+    email_address = Column(String, nullable=False)
+    supervisor_name = Column(String, nullable=False)
+    supervisor_email = Column(String, nullable=False)
+    project_description = Column(String, nullable=True)
+    data_nature = Column(String, nullable=True)
+    data_origin = Column(String, nullable=True)
+    data_public = Column(Boolean, nullable=True)
+    public_evidence = Column(String, nullable=True)
+    access_conditions = Column(String, nullable=True)
+    personal_info = Column(Boolean, nullable=True)
+    data_anonymized = Column(Boolean, nullable=True)
+    anonymization_comment = Column(String, nullable=True)
+    private_permission = Column(Boolean, nullable=True)
+    permission_details = Column(String, nullable=True)
+    shortcomings_reported = Column(Boolean, nullable=True)
+    limitations_reporting = Column(String, nullable=True)
+    methodology_alignment = Column(Boolean, nullable=True)
+    data_acknowledgment = Column(String, nullable=True)
+    original_clearance = Column(Boolean, nullable=True)
+    participant_permission = Column(Boolean, nullable=True)
+    data_safekeeping = Column(String, nullable=True)
+    risk_level = Column(String, nullable=True)
+    risk_comments = Column(String, nullable=True)
+    declaration_full_name = Column(String, nullable=False)
+    declaration_date = Column(DateTime, nullable=False)
+
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+    
+
+class FormC(Base):
+    __tablename__ = "form_c"
+    form_id = Column(String, primary_key=True, default=generate_uuid)
+    applicant_name = Column(String, nullable=False)
+    student_number = Column(Integer, nullable=False)
+    institution = Column(String, nullable=False)
+    department = Column(String, nullable=False)
+    degree = Column(String, nullable=False)
+    project_title = Column(String, nullable=False)
+    mobile_number = Column(String, nullable=False)
+    email_address = Column(String, nullable=False)
+    supervisor_name = Column(String, nullable=False)
+    supervisor_email = Column(String, nullable=False)
+    ethical_clearance = Column(Boolean, nullable=True)
+    clearance_details = Column(String, nullable=True)
+    participant_consent = Column(Boolean, nullable=True)
+    consent_details = Column(String, nullable=True)
+    risk_assessment = Column(String, nullable=True)
+    declaration_full_name = Column(String, nullable=False)
+    declaration_date = Column(DateTime, nullable=False)
+
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
