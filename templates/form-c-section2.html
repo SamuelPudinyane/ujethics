@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form C – Risk Assessment | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/form_a.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}">
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form C – Risk Assessment</span>
+      <div style="text-align: right;">
+        <a href="logout.html" class="btn-logout">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Top Bar -->
+  <div class="form-header">
+    <button class="approve-btn">💾 Save Draft</button>
+    <strong>Step 2 of 4</strong>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" style="width: 50%;">50%</div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <form action="form-c-section3.html" method="GET">
+
+      <h2>SECTION 2: Risk Assessment</h2>
+
+      <h4>2.1 Does your research involve the following participants?</h4>
+      <div class="question-block">
+        <label>Communities that may be considered vulnerable:</label>
+        <div class="yes-no">
+          <input type="radio" name="q1" value="Yes" required> Yes
+          <input type="radio" name="q1" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>People under the age of 18 or over 65:</label>
+        <div class="yes-no">
+          <input type="radio" name="q2" value="Yes" required> Yes
+          <input type="radio" name="q2" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>UJ employees or students:</label>
+        <div class="yes-no">
+          <input type="radio" name="q3" value="Yes" required> Yes
+          <input type="radio" name="q3" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>Persons contextually vulnerable in this study:</label>
+        <div class="yes-no">
+          <input type="radio" name="q4" value="Yes" required> Yes
+          <input type="radio" name="q4" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>Non-English-speaking participants:</label>
+        <div class="yes-no">
+          <input type="radio" name="q5" value="Yes" required> Yes
+          <input type="radio" name="q5" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>Researcher's own students:</label>
+        <div class="yes-no">
+          <input type="radio" name="q6" value="Yes" required> Yes
+          <input type="radio" name="q6" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>People living in poverty:</label>
+        <div class="yes-no">
+          <input type="radio" name="q7" value="Yes" required> Yes
+          <input type="radio" name="q7" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>People with little or no education:</label>
+        <div class="yes-no">
+          <input type="radio" name="q8" value="Yes" required> Yes
+          <input type="radio" name="q8" value="No" required> No
+        </div>
+      </div>
+      <div class="question-block">
+        <label>Other (please describe):</label>
+        <div class="yes-no">
+          <input type="radio" name="q9" value="Yes" required> Yes
+          <input type="radio" name="q9" value="No" required> No
+        </div>
+      </div>
+      <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+
+      <hr>
+
+      <h4>2.2 Does your research involve any of the following activities?</h4>
+      <div class="question-block">
+        <label>Collection, use or disclosure of information without consent:</label>
+        <div class="yes-no">
+          <input type="radio" name="q10" value="Yes" required> Yes
+          <input type="radio" name="q10" value="No" required> No
+        </div>
+      </div>
+      <!-- Add more activity questions below in same pattern if needed -->
+      <textarea name="activities_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+
+      <hr>
+
+      <h4>2.3 Other Research Project Factors</h4>
+      <div class="question-block">
+        <label>Reimbursement or incentives to participants:</label>
+        <div class="yes-no">
+          <input type="radio" name="q20" value="Yes" required> Yes
+          <input type="radio" name="q20" value="No" required> No
+        </div>
+      </div>
+      <textarea name="factors_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+
+      <hr>
+
+      <h4>Overall Project Risk Level</h4>
+      <select name="risk_rating" required>
+        <option value="">-- Select Risk Level --</option>
+        <option value="Negligible">Negligible</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <label>If Medium or High, describe potential benefits:</label>
+      <textarea name="benefits_description" rows="3"></textarea>
+
+      <label>If Medium or High, describe risk mitigation:</label>
+      <textarea name="risk_mitigation" rows="3"></textarea>
+
+      <!-- Navigation -->
+      <div class="form-navigation">
+        <a href="form-c-section1.html" class="revise-btn">⬅ Back</a>
+        <button type="submit" class="approve-btn">Next ➔ Section 3</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

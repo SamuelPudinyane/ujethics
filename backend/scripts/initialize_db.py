@@ -1,4 +1,4 @@
-from backend.models import Base, engine
+from models import Base, engine
 
 def create_tables():
     """Create all tables defined in models.py."""
