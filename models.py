@@ -29,6 +29,7 @@ class UserRole(enum.Enum):
     ADMIN = "admin"
     REC = "rec"         #Research Ethics committe
     REVIEWER = "reviewer"
+    DEAN = "dean"
 
 
 class User(Base):
@@ -83,10 +84,9 @@ Base.metadata.create_all(engine)
 # except Exception as e:
 #     print("Failed to store user. \n", e)
 
-
-
-
-
+    # { user_id: "sup001", full_name: "Prof. Lerato Mokoena", email: "lmokoena@uj.ac.za" },
+    # { user_id: "sup002", full_name: "Dr. John Naidoo", email: "jnaidoo@uj.ac.za" },
+    # { user_id: "sup003", full_name: "Ms. Zanele Dlamini", email: "zdlamini@uj.ac.za" }
 
 # FORMS 
 class FormB(Base):

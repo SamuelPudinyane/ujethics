@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from models import db_session, User, UserRole, FormB, FormC
-from backend.utils.helpers import generate_reset_token, send_email, validate_password
+from utils.helpers import generate_reset_token, send_email, validate_password
 import os
 import secrets
 from dotenv import load_dotenv
@@ -27,45 +27,36 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
-
+    
         if user and user.verify_password(password):
             session['loggedin'] = True
             session['id'] = user.user_id
             session['first_name'] = user.full_name
-            return redirect('/dashboard')  # or wherever
+
+            # render appropriate template depending on role
+            # NB: role is an enum, hence the .value
+            role = user.role.value or 'student'
+            
+            if role == 'student':
+                # return render_template('video.html')
+                return render_template('dashboard.html')
+            elif role == 'supervisor':
+                return render_template('supervisor-dashboard.html')
+            elif role == 'admin':
+                return render_template('admin-dashboard.html')
+            elif role == 'rec':
+                return render_template('committee-dashboard.html')
+            elif role == 'dean':
+                return render_template('dean-dashboard.html')
+            else:
+                return render_template( 'video.html') #default fallback 
         else:
             error = 'Incorrect email or password'
-            return render_template('login.html', error=error)
+            return render_template('login.html', msg=error)
 
-    return render_template('login.html')
-
-
-
-@app.route('/api/login', methods =['GET', 'POST'])
-def login():
-    msg = {}
-    data = request.get_json()
-    if request.method == 'POST' and 'email' in data and 'password' in data:
-        loginEmail = data.get('email').strip()
-        loginPassword = data.get('password').strip()
-
-        user = db_session.query(User).filter_by(email=loginEmail).first()
-        
-        if user and user.verify_password(loginPassword):
-            session['loggedin'] = True
-            session['id'] = user.user_id
-            session['first_name'] = user.full_name
-            msg["message"] = 'Logged in successfully!'
-        else:
-            msg['message'] = 'Incorrect username / password!'
-            return jsonify(msg), 400
-    else:
-        msg['message'] = 'Invalid Request / Missing email or password'
-        return jsonify(msg), 400
-    
     return render_template('login.html')
 
 
