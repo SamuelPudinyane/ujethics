@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 import enum
 import uuid
@@ -38,7 +38,7 @@ class User(Base):
     full_name = Column(String, nullable=False)
     student_number = Column(Integer, nullable=True)
     email = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
+    password = Column(LargeBinary(60), nullable=False)
     supervisor_id = Column(String, nullable=True)
     role = Column(Enum(UserRole), nullable=False, default=UserRole.STUDENT)
     reset_token = Column(String, nullable=True)
@@ -54,13 +54,15 @@ class User(Base):
         self.role = UserRole(role) if isinstance(role, str) else role
 
     @staticmethod
-    def hash_password(password:str)->str:
+    def hash_password(password:str)->bytes:
         salt = bcrypt.gensalt()
-        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed.decode('utf-8')
+        if isinstance(password, str):
+            password = password.encode('utf-8')
+        hashed = bcrypt.hashpw(password, salt)
+        return hashed
 
     def verify_password(self, password:str)->bool:
-        return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
+        return bcrypt.checkpw(password.encode('utf-8'), self.password)
     
     def to_dict(self):
         return {
@@ -78,15 +80,24 @@ class User(Base):
 Base.metadata.create_all(engine)
 
 # try:
-#     user1 = User("Prof Albert Einstein", None, "eistein@uj.ac.za", "1234", None, "supervisor" )
-#     db_session.add(user1)
+#     users = [
+#         User("Prof Albert Einstein", None, "eistein@uj.ac.za", "1234", None, "supervisor"),
+#         User("Prof. Lerato Mokoena", None, "lmokoena@uj.ac.za", "1234", None, "dean"),
+#         User("Dr. John Naidoo", None, "jnaidoo@uj.ac.za", "1234", None, "rec"),
+#         User("Ms. Zanele Dlamini", None, "zdlamini@uj.ac.za", "1234", None, "student"),
+#         User("Dr. Fatima Patel", None, "fpatel@uj.ac.za", "1234", None, "reviewer"),
+#         User("Prof. Tshidi Mthembu", None, "tmthembu@uj.ac.za", "1234", None, "supervisor"),
+#         User("Prof. Samuel van der Merwe", None, "svdmerwe@uj.ac.za", "1234", None, "supervisor"),
+#         User("Dr. Bongani Khumalo", None, "bkhumalo@uj.ac.za", "1234", None, "reviewer"),
+#         User("Ms. Nomsa Nkosi", None, "nnkosi@uj.ac.za", "1234", None, "reviewer"),
+#         User("Prof. Peter Botha", None, "pbotha@uj.ac.za", "1234", None, "supervisor")
+#     ]
+
+#     db_session.add_all(users)
 #     db_session.commit()
 # except Exception as e:
 #     print("Failed to store user. \n", e)
 
-    # { user_id: "sup001", full_name: "Prof. Lerato Mokoena", email: "lmokoena@uj.ac.za" },
-    # { user_id: "sup002", full_name: "Dr. John Naidoo", email: "jnaidoo@uj.ac.za" },
-    # { user_id: "sup003", full_name: "Ms. Zanele Dlamini", email: "zdlamini@uj.ac.za" }
 
 # FORMS 
 class FormB(Base):

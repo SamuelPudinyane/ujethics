@@ -15,14 +15,15 @@
   <!-- Navbar -->
   <header class="navbar">
     <div class="nav-content">
-      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
-      <span class="nav-title">Ethics Application System</span>
+      <div>
+        <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+        <span class="nav-title">Ethics Application System</span>
+      </div>
 
-          <!-- Logout -->
-    <div style="text-align: right;">
-
-      <a href="logout.html" class="btn-logout">Logout</a>
-    </div>
+      <!-- Logout -->
+      <div>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+      </div>
     </div>
   </header>
 
@@ -37,22 +38,26 @@
         <div class="form-card" onclick="location.href='form-a-upload.html'">
           <h5>Form A</h5>
           <p>Primary Data Collection (Human Interaction)</p>
-          <span class="info-icon" title="Use when your research involves human interaction such as interviews, surveys, or focus groups.">ℹ️</span>
+          <span class="info-icon"
+            title="Use when your research involves human interaction such as interviews, surveys, or focus groups.">ℹ️</span>
         </div>
         <div class="form-card" onclick="location.href='form-b-upload.html'">
           <h5>Form B</h5>
           <p>Secondary Data (No Human Interaction)</p>
-          <span class="info-icon" title="Use for secondary/existing data only. No human interaction is involved, but permissions may be needed.">ℹ️</span>
+          <span class="info-icon"
+            title="Use for secondary/existing data only. No human interaction is involved, but permissions may be needed.">ℹ️</span>
         </div>
         <div class="form-card" onclick="location.href='form-c-section1.html'">
           <h5>Form C</h5>
           <p>Public Data – Clearance Exemption</p>
-          <span class="info-icon" title="Applies when data is publicly available and anonymized. No permissions or human engagement required.">ℹ️</span>
+          <span class="info-icon"
+            title="Applies when data is publicly available and anonymized. No permissions or human engagement required.">ℹ️</span>
         </div>
         <div class="form-card" onclick="location.href='form-a-upload.html'">
           <h5>Form D</h5>
           <p>Both Primary and Secondary Data Collection</p>
-          <span class="info-icon" title="Use when your research involves both human interaction and the use of secondary data.">ℹ️</span>
+          <span class="info-icon"
+            title="Use when your research involves both human interaction and the use of secondary data.">ℹ️</span>
         </div>
       </div>
     </section>

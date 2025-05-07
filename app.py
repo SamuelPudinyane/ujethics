@@ -25,16 +25,19 @@ def index():
 
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
-def login_page():
+def login():
     if request.method == 'POST':
         email = request.form.get('email')
-        password = request.form.get('password')
+        user_password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
-    
-        if user and user.verify_password(password):
+
+        print(user_password)
+        print(email)
+        print(user.verify_password(password=user_password))
+        if user and user.verify_password(user_password):
             session['loggedin'] = True
             session['id'] = user.user_id
-            session['first_name'] = user.full_name
+            session['name'] = user.full_name
 
             # render appropriate template depending on role
             # NB: role is an enum, hence the .value
@@ -42,7 +45,7 @@ def login_page():
             
             if role == 'student':
                 # return render_template('video.html')
-                return render_template('dashboard.html')
+                return render_template('dashboard.html') # Render video page if not completed yet.
             elif role == 'supervisor':
                 return render_template('supervisor-dashboard.html')
             elif role == 'admin':
@@ -59,48 +62,54 @@ def login_page():
 
     return render_template('login.html')
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session['loggedin'] = False
+    session['id'] = ""
+    session['name'] = ""
+    return render_template('logout.html')
 
-@app.route('/api/register', methods=['GET', 'POST'])
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    msg = {}
-    data = request.get_json()
+    msg = ""
+    data = request.form
     required_fields = ["full_name", "student_number", "email", "password", "supervisor_id"]
-
+   
     if request.method == 'POST' and all(key in data for key in required_fields):
-        full_name = data['full_name'].strip()  # Todo : Capitalize first name and last name
-        student_number = data['student_number'].strip()
+        full_name = data['full_name'].strip()  # Todo : Capitalize letters of first name and last name
+        student_number = data['student_number']
         email = data['email'].strip().lower()
-        password = data['password'].strip()
+        password = data['password']
         supervisor_id = data['supervisor_id']
         
         # validate UJ email
         if not email.endswith('student.uj.ac.za'):
-            msg['message'] = "Only University of Johannesburg email allowed"
-            return jsonify(msg), 400
+            msg = "Only University of Johannesburg email allowed"
+            return render_template('register.html', msg=msg )
         
-        # validate password (To be improved later)
-        is_valid, message = validate_password(password)
+        # validate password
+        is_valid, message = validate_password(password) 
         if not is_valid:
-            msg['message'] = message
-            return jsonify(msg), 400
+            msg = message
+            return render_template('register.html', msg=msg)
         
         user = db_session.query(User).filter_by(email=email).first()
         if user:
-            msg['message'] = 'Email already registered!'
-            return jsonify(msg), 400
+            msg = 'Email already registered!'
+            return render_template('register.html', msg=msg)
         else:
-            hashed_password = User.hash_password(password)
-            new_user = User(full_name=full_name, student_number=student_number, email=email, password=hashed_password, supervisor_id=supervisor_id, role=UserRole.STUDENT)
+            new_user = User(full_name=full_name, student_number=student_number, email=email, password=password, supervisor_id=supervisor_id, role=UserRole.STUDENT)
             
             db_session.add(new_user)
             db_session.commit()
             
-            msg['message'] = 'You have successfully registered!'
+            msg = 'You have successfully registered!'
     else:
-        msg['message'] = 'Please fill out the form completely!'
-        return jsonify(msg), 400
+        msg = ''
+        return render_template('register.html', msg=msg)
     
-    return jsonify(msg), 200
+    return render_template('login.html', msg=msg)
 
 
 @app.route('/api/forgot-password', methods=['POST'])
