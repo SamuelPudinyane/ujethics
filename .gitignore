@@ -1,3 +1,5 @@
-backend/__pycache__
-backend/venv
-backend/.env
+__pycache__
+venv
+.env
+myvenv
+.vscode

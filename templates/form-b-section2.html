@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form B – Research Project Details | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/form_a.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}">
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form B – Research Project Details</span>
+      <div style="text-align: right;">
+        <a href="logout.html" class="btn-logout">Logout</a>
+      </div>
+    </div>
+  </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+  <!-- Top Bar -->
+  <div class="form-header">
+    <button class="approve-btn">💾 Save Draft</button>
+    <strong>Step 2 of 3</strong>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" style="width: 66%">66%</div>
+  </div>
+
+
+    <form action="form-b-section3.html" method="GET">
+      <h2>Research Project and Data Information</h2>
+
+      <label>1. Short Description of the Research Project (±200 words)</label>
+      <textarea name="project_description" rows="5" required></textarea>
+
+      <hr>
+
+      <h3>2. Details of the Data</h3>
+
+      <label>2.1 Nature of the Data</label>
+      <input type="text" name="data_nature" required>
+
+      <label>2.2 Origin/Source of Research Data</label>
+      <input type="text" name="data_origin" required>
+
+      <div class="question-block">
+        <label>2.3 Are the sources of the research data in the public domain?</label>
+        <div class="yes-no">
+          <input type="radio" name="data_public" value="Yes" required> Yes
+          <input type="radio" name="data_public" value="No" required> No
+        </div>
+      </div>
+
+      <label>Provide evidence or explanation (if applicable)</label>
+      <textarea name="public_evidence" rows="3"></textarea>
+
+      <label>2.4 If data is not public, what are the access conditions?</label>
+      <textarea name="access_conditions" rows="3"></textarea>
+
+      <div class="question-block">
+        <label>2.5 Does the database contain personal information/identifiers?</label>
+        <div class="yes-no">
+          <input type="radio" name="personal_info" value="Yes" required> Yes
+          <input type="radio" name="personal_info" value="No" required> No
+        </div>
+      </div>
+
+      <div class="question-block">
+        <label>2.6 If yes, has the data been anonymized?</label>
+        <div class="yes-no">
+          <input type="radio" name="data_anonymized" value="Yes"> Yes
+          <input type="radio" name="data_anonymized" value="No"> No
+          <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
+        </div>
+      </div>
+
+      <label>Comment / Justification:</label>
+      <textarea name="anonymization_comment" rows="3"></textarea>
+
+      <div class="question-block">
+        <label>2.7 Private database: does it contain confidential private company data requiring permission?</label>
+        <div class="yes-no">
+          <input type="radio" name="private_permission" value="Yes" required> Yes
+          <input type="radio" name="private_permission" value="No" required> No
+        </div>
+      </div>
+
+      <label>Provide permission details (or attach separately):</label>
+      <textarea name="permission_details" rows="3"></textarea>
+
+      <div class="question-block">
+        <label>2.8 Will data shortcomings/incompleteness be reported?</label>
+        <div class="yes-no">
+          <input type="radio" name="shortcomings_reported" value="Yes" required> Yes
+          <input type="radio" name="shortcomings_reported" value="No" required> No
+        </div>
+      </div>
+
+      <label>2.9 How will data limitations be reported?</label>
+      <textarea name="limitations_reporting" rows="3"></textarea>
+
+      <div class="question-block">
+        <label>2.10 Are the research methodology and design aligned with secondary data use?</label>
+        <div class="yes-no">
+          <input type="radio" name="methodology_alignment" value="Yes" required> Yes
+          <input type="radio" name="methodology_alignment" value="No" required> No
+        </div>
+      </div>
+
+      <label>2.11 How will original owners of the data be acknowledged?</label>
+      <textarea name="data_acknowledgment" rows="3"></textarea>
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <a href="form-b-section1.html" class="revise-btn">⬅ Back</a>
+        <button type="submit" class="approve-btn">Next ➔ Ethical Considerations</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
