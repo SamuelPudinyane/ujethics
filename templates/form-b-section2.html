@@ -23,6 +23,9 @@
     </div>
   </header>
 
+    <!-- Main Content -->
+    <main class="main-content">
+
   <!-- Top Bar -->
   <div class="form-header">
     <button class="approve-btn">💾 Save Draft</button>
@@ -34,8 +37,7 @@
     <div class="progress-fill" style="width: 66%">66%</div>
   </div>
 
-  <!-- Main Content -->
-  <main class="main-content">
+
     <form action="form-b-section3.html" method="GET">
       <h2>Research Project and Data Information</h2>
 
@@ -72,6 +74,7 @@
           <input type="radio" name="personal_info" value="Yes" required> Yes
           <input type="radio" name="personal_info" value="No" required> No
         </div>
+        <textarea name="personal_info_comment" rows="3" placeholder="If yes, please specify what kind of personal information/identifiers to be collected"></textarea>
       </div>
 
       <div class="question-block">
@@ -84,8 +87,8 @@
       </div>
 
       <label>Comment / Justification:</label>
-      <textarea name="anonymization_comment" rows="3"></textarea>
-
+      <textarea name="anonymization_comment" rows="3" placeholder="Provide justification for anonymization or not"></textarea>
+     
       <div class="question-block">
         <label>2.7 Private database: does it contain confidential private company data requiring permission?</label>
         <div class="yes-no">

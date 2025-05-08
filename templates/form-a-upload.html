@@ -23,6 +23,14 @@
     input[type="radio"] {
       margin-right: 0.3rem;
     }
+    .info-icon {
+    font-size: 0.95rem;
+    /* cursor: help; */
+    margin-left: 2px;
+    color: var(--jbs-teal);
+    padding-top: 2px;
+  }
+
   </style>
 </head>
 
@@ -48,12 +56,13 @@
     <form id="formARequirements" enctype="multipart/form-data">
 
       <div class="question-block">
-        <label>1. Will you require permission to access the company or organisation?</label><br>
+        <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
         <input type="radio" name="need_permission" value="No" checked required> No
       </div>
 
       <div class="question-block hidden" id="companyLetterUpload">
+       
         <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
         <input type="file" name="permission_letter" accept=".pdf,.docx">
       </div>
@@ -73,6 +82,12 @@
         <label>3. Does the company require ethical clearance from JBS?</label><br>
         <input type="radio" name="company_requires_jbs" value="Yes" required> Yes
         <input type="radio" name="company_requires_jbs" value="No" checked required> No
+      </div>
+
+      
+      <div class="question-block hidden" id="clearanceUpload">
+        <label>Upload Ethical Clearance Document</label>
+        <input type="file" name="prior_clearance" accept=".pdf,.docx">
       </div>
 
       <div class="question-block hidden" id="jbsClearanceUpload">

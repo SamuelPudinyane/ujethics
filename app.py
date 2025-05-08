@@ -10,13 +10,14 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 import json
 
+
 # Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
 
-app.secret_key = os.getenv('SECRETE_KEY')
+app.secret_key = os.getenv('SECRET_KEY')
 
 # ==============================================
     # Serve pages/templates

@@ -45,6 +45,10 @@
       margin-top: 1.5rem;
       font-weight: bold;
     }
+
+    .checklist-table ul {
+        padding-left: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -71,7 +75,7 @@
 
     <section class="admin-content">
       <form id="checklistForm">
-        <h3>Reviewer Checklist</h3>
+        <h3>Reviewer Feedback</h3>
 
         <table class="checklist-table">
           <thead>
@@ -83,10 +87,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>Organisational Permission
+              <td><strong>Organisational Permission</strong>
                 <ul>
                     <li>Can be an email or formal letter; ensure that permission to access relevant business documents are also included.</li>
-                    <li>Permission to access the business premises is also required.</li>
+                    <li>If you have not yet requested permission from the organization, please use request for permission template in “Additional resources” tab, under “Ethical clearance templates” section</li>
                 </ul>
               </td>
               <td>
@@ -99,7 +103,11 @@
               <td><textarea class="textarea-sm" name="org_permission_comment"></textarea></td>
             </tr>
             <tr>
-              <td>Signed Waiver from Business</td>
+              <td><strong>Signed Waiver from Business</strong>
+                <ul>
+                    <li>Please use template provided in “Additional resources” tab, under “Ethical clearance templates” section in Blackboard</li>
+                </ul>
+              </td>
               <td>
                 <select name="signed_waiver" required>
                   <option value="">Select</option>
@@ -110,7 +118,13 @@
               <td><textarea class="textarea-sm" name="signed_waiver_comment"></textarea></td>
             </tr>
             <tr>
-              <td>Form A – Ethics Application Form</td>
+              <td><strong>Form A – Ethics Application Form</strong>
+                <ul>
+                    <li>Completed form, otherwise your application will be referred back to you; please refer to ethical clearance presentation by Prof. Henn earlier this year to complete the form correctly.</li>
+                    <li>Please submit with any changes made since your supervisor reviewed it as part of your formal proposal submission.</li>
+                    <li>Your supervisor must co-sign this form</li>
+                </ul>
+              </td>
               <td>
                 <select name="form_a" required>
                   <option value="">Select</option>
@@ -121,7 +135,14 @@
               <td><textarea class="textarea-sm" name="form_a_comment"></textarea></td>
             </tr>
             <tr>
-              <td>Interview Questions or Questionnaire</td>
+              <td><strong>Interview Questions or Questionnaire</strong>
+                <ul>
+                    <li>As close to final as possible</li>
+                    <li>If not finalised, you may submit preliminary interview questions and questionnaire items. </li>
+                    <li>Ethical clearance committee needs to review whether the questions are sensitive or invasive. This is important because we want studies to be low or negligible risk and invasive questions can increase the ethical risk. However, this should in all likelihood not be the case for the Capstone projects. </li>
+                    <li>This can be added to the bottom of the informed consent form, or submitted as a separate document</li>
+                </ul>
+              </td>
               <td>
                 <select name="questions" required>
                   <option value="">Select</option>
@@ -132,7 +153,12 @@
               <td><textarea class="textarea-sm" name="questions_comment"></textarea></td>
             </tr>
             <tr>
-              <td>Participant Info Sheet & Informed Consent</td>
+              <td><strong>Participant Info Sheet & Informed Consent</strong>
+                <ul>
+                    <li>Adapt the provided template to suit your project.</li>
+                    <li>Please use template provided in “Additional resources” tab, under “Ethical clearance templates” section in Moodle.</li>
+                </ul>
+              </td>
               <td>
                 <select name="consent_form" required>
                   <option value="">Select</option>
@@ -143,7 +169,11 @@
               <td><textarea class="textarea-sm" name="consent_form_comment"></textarea></td>
             </tr>
             <tr>
-              <td>Refined Concept Proposal</td>
+              <td><strong>Refined Concept Proposal</strong>
+                <ul>
+                    <li>This is the Refined Concept Proposal you submitted with your Literature Review</li>
+                </ul>
+              </td>
               <td>
                 <select name="refined_proposal" required>
                   <option value="">Select</option>
@@ -156,7 +186,7 @@
           </tbody>
         </table>
 
-        <label class="form-label">Additional Reviewer Comments</label>
+        <label class="form-label">Reviewer Comments (Mandatory)</label>
         <textarea rows="5" name="additional_comments" style="width:100%;" placeholder="Add general comments or recommendation..."></textarea>
 
         <div class="submit-row">
