@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole, UserInfo, FormB, FormC, FormAUpload
+from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormUploads, Documents
 from utils.helpers import generate_reset_token, send_email, validate_password
+from db_queries import getFormAData, getSupervisorsList
 import os
 import secrets
 from dotenv import load_dotenv
 import uuid
 from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
+import json
 
 # Load environment variables from .env file
 load_dotenv()
@@ -37,7 +39,6 @@ def login():
         user_password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
 
-        print(user.verify_password(password=user_password))
         if user and user.verify_password(user_password):
             session['loggedin'] = True
             session['id'] = user.user_id
@@ -230,31 +231,55 @@ def form_a_upload ():
 @app.route('/submit_form_a_upload', methods=['GET', 'POST'])
 def submit_form_a_upload ():
     try:
-        for field in ['permission_letter', 'prior_clearance', 'need_jbs_clearance', 'research_tools', 'proposal']:
+        id_list = []
+        for field in ['permission_letter', 'prior_clearance', 'need_jbs_clearance', 'research_tools', 'proposal', 'impact_assessment']:
             file = request.files.get(field)
             if file:
-                upload = FormAUpload(
-                    student_id = session['id'],
+                upload = Documents(
                     filename=file.filename,
                     data=file.read(),
                     content_type=file.content_type,
                     field_name=field
                 )
                 db_session.add(upload)
-            
-            db_session.commit()
+                db_session.commit()
+                id_list.append(upload.id)
+
+        new_file_list = FormUploads(
+                    student_id = session['id'],
+                    files = json.dumps(id_list),
+                    form_type = 'formA',
+                )
+        db_session.add(new_file_list)
+        db_session.commit()      
+        session['formA-attachments_id'] = new_file_list.id 
         return jsonify({"message": "Information saved!"}),200
     except:
-        return jsonify({"message": "attach all the files."}),400
+        return jsonify({"message": "Error, please check all attachments. or check dashboard to continue with form"}),400
+
+@app.route('/edit-form-a/<form_id>', methods=['GET'])
+def edit_form_a(form_id):
+    data = getFormAData(form_id)
+    return render_template('form-a-section1.html', formdata = data)
 
 # ---------------- Section 1 ------------------
 @app.route('/form_a_sec1', methods=['GET', 'POST'])
 def form_a_sec1 ():
-    return render_template('form-a-section1.html')
+    sup_list = getSupervisorsList()
+    return render_template('form-a-section1.html', supervisors=sup_list)
 
 @app.route('/submit_form_a_sec1', methods=['GET', 'POST'])
 def submit_form_a_sec1 ():
-    print("******** Submitted")
+    # Dynamically build kwargs from submitted fields matching model attributes
+    field_data = {"user_id":session['id'], "attachment_id":session['formA-attachments_id']}
+    for key, value in request.form.items():
+        if hasattr(FormA, key):
+            field_data[key] = value
+
+    formA_record = FormA(**field_data)
+    db_session.add(formA_record)
+    db_session.commit()
+    session['formA_id'] = formA_record.id
     return render_template('form-a-section2.html')
 
 # ---------------- Section 2 ------------------
@@ -264,6 +289,28 @@ def form_a_sec2 ():
 
 @app.route('/submit_form_a_sec2', methods=['GET', 'POST'])
 def submit_form_a_sec2 ():
+    form_id = session['formA_id']
+    # form = db_session.query(FormA).filter_by(id=form_id).first()
+    for key, value in request.form.items():
+        print(f'{key}: {value}')
+
+    form_record = db_session.query(FormA).get(form_id)
+
+    # Loop through all form fields and update the model
+    # check if type is 
+    boolean_fields = {'survey', 'focus_groups', 'observations', 'documents','interviews', 'non_english', 'age_range'}
+    # First, handle ALL boolean fields
+    for field in boolean_fields:
+        if hasattr(form_record, field):
+            setattr(form_record, field, field in request.form)
+
+    # Then, handle all text/other fields
+    for key, value in request.form.items():
+        if hasattr(form_record, key) and key not in boolean_fields:
+            setattr(form_record, key, value)
+
+
+    db_session.commit()
     return render_template('form-a-section3.html')
 
 # ---------------- Section 3 ------------------

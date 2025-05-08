@@ -60,7 +60,7 @@
       <!-- Logout -->
       <div style="text-align: right;">
 
-        <a href="logout.html" class="btn-logout">Logout</a>
+        <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
       </div>
     </div>
   </header>
@@ -70,7 +70,7 @@
 
     <!-- Top Bar -->
     <div class="form-header">
-      <button class="approve-btn">💾 Save Draft</button>
+      <button class="approve-btn" onclick="saveDraft()">💾 Save Draft</button>
       <strong>Step 1 of 7</strong>
     </div>
 
@@ -107,10 +107,18 @@
         <input type="email" id="email" name="email" required>
 
         <label for="supervisor">Supervisor Name(s)</label>
-        <input type="text" id="supervisor" name="supervisor" required>
+        <select id="supervisor" name="supervisor" required>
+          <option value="" disabled selected>-- Click to select --</option>
+          {% for supervisor in supervisors %}
+          <option value="{{ supervisor['full_name'] }}" sup-email="{{supervisor['email']}}">{{ supervisor['full_name']
+            }}
+          </option>
+          {% endfor %}
+        </select>
 
-        <label for="supervisor-email">Supervisor Email</label>
-        <input type="email" id="supervisor-email" name="supervisor_email" required>
+        <label for="supervisor_email">Supervisor Email</label>
+        <input type="email" id="supervisor_email" name="supervisor_email" placeholder="Supervisor Email" required
+          readonly>
       </div>
 
       <!-- Navigation Buttons -->
@@ -128,6 +136,12 @@
   </footer>
 
   <script>
+
+    document.getElementById('supervisor').addEventListener('change', function () {
+      const selected = this.options[this.selectedIndex];
+      const email = selected.getAttribute('sup-email') || '';
+      document.getElementById('supervisor_email').value = email;
+    });
 
     document.getElementById("formAsection1").addEventListener("submit", async function (event) {
       event.preventDefault();

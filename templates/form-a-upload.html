@@ -37,7 +37,7 @@
       <!-- Logout -->
       <div style="text-align: right;">
 
-        <a href="logout.html" class="btn-logout">Logout</a>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
       </div>
     </div>
   </header>
@@ -91,8 +91,8 @@
       </div>
 
       <div class="question-block">
-        <label>5. Upload Personal Impact Assessment Form</label>
-        <input type="file" name="proposal" accept=".pdf,.docx" required>
+        <label>6. Upload Personal Impact Assessment Form</label>
+        <input type="file" name="impact_assessment" accept=".pdf,.docx" required>
       </div>
 
       <div class="form-navigation">

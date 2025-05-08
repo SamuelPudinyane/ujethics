@@ -1,10 +1,11 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 import enum
 import uuid
 import bcrypt
 import datetime
 import os
+import json
 
 mySQL_string = 'mysql+pymysql://root:password@localhost/ethics'
 sqlite_string = "sqlite+pysqlite:///ethics.db"
@@ -12,7 +13,7 @@ sqlite_string = "sqlite+pysqlite:///ethics.db"
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-engine = create_engine(sqlite_string, echo=False)
+engine = create_engine(sqlite_string, echo=True)
 
 Session = sessionmaker(bind=engine)
 db_session = Session()
@@ -80,17 +81,34 @@ class User(Base):
 class UserInfo(Base):
     __tablename__ = "user_information"
     id = Column(String, primary_key=True, default=generate_uuid)
-    user_id = Column(String, primary_key=True, nullable=False)
+    user_id = Column(String, primary_key=True, nullable=False)  #FK User.user_id
     watched_demo = Column(Boolean, nullable=True)
     test_score = Column(Integer, nullable=True)
 
     def __repr__(self):
         return f"<UserInfo Watched demo video({self.watched_demo}), test score={self.test_score}%>"
 
-class FormAUpload(Base):
-    __tablename__ = 'forma_uploads'
+class FormUploads(Base):
+    __tablename__ = 'form_uploads'
     id = Column(String, primary_key=True, default=generate_uuid)
-    student_id = Column(String, nullable=False)
+    student_id = Column(String, nullable=False)    #FK User.user_id
+    form_type = Column(String, nullable=False)
+    files = Column(Text, nullable=True)  # Will store JSON list containing id's of files
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, onupdate=func.now(), server_default=func.now(), nullable=False)
+
+    @property
+    def files_list(self):
+        return json.loads(self.files) if self.files else []
+    
+    @files_list.setter
+    def files_list(self, value):
+        self.files = json.dumps(value)
+
+
+class Documents(Base):
+    __tablename__ = 'documents'
+    id = Column(String, primary_key=True, default=generate_uuid)
     filename = Column(String(255))
     data = Column(LargeBinary)
     content_type = Column(String(255))
@@ -99,29 +117,42 @@ class FormAUpload(Base):
     updated_at = Column(DateTime, onupdate=func.now(), server_default=func.now(), nullable=False)
 
 
-Base.metadata.create_all(engine)
-
-# try:
-#     users = [
-#         User("Prof Albert Einstein", None, "eistein@uj.ac.za", "1234", None, "supervisor"),
-#         User("Prof. Lerato Mokoena", None, "lmokoena@uj.ac.za", "1234", None, "dean"),
-#         User("Dr. John Naidoo", None, "jnaidoo@uj.ac.za", "1234", None, "rec"),
-#         User("Ms. Zanele Dlamini", None, "zdlamini@uj.ac.za", "1234", None, "student"),
-#         User("Dr. Fatima Patel", None, "fpatel@uj.ac.za", "1234", None, "reviewer"),
-#         User("Prof. Tshidi Mthembu", None, "tmthembu@uj.ac.za", "1234", None, "supervisor"),
-#         User("Prof. Samuel van der Merwe", None, "svdmerwe@uj.ac.za", "1234", None, "supervisor"),
-#         User("Dr. Bongani Khumalo", None, "bkhumalo@uj.ac.za", "1234", None, "reviewer"),
-#         User("Ms. Nomsa Nkosi", None, "nnkosi@uj.ac.za", "1234", None, "reviewer"),
-#         User("Prof. Peter Botha", None, "pbotha@uj.ac.za", "1234", None, "supervisor")
-#     ]
-
-#     db_session.add_all(users)
-#     db_session.commit()
-# except Exception as e:
-#     print("Failed to store user. \n", e)
-
 
 # FORMS 
+
+class FormA(Base):
+    __tablename__ = 'form_a'
+    id = Column(String, primary_key=True, default=generate_uuid)
+    user_id = Column(String, nullable=False)
+    attachment_id = Column(String, nullable=False) #id of "form-a-upload", stored in current session
+    applicant_name = Column(String(120), nullable=False)
+    student_number = Column(String(50), nullable=False)
+    institution = Column(String(120), nullable=False)
+    department = Column(String(120), nullable=False)
+    degree = Column(String(120), nullable=False)
+    study_title = Column(String(255), nullable=False)
+    mobile = Column(String(30), nullable=False)
+    email = Column(String(120), nullable=False)
+    supervisor = Column(String(120), nullable=False)
+    supervisor_email = Column(String(120), nullable=False)
+    #section 2
+    survey = Column(Boolean, nullable=True)
+    focus_groups = Column(Boolean, nullable=True)
+    observations = Column(Boolean, nullable=True)
+    documents = Column(Boolean, nullable=True)
+    age_range = Column(Boolean, nullable=True)
+    non_english = Column(Boolean, nullable=True)
+    uj_employees = Column(Boolean, nullable=True)
+    other_sec2 = Column(String, nullable=True)
+
+    def __repr__(self):
+        return f'<FormA {self.applicant_name} ({self.student_number})>'
+    
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+Base.metadata.create_all(engine)
+
 class FormB(Base):
     __tablename__ = "form_b"
     form_id = Column(String, primary_key=True, default=generate_uuid)
@@ -187,3 +218,24 @@ class FormC(Base):
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+    
+
+
+    # try:
+#     users = [
+#         User("Prof Albert Einstein", None, "eistein@uj.ac.za", "1234", None, "supervisor"),
+#         User("Prof. Lerato Mokoena", None, "lmokoena@uj.ac.za", "1234", None, "dean"),
+#         User("Dr. John Naidoo", None, "jnaidoo@uj.ac.za", "1234", None, "rec"),
+#         User("Ms. Zanele Dlamini", None, "zdlamini@uj.ac.za", "1234", None, "student"),
+#         User("Dr. Fatima Patel", None, "fpatel@uj.ac.za", "1234", None, "reviewer"),
+#         User("Prof. Tshidi Mthembu", None, "tmthembu@uj.ac.za", "1234", None, "supervisor"),
+#         User("Prof. Samuel van der Merwe", None, "svdmerwe@uj.ac.za", "1234", None, "supervisor"),
+#         User("Dr. Bongani Khumalo", None, "bkhumalo@uj.ac.za", "1234", None, "reviewer"),
+#         User("Ms. Nomsa Nkosi", None, "nnkosi@uj.ac.za", "1234", None, "reviewer"),
+#         User("Prof. Peter Botha", None, "pbotha@uj.ac.za", "1234", None, "supervisor")
+#     ]
+
+#     db_session.add_all(users)
+#     db_session.commit()
+# except Exception as e:
+#     print("Failed to store user. \n", e)

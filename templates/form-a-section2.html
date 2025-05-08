@@ -22,7 +22,7 @@
       <!-- Logout -->
       <div style="text-align: right;">
 
-        <a href="logout.html" class="btn-logout">Logout</a>
+        <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
       </div>
     </div>
   </header>
@@ -36,95 +36,97 @@
       <strong>Step 2 of 7</strong>
     </div>
 
-      <!-- Progress Bar -->
-      <div class="progress-bar">
-        <div class="progress-fill">28%</div>
-      </div>
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill">28%</div>
+    </div>
 
     <h1>FORM A</h1>
     <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
 
-    <h3>1. Ethical Clearance Aspects</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Aspect</th>
-          <th>YES</th>
-          <th>NO</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Survey/questionnaire</td>
-          <td><input type="radio" name="survey" value="yes"></td>
-          <td><input type="radio" name="survey" value="no"></td>
-        </tr>
-        <tr>
-          <td>Focus groups</td>
-          <td><input type="radio" name="focus_groups" value="yes"></td>
-          <td><input type="radio" name="focus_groups" value="no"></td>
-        </tr>
-        <tr>
-          <td>Observations</td>
-          <td><input type="radio" name="observations" value="yes"></td>
-          <td><input type="radio" name="observations" value="no"></td>
-        </tr>
-        <tr>
-          <td>Interviews</td>
-          <td><input type="radio" name="interviews" value="yes"></td>
-          <td><input type="radio" name="interviews" value="no"></td>
-        </tr>
-        <tr>
-          <td>Documents</td>
-          <td><input type="radio" name="documents" value="yes"></td>
-          <td><input type="radio" name="documents" value="no"></td>
-        </tr>
-        <tr>
-          <td>Other (Specify)</td>
-          <td><input type="radio" name="other" value="yes"></td>
-          <td><input type="radio" name="other" value="no"></td>
-        </tr>
-      </tbody>
-    </table>
+    <form id="formAsection2" enctype="multipart/form-data">
+      <h3>1. Ethical Clearance Aspects</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>which aspects of the proposed research that involves humans need ethics clearance. </th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Survey/questionnaire</td>
+            <td><input type="checkbox" name="survey"></td>
 
-    <h3>2. Risk Assessment (Except)</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Research includes direct involvement of:</th>
-          <th>YES</th>
-          <th>NO</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>People under 18 or over 65</td>
-          <td><input type="radio" name="age_range" value="yes"></td>
-          <td><input type="radio" name="age_range" value="no"></td>
-        </tr>
-        <tr>
-          <td>Non-English-speaking participants</td>
-          <td><input type="radio" name="non_english" value="yes"></td>
-          <td><input type="radio" name="non_english" value="no"></td>
-        </tr>
-        <tr>
-          <td>UJ employees or students</td>
-          <td><input type="radio" name="uj_employees" value="yes"></td>
-          <td><input type="radio" name="uj_employees" value="no"></td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+          <tr>
+            <td>Focus groups</td>
+            <td><input type="checkbox" name="focus_groups"></td>
 
-    <!-- Add more sections as needed using same pattern -->
+          </tr>
+          <tr>
+            <td>Observations</td>
+            <td><input type="checkbox" name="observations"></td>
 
-    </div>
+          </tr>
+          <tr>
+            <td>Interviews</td>
+            <td><input type="checkbox" name="interviews"></td>
+
+          </tr>
+          <tr>
+            <td>Documents</td>
+            <td><input type="checkbox" name="documents"></td>
+
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label>Other (Specify)</label>
+              <input type="text" name="other_sec2">
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
 
 
-    <!-- Navigation Buttons -->
-    <div class="form-navigation">
-      <a href="dashboard.html" class="revise-btn">⬅ Section 2</a>
-      <button type="submit" class="approve-btn">Next ➔ Section 3</button>
-    </div>
+      <h3>2. Risk Assessment (Except)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Research includes direct involvement of:</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>People under 18 or over 65</td>
+            <td><input type="checkbox" name="age_range"></td>
+
+          </tr>
+          <tr>
+            <td>Non-English-speaking participants</td>
+            <td><input type="checkbox" name="non_english"></td>
+
+          </tr>
+          <tr>
+            <td>UJ employees or students</td>
+            <td><input type="checkbox" name="uj_employees"></td>
+
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Add more sections as needed using same pattern -->
+
+      </div>
+
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <a href="dashboard.html" class="revise-btn">⬅ Section 2</a>
+        <button type="submit" class="approve-btn">Next ➔ Section 3</button>
+      </div>
     </form>
 
   </main>
@@ -133,6 +135,29 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
+
+  <script>
+
+    document.getElementById("formAsection2").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form); // Collects all text and file fields
+
+      const response = await fetch('{{ url_for("submit_form_a_sec2") }}', {
+        method: 'POST',
+        body: formData //browser sets Headers automatically!
+      });
+
+      if (response.ok) {
+        window.location.href = '{{ url_for("form_a_sec3") }}';
+      }
+      const result = await response.json();
+      document.getElementById("message").textContent = result.message;
+    });
+
+
+  </script>
 
 </body>
 
