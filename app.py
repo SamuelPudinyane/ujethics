@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole, FormB, FormC
+from models import db_session, User, UserRole, UserInfo, FormB, FormC, FormAUpload
 from utils.helpers import generate_reset_token, send_email, validate_password
 import os
 import secrets
@@ -16,12 +16,18 @@ CORS(app)
 
 app.secret_key = os.getenv('SECRETE_KEY')
 
-@app.route('/api')
-def index():
-    response={
-         "message": "Welocme",
-    }
-    return jsonify(response), 200
+# ==============================================
+    # Serve pages/templates
+# ==============================================
+
+@app.route('/student-dashboard', methods=['GET'])
+def student_dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/quiz', methods=['GET'])
+def quiz():
+    return render_template('quiz.html')
+
 
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
@@ -31,8 +37,6 @@ def login():
         user_password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
 
-        print(user_password)
-        print(email)
         print(user.verify_password(password=user_password))
         if user and user.verify_password(user_password):
             session['loggedin'] = True
@@ -44,8 +48,12 @@ def login():
             role = user.role.value or 'student'
             
             if role == 'student':
-                # return render_template('video.html')
-                return render_template('dashboard.html') # Render video page if not completed yet.
+                student_info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
+                print("====> Student")
+                if student_info and student_info.watched_demo and student_info.test_score is not None and student_info.test_score >= 80:
+                    return render_template('dashboard.html', name = session['name'])
+                else:
+                    return render_template('video.html')
             elif role == 'supervisor':
                 return render_template('supervisor-dashboard.html')
             elif role == 'admin':
@@ -111,6 +119,33 @@ def register():
     
     return render_template('login.html', msg=msg)
 
+@app.route('/updat_user_info', methods=['POST'])
+def updat_user_info():
+    data = request.get_json()
+    if 'watched_video' in data:
+        info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
+        if info:
+            info.watched_demo = True
+            db_session.commit()
+        else:
+            newInfo = UserInfo(user_id=session['id'], watched_demo=True)
+            db_session.add(newInfo)
+            db_session.commit()
+        return jsonify({'message': 'status saved'}),200
+    
+    if 'quiz_score' in data:
+        score = data['quiz_score']
+        info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
+        if info:
+            info.test_score = data['quiz_score']
+            db_session.commit()
+        else:
+            newInfo = UserInfo(user_id=session['id'], test_score=score)
+            db_session.add(newInfo)
+            db_session.commit()
+        return jsonify({'message': 'score saved'}),200
+    
+    return render_template('quiz.html')
 
 @app.route('/api/forgot-password', methods=['POST'])
 def forgot_password():
@@ -180,15 +215,92 @@ def get_supervisors():
     
     return jsonify(result), 200
 
+
+
 # =====================================================================================================
 # THIS SECTION IS FOR HANDLING FORMS
 # =====================================================================================================
 
 # FORM A =====================================================================================================
+@app.route('/form_a_upload', methods=['GET'])
+def form_a_upload ():
+    return render_template('form-a-upload.html')
 
 
+@app.route('/submit_form_a_upload', methods=['GET', 'POST'])
+def submit_form_a_upload ():
+    try:
+        for field in ['permission_letter', 'prior_clearance', 'need_jbs_clearance', 'research_tools', 'proposal']:
+            file = request.files.get(field)
+            if file:
+                upload = FormAUpload(
+                    student_id = session['id'],
+                    filename=file.filename,
+                    data=file.read(),
+                    content_type=file.content_type,
+                    field_name=field
+                )
+                db_session.add(upload)
+            
+            db_session.commit()
+        return jsonify({"message": "Information saved!"}),200
+    except:
+        return jsonify({"message": "attach all the files."}),400
 
+# ---------------- Section 1 ------------------
+@app.route('/form_a_sec1', methods=['GET', 'POST'])
+def form_a_sec1 ():
+    return render_template('form-a-section1.html')
 
+@app.route('/submit_form_a_sec1', methods=['GET', 'POST'])
+def submit_form_a_sec1 ():
+    print("******** Submitted")
+    return render_template('form-a-section2.html')
+
+# ---------------- Section 2 ------------------
+@app.route('/form_a_sec2', methods=['GET', 'POST'])
+def form_a_sec2 ():
+    return render_template('form-a-section2.html')
+
+@app.route('/submit_form_a_sec2', methods=['GET', 'POST'])
+def submit_form_a_sec2 ():
+    return render_template('form-a-section3.html')
+
+# ---------------- Section 3 ------------------
+@app.route('/form_a_sec3', methods=['GET', 'POST'])
+def form_a_sec3 ():
+    return render_template('form-a-section3.html')
+
+@app.route('/submit_form_a_sec3', methods=['GET', 'POST'])
+def submit_form_a_sec3 ():
+    return render_template('form-a-section4.html')
+
+# ---------------- Section 4 ------------------
+@app.route('/form_a_sec4', methods=['GET', 'POST'])
+def form_a_sec4 ():
+    return render_template('form-a-section4.html')
+
+@app.route('/submit_form_a_sec4', methods=['GET', 'POST'])
+def submit_form_a_sec4 ():
+    return render_template('form-a-section5.html')
+
+# ---------------- Section 5 ------------------
+@app.route('/form_a_sec5', methods=['GET', 'POST'])
+def form_a_sec5 ():
+    return render_template('form-a-section5.html')
+
+@app.route('/submit_form_a_sec5', methods=['GET', 'POST'])
+def submit_form_a_sec5 ():
+    return render_template('form-a-section6.html')
+
+# ---------------- Section 6 ------------------
+@app.route('/form_a_sec6', methods=['GET', 'POST'])
+def form_a_sec6 ():
+    return render_template('form-a-section6.html')
+
+@app.route('/submit_form_a_sec6', methods=['GET', 'POST'])
+def submit_form_a_sec6 ():
+    return render_template('dashboard.html')
 
 # FORM B =====================================================================================================
 @app.route('/api/form-b/<form_id>', methods=['GET'])

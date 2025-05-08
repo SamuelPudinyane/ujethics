@@ -273,13 +273,10 @@ button:disabled {
 }
 
 .info-icon {
-  font-size: 0.95rem;
+  /* font-size: 0.95rem; */
+  font-size: small;
   /* cursor: help; */
   margin-left: 2px;
   color: var(--jbs-teal);
   padding-top: 2px;
-}
-
-.info-icon:hover {
-  text-decoration: underline dotted;
 }

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 import enum
 import uuid
@@ -77,6 +77,28 @@ class User(Base):
     def __repr__(self):
         return f"<User {self.full_name} ({self.email})>"
 
+class UserInfo(Base):
+    __tablename__ = "user_information"
+    id = Column(String, primary_key=True, default=generate_uuid)
+    user_id = Column(String, primary_key=True, nullable=False)
+    watched_demo = Column(Boolean, nullable=True)
+    test_score = Column(Integer, nullable=True)
+
+    def __repr__(self):
+        return f"<UserInfo Watched demo video({self.watched_demo}), test score={self.test_score}%>"
+
+class FormAUpload(Base):
+    __tablename__ = 'forma_uploads'
+    id = Column(String, primary_key=True, default=generate_uuid)
+    student_id = Column(String, nullable=False)
+    filename = Column(String(255))
+    data = Column(LargeBinary)
+    content_type = Column(String(255))
+    field_name = Column(String(64))
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, onupdate=func.now(), server_default=func.now(), nullable=False)
+
+
 Base.metadata.create_all(engine)
 
 # try:
@@ -103,6 +125,7 @@ Base.metadata.create_all(engine)
 class FormB(Base):
     __tablename__ = "form_b"
     form_id = Column(String, primary_key=True, default=generate_uuid)
+    student_id = Column(String, nullable=False)
     applicant_name = Column(String, nullable=False)
     student_number = Column(Integer, nullable=False)
     institution = Column(String, nullable=False)
@@ -143,6 +166,7 @@ class FormB(Base):
 class FormC(Base):
     __tablename__ = "form_c"
     form_id = Column(String, primary_key=True, default=generate_uuid)
+    student_id = Column(String, nullable=False)
     applicant_name = Column(String, nullable=False)
     student_number = Column(Integer, nullable=False)
     institution = Column(String, nullable=False)

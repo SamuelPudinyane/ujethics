@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Form A Requirements | JBS Ethics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/form_a.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}">
   <style>
     .question-block {
@@ -23,9 +23,9 @@
     input[type="radio"] {
       margin-right: 0.3rem;
     }
-
-</style>
+  </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -34,33 +34,34 @@
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Ethics Application System</span>
 
-          <!-- Logout -->
-    <div style="text-align: right;">
+      <!-- Logout -->
+      <div style="text-align: right;">
 
-      <a href="logout.html" class="btn-logout">Logout</a>
-    </div>
+        <a href="logout.html" class="btn-logout">Logout</a>
+      </div>
     </div>
   </header>
 
   <main class="main-content">
     <h2>Before You Start Form A</h2>
-    <form id="formARequirements">
+    <p id="message" style="color: red;">{{msg}}</p>
+    <form id="formARequirements" enctype="multipart/form-data">
 
       <div class="question-block">
         <label>1. Will you require permission to access the company or organisation?</label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
-        <input type="radio" name="need_permission" value="No" required> No
+        <input type="radio" name="need_permission" value="No" checked required> No
       </div>
 
       <div class="question-block hidden" id="companyLetterUpload">
-        <label>Upload Company Permission Letter</label>
+        <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
         <input type="file" name="permission_letter" accept=".pdf,.docx">
       </div>
 
       <div class="question-block">
         <label>2. Do you have prior ethical clearance from the original study?</label><br>
         <input type="radio" name="has_clearance" value="Yes" required> Yes
-        <input type="radio" name="has_clearance" value="No" required> No
+        <input type="radio" name="has_clearance" value="No" checked required> No
       </div>
 
       <div class="question-block hidden" id="clearanceUpload">
@@ -71,7 +72,12 @@
       <div class="question-block">
         <label>3. Does the company require ethical clearance from JBS?</label><br>
         <input type="radio" name="company_requires_jbs" value="Yes" required> Yes
-        <input type="radio" name="company_requires_jbs" value="No" required> No
+        <input type="radio" name="company_requires_jbs" value="No" checked required> No
+      </div>
+
+      <div class="question-block hidden" id="jbsClearanceUpload">
+        <label>Please Upload the proof from company <small>(letter/email screenshot)</small></label>
+        <input type="file" name="need_jbs_clearance" accept=".pdf,.docx, .png, .jpg">
       </div>
 
       <div class="question-block">
@@ -114,12 +120,29 @@
 
     toggleUpload('need_permission', 'companyLetterUpload');
     toggleUpload('has_clearance', 'clearanceUpload');
+    toggleUpload('company_requires_jbs', 'jbsClearanceUpload');
 
-    document.getElementById("formARequirements").addEventListener("submit", function (e) {
-      e.preventDefault();
-      window.location.href = "form-a-section1.html";
+    document.getElementById("formARequirements").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form); // Collects all text and file fields
+
+      const response = await fetch('{{ url_for("submit_form_a_upload") }}', {
+        method: 'POST',
+        body: formData //browser sets Headers automatically!
+      });
+
+      if (response.ok) {
+        window.location.href = '{{ url_for("form_a_sec1") }}';
+      }
+      const result = await response.json();
+      document.getElementById("message").textContent = result.message;
     });
+
+
   </script>
 
 </body>
+
 </html>

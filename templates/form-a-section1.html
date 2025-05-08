@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Form A – Section 1 | JBS Ethics</title>
@@ -26,7 +27,8 @@
     .progress-fill {
       height: 20px;
       background-color: var(--jbs-teal);
-      width: 14.28%; /* 1 out of 7 steps */
+      width: 14.28%;
+      /* 1 out of 7 steps */
       color: white;
       text-align: center;
       font-size: 0.85rem;
@@ -55,17 +57,17 @@
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Form A – Section 1: Researcher’s Details</span>
 
-                <!-- Logout -->
-    <div style="text-align: right;">
+      <!-- Logout -->
+      <div style="text-align: right;">
 
-      <a href="logout.html" class="btn-logout">Logout</a>
-    </div>
+        <a href="logout.html" class="btn-logout">Logout</a>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="main-content">
-    
+
     <!-- Top Bar -->
     <div class="form-header">
       <button class="approve-btn">💾 Save Draft</button>
@@ -78,7 +80,7 @@
     </div>
 
     <!-- Form -->
-    <form action="form-a-section2.html" method="GET">
+    <form id="formAsection1" enctype="multipart/form-data">
       <div class="form-section">
         <label for="applicant-name">Applicant Name</label>
         <input type="text" id="applicant-name" name="applicant_name" required>
@@ -113,7 +115,7 @@
 
       <!-- Navigation Buttons -->
       <div class="form-navigation">
-        <a href="dashboard.html" class="revise-btn">⬅ Back to Dashboard</a>
+        <a href='{{ url_for("student_dashboard") }}' class="revise-btn">⬅ Back to Dashboard</a>
         <button type="submit" class="approve-btn">Next ➔ Section 2</button>
       </div>
     </form>
@@ -125,5 +127,28 @@
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
 
+  <script>
+
+    document.getElementById("formAsection1").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form); // Collects all text and file fields
+
+      const response = await fetch('{{ url_for("submit_form_a_sec1") }}', {
+        method: 'POST',
+        body: formData //browser sets Headers automatically!
+      });
+
+      if (response.ok) {
+        window.location.href = '{{ url_for("form_a_sec2") }}';
+      }
+      const result = await response.json();
+      document.getElementById("message").textContent = result.message;
+    });
+
+
+  </script>
 </body>
+
 </html>
