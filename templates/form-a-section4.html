@@ -45,44 +45,70 @@
     <h2>SECTION 5 – METHODOLOGY</h2>
 
     <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
-    <input type="checkbox" name="paradigm" value="Quantitative"> Quantitative<br>
-    <input type="checkbox" name="paradigm" value="Qualitative"> Qualitative<br>
-    <input type="checkbox" name="paradigm" value="Mixed"> Mixed Methods<br>
+    <table id="methodTypeTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Select Quantitative</th>
+          <th>Select Qualitative</th>
+          <th>Select Mixed Methods</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center"><input type="checkbox" name="quantitative[]" value="yes"></td>
+          <td class="text-center"><input type="checkbox" name="qualitative[]" value="yes"></td>
+          <td class="text-center"><input type="checkbox" name="mixed_methods[]" value="yes"></td>
+        </tr>
+      </tbody>
+    </table>
     <textarea name="paradigm_explanation" rows="3" placeholder="Explain your paradigm selection"></textarea>
 
     <label>5.2 Research Design / Approach</label>
-    <textarea name="design" rows="4" placeholder="Describe your research design and phases"></textarea>
+    <textarea name="design" rows="4" placeholder="Name & describe the research design you intend to use, e.g. descriptive correlation, case study, grounded theory, etc. If your research will proceed in different phases, describe each phase sequentially"></textarea>
 
     <h3>5.3 Details of the participants</h3>
 
-    <label>5.3.1 Participant Group Description</label>
+    <h4>5.3.1 Participant Group Description</h4>
     <textarea name="participants_description" rows="3"></textarea>
 
-    <label>Population</label>
-    <input type="text" name="population">
+    <table id="participantsTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Population</th>
+          <th>Sampling Method</th>
+          <th>Sample Size</th>
+          <th>Inclusion Criteria</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" name="population[]" class="form-control" /></td>
+          <td><input type="text" name="sampling_method[]" class="form-control" /></td>
+          <td><input type="number" name="sample_size[]" class="form-control" /></td>
+          <td><textarea name="inclusion_criteria[]" rows="2" class="form-control"></textarea></td>
+          <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
 
-    <label>Sampling Method</label>
-    <input type="text" name="sampling_method">
 
-    <label>Sample Size</label>
-    <input type="number" name="sample_size">
-
-    <label>Inclusion Criteria</label>
-    <textarea name="inclusion_criteria" rows="2"></textarea>
-
-    <label>5.3.4 Duration and Timing of Data Collection</label>
+    <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.</label>
     <textarea name="duration_timing" rows="2"></textarea>
 
-    <label>5.3.5 How will you obtain participant contact details?</label>
+    <label>5.3.3 Explain how you will obtain the contact details of participantslabel>
     <textarea name="contact_details_method" rows="2"></textarea>
 
-    <label>5.3.6 Conflict of interest or unequal relationship?</label><br>
+    <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?</label><br>
     <input type="radio" name="conflict_interest" value="No"> No
     <input type="radio" name="conflict_interest" value="Yes"> Yes
-    <textarea name="conflict_explanation" rows="2" placeholder="If yes, explain mitigation"></textarea>
+    <textarea name="conflict_explanation" rows="2" placeholder="If yes, give details and explain how it will be mitigated"></textarea>
 
     <h3>5.4 Research Instruments for Data Collection</h3>
-    <label>Questionnaire(s):</label><br>
+    <label>5.4.1 Indicate which data collection methds will be used</label><br>
+    <label>5.4.1.1 Questionnaire(s):</label><br>
     <input type="radio" name="questionnaire_type" value="Self-designed"> Self-designed<br>
     <input type="radio" name="questionnaire_type" value="Existing"> Existing<br>
     <label>If existing, permission obtained?</label>
@@ -90,10 +116,10 @@
     <input type="checkbox" name="open_source"> Open Source<br>
     <textarea name="instrument_attachment_reason" rows="2" placeholder="Attach or justify"></textarea>
 
-    <label>Describe the data collection procedure</label>
+    <label>5.4.2 Describe the data collection procedure</label>
     <textarea name="data_collection_procedure" rows="3"></textarea>
 
-    <label>Interviews</label><br>
+    <label>5.4.2.1 Interviews</label><br>
     <input type="checkbox" name="interview_type" value="In-depth"> In-depth
     <input type="checkbox" name="interview_type" value="Semi-structured"> Semi-structured
     <input type="checkbox" name="interview_type" value="Unstructured"> Unstructured<br>
@@ -102,36 +128,70 @@
     <input type="checkbox" name="interview_recording" value="Audio"> Audio
     <input type="checkbox" name="interview_recording" value="Video"> Video<br>
 
-    <label>Focus Groups</label><br>
+    <label>5.4.2.2 Focus Groups</label><br>
     <input type="radio" name="use_focus_groups" value="Yes"> Yes
     <input type="radio" name="use_focus_groups" value="No"> No<br>
     <label>Will focus groups be recorded?</label><br>
     <input type="checkbox" name="focus_recording" value="Audio"> Audio
     <input type="checkbox" name="focus_recording" value="Video"> Video
     <br><br>
-    <label>Attach focus group/interview questions</label>
-    <input type="file" name="focus_group_questions" accept=".pdf,.doc,.docx">
+    
 
-    <label>5.7 Who will collect the data?</label>
-    <textarea name="data_collectors" rows="2" placeholder="Mention yourself, fieldworkers, confidentiality measures"></textarea>
+    <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?</label>
+    <textarea name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
 
-    <label>5.8 Will participants be subjected to any intervention?</label><br>
+    <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?</label><br>
     <input type="radio" name="intervention" value="No"> No
     <input type="radio" name="intervention" value="Yes"> Yes<br>
     <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea>
 
-    <label>5.9 Sensitive data or vulnerable populations?</label>
+    <label>5.4.5 Sensitive data or vulnerable populations?</label>
     <textarea name="sensitive_data" rows="2"></textarea>
 
-    <label>5.10 Will a translator be required?</label><br>
+    <label>5.4.6 Will a translator be required?</label><br>
     <input type="radio" name="translator" value="No"> No
     <input type="radio" name="translator" value="Yes"> Yes
     <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
 
-    <label>5.12 Secondary data to be used?</label><br>
-    <input type="radio" name="secondary_data" value="No"> No
-    <input type="radio" name="secondary_data" value="Yes"> Yes
-    <textarea name="secondary_data_details" rows="2" placeholder="Details and attach proof if applicable"></textarea>
+    <h3>5.5 Secondary Data Usage</h3>
+
+    <label>Will secondary data be used?</label><br>
+    <select id="secondaryData" class="form-select" onchange="handleSecondaryData()">
+      <option value="">-- Select --</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+    
+    <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
+    
+      <label>Is the data Public or Private?</label><br>
+      <select id="dataType" class="form-select" onchange="handleDataType()">
+        <option value="">-- Select --</option>
+        <option value="private">Private</option>
+        <option value="public">Public</option>
+      </select>
+    
+      <!-- Private Data Section -->
+      <div id="privateDataSection" style="display: none; margin-top: 1rem;">
+        <label>Is the data from a company that has provided permission?</label><br>
+        <select id="privatePermission" class="form-select" onchange="handlePrivatePermission()">
+          <option value="">-- Select --</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+    
+        <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
+          <label>Please upload the permission for use of private data:</label>
+          <input type="file" name="private_permission_file" class="form-control">
+        </div>
+      </div>
+    
+      <!-- Public Data Section -->
+      <div id="publicDataSection" style="display: none; margin-top: 1rem;">
+        <label>What type of public data is going to be used?</label>
+        <textarea name="public_data_description" rows="3" class="form-control"></textarea>
+      </div>
+    </div>
   </section>
 
         <!-- Navigation Buttons -->
@@ -147,6 +207,52 @@
     <footer class="footer">
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>
+
+    <script>
+      function addRow() {
+        const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
+        const newRow = table.rows[0].cloneNode(true);
+        // Clear input values
+        Array.from(newRow.querySelectorAll('input, textarea')).forEach(input => input.value = '');
+        table.appendChild(newRow);
+      }
+    
+      function removeRow(button) {
+        const row = button.closest('tr');
+        const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
+        if (table.rows.length > 1) {
+          row.remove();
+        } else {
+          alert("You must have at least one row.");
+        }
+      }
+
+      function handleSecondaryData() {
+    const selection = document.getElementById('secondaryData').value;
+    document.getElementById('secondaryDetails').style.display = selection === 'yes' ? 'block' : 'none';
+    resetFields(); // Reset all nested logic
+  }
+
+  function handleDataType() {
+    const dataType = document.getElementById('dataType').value;
+    document.getElementById('privateDataSection').style.display = dataType === 'private' ? 'block' : 'none';
+    document.getElementById('publicDataSection').style.display = dataType === 'public' ? 'block' : 'none';
+    document.getElementById('uploadPrivatePermission').style.display = 'none'; // Hide by default
+  }
+
+  function handlePrivatePermission() {
+    const permission = document.getElementById('privatePermission').value;
+    document.getElementById('uploadPrivatePermission').style.display = permission === 'no' ? 'block' : 'none';
+  }
+
+  function resetFields() {
+    document.getElementById('dataType').value = "";
+    document.getElementById('privatePermission').value = "";
+    document.getElementById('privateDataSection').style.display = 'none';
+    document.getElementById('publicDataSection').style.display = 'none';
+    document.getElementById('uploadPrivatePermission').style.display = 'none';
+  }
+    </script>
 
 
 </body>
