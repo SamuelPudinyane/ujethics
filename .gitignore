@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 backend/__pycache__
 backend/venv
 backend/.env
 myvenv/
 .env
-=======
-__pycache__
-venv
-.env
-myvenv
-.vscode
->>>>>>> 030b08c09d4379745c3239941337d2e193d3f949
