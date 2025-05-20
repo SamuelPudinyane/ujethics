@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Form A – Section 1 | JBS Ethics</title>
@@ -26,7 +27,8 @@
     .progress-fill {
       height: 20px;
       background-color: var(--jbs-teal);
-      width: 14.28%; /* 1 out of 7 steps */
+      width: 14.28%;
+      /* 1 out of 7 steps */
       color: white;
       text-align: center;
       font-size: 0.85rem;
@@ -55,26 +57,26 @@
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Form A – Section 1: Researcher’s Details</span>
 
-                <!-- Logout -->
-    <div style="text-align: right;">
+      <!-- Logout -->
+      <div style="text-align: right;">
 
-      <a href="logout.html" class="btn-logout">Logout</a>
-    </div>
+        <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="main-content">
-    
+
     <!-- Top Bar -->
     <div class="form-header">
-      <button class="approve-btn">💾 Save Draft</button>
+      <button class="approve-btn" onclick="saveDraft()">💾 Save Draft</button>
       <strong>Step 1 of 7</strong>
     </div>
 
     <!-- Progress Bar -->
     <div class="progress-bar">
-      <div class="progress-fill">14%</div>
+      <div class="progress-fill" style="width: 14%">14%</div>
     </div>
 
     <!-- Form -->
@@ -146,4 +148,5 @@
     }, 3000); // 3000ms = 3 seconds
 </script>
 </body>
+
 </html>

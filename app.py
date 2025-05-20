@@ -1,6 +1,6 @@
 from flask import Flask,flash, render_template, request, redirect, url_for, session, jsonify
 from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormUploads, Documents,FormARequirements
-from backend.utils.helpers import generate_reset_token, send_email, validate_password
+from utils.helpers import generate_reset_token, send_email, validate_password
 import json
 from db_queries import getFormAData, getSupervisorsList
 import os
@@ -46,6 +46,11 @@ def student_dashboard():
 @app.route('/quiz', methods=['GET'])
 def quiz():
     return render_template('quiz.html')
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    return render_template('login.html')
 
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])

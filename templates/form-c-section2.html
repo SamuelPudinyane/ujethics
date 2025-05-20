@@ -23,6 +23,9 @@
     </div>
   </header>
 
+    <!-- Main Content -->
+    <main class="main-content">
+
   <!-- Top Bar -->
   <div class="form-header">
     <button class="approve-btn">💾 Save Draft</button>
@@ -34,119 +37,109 @@
     <div class="progress-fill" style="width: 50%;">50%</div>
   </div>
 
-  <!-- Main Content -->
-  <main class="main-content">
+
     <form action="form-c-section3.html" method="GET">
 
       <h2>SECTION 2: Risk Assessment</h2>
 
-      <h4>2.1 Does your research involve the following participants?</h4>
-      <div class="question-block">
-        <label>Communities that may be considered vulnerable:</label>
-        <div class="yes-no">
-          <input type="radio" name="q1" value="Yes" required> Yes
-          <input type="radio" name="q1" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>People under the age of 18 or over 65:</label>
-        <div class="yes-no">
-          <input type="radio" name="q2" value="Yes" required> Yes
-          <input type="radio" name="q2" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>UJ employees or students:</label>
-        <div class="yes-no">
-          <input type="radio" name="q3" value="Yes" required> Yes
-          <input type="radio" name="q3" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Persons contextually vulnerable in this study:</label>
-        <div class="yes-no">
-          <input type="radio" name="q4" value="Yes" required> Yes
-          <input type="radio" name="q4" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Non-English-speaking participants:</label>
-        <div class="yes-no">
-          <input type="radio" name="q5" value="Yes" required> Yes
-          <input type="radio" name="q5" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Researcher's own students:</label>
-        <div class="yes-no">
-          <input type="radio" name="q6" value="Yes" required> Yes
-          <input type="radio" name="q6" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>People living in poverty:</label>
-        <div class="yes-no">
-          <input type="radio" name="q7" value="Yes" required> Yes
-          <input type="radio" name="q7" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>People with little or no education:</label>
-        <div class="yes-no">
-          <input type="radio" name="q8" value="Yes" required> Yes
-          <input type="radio" name="q8" value="No" required> No
-        </div>
-      </div>
-      <div class="question-block">
-        <label>Other (please describe):</label>
-        <div class="yes-no">
-          <input type="radio" name="q9" value="Yes" required> Yes
-          <input type="radio" name="q9" value="No" required> No
-        </div>
-      </div>
-      <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
-
+      <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Participant Group</th>
+            <th>Tick if Applicable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Communities that may be considered as vulnerable</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>People under the age of 18 or over 65</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>UJ employees or students</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>Persons not usually considered vulnerable but would be in this context</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>Non-English-speaking participants</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>A researcher’s own students</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>People living in poverty</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>People with little or no education</td><td><input type="checkbox" name="vulnerable[]"></td></tr>
+          <tr><td>Other: Please describe.</td><td><textarea name="vulnerable_other" class="form-control" rows="2"></textarea></td></tr>
+        </tbody>
+      </table>
+      
+      <label><strong>Comments (e.g. “No participants”):</strong></label>
+      <textarea name="vulnerable_comments" class="form-control" rows="2"></textarea>
+      
       <hr>
 
-      <h4>2.2 Does your research involve any of the following activities?</h4>
-      <div class="question-block">
-        <label>Collection, use or disclosure of information without consent:</label>
-        <div class="yes-no">
-          <input type="radio" name="q10" value="Yes" required> Yes
-          <input type="radio" name="q10" value="No" required> No
-        </div>
-      </div>
-      <!-- Add more activity questions below in same pattern if needed -->
-      <textarea name="activities_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+      <h4>2.2 Research Activity Type</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Tick if Applicable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Causing discomfiture beyond normal inconvenience</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Deception of participants or covert observation</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Examining sensitive or contentious issues</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Seeking prejudicial information about participants</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Using intrusive techniques</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Study/participation in illegal activities</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Collecting personal/social info directly from participants</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Identifiable info collected from available records (staff/student records)</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Psychology inventories / scales / tests</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Activities putting researcher/data collector at risk</td><td><input type="checkbox" name="activity[]"></td></tr>
+    <tr><td>Other:  Please describe.</td><td><textarea name="activity_other" class="form-control" rows="2"></textarea></td></tr>
+  </tbody>
+</table>
 
+<label><strong>Comments:</strong></label>
+<textarea name="activity_comments" class="form-control" rows="2"></textarea>
       <hr>
 
-      <h4>2.3 Other Research Project Factors</h4>
-      <div class="question-block">
-        <label>Reimbursement or incentives to participants:</label>
-        <div class="yes-no">
-          <input type="radio" name="q20" value="Yes" required> Yes
-          <input type="radio" name="q20" value="No" required> No
-        </div>
-      </div>
-      <textarea name="factors_comments" rows="3" placeholder="Comments (if any)..."></textarea>
-
+      <h4>2.3 Additional Research Considerations</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Tick if Applicable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>a) Reimbursement or incentives to any participants.</td><td><input type="checkbox" name="consideration[]"></td></tr>
+          <tr><td>b) Participants will incur financial costs by participating.</td><td><input type="checkbox" name="consideration[]"></td></tr>
+          <tr><td>c) Researcher has financial or other involvement in the research.</td><td><input type="checkbox" name="consideration[]"></td></tr>
+          <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td><td><input type="checkbox" name="consideration[]"></td></tr>
+          <tr><td>e) Research is conducted on UJ premises.</td><td><input type="checkbox" name="consideration[]"></td></tr>
+          <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td><td><input type="checkbox" name="consideration[]"></td></tr>
+          <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td><td><input type="checkbox" name="consideration[]"></td></tr>
+        </tbody>
+      </table>
+      
+      <label><strong>Comments:</strong></label>
+      <textarea name="consideration_comments" class="form-control" rows="2"></textarea>
+      
       <hr>
-
-      <h4>Overall Project Risk Level</h4>
-      <select name="risk_rating" required>
+      
+      <h5>Risk Assessment</h5>
+      
+      <label><strong>Rate your project risk level:</strong></label>
+      <select name="risk_level" class="form-select">
         <option value="">-- Select Risk Level --</option>
-        <option value="Negligible">Negligible</option>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
+        <option value="Low">Low Risk</option>
+        <option value="Medium">Medium Risk</option>
+        <option value="High">High Risk</option>
       </select>
-
-      <label>If Medium or High, describe potential benefits:</label>
-      <textarea name="benefits_description" rows="3"></textarea>
-
-      <label>If Medium or High, describe risk mitigation:</label>
-      <textarea name="risk_mitigation" rows="3"></textarea>
+      
+      <br>
+      <label><strong>Justify the Risk Level</strong></label>
+      <textarea name="justify" class="form-control" rows="3"></textarea>
+      
+      <label><strong>If Medium or High Risk, describe potential benefits:</strong></label>
+      <textarea name="risk_benefits" class="form-control" rows="3"></textarea>
+      
+      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong></label>
+      <textarea name="risk_mitigation" class="form-control" rows="3"></textarea>
+      
 
       <!-- Navigation -->
       <div class="form-navigation">

@@ -36,7 +36,7 @@
 
     <!-- Progress Bar -->
     <div class="progress-bar">
-      <div class="progress-fill">84%</div>
+      <div class="progress-fill" style="width: 84%">84%</div>
     </div>
 <form action="{{url_for('form_a_sec5')}}" method="post">
   <!-- Error Messages -->
@@ -101,27 +101,37 @@
   
     <div class="question-block">
       <label>6.9 Checklist to ensure the covering letter meets ethical requirements</label>
-      <table>
-        <tr><td>a) Identity and position of the researcher(s)?</td><td><input type="radio" name="q6_9a" value="yes"> Yes <input type="radio" name="q6_9a" value="no"> No</td></tr>
-        <tr><td>b) Purpose of the information collection?</td><td><input type="radio" name="q6_9b" value="yes"> Yes <input type="radio" name="q6_9b" value="no"> No</td></tr>
-        <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><input type="radio" name="q6_9c" value="yes"> Yes <input type="radio" name="q6_9c" value="no"> No</td></tr>
-        <tr><td>d) Participant’s role in the study?</td><td><input type="radio" name="q6_9d" value="yes"> Yes <input type="radio" name="q6_9d" value="no"> No</td></tr>
-        <tr><td>e) Expected duration of participation?</td><td><input type="radio" name="q6_9e" value="yes"> Yes <input type="radio" name="q6_9e" value="no"> No</td></tr>
-        <tr><td>f) Statement of voluntary participation and no penalty?</td><td><input type="radio" name="q6_9f" value="yes"> Yes <input type="radio" name="q6_9f" value="no"> No</td></tr>
-        <tr><td>g) Benefits to the participant and others?</td><td><input type="radio" name="q6_9g" value="yes"> Yes <input type="radio" name="q6_9g" value="no"> No</td></tr>
-        <tr><td>h) Risks and steps for harm/injury?</td><td><input type="radio" name="q6_9h" value="yes"> Yes <input type="radio" name="q6_9h" value="no"> No</td></tr>
-        <tr><td>i) Statement of right to withdraw?</td><td><input type="radio" name="q6_9i" value="yes"> Yes <input type="radio" name="q6_9i" value="no"> No</td></tr>
-        <tr><td>j) Compensation/gifts/services?</td><td><input type="radio" name="q6_9j" value="yes"> Yes <input type="radio" name="q6_9j" value="no"> No</td></tr>
-        <tr><td>k) Reimbursement for costs?</td><td><input type="radio" name="q6_9k" value="yes"> Yes <input type="radio" name="q6_9k" value="no"> No</td></tr>
-        <tr><td>l) Indemnity if applicable?</td><td><input type="radio" name="q6_9l" value="yes"> Yes <input type="radio" name="q6_9l" value="no"> No</td></tr>
-        <tr><td>m) Period for which records will be kept?</td><td><input type="radio" name="q6_9m" value="yes"> Yes <input type="radio" name="q6_9m" value="no"> No</td></tr>
-        <tr><td>n) Steps for confidentiality and secure storage?</td><td><input type="radio" name="q6_9n" value="yes"> Yes <input type="radio" name="q6_9n" value="no"> No</td></tr>
-        <tr><td>o) Disclosure of information to third parties?</td><td><input type="radio" name="q6_9o" value="yes"> Yes <input type="radio" name="q6_9o" value="no"> No</td></tr>
-        <tr><td>p) Privacy protection in publications?</td><td><input type="radio" name="q6_9p" value="yes"> Yes <input type="radio" name="q6_9p" value="no"> No</td></tr>
-        <tr><td>q) Feedback to participants?</td><td><input type="radio" name="q6_9q" value="yes"> Yes <input type="radio" name="q6_9q" value="no"> No</td></tr>
-        <tr><td>r) Exclusions to confidentiality disclosed?</td><td><input type="radio" name="q6_9r" value="yes"> Yes <input type="radio" name="q6_9r" value="no"> No</td></tr>
-        <tr><td>s) Consent for audio/video recording?</td><td><input type="radio" name="q6_9s" value="yes"> Yes <input type="radio" name="q6_9s" value="no"> No</td></tr>
-      </table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th style="width: 70%;">Checklist Item</th>
+      <th style="width: 30%;">Select</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>a) Identity and position of the researcher(s)?</td><td><input type="radio" name="q6_9a" value="yes"> Yes <input type="radio" name="q6_9a" value="no"> No</td></tr>
+    <tr><td>b) Purpose of the information collection?</td><td><input type="radio" name="q6_9b" value="yes"> Yes <input type="radio" name="q6_9b" value="no"> No</td></tr>
+    <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><input type="radio" name="q6_9c" value="yes"> Yes <input type="radio" name="q6_9c" value="no"> No</td></tr>
+    <tr><td>d) Participant’s role in the study?</td><td><input type="radio" name="q6_9d" value="yes"> Yes <input type="radio" name="q6_9d" value="no"> No</td></tr>
+    <tr><td>e) Expected duration of participation?</td><td><input type="radio" name="q6_9e" value="yes"> Yes <input type="radio" name="q6_9e" value="no"> No</td></tr>
+    <tr><td>f) Statement of voluntary participation and no penalty?</td><td><input type="radio" name="q6_9f" value="yes"> Yes <input type="radio" name="q6_9f" value="no"> No</td></tr>
+    <tr><td>g) Benefits to the participant and others?</td><td><input type="radio" name="q6_9g" value="yes"> Yes <input type="radio" name="q6_9g" value="no"> No</td></tr>
+    <tr><td>h) Risks and steps for harm/injury?</td><td><input type="radio" name="q6_9h" value="yes"> Yes <input type="radio" name="q6_9h" value="no"> No</td></tr>
+    <tr><td>i) Statement of right to withdraw?</td><td><input type="radio" name="q6_9i" value="yes"> Yes <input type="radio" name="q6_9i" value="no"> No</td></tr>
+    <tr><td>j) Compensation/gifts/services?</td><td><input type="radio" name="q6_9j" value="yes"> Yes <input type="radio" name="q6_9j" value="no"> No</td></tr>
+    <tr><td>k) Reimbursement for costs?</td><td><input type="radio" name="q6_9k" value="yes"> Yes <input type="radio" name="q6_9k" value="no"> No</td></tr>
+    <tr><td>l) Indemnity if applicable?</td><td><input type="radio" name="q6_9l" value="yes"> Yes <input type="radio" name="q6_9l" value="no"> No</td></tr>
+    <tr><td>m) Period for which records will be kept?</td><td><input type="radio" name="q6_9m" value="yes"> Yes <input type="radio" name="q6_9m" value="no"> No</td></tr>
+    <tr><td>n) Steps for confidentiality and secure storage?</td><td><input type="radio" name="q6_9n" value="yes"> Yes <input type="radio" name="q6_9n" value="no"> No</td></tr>
+    <tr><td>o) Disclosure of information to third parties?</td><td><input type="radio" name="q6_9o" value="yes"> Yes <input type="radio" name="q6_9o" value="no"> No</td></tr>
+    <tr><td>p) Privacy protection in publications?</td><td><input type="radio" name="q6_9p" value="yes"> Yes <input type="radio" name="q6_9p" value="no"> No</td></tr>
+    <tr><td>q) Feedback to participants?</td><td><input type="radio" name="q6_9q" value="yes"> Yes <input type="radio" name="q6_9q" value="no"> No</td></tr>
+    <tr><td>r) Exclusions to confidentiality disclosed?</td><td><input type="radio" name="q6_9r" value="yes"> Yes <input type="radio" name="q6_9r" value="no"> No</td></tr>
+    <tr><td>s) Consent for audio/video recording?</td><td><input type="radio" name="q6_9s" value="yes"> Yes <input type="radio" name="q6_9s" value="no"> No</td></tr>
+  </tbody>
+</table>
+
     </div>
   
     <div class="question-block">

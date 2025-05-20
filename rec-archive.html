@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>REC Archive | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/supervisor.css" />
+  <link rel="stylesheet" href="css/review.css" />
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="img/image.png" class="sidebar-logo" />
+      <h3>Reviewer Panel</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="rec-dashboard.html">📋 My Reviews</a>
+      <a href="rec-archive.html" class="active">📁 Archive</a>
+      <a href="logout.html">🔒 Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>REC Review Archive</h2>
+    </header>
+
+    <section class="admin-content">
+      <h3>Previously Reviewed Students</h3>
+
+      <!-- Filters -->
+      <div class="filter-row">
+        <input type="text" id="filterName" placeholder="Filter by Name" />
+        <input type="text" id="filterStudent" placeholder="Filter by Student Number" />
+        <select id="filterOutcome">
+          <option value="">All Outcomes</option>
+          <option>Approved</option>
+          <option>Approved with Minor Changes</option>
+          <option>Resubmission</option>
+          <option>Rejected</option>
+        </select>
+        <select id="filterYear">
+          <option value="">All Years</option>
+          <option>2025</option>
+          <option>2024</option>
+          <option>2023</option>
+        </select>
+        <button onclick="applyFilters()">🔍 Apply Filters</button>
+      </div>
+
+      <!-- Archive Table -->
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Student Number</th>
+            <th>Student Name</th>
+            <th>Form</th>
+            <th>Reviewer</th>
+            <th>Date Reviewed</th>
+            <th>Outcome</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="archiveTable">
+          <tr>
+            <td>216018061</td>
+            <td>Musawenkosi Nyathi</td>
+            <td>Form A</td>
+            <td>Dr. Lerato Mokoena</td>
+            <td>2025-04-28</td>
+            <td>Approved</td>
+            <td>
+              <a href="checklists/216018061.pdf" class="view-btn" target="_blank">View Checklist</a>
+              <a href="feedback/216018061-comments.pdf" class="view-btn" target="_blank">Download Feedback</a>
+            </td>
+          </tr>
+          <tr>
+            <td>216056789</td>
+            <td>Jane Doe</td>
+            <td>Form B</td>
+            <td>Prof. Naidoo</td>
+            <td>2024-11-15</td>
+            <td>Resubmission</td>
+            <td>
+              <a href="checklists/216056789.pdf" class="view-btn" target="_blank">View Checklist</a>
+              <a href="feedback/216056789-comments.pdf" class="view-btn" target="_blank">Download Feedback</a>
+            </td>
+          </tr>
+          <!-- More archived rows -->
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 JBS Ethics Review Board</p>
+    </footer>
+  </main>
+
+</div>
+
+<!-- Filter Script -->
+<script>
+  function applyFilters() {
+    const name = document.getElementById("filterName").value.toLowerCase();
+    const student = document.getElementById("filterStudent").value.toLowerCase();
+    const outcome = document.getElementById("filterOutcome").value.toLowerCase();
+    const year = document.getElementById("filterYear").value;
+
+    const rows = document.querySelectorAll("#archiveTable tr");
+
+    rows.forEach(row => {
+      const nameCell = row.cells[1].textContent.toLowerCase();
+      const studentCell = row.cells[0].textContent.toLowerCase();
+      const outcomeCell = row.cells[5].textContent.toLowerCase();
+      const yearCell = row.cells[4].textContent.slice(0, 4); // Extract year from date
+
+      const visible = (!name || nameCell.includes(name)) &&
+                      (!student || studentCell.includes(student)) &&
+                      (!outcome || outcomeCell.includes(outcome)) &&
+                      (!year || yearCell === year);
+
+      row.style.display = visible ? "" : "none";
+    });
+  }
+</script>
+
+</body>
+</html>
