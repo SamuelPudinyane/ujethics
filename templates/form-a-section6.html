@@ -73,8 +73,18 @@
 </header>
 
 <main class="main-content">
-  <form id="formA">
+  <form id="formA" action="{{url_for('form_a_sec6')}}" method="post">
+<!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
 
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <!-- Top Bar -->
     <div class="form-header">
       <button type="button" class="approve-btn">💾 Save Draft</button>
@@ -119,28 +129,28 @@
 </footer>
 
 <!-- Confirmation Modal -->
-<div id="confirmationModal" class="modal-overlay">
+<!--<div id="confirmationModal" class="modal-overlay">
   <div class="modal-content">
     <h3>Form A Submitted Successfully!</h3>
     <p>Your application has been received and will be sent to your supervisor.</p>
     <button id="closeModalBtn">Return to Dashboard</button>
-  </div>
+  </div>-->
 </div>
 
 <!-- JS: Modal Logic -->
 <script>
-  const form = document.getElementById("formA");
-  const modal = document.getElementById("confirmationModal");
-  const closeModalBtn = document.getElementById("closeModalBtn");
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault(); // Prevent actual form submission
-    modal.style.display = "flex";
-  });
+ // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
 
-  closeModalBtn.addEventListener("click", () => {
-    window.location.href = "dashboard.html";
-  });
+
 </script>
 
 </body>

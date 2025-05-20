@@ -45,44 +45,56 @@
     <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
 
     <h3>1. Ethical Clearance Aspects</h3>
-    <table>
+    <form action="{{url_for('form_a_sec2')}}" method="post">
+       <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <table>
       <thead>
         <tr>
           <th>Aspect</th>
-          <th>YES</th>
-          <th>NO</th>
+          <th>YES, if NO leave unchecked</th>
+         
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Survey/questionnaire</td>
-          <td><input type="radio" name="survey" value="yes"></td>
-          <td><input type="radio" name="survey" value="no"></td>
+          <td><input type="checkbox" name="survey" value="yes"></td>
+          
         </tr>
         <tr>
           <td>Focus groups</td>
-          <td><input type="radio" name="focus_groups" value="yes"></td>
-          <td><input type="radio" name="focus_groups" value="no"></td>
+          <td><input type="checkbox" name="focus_groups" value="yes"></td>
+          
         </tr>
         <tr>
           <td>Observations</td>
-          <td><input type="radio" name="observations" value="yes"></td>
-          <td><input type="radio" name="observations" value="no"></td>
+          <td><input type="checkbox" name="observations" value="yes"></td>
+          
         </tr>
         <tr>
           <td>Interviews</td>
-          <td><input type="radio" name="interviews" value="yes"></td>
-          <td><input type="radio" name="interviews" value="no"></td>
+          <td><input type="checkbox" name="interviews" value="yes"></td>
+          
         </tr>
         <tr>
           <td>Documents</td>
-          <td><input type="radio" name="documents" value="yes"></td>
-          <td><input type="radio" name="documents" value="no"></td>
+          <td><input type="checkbox" name="documents" value="yes"></td>
+          
         </tr>
         <tr>
-          <td>Other (Specify)</td>
-          <td><input type="radio" name="other" value="yes"></td>
-          <td><input type="radio" name="other" value="no"></td>
+          <td>Other (specify)</td>
+          <td><input type="text" class="form-control d-inline" name="vulnerable_other_specify" placeholder="Specify">
+          </td>
+          
         </tr>
       </tbody>
     </table>
@@ -92,25 +104,25 @@
       <thead>
         <tr>
           <th>Research includes direct involvement of:</th>
-          <th>YES</th>
-          <th>NO</th>
+          <th>YES, if NO leave unchecked</th>
+         
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>People under 18 or over 65</td>
-          <td><input type="radio" name="age_range" value="yes"></td>
-          <td><input type="radio" name="age_range" value="no"></td>
+          <td><input type="checkbox" name="age_range" value="yes"></td>
+          
         </tr>
         <tr>
           <td>Non-English-speaking participants</td>
-          <td><input type="radio" name="non_english" value="yes"></td>
-          <td><input type="radio" name="non_english" value="no"></td>
+          <td><input type="checkbox" name="non_english" value="yes"></td>
+          
         </tr>
         <tr>
           <td>UJ employees or students</td>
-          <td><input type="radio" name="uj_employees" value="yes"></td>
-          <td><input type="radio" name="uj_employees" value="no"></td>
+          <td><input type="checkbox" name="uj_employees" value="yes"></td>
+         
         </tr>
       </tbody>
     </table>
@@ -133,7 +145,17 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
-
+  <script>
+// Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
+  </script>
 </body>
 
 </html>

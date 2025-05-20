@@ -44,8 +44,18 @@
 
     <!-- Section Title -->
     <h2>Before You Start Form B</h2>
-    <form id="formBRequirements">
+    <form id="formBRequirements" action="{{url_for('form_b_upload')}}" method="post" enctype="multipart/form-data">
+<!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
 
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="question-block">
         <label>1. Do you require permission to access the secondary data?</label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
@@ -99,6 +109,17 @@
 
   <!-- Script -->
   <script>
+    // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
+
+
     function setupRadioConditional(questionName, containerId) {
       const radios = document.getElementsByName(questionName);
       const container = document.getElementById(containerId);
@@ -118,10 +139,11 @@
     setupRadioConditional('has_clearance', 'clearanceUpload');
     setupRadioConditional('has_ethics_evidence', 'ethicsEvidenceUpload');
 
-    document.getElementById('formBRequirements').addEventListener('submit', function (e) {
-      e.preventDefault();
-      window.location.href = 'form-b-section1.html';
-    });
+    //document.getElementById('formBRequirements').addEventListener('submit', function (e) {
+     // e.preventDefault();
+      //window.location.href = 'form-b-section1.html';
+    //});
+
   </script>
 
 </body>

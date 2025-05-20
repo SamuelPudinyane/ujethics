@@ -1,20 +1,35 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole, FormB, FormC
+from flask import Flask,flash, render_template, request, redirect, url_for, session, jsonify
+from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormUploads, Documents,FormARequirements
 from backend.utils.helpers import generate_reset_token, send_email, validate_password
+import json
+from db_queries import getFormAData, getSupervisorsList
 import os
+from werkzeug.utils import secure_filename
 import secrets
 from dotenv import load_dotenv
 import uuid
 from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
+from flask_wtf.csrf import CSRFProtect
+
+
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app) 
+csrf = CSRFProtect(app)
+app.secret_key = os.getenv('SECRET_KEY')
 
-app.secret_key = os.getenv('SECRETE_KEY')
+
+
+ALLOWED_EXTENSIONS = {'pdf', 'docx'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/api')
 def index():
@@ -23,93 +38,141 @@ def index():
     }
     return jsonify(response), 200
 
+
+@app.route('/student-dashboard', methods=['GET'])
+def student_dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/quiz', methods=['GET'])
+def quiz():
+    return render_template('quiz.html')
+
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
+    
+    
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        user_password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
+        print("user ",user)
+        
+        if user:
+            if user.verify_password(user_password):
+                session['loggedin'] = True
+                session['id'] = user.user_id
+                session['name'] = user.full_name
 
-        if user and user.verify_password(password):
-            session['loggedin'] = True
-            session['id'] = user.user_id
-            session['first_name'] = user.full_name
-            return redirect('/dashboard')  # or wherever
+                # render appropriate template depending on role
+                # NB: role is an enum, hence the .value
+                role = user.role.value or 'student'
+                print("role ",role)
+                if role == 'student':
+                    student_info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
+                    print("====> Student")
+                    if student_info and student_info.watched_demo and student_info.test_score is not None and student_info.test_score >= 80:
+                        return render_template('dashboard.html', name = session['name'])
+                    else:
+                        return render_template('video.html')
+                elif role == 'supervisor':
+                    return render_template('supervisor-dashboard.html')
+                elif role == 'admin':
+                    return render_template('admin-dashboard.html')
+                elif role == 'rec':
+                    return render_template('committee-dashboard.html')
+                elif role == 'dean':
+                    return render_template('dean-dashboard.html')
+                else:
+                    return render_template( 'video.html') #default fallback 
+            else:
+                error = 'Incorrect email or password'
+                return render_template('login.html', messages=[error])
         else:
             error = 'Incorrect email or password'
-            return render_template('login.html', error=error)
+            return render_template('login.html', messages=[error])
 
     return render_template('login.html')
 
 
+# hashed_password = User.hash_password("supervisor")
+# new_user = User(
+#                 full_name="Dr. Thabo Ndlovu",
+#                 email="thabo.ndlovu@uj.ac.za",
+#                 password=hashed_password,
+#                 student_number="",
+#                 supervisor_id="",
+#                 role="SUPERVISOR"
+#             )
 
-@app.route('/api/login', methods =['GET', 'POST'])
-def login():
-    msg = {}
-    data = request.get_json()
-    if request.method == 'POST' and 'email' in data and 'password' in data:
-        loginEmail = data.get('email').strip()
-        loginPassword = data.get('password').strip()
-
-        user = db_session.query(User).filter_by(email=loginEmail).first()
-        
-        if user and user.verify_password(loginPassword):
-            session['loggedin'] = True
-            session['id'] = user.user_id
-            session['first_name'] = user.full_name
-            msg["message"] = 'Logged in successfully!'
-        else:
-            msg['message'] = 'Incorrect username / password!'
-            return jsonify(msg), 400
-    else:
-        msg['message'] = 'Invalid Request / Missing email or password'
-        return jsonify(msg), 400
-    
-    return render_template('login.html')
-
+# db_session.add(new_user)
+# db_session.commit()
 
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
+    supervisors = db_session.query(User).filter(User.role == UserRole.SUPERVISOR).all()
     msg = {}
-    data = request.get_json()
-    required_fields = ["full_name", "student_number", "email", "password", "supervisor_id"]
-
-    if request.method == 'POST' and all(key in data for key in required_fields):
-        full_name = data['full_name'].strip()  # Todo : Capitalize first name and last name
-        student_number = data['student_number'].strip()
-        email = data['email'].strip().lower()
-        password = data['password'].strip()
-        supervisor_id = data['supervisor_id']
+    
+    if request.method == 'POST':
+        full_name = request.form.get('full_name', '').strip()
+        student_number = request.form.get('student_number', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '').strip()
+        supervisor_id = request.form.get('supervisors')
         
-        # validate UJ email
+        # Debug print to verify raw inputs
+        print("Raw inputs:", full_name, student_number, email, password, supervisor_id)
+        
+        # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
-            msg['message'] = "Only University of Johannesburg email allowed"
-            return jsonify(msg), 400
-        
-        # validate password (To be improved later)
+            msg = "Only University of Johannesburg email allowed"
+            return render_template('register.html', messages=[msg], supervisors=supervisors)
+
+        # Validate password
         is_valid, message = validate_password(password)
         if not is_valid:
             msg['message'] = message
-            return jsonify(msg), 400
-        
+            return render_template('register.html', messages=msg, supervisors=supervisors)
+
+        # Check if user exists
         user = db_session.query(User).filter_by(email=email).first()
         if user:
-            msg['message'] = 'Email already registered!'
-            return jsonify(msg), 400
-        else:
+            msg = 'Email already registered!'
+            return render_template('register.html', messages=[msg], supervisors=supervisors)
+        
+        try:
+            # Hash the password properly
             hashed_password = User.hash_password(password)
-            new_user = User(full_name=full_name, student_number=student_number, email=email, password=hashed_password, supervisor_id=supervisor_id, role=UserRole.STUDENT)
+            print("Hashed password:", hashed_password)  # Debug print
+            
+            # Create new user
+            new_user = User(
+                full_name=full_name,
+                student_number=student_number,
+                email=email,
+                password=hashed_password,  # Make sure this is the hashed version
+                supervisor_id=supervisor_id,
+                role=UserRole.STUDENT
+            )
             
             db_session.add(new_user)
             db_session.commit()
             
-            msg['message'] = 'You have successfully registered!'
-    else:
-        msg['message'] = 'Please fill out the form completely!'
-        return jsonify(msg), 400
+            # Debug: Verify what was stored
+            stored_user = db_session.query(User).filter_by(email=email).first()
+            print("Stored password:", stored_user.password)  # Should start with $2b$
+            
+            msg = 'You have successfully registered!'
+            return render_template("login.html", messages=[msg])
+            
+        except Exception as e:
+            db_session.rollback()
+            print("Registration error:", str(e))
+            msg = 'Registration failed. Please try again.'
+            return render_template('register.html', messages=[msg], supervisors=supervisors)
     
-    return jsonify(msg), 200
+    msg = 'Please fill out the form completely!'
+    return render_template('register.html', messages=[msg], supervisors=supervisors)
 
 
 @app.route('/api/forgot-password', methods=['POST'])
@@ -180,12 +243,568 @@ def get_supervisors():
     
     return jsonify(result), 200
 
+
+@app.route('/ethics_pack', methods=['GET'])
+def ethics_pack ():
+    return render_template('ethics_pack.html')
+
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard ():
+    user_id = session.get('id')
+    if not user_id:
+        return "Unauthorized access. Please log in.", 401
+    form_a = db_session.query(FormA).filter_by(user_id=user_id).first()
+    date_str=''
+    if form_a:
+        date=form_a.submitted_at
+        date_str = date.strftime('%Y-%m-%d')
+  
+    return render_template('dashboard.html',date=date_str)
+
 # =====================================================================================================
 # THIS SECTION IS FOR HANDLING FORMS
 # =====================================================================================================
 
 # FORM A =====================================================================================================
 
+
+@app.route('/api/form-a/requirements', methods=['POST'])
+def submit_form_a_requirements():
+    try:
+        UPLOAD_FOLDER = 'uploads/form_a'
+        
+        # Get form data
+        needs_permission = request.form.get('need_permission') == 'Yes'
+        has_prior_clearance = request.form.get('has_clearance') == 'Yes'
+        company_requires_jbs = request.form.get('company_requires_jbs') == 'Yes'
+
+        # Get user ID from session (adjust based on your auth system)
+        user_id = session.get('id')
+        if not user_id:
+            return jsonify({'error': 'Unauthorized'}), 401
+        
+        # Create uploads directory if it doesn't exist
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        
+        # Handle file uploads
+        def save_file(file_field_name):
+            if file_field_name not in request.files:
+                return None
+            file = request.files[file_field_name]
+            if file.filename == '':
+                return None
+            if file and allowed_file(file.filename):
+                filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+                file_path = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(file_path)
+                return file_path
+            return None
+        
+        # Save files based on form field names (corrected from request.form to request.files)
+        permission_letter_path = save_file('permission_letter') if needs_permission else None
+        prior_clearance_path = save_file('prior_clearance') if has_prior_clearance else None
+        research_tools_path = save_file('research_tools')
+        proposal_path = save_file('proposal')
+        impact_assessment_path = save_file('impact_assessment')
+        
+        # Validate required files
+        if not all([research_tools_path, proposal_path, impact_assessment_path]):
+            return jsonify({'error': 'Missing required files'}), 400
+            
+        # Check if form exists for this user
+        form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
+        print("path ",impact_assessment_path)
+        if form:
+            # Update existing form
+            form.needs_permission = needs_permission
+            form.has_prior_clearance = has_prior_clearance
+            form.company_requires_jbs = company_requires_jbs
+            
+            if permission_letter_path:
+                form.permission_letter_path = permission_letter_path
+            if prior_clearance_path:
+                form.prior_clearance_path = prior_clearance_path
+            if research_tools_path:
+                form.research_tools_path = research_tools_path
+            if proposal_path:
+                form.proposal_path = proposal_path
+            if impact_assessment_path:
+                form.impact_assessment_path = impact_assessment_path
+        else:
+            # Create new record
+            form = FormARequirements(
+                user_id=user_id,
+                needs_permission=needs_permission,
+                permission_letter_path=permission_letter_path,
+                has_prior_clearance=has_prior_clearance,
+                prior_clearance_path=prior_clearance_path,
+                company_requires_jbs=company_requires_jbs,
+                research_tools_path=research_tools_path,
+                proposal_path=proposal_path,
+                impact_assessment_path=impact_assessment_path
+            )
+        
+        db_session.add(form)
+        db_session.commit()
+        
+        return jsonify({
+            'message': 'Form A requirements submitted successfully',
+            'id': str(form.id)
+        }), 201
+        
+    except Exception as e:
+        db_session.rollback()
+        return jsonify({'error': str(e)}), 500
+    
+
+
+
+@app.route('/submit_form_a_upload', methods=['GET', 'POST'])
+def submit_form_a_upload ():
+    try:
+        id_list = []
+        for field in ['permission_letter', 'prior_clearance', 'need_jbs_clearance', 'research_tools', 'proposal', 'impact_assessment']:
+            file = request.files.get(field)
+            if file:
+                upload = Documents(
+                    filename=file.filename,
+                    data=file.read(),
+                    content_type=file.content_type,
+                    field_name=field
+                )
+                db_session.add(upload)
+                db_session.commit()
+                id_list.append(upload.id)
+
+        new_file_list = FormUploads(
+                    student_id = session['id'],
+                    files = json.dumps(id_list),
+                    form_type = 'formA',
+                )
+        db_session.add(new_file_list)
+        db_session.commit()      
+        session['formA-attachments_id'] = new_file_list.id 
+        return jsonify({"message": "Information saved!"}),200
+    except:
+        return jsonify({"message": "Error, please check all attachments. or check dashboard to continue with form"}),400
+
+@app.route('/edit-form-a/<form_id>', methods=['GET'])
+def edit_form_a(form_id):
+    data = getFormAData(form_id)
+    return render_template('form-a-section1.html', formdata = data)
+
+# ---------------- Section 1 ------------------
+@app.route('/form_a_sec1', methods=['GET', 'POST'])
+def form_a_sec1 ():
+    sup_list = getSupervisorsList()
+    if request.method == 'POST':
+        # Verify user is logged in
+        user_id = session.get('id')
+        if not user_id:
+            return jsonify({'error': 'Unauthorized'}), 401
+
+        # Get form data
+        form_data = request.form
+        user = db_session.query(User).filter(User.user_id == user_id).first()
+        supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
+        form_requirements = db_session.query(FormARequirements).filter(FormARequirements.user_id == user_id).first()
+        # Create new record
+        form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if form:
+            form.user_id=user_id
+            form.attachment_id=form_requirements.id
+            form.applicant_name=form_data.get('applicant_name')
+            form.student_number=form_data.get('student_number')
+            form.institution=form_data.get('institution')
+            form.department=form_data.get('department')
+            form.degree=form_data.get('degree')
+            form.study_title=form_data.get('study_title')
+            form.mobile=form_data.get('mobile')
+            form.email=user.email
+            form.supervisor=supervisor.full_name
+            form.supervisor_email=supervisor.email
+        else:
+            form=FormA(
+            user_id=user_id,
+            attachment_id=form_requirements.id,
+            applicant_name=form_data.get('applicant_name'),
+            student_number=form_data.get('student_number'),
+            institution=form_data.get('institution'),
+            department=form_data.get('department'),
+            degree=form_data.get('degree'),
+            study_title=form_data.get('study_title'),
+            mobile=form_data.get('mobile'),
+            email=user.email,
+            supervisor=supervisor.full_name,
+            supervisor_email=supervisor.email,
+           )
+
+        db_session.add(form)
+        db_session.commit()
+        message='form submitted succesffuly'
+        return render_template("form-a-section2.html",messages=[message])
+
+    
+    return render_template('form-a-section1.html', supervisors=sup_list)
+        
+
+   
+@app.route('/submit_form_a_sec1', methods=['GET', 'POST'])
+def submit_form_a_sec1 ():
+    # Dynamically build kwargs from submitted fields matching model attributes
+    field_data = {"user_id":session['id'], "attachment_id":session['formA-attachments_id']}
+    for key, value in request.form.items():
+        if hasattr(FormA, key):
+            field_data[key] = value
+
+    formA_record = FormA(**field_data)
+    db_session.add(formA_record)
+    db_session.commit()
+    session['formA_id'] = formA_record.id
+    return render_template('form-a-section2.html')
+
+# ---------------- Section 2 ------------------
+@app.route('/form_a_sec2', methods=['GET', 'POST'])
+def form_a_sec2 ():
+    data = request.form
+    if request.method == 'POST':
+        user_id = session.get('id')
+
+        # Fetch the existing record using user_id
+        form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if not form:
+            return "No existing Form A record found for this user.", 404
+        
+        if data.get('survey')=='yes':
+            survey=True
+        else:
+            survey=False
+        if data.get('focus_groups')=='yes':
+            focus_groups=True
+        else:
+            focus_groups=False
+        if data.get('observations')=='yes':
+            observations=True
+        else:
+            observations=False
+        if data.get('interviews')=='yes':
+            interviews=True
+        else:
+            interviews=False
+        if data.get('documents')=='yes':
+            documents=True
+        else:
+            documents=False
+        if data.get('age_range')=='yes':
+            age_range=True
+        else:
+            age_range=False
+        if data.get('non_english')=='yes':
+            non_english=True
+        else:
+            non_english=False
+        if data.get('uj_employees')=='yes':
+            uj_employees=True
+        else:
+            uj_employees=False
+        form.other_sec2 = data.get('vulnerable_other_specify')
+        
+        form.survey=survey
+        form.focus_groups=focus_groups
+        form.observations=observations
+        form.interviews=interviews
+        form.documents=documents
+        form.age_range=age_range
+        form.non_english=non_english
+        form.uj_employees=uj_employees
+        
+    
+        db_session.add(form)
+        db_session.commit()
+        message= 'Form A submitted successfully'
+        return render_template("form-a-section3.html",messsages=[message])
+    return render_template('form-a-section2.html')
+
+@app.route('/submit_form_a_sec2', methods=['GET', 'POST'])
+def submit_form_a_sec2 ():
+    form_id = session['formA_id']
+    # form = db_session.query(FormA).filter_by(id=form_id).first()
+    for key, value in request.form.items():
+        print(f'{key}: {value}')
+
+    form_record = db_session.query(FormA).get(form_id)
+
+    # Loop through all form fields and update the model
+    # check if type is 
+    boolean_fields = {'survey', 'focus_groups', 'observations', 'documents','interviews', 'non_english', 'age_range'}
+    # First, handle ALL boolean fields
+    for field in boolean_fields:
+        if hasattr(form_record, field):
+            setattr(form_record, field, field in request.form)
+
+    # Then, handle all text/other fields
+    for key, value in request.form.items():
+        if hasattr(form_record, key) and key not in boolean_fields:
+            setattr(form_record, key, value)
+
+
+    db_session.commit()
+    return render_template('form-a-section3.html')
+
+# ---------------- Section 3 ------------------
+@app.route('/form_a_sec3', methods=['GET', 'POST'])
+def form_a_sec3 ():
+    if request.method == 'POST':
+        data = request.form
+        user_id = session.get('id')
+
+        if not user_id:
+            return "Unauthorized access. Please log in.", 401
+        
+        form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if not form:
+            return "No existing Form A record found for this user.", 404
+        
+
+        form.title_provision=data.get('title_provisional')
+        form.abstract=data.get('abstract')
+        form.questions=data.get('questions')
+        form.purpose_objectives=data.get('purpose_objectives')
+
+        form.org_name=data.get('org_name')
+        form.org_contact=data.get('org_contact')
+        form.org_role=data.get('org_role')
+        form.org_permission=data.get('org_permission')
+
+        form.researcher_affiliation=data.get('researcher_affiliation')
+        form.affiliation_details=data.get('affiliation_details')
+
+        form.collective_involvement=data.get('collective_involvement')
+        form.collective_details=data.get('collective_details')
+
+        form.is_funded=data.get('is_funded')
+        form.fund_org=data.get('fund_org')
+        form.fund_contact=data.get('fund_contact')
+        form.fund_role=data.get('fund_role')
+        form.fund_amount=data.get('fund_amount')
+
+        form.indemnity_arrangements=data.get('indemnity_arrangements')
+        form.other_committee=data.get('other_committee')
+    
+
+        db_session.add(form)
+        db_session.commit()
+        message= 'Form submitted successfully'
+        print("im here")
+        return render_template("form-a-section4.html",messsages=[message])
+    return render_template('form-a-section3.html')
+
+
+@app.route('/form_a_upload', methods=['GET'])
+def form_a_upload ():
+    return render_template('form-a-upload.html')
+
+# ---------------- Section 4 ------------------
+@app.route('/form_a_sec4', methods=['GET', 'POST'])
+def form_a_sec4():
+    print("form 4")
+
+    if request.method == 'POST':
+        user_id = session.get('id')
+        if not user_id:
+            return "Unauthorized access. Please log in.", 401
+
+        # Fetch existing form entry for the user
+        form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if not form:
+            return "No existing Form A record found for this user.", 404
+
+        # Update form fields from form data
+        form.paradigm = ','.join(request.form.getlist('paradigm'))
+        form.paradigm_explanation = request.form.get('paradigm_explanation')
+        form.design = request.form.get('design')
+        form.participants_description = request.form.get('participants_description')
+        form.population = request.form.get('population')
+        form.sampling_method = request.form.get('sampling_method')
+        
+        # Convert to int safely if possible
+        sample_size = request.form.get('sample_size')
+        form.sample_size = int(sample_size) if sample_size and sample_size.isdigit() else None
+
+        form.inclusion_criteria = request.form.get('inclusion_criteria')
+        form.duration_timing = request.form.get('duration_timing')
+        form.contact_details_method = request.form.get('contact_details_method')
+
+        if request.form.get('conflict_interest')=='yes':
+            form.conflict_interest = True
+        else: 
+            form.conflict_interest=False
+        
+        form.conflict_explanation = request.form.get('conflict_explanation')
+        form.questionnaire_type = request.form.get('questionnaire_type')
+
+        if request.form.get('permission_obtained') == 'yes':
+            form.permission_obtained = True
+        
+        if request.form.get('open_source'):
+            form.open_source = True
+        
+        form.instrument_attachment_reason = request.form.get('instrument_attachment_reason')
+        form.data_collection_procedure = request.form.get('data_collection_procedure')
+        form.interview_type = ','.join(request.form.getlist('interview_type'))
+        form.interview_recording = ','.join(request.form.getlist('interview_recording'))
+
+        if request.form.get('use_focus_groups')== 'yes':
+            form.use_focus_groups = True
+        else:
+            form.use_focus_groups=False
+    
+        form.focus_recording = ','.join(request.form.getlist('focus_recording'))
+        form.data_collectors = request.form.get('data_collectors')
+
+        if request.form.get('intervention')=='yes':
+            form.intervention = True
+        else:
+            form.intervention=False
+
+        form.intervention_details = request.form.get('intervention_details')
+        form.sensitive_data = request.form.get('sensitive_data')
+
+        if request.form.get('translator')=='yes':
+            form.translator = True
+        else:
+            form.translator=False
+
+        form.translator_procedure = request.form.get('translator_procedure')
+
+        if request.form.get('secondary_data')=='yes':
+            form.secondary_data = True
+        else:
+            form.secondary_data=False
+
+        form.secondary_data_details = request.form.get('secondary_data_details')
+
+        # Handle file upload
+        file = request.files.get('focus_group_questions')
+        if file and file.filename:
+            upload_folder = app.config.get('UPLOAD_FOLDER', 'uploads')
+            os.makedirs(upload_folder, exist_ok=True)
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(upload_folder, filename)
+            file.save(file_path)
+            form.focus_group_questions_filename = filename
+
+        # Save changes to DB
+        db_session.commit()
+
+        message = 'Form submitted successfully'
+        return render_template('form-a-section5.html', messages=[message])
+
+    return render_template('form-a-section4.html')
+
+@app.route('/submit_form_a_sec4', methods=['GET', 'POST'])
+def submit_form_a_sec4 ():
+    return render_template('form-a-section5.html')
+
+# ---------------- Section 5 ------------------
+@app.route('/form_a_sec5', methods=['GET', 'POST'])
+def form_a_sec5 ():
+    if request.method == 'POST':
+        user_id = session.get('id')
+        print("User ID from session:", user_id)
+
+        if not user_id:
+            return "Unauthorized access. Please log in.", 401
+
+        # Fetch existing form entry for the user
+        form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if not form:
+            return "No existing Form A record found for this user.", 404
+        
+        
+        
+        form.informed_consent=request.form.get('informed_consent')
+        form.data_storage=request.form.getlist('data_storage[]')
+        form.study_benefits=request.form.get('study_benefits')
+        form.participant_risks=request.form.get('participant_risks')
+        form.adverse_steps=request.form.get('adverse_steps')
+        form.community_participation=request.form.get('community_participation')
+        form.community_effects=request.form.get('community_effects')
+        form.privacy=request.form.getlist('privacy[]')
+        form.q6_9a= request.form.get("q6_9a")=='yes'
+        form.q6_9b=request.form.get("q6_9b")=='yes'
+        form.q6_9c=request.form.get("q6_9c")=='yes'
+        form.q6_9d=request.form.get("q6_9d")=='yes'
+        form.q6_9e=request.form.get("q6_9e")=='yes'
+        form.q6_9f=request.form.get("q6_9f")=='yes'
+        form.q6_9g=request.form.get("q6_9g")=='yes'
+        form.q6_9i=request.form.get("q6_9i")=='yes'
+        form.q6_9j=request.form.get("q6_9j")=='yes'
+        form.q6_9k=request.form.get("q6_9k")=='yes'
+        form.q6_9i=request.form.get("q6_9i")=='yes'
+        form.q6_9j=request.form.get("q6_9j")=='yes'
+        form.q6_9k=request.form.get("q6_9k")=='yes'
+        form.q6_9l=request.form.get("q6_9l")=='yes'
+        form.q6_9m=request.form.get("q6_9m")=='yes'
+        form.q6_9n=request.form.get("q6_9n")=='yes'
+        form.q6_9o=request.form.get("q6_9o")=='yes'
+        form.q6_9p=request.form.get("q6_9p")=='yes'
+        form.q6_9q=request.form.get("q6_9q")=='yes'
+        form.q6_9r=request.form.get("q6_9r")=='yes'
+        form.q6_9s=request.form.get("q6_9s")=='yes'
+        form.results_feedback=request.form.get('results_feedback')
+        form.products_access=request.form.get('products_access')
+        form.publication_plans=request.form.get('publication_plans')
+        form.participant_comp=request.form.get('participant_comp')
+        form.participant_costs=request.form.get('participant_costs')
+        form.ethics_reporting=request.form.get('ethics_reporting')
+    
+        db_session.add(form)
+        db_session.commit()
+        return render_template('form-a-section6.html')  # Next section
+        
+
+    return render_template('form-a-section5.html')
+
+@app.route('/submit_form_a_sec5', methods=['GET', 'POST'])
+def submit_form_a_sec5 ():
+    return render_template('form-a-section6.html')
+
+# ---------------- Section 6 ------------------
+@app.route('/form_a_sec6', methods=['GET', 'POST'])
+def form_a_sec6 ():
+    if request.method == 'POST':
+        user_id = session.get('id')
+        if not user_id:
+            return "Unauthorized access. Please log in.", 401
+
+        form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if not form:
+            return "No existing Form A record found for this user.", 404
+
+        # Save declaration section
+        form.declaration_name = request.form.get('declaration_name')
+        form.applicant_signature = request.form.get('applicant_signature')
+
+        # Convert string to date
+        date_str = request.form.get('declaration_date')
+        try:
+            form.declaration_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        except (ValueError, TypeError):
+            return "Invalid date format. Please use YYYY-MM-DD.", 400
+
+        db_session.add(form)
+        db_session.commit()
+        messages="Form A submitted successfully."
+        return redirect(url_for('dashboard'))  # or any final confirmation route
+
+    
+    return render_template('form-a-section6.html')
+
+@app.route('/submit_form_a_sec6', methods=['GET', 'POST'])
+def submit_form_a_sec6 ():
+    return render_template('dashboard.html')
 
 
 
@@ -197,6 +816,217 @@ def get_form_b(form_id):
     if not form_b:
         return jsonify({"message": "Form not found"}), 404
     return jsonify(form_b.to_dict()), 200
+
+
+
+
+@app.route('/form_b_upload', methods=['GET','POST'])
+def form_b_upload():
+    UPLOAD_FOLDER = 'uploads/form_b'
+    user_id = session.get('id')
+    print("something")
+    if not user_id:
+        return "Unauthorized", 401
+    
+    if request.method=='POST':
+        form = db_session.query(FormB).filter_by(user_id=user_id).first()
+        # Get form data
+        need_permission = request.form.get('need_permission')
+        has_clearance = request.form.get('has_clearance')
+        has_ethics_evidence = request.form.get('has_ethics_evidence')
+
+        # Create upload folder if it doesn't exist
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+        def save_file(field_name):
+            file = request.files.get(field_name)
+            if file and file.filename:
+                filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+                file_path = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(file_path)
+                print(f"Saved file to: {file_path}")
+                return file_path  # Save full path or relative path for consistency
+            return None
+
+        permission_letter = save_file('permission_letter')
+        prior_clearance = save_file('prior_clearance')
+        ethics_evidence = save_file('ethics_evidence')
+        proposal = save_file('proposal')
+
+        if form:
+            form.user_id=user_id
+            form.need_permission=need_permission=='Yes'
+            form.permission_letter=permission_letter
+            form.has_clearance=has_clearance=='Yes'
+            form.prior_clearance=prior_clearance
+            form.has_ethics_evidence=has_ethics_evidence=='Yes'
+            form.ethics_evidence=ethics_evidence
+            form.proposal=proposal
+        else:
+            # Save to database
+            form = FormB(
+                user_id=user_id,
+                need_permission=need_permission=='Yes',
+                permission_letter=permission_letter,
+                has_clearance=has_clearance=='Yes',
+                prior_clearance=prior_clearance,
+                has_ethics_evidence=has_ethics_evidence=='Yes',
+                ethics_evidence=ethics_evidence,
+                proposal=proposal
+            )
+
+        db_session.add(form)
+        db_session.commit()
+        message="form submited succesffuly"
+        print("submited")
+        return render_template("form-b-section1.html",messages=[message])
+
+    return render_template("form-b-upload.html")
+
+
+@app.route('/form_b_sec1', methods=['GET','POST'])
+def form_b_sec1():
+    if request.method == 'POST':
+        print("im here ")
+        user_id=session.get('id')
+        if not user_id:
+            return jsonify({'error':'unauthorized'}),401
+        
+        form_data=request.form
+        user = db_session.query(User).filter(User.user_id == user_id).first()
+        supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
+        form = db_session.query(FormB).filter_by(user_id=user_id).first()
+        if form:
+            form.user_id=user_id
+            form.applicant_name=form_data.get('applicant_name')
+            form.student_number=form_data.get('student_number')
+            form.institution=form_data.get('institution')
+            form.department=form_data.get('department')
+            form.degree=form_data.get('degree')
+            form.study_title=form_data.get('study_title')
+            form.mobile=form_data.get('mobile')
+            form.email=user.email
+            form.supervisor=supervisor.full_name
+            form.supervisor_email=supervisor.email
+        else:
+            form=FormB(
+                user_id=user_id,
+                applicant_name=form_data.get('applicant_name'),
+                student_number=form_data.get('student_number'),
+                institution=form_data.get('institution'),
+                department=form_data.get('department'),
+                degree=form_data.get('degree'),
+                study_title=form_data.get('study_title'),
+                mobile=form_data.get('mobile'),
+                email=user.email,
+                supervisor=supervisor.full_name,
+                supervisor_email=supervisor.email,
+            )
+        db_session.add(form)
+        db_session.commit()
+        message='form submitted succesffuly'
+        return render_template("form-b-section2.html",messages=[message])
+    return render_template('form-b-section1.html')
+
+
+@app.route('/form_b_sec2', methods=['GET','POST'])
+def form_b_sec2():
+    user_id = session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    if request.method == 'POST':
+        form_data = request.form
+
+        form = db_session.query(FormB).filter_by(user_id=user_id).first()
+
+        if not form:
+            form = FormB(user_id=user_id)
+
+        form.project_description = form_data.get('project_description')
+        form.data_nature = form_data.get('data_nature')
+        form.data_origin = form_data.get('data_origin')
+
+        if form_data.get('data_public')=='Yes':
+            form.data_public = True
+        else: 
+            form.data_public=False
+
+        form.public_evidence = form_data.get('public_evidence')
+        form.access_conditions = form_data.get('access_conditions')
+
+        if form_data.get('personal_info')== 'Yes':
+            form.personal_info = True
+        else:
+            form.personal_info=False
+
+        form.data_anonymized = form_data.get('data_anonymized')
+        form.anonymization_comment = form_data.get('anonymization_comment')
+
+        if form_data.get('private_permission')=='Yes':
+            form.private_permission = True
+        else:
+            form.private_permission=False
+
+        form.permission_details = form_data.get('permission_details')
+
+        if form_data.get('shortcomings_reported')=="Yes":
+            form.shortcomings_reported = True
+        else:
+            form.shortcomings_reported=False
+
+        form.limitations_reporting = form_data.get('limitations_reporting')
+
+        if form_data.get('methodology_alignment')=="Yes":
+            form.methodology_alignment = True
+        else:
+            form.methodology_alignment=False
+
+        form.data_acknowledgment = form_data.get('data_acknowledgment')
+
+        db_session.add(form)
+        db_session.commit()
+        message="Section 2 saved successfully."
+
+        return render_template("form-b-section3.html", messages=[message])
+
+    return render_template('form-b-section2.html')
+
+@app.route('/form_b_sec3', methods=['GET','POST'])
+def form_b_sec3():
+    user_id = session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    if request.method == 'POST':
+        try:
+            form = db_session.query(FormB).filter_by(user_id=user_id).first()
+            if not form:
+                form = FormB(user_id=user_id)
+          
+            form.original_clearance=request.form.get('original_clearance')
+            form.participant_permission=request.form.get('participant_permission')
+            form.data_safekeeping=request.form.get('data_safekeeping')
+            form.risk_level=request.form.get('risk_level')
+            form.risk_comments=request.form.get('risk_comments')
+            form.declaration_name=request.form.get('declaration_name')
+            form.full_name=request.form.get('full_name')
+            form.declaration_date=datetime.strptime(request.form.get('declaration_date'), '%Y-%m-%d')
+            
+            db_session.add(form)
+            db_session.commit()
+            return render_template('dashboard.html', messages=[], show_modal=True)
+        except Exception as e:
+            db_session.rollback()
+            flash(f"An error occurred: {str(e)}", 'danger')
+            return render_template('form_b_section3.html', messages=[str(e)], show_modal=False)
+    return render_template('form_b_section3.html', messages=[], show_modal=False)
+
+
+@app.route('/form_c_sec1', methods=['GET','POST'])
+def form_c_sec1():
+
+    return render_template("form-c-section1.html")
 
 
 
@@ -304,6 +1134,30 @@ def get_form_c(form_id):
     if not form_c:
         return jsonify({"message": "Form not found"}), 404
     return jsonify(form_c.to_dict()), 200
+
+
+
+@app.route('/request-reset', methods=['POST'])
+def request_reset():
+    email = request.form.get('email')
+    token = generate_reset_token(email)
+    if token:
+        reset_link = url_for('reset_password', token=token, _external=True)
+        send_email(
+            to=email,
+            subject="Password Reset",
+            body=f"Click here to reset: {reset_link}"
+        )
+        return "Reset email sent!"
+    return "Email not found", 404
+
+
+def validate_reset_token(token):
+    user = User.query.filter_by(reset_token=token).first()
+    if user and user.reset_token_expiry > datetime.utcnow():
+        return user  # Token is valid
+    return None  # Token is invalid/expired
+
 
 # =====================================================================================================
 # END OF FORMS

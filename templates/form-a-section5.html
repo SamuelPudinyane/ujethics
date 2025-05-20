@@ -38,7 +38,17 @@
     <div class="progress-bar">
       <div class="progress-fill">84%</div>
     </div>
-
+<form action="{{url_for('form_a_sec5')}}" method="post">
+  <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <!-- Section 6 – Ethical Considerations -->
 <div class="form-section" id="section6">
     <h2>SECTION 6 – ETHICAL CONSIDERATIONS</h2>
@@ -147,7 +157,7 @@
         <!-- Navigation Buttons -->
         <div class="form-navigation">
           <a href="form-a-section4.html" class="revise-btn">⬅ Section 4</a>
-          <a href="form-a-section6.html"  class="approve-btn">Next ➔ Section 5</a>
+          <button type="submit"   class="approve-btn">Next ➔ Section 5</button>
         </div>
       </form>
   
@@ -157,7 +167,17 @@
     <footer class="footer">
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>
-
+<script>
+      // Hide alert after 3 seconds
+      setTimeout(function () {
+        const alert = document.getElementById("alertMessage");
+        if (alert) {
+          alert.classList.remove("show"); // Bootstrap fade out
+          alert.classList.add("fade"); // add fade class
+          alert.style.display = "none"; // or use .remove() if you prefer
+        }
+      }, 3000); // 3000ms = 3 seconds
+    </script>
     </body>
     </html>
   

@@ -31,18 +31,17 @@
 </head>
 
 <body>
-
-  <header class="navbar">
+<header class="navbar">
     <div class="nav-content">
-      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Ethics Application System</span>
-                     <!-- Logout -->
+    </div>
     <div style="text-align: right;">
 
       <a href="logout.html" class="btn-logout">Logout</a>
     </div>
-    </div>
   </header>
+ 
 
   <main class="main-content">
     <h2>Ethics Training Videos</h2>
@@ -138,7 +137,7 @@
     });
 
     continueBtn.addEventListener("click", () => {
-      window.location.href = "ethics_app.html";
+      window.location.href = "{{ url_for('ethics_pack') }}";
     });
 
 

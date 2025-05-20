@@ -44,8 +44,8 @@
 
   <main class="main-content">
     <h2>Before You Start Form A</h2>
-    <form id="formARequirements">
-
+    <form id="formARequirements" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="question-block">
         <label>1. Will you require permission to access the company or organisation?</label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
@@ -86,11 +86,11 @@
 
       <div class="question-block">
         <label>5. Upload Personal Impact Assessment Form</label>
-        <input type="file" name="proposal" accept=".pdf,.docx" required>
+        <input type="file" name="impact_assessment" accept=".pdf,.docx" required>
       </div>
 
       <div class="form-navigation">
-        <a href="dashboard.html" class="revise-btn">⬅ Back</a>
+        <a href="#" class="revise-btn" id="backButton">⬅ Back</a>
         <button type="submit" class="approve-btn">Proceed to Form A</button>
       </div>
     </form>
@@ -115,10 +115,39 @@
     toggleUpload('need_permission', 'companyLetterUpload');
     toggleUpload('has_clearance', 'clearanceUpload');
 
-    document.getElementById("formARequirements").addEventListener("submit", function (e) {
-      e.preventDefault();
-      window.location.href = "form-a-section1.html";
-    });
+    document.getElementById("formARequirements").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    // Validate files
+    const researchTools = document.querySelector('input[name="research_tools"]').files[0];
+    const proposal = document.querySelector('input[name="proposal"]').files[0];
+    const impactAssessment = document.querySelector('input[name="impact_assessment"]').files[0];
+    
+    if (!researchTools || !proposal || !impactAssessment) {
+        alert("Please upload all required files!");
+        return;
+    }
+
+    const formData = new FormData(this);
+    
+    try {
+        const response = await fetch('/api/form-a/requirements', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(error);
+        }
+        
+        window.location.href = "{{ url_for('form_a_sec1') }}";
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Submission failed: " + error.message);
+    }
+});
+
   </script>
 
 </body>

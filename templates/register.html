@@ -16,7 +16,7 @@
   <!-- Include layout.html navbar -->
   <header class="navbar">
     <div class="nav-content">
-      <img src="img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Ethics Application System</span>
     </div>
   </header>
@@ -25,25 +25,35 @@
   <main class="main-content">
     <h2 class="centered-text">Register</h2>
     <p id="message" style="color: red;"></p>
-    <form action="#" id="registerForm">
-      <input id="full-name" type="text" placeholder="Enter Full Name" required>
-      <input id="student-number" type="text" placeholder="Enter Student Number" required>
-      <input id="email" type="email" placeholder="Enter UJ Email" required>
-      <input id="password" type="password" placeholder="Create password" required>
+    <form action="{{ url_for('register') }}" id="registerForm" method="post">
+       {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+  <input id="full-name" name="full_name" type="text" placeholder="Enter Full Name" required>
+  <input id="student-number" name="student_number" type="text" placeholder="Enter Student Number" required>
+  <input id="email" name="email" type="email" placeholder="Enter UJ Email" required>
+  <input id="password" name="password" type="password" placeholder="Create password" required>
 
-      <h4 class="centered-text">Supervisor Details</h4>
-      <label for="supervisors">Choose supervisor from list:</label>
-      <select id="supervisors" name="supervisors" required>
-        <option value="" disabled selected>-- Click to select --</option>
-      </select>
-      <input id="sup-email" type="email" placeholder="Supervisor Email" required disabled>
+  <h4 class="centered-text">Supervisor Details</h4>
+  <label for="supervisors">Choose supervisor from list:</label>
+  <select id="supervisors" name="supervisors" required>
+    <option value="" disabled selected>-- Click to select --</option>
+    {% for supervisor in supervisors %}
+    <option value="{{supervisor.user_id}}" data-email="{{ supervisor.email }}">{{supervisor.full_name}}</option>
+    {% endfor %}
+  </select>
 
-      <a href="login.html" class="btn-link">
-        <button type="button">Register</button>
-      </a>
-      
-    </form>
-    <p class="switch-link">Already have an account? <a href="login.html">Login</a></p>
+  <input id="sup-email" type="email" name="sub_email" placeholder="Supervisor Email" required disabled>
+
+  <button type="submit">Register</button>
+</form>
+
+    <p class="switch-link">Already have an account? <a href="{{url_for('login_page')}}">Login</a></p>
   </main>
 
   <!-- Footer -->
@@ -51,65 +61,27 @@
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
 
-  <script>
-window.addEventListener('DOMContentLoaded', function () {
-  // ✅ Dummy list of supervisors
-  const dummySupervisors = [
-    { user_id: "sup001", full_name: "Prof. Lerato Mokoena", email: "lmokoena@uj.ac.za" },
-    { user_id: "sup002", full_name: "Dr. John Naidoo", email: "jnaidoo@uj.ac.za" },
-    { user_id: "sup003", full_name: "Ms. Zanele Dlamini", email: "zdlamini@uj.ac.za" }
-  ];
-
-  function loadSupervisors() {
-    const select = document.getElementById('supervisors');
-    select.length = 1; // keep placeholder
-    dummySupervisors.forEach(sup => {
-      const option = document.createElement('option');
-      option.value = sup.user_id;
-      option.textContent = sup.full_name;
-      option.setAttribute('data-email', sup.email);
-      select.appendChild(option);
-    });
-  }
-
-  document.getElementById('supervisors').addEventListener('change', function () {
-    const selected = this.options[this.selectedIndex];
-    const email = selected.getAttribute('data-email') || '';
-    document.getElementById('sup-email').value = email;
-  });
-
-  document.getElementById('email').addEventListener('input', function () {
-    const message = document.getElementById('message');
-    const email = this.value;
-    if (!email.endsWith('@uj.ac.za')) {
-      message.textContent = 'Only UJ email addresses are allowed.';
-    } else {
-      message.textContent = '';
-    }
-  });
-
-  document.getElementById('registerForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const full_name = document.getElementById('full-name').value;
-    const student_number = document.getElementById('student-number').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const supervisor_id = document.getElementById('supervisors').value;
-
-    if (!email.endsWith('@uj.ac.za')) {
-      document.getElementById('message').textContent = 'Only UJ email addresses are allowed.';
-      return;
-    }
-
-    alert('Registered successfully! Redirecting to login...');
-    window.location.href = 'login.html';
-  });
-
-  loadSupervisors();
-});
-
-  </script>
+   <script>
+    
+    // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
   
+  const supervisorSelect = document.getElementById("supervisors");
+  const emailInput = document.getElementById("sup-email");
+
+  supervisorSelect.addEventListener("change", function () {
+    const selectedOption = this.options[this.selectedIndex];
+    const email = selectedOption.getAttribute("data-email");
+    emailInput.value = email || "";
+  });
+</script>
 </body>
 
 </html>

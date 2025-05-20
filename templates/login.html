@@ -21,72 +21,41 @@
   <!-- Login Form -->
   <main class="main-content">
     <h2 class="centered-text">Login</h2>
-    <form action="#" id="loginForm">
+     <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+    <form action="{{ url_for('login_page')}} " method="post" id="loginForm">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <p id="message" style="color: red;"></p>
-      <input type="email" id="email" placeholder="UJ Email" required>
-      <input type="password" id="password" placeholder="Password" required>
+      <input type="email" name="email" id="email" placeholder="UJ Email" required>
+      <input type="password" name="password" id="password" placeholder="Password" required>
       <a href="video.html" class="btn-link">
-        <button type="button">Login</button>
+        <button type="submit">Login</button>
       </a>
     </form>
-    <p class="switch-link">Don’t have an account? <a href="register.html">Register here</a></p>
+    <p class="switch-link">Don’t have an account? <a href="{{url_for('register')}}">Register here</a></p>
   </main>
   <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
 
-  <!-- Script -->
-  <script>
-    const BASE_URL = 'http://127.0.0.1:5000';
-
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      try {
-        const response = await fetch(BASE_URL + '/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          // Save token/user info if needed
-          document.getElementById('message').style.color = 'green';
-          document.getElementById('message').textContent = 'Login successful! Redirecting...';
-
-          // Simulate user role redirect (replace with actual role from backend if available)
-          const role = data.role || 'student'; // fallback default
-
-          if (role === 'student') {
-            window.location.href = 'video.html';
-          } else if (role === 'supervisor') {
-            window.location.href = 'supervisor-dashboard.html';
-          } else if (role === 'admin') {
-            window.location.href = 'admin-dashboard.html';
-          } else if (role === 'committee') {
-            window.location.href = 'committee-dashboard.html';
-          } else if (role === 'dean') {
-            window.location.href = 'dean-dashboard.html';
-          } else {
-            window.location.href = 'video.html'; // default fallback
-          }
-        } else {
-          document.getElementById('message').style.color = 'red';
-          document.getElementById('message').textContent = data.message || 'Login failed';
-        }
-      } catch (error) {
-        console.error(error);
-        document.getElementById('message').style.color = 'red';
-        document.getElementById('message').textContent = 'An error occurred during login';
+<script>
+    // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
       }
-    });
+    }, 3000); // 3000ms = 3 seconds
   </script>
-
 </body>
 </html>
