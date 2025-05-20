@@ -210,6 +210,46 @@
             placeholder="Details and attach proof if applicable"
           ></textarea>
         </section>
+    <h3>5.5 Secondary Data Usage</h3>
+
+    <label>Will secondary data be used?</label><br>
+    <select id="secondaryData" class="form-select" onchange="handleSecondaryData()">
+      <option value="">-- Select --</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+    
+    <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
+    
+      <label>Is the data Public or Private?</label><br>
+      <select id="dataType" class="form-select" onchange="handleDataType()">
+        <option value="">-- Select --</option>
+        <option value="private">Private</option>
+        <option value="public">Public</option>
+      </select>
+    
+      <!-- Private Data Section -->
+      <div id="privateDataSection" style="display: none; margin-top: 1rem;">
+        <label>Is the data from a company that has provided permission?</label><br>
+        <select id="privatePermission" class="form-select" onchange="handlePrivatePermission()">
+          <option value="">-- Select --</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+    
+        <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
+          <label>Please upload the permission for use of private data:</label>
+          <input type="file" name="private_permission_file" class="form-control">
+        </div>
+      </div>
+    
+      <!-- Public Data Section -->
+      <div id="publicDataSection" style="display: none; margin-top: 1rem;">
+        <label>What type of public data is going to be used?</label>
+        <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports"></textarea>
+      </div>
+    </div>
+  </section>
 
         <!-- Navigation Buttons -->
         <div class="form-navigation">

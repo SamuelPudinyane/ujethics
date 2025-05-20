@@ -16,6 +16,7 @@
   <header class="navbar">
     <div class="nav-content">
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Ethics Application System</span>
     </div>
   </header>
@@ -99,6 +100,31 @@
         select.appendChild(option);
       });
 
+    window.addEventListener('DOMContentLoaded', async function () {
+      const response = await fetch("{{ url_for('get_supervisors') }}");
+      const supervisors = await response.json();
+
+      const select = document.getElementById('supervisors');
+      select.length = 1; // keep placeholder
+      supervisors.forEach(sup => {
+        const option = document.createElement('option');
+        option.value = sup.user_id;
+        option.textContent = sup.full_name;
+        option.setAttribute('data-email', sup.email);
+        select.appendChild(option);
+      });
+
+      document.getElementById('supervisors').addEventListener('change', function () {
+        const selected = this.options[this.selectedIndex];
+        const email = selected.getAttribute('data-email') || '';
+        document.getElementById('sup-email').value = email;
+      });
+    });
+
+    const input = document.getElementById('password');
+    const tooltip = document.getElementById('passHint');
+    input.addEventListener('focus', () => tooltip.classList.add('visible'));
+    input.addEventListener('blur', () => tooltip.classList.remove('visible'));
       document.getElementById('supervisors').addEventListener('change', function () {
         const selected = this.options[this.selectedIndex];
         const email = selected.getAttribute('data-email') || '';

@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import JSON, ARRAY
 from sqlalchemy.types import PickleType
@@ -11,6 +12,7 @@ import uuid
 import bcrypt
 import datetime
 import os
+import json
 import json
 
 # mySQL_string = 'mysql+pymysql://root:password@localhost/ethics'
@@ -387,6 +389,28 @@ class FormC(Base):
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+    
+
+
+    # try:
+#     users = [
+#         User("Prof Albert Einstein", None, "eistein@uj.ac.za", "1234", None, "supervisor"),
+#         User("Prof. Lerato Mokoena", None, "lmokoena@uj.ac.za", "1234", None, "dean"),
+#         User("Dr. John Naidoo", None, "jnaidoo@uj.ac.za", "1234", None, "rec"),
+#         User("Ms. Zanele Dlamini", None, "zdlamini@uj.ac.za", "1234", None, "student"),
+#         User("Dr. Fatima Patel", None, "fpatel@uj.ac.za", "1234", None, "reviewer"),
+#         User("Prof. Tshidi Mthembu", None, "tmthembu@uj.ac.za", "1234", None, "supervisor"),
+#         User("Prof. Samuel van der Merwe", None, "svdmerwe@uj.ac.za", "1234", None, "supervisor"),
+#         User("Dr. Bongani Khumalo", None, "bkhumalo@uj.ac.za", "1234", None, "reviewer"),
+#         User("Ms. Nomsa Nkosi", None, "nnkosi@uj.ac.za", "1234", None, "reviewer"),
+#         User("Prof. Peter Botha", None, "pbotha@uj.ac.za", "1234", None, "supervisor")
+#     ]
+
+#     db_session.add_all(users)
+#     db_session.commit()
+# except Exception as e:
+#     print("Failed to store user. \n", e)
+
     
 
 

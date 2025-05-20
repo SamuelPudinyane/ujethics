@@ -23,6 +23,7 @@
       <div style="text-align: right;">
 
         <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
+        <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
       </div>
     </div>
   </header>
@@ -36,6 +37,10 @@
       <strong>Step 2 of 7</strong>
     </div>
 
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 28%">28%</div>
+    </div>
     <!-- Progress Bar -->
     <div class="progress-bar">
       <div class="progress-fill" style="width: 28%">28%</div>
@@ -118,15 +123,179 @@
           <td>Non-English-speaking participants</td>
           <td><input type="checkbox" name="non_english" value="yes"></td>
           
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>A researcher’s own students</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>People living in poverty</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>People with little or no education </td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
         </tr>
         <tr>
           <td>UJ employees or students</td>
-          <td><input type="checkbox" name="uj_employees" value="yes"></td>
-         
+          <td><input type="radio" name="uj_employees" value="yes"></td>
+          <td><input type="radio" name="uj_employees" value="no"></td>
         </tr>
       </tbody>
     </table>
 
+    <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+
+    <hr>
+
+    <table>
+      <thead>
+        <tr>
+          <th>2.2 Does your research involve any of the following types of activity?</th>
+          <th>Tick where applicable</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Collection, use or disclosure of information WITHOUT the consent of the individual whose information it
+            is, with the exception of aggregated data or data from official databases such as StatsSA, SARS, etc.</td>
+          <td><input type="checkbox" name="age_range"></td>
+
+        </tr>
+        <tr>
+          <td>Causing discomfiture to participants beyond normal levels of inconvenience</td>
+          <td><input type="checkbox" name="non_english"></td>
+
+        </tr>
+        <tr>
+          <td>Deception of participants, concealment or covert observation</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Examining potentially sensitive or contentious issues</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Seeking disclosure of information which may be prejudicial to participants</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Using intrusive techniques</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Study of or participation in illegal activities</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Personal and social information collected directly from participants</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Identifiable information to be collected about people from available records (e.g., staff records, student
+            records, etc.)</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Psychology inventories / scales / tests</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Activities which may place the researcher(s) / data collector at risk</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>Other: Provide a description</td>
+          <td><input type="text" class="form-control d-inline" name="activity_specify" placeholder="Specify"></td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+    <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+
+    <hr>
+
+    <table>
+      <thead>
+        <tr>
+          <th>2.3 Do any of the following apply to your research project?</th>
+          <th>Tick where applicable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>a) Reimbursement or incentives to any participants. </td>
+          <td><input type="checkbox" name="age_range"></td>
+
+        </tr>
+        <tr>
+          <td>b) The participants will incur financial costs by participating in the study.</td>
+          <td><input type="checkbox" name="non_english"></td>
+
+        </tr>
+        <tr>
+          <td>c) At least one of the researchers has a financial or other involvement in the research (apart from their
+            research role) or may receive a reward.</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>d) Any other potential conflict of interest for any of the researchers (real or perceived financial or
+            personal considerations that may compromise a researcher’s professional judgement in carrying out or
+            reporting research, such as conducting research with colleagues, peers or students).</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>e) Research is done on the premises of UJ or any of its units.</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>f) Research will make use of some of UJs facilities (venues, software, hardware, etc.)</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td>g) Research will be funded by UJ or funding for it was acquired through UJ.</td>
+          <td><input type="checkbox" name="uj_employees"></td>
+
+        </tr>
+        <tr>
+          <td> <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mb-3">
+      <label><strong>Rate your project (Negligible, Low, Medium, High Risk):</strong><span class="info-icon"
+          title="Low risk: ; Medium risk: ' High risk:">ℹ️</span></label>
+      <select name="risk_rating" class="form-select">
+        <option value="">-- Select Risk Level --</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
     <textarea name="vulnerable_comments" rows="3" placeholder="Comments (if any)..."></textarea>
 
     <hr>
@@ -318,17 +487,7 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
-  <script>
-// Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
-  </script>
+
 </body>
 
 </html>

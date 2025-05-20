@@ -60,6 +60,8 @@ def login_page():
     if request.method == 'POST':
         email = request.form.get('email')
         user_password = request.form.get('password')
+        email = request.form.get('email')
+        user_password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
         print("user ",user)
         

@@ -19,7 +19,16 @@
         <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
         <span class="nav-title">Ethics Application System</span>
       </div>
+      <div>
+        <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+        <span class="nav-title">Ethics Application System</span>
+      </div>
 
+      <!-- Logout -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <h5>Welcome, {{name}}</h5>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+      </div>
       <!-- Logout -->
       <div style="display: flex; align-items: center; gap: 10px;">
         <h5>Welcome, {{name}}</h5>
@@ -34,6 +43,7 @@
     <!-- Form Selection -->
     <section>
       <h3>Select a Form to Start</h3>
+      <h3>Select a Form to Start</h3>
       <div class="form-card-grid">
         <div class="form-card" onclick="location.href='{{url_for('form_a_upload')}}'">
           <h5>Form A</h5>
@@ -45,15 +55,24 @@
           <p>Secondary Data (No Human Interaction)</p>ℹ️
           <span class="info-icon">Use for secondary/existing data only. No human interaction is involved, but
             permissions may be needed.</span>
+          <p>Secondary Data (No Human Interaction)</p>ℹ️
+          <span class="info-icon">Use for secondary/existing data only. No human interaction is involved, but
+            permissions may be needed.</span>
         </div>
         <div class="form-card" onclick="location.href='{{url_for('form_c_sec1')}}'">
           <h5>Form C</h5>
           <p>Public Data – Clearance Exemption</p>ℹ️
           <span class="info-icon">Applies when data is publicly available and anonymized. No permissions or human
             engagement required.</span>
+          <p>Public Data – Clearance Exemption</p>ℹ️
+          <span class="info-icon">Applies when data is publicly available and anonymized. No permissions or human
+            engagement required.</span>
         </div>
         <div class="form-card" onclick="location.href='form-a-upload.html'">
           <h5>Form D</h5>
+          <p>Both Primary and Secondary Data Collection</p>ℹ️
+          <span class="info-icon">Use when your research involves both human interaction and the use of secondary
+            data.</span>
           <p>Both Primary and Secondary Data Collection</p>ℹ️
           <span class="info-icon">Use when your research involves both human interaction and the use of secondary
             data.</span>
