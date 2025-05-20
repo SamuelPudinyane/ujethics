@@ -367,7 +367,7 @@ class FormB(Base):
 class FormC(Base):
     __tablename__ = "form_c"
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
-    student_id = Column(String(255), nullable=False)
+    user_id = Column(String(255), nullable=False)
     applicant_name = Column(String, nullable=True)
     student_number = Column(Integer, nullable=True)
     institution = Column(String, nullable=True)
@@ -378,7 +378,40 @@ class FormC(Base):
     email_address = Column(String(120), nullable=True)
     supervisor_name = Column(String, nullable=True)
     supervisor_email = Column(String, nullable=True)
+    # section 2
+    # Section 2.1 - Vulnerable groups
+    vulnerable = Column(PickleType, nullable=True)  # List of selected checkboxes
+    vulnerable_other = Column(Text, nullable=True)
+    vulnerable_comments = Column(Text, nullable=True)
+
+    # Section 2.2 - Research activity types
+    activity = Column(PickleType, nullable=True)  # List of selected checkboxes
+    activity_other = Column(Text, nullable=True)
+    activity_comments = Column(Text, nullable=True)
+
+    # Section 2.3 - Additional considerations
+    consideration = Column(PickleType, nullable=True)  # List of selected checkboxes
+    consideration_comments = Column(Text, nullable=True)
+
+    # Risk level and justification
+    risk_level = Column(String(50), nullable=True)
+    justify = Column(Text, nullable=True)
+    risk_benefits = Column(Text, nullable=True)
+    risk_mitigation = Column(Text, nullable=True)
+
+    # section 3
     
+    executive_summary = Column(Text,nullable=True)
+    research_questions = Column(Text,nullable=True)
+    research_purpose = Column(Text,nullable=True)
+    secondary_data_info = Column(Text,nullable=True)
+    exemption_reason = Column(Text,nullable=True)
+
+    # section 4
+    declaration_name = Column(String(255), nullable=True)  # from the embedded paragraph
+    full_name = Column(String(255), nullable=True)
+    submission_date = Column(DateTime, nullable=True)
+
     ethical_clearance = Column(Boolean, nullable=True)
     clearance_details = Column(String, nullable=True)
     participant_consent = Column(Boolean, nullable=True)

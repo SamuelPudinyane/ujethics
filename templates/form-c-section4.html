@@ -76,7 +76,18 @@
       <div class="progress-fill" style="width: 99%;">99%</div>
     </div>
 
-    <form id="formCDeclaration">
+    <form id="formCDeclaration" action="{{url_for('form_c_sec4')}}" method="post" enctype="multipart/form-data">
+      <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <h2>SECTION 4: Declaration</h2>
 
       <p class="form-note">
@@ -126,6 +137,16 @@
 
 <!-- SCRIPT: Confirmation Modal Logic -->
 <script>
+// Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
+
   const form = document.getElementById("formCDeclaration");
   const modal = document.getElementById("confirmationModal");
   const closeModalBtn = document.getElementById("closeModalBtn");

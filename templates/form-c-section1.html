@@ -38,7 +38,18 @@
   </div>
 
   
-    <form action="form-c-section2.html" method="GET">
+    <form action="{{url_for('form_c_sec1')}}" method="post" enctype="multipart/form-data">
+      <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <h2>SECTION 1: Researcher's Details</h2>
 
       <label>Applicant Name</label>
@@ -63,13 +74,13 @@
       <input type="tel" name="mobile" required>
 
       <label>Email Address (Applicant)</label>
-      <input type="email" name="email" required>
+      <input type="email" name="email" >
 
       <label>Supervisor(s)</label>
-      <input type="text" name="supervisor_name" required>
+      <input type="text" name="supervisor_name" >
 
       <label>Supervisor Email(s)</label>
-      <input type="email" name="supervisor_email" required>
+      <input type="email" name="supervisor_email" >
 
       <div class="form-navigation">
         <a href="dashboard.html" class="revise-btn">⬅ Back</a>
@@ -83,6 +94,16 @@
   </footer>
 
 </div>
-
+<script>
+  // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
+</script>
 </body>
 </html>

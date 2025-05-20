@@ -1032,10 +1032,113 @@ def form_b_sec3():
 
 @app.route('/form_c_sec1', methods=['GET','POST'])
 def form_c_sec1():
+    if request.method=='POST':
+        user_id=session.get('id')
+        if not user_id:
+            return jsonify({'error': 'Unauthorized'}), 401
+        
+        form = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if not form:
+                form = FormC(user_id=user_id)
+       
+        form.applicant_name=request.form.get('applicant_name')
+        form.student_number=request.form.get('student_number')
+        form.institution=request.form.get('institution')
+        form.department=request.form.get('department')
+        form.degree=request.form.get('degree')
+        form.project_title=request.form.get('title')
+        form.mobile_number=request.form.get('mobile')
+        form.email_address=request.form.get('email')
+        form.supervisor_name=request.form.get('supervisor_name')
+        form.supervisor_email=request.form.get('supervisor_email')
+        
+        db_session.add(form)
+        db_session.commit()
+        message="form submitted succesfully"
+        return render_template("form-c-section2.html",messages=[message])
 
     return render_template("form-c-section1.html")
 
 
+@app.route('/form_c_sec2', methods=['GET','POST'])
+def form_c_sec2():
+    if request.method=="POST":
+        user_id=session.get('id')
+        if not user_id:
+            return jsonify({'error': 'Unauthorized'}), 401
+        
+        form = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if not form:
+            form = FormC(user_id=user_id)
+        form.vulnerable=request.form.get('vulnerable'),
+        form.vulnerable_other=request.form.get('vulnerable_other'),
+        form.vulnerable_comments=request.form.get('vulnerable_comments'),
+
+        form.activity=request.form.get('activity'),
+        form.activity_other=request.form.get('activity_other'),
+        form.activity_comments=request.form.get('activity_comments'),
+
+        form.consideration=request.form.get('consideration'),
+        form.consideration_comments=request.form.get('consideration_comments'),
+
+        form.risk_level=request.form.get('risk_level'),
+        form.justify=request.form.get('justify'),
+        form.risk_benefits=request.form.get('risk_benefits'),
+        form.risk_mitigation=request.form.get('risk_mitigation'),
+        
+        db_session.add(form)
+        db_session.commit()
+        message="form submitted succesfully"
+        return render_template("form-c-section3.html",messages=[message])
+    return render_template("form-c-section2.html")
+
+
+
+
+@app.route('/form_c_sec3', methods=['GET','POST'])
+def form_c_sec3():
+    if request.method=="POST":
+        user_id=session.get('id')
+        if not user_id:
+            return jsonify({'error': 'Unauthorized'}), 401
+        
+        form = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if not form:
+            form = FormC(user_id=user_id)
+        
+        form.project_title=request.form.get('project_title')
+        form.executive_summary=request.form.get('executive_summary')
+        form.research_questions=request.form.get('research_questions')
+        form.research_purpose=request.form.get('research_purpose')
+        form.secondary_data_info=request.form.get('secondary_data_info')
+        form.exemption_reason=request.form.get('exemption_reason')
+    
+        db_session.add(form)
+        db_session.commit()
+        
+        message="form submitted succesfully"
+        return render_template("form-c-section4.html",messages=[message])
+    return render_template("form-c-section3.html")
+
+
+@app.route('/form_c_sec4', methods=['GET','POST'])
+def form_c_sec4():
+    if request.method=="POST":
+        user_id=session.get('id')
+        if not user_id:
+            return jsonify({'error': 'Unauthorized'}), 401
+        
+        form = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if not form:
+            form = FormC(user_id=user_id)
+        form.declaration_name=request.form.get('declaration_name'),
+        form.full_name=request.form.get('full_name'),
+        form.submission_date=datetime.strptime(request.form.get('submission_date'), '%Y-%m-%d')
+        db_session.add(form)
+        db_session.commit()
+        message="form submitted succesfully"
+        return render_template("dashboard.html",messages=[message])
+    return render_template("form-c-section4.html")
 
 @app.route('/api/form-b', methods=['POST'])
 def submit_form_b():
