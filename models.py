@@ -175,16 +175,59 @@ class FormA(Base):
     supervisor = Column(String(120), nullable=False)
     supervisor_email = Column(String(120), nullable=False)
     #section 2
+    # 1
     survey = Column(Boolean, nullable=True)
     focus_groups = Column(Boolean, nullable=True)
     observations = Column(Boolean, nullable=True)
-    documents = Column(Boolean, nullable=True)
     interviews = Column(Boolean, nullable=True)
+    documents = Column(Boolean, nullable=True)
+    vulnerable_other_specify = Column(String(255), nullable=True)
+    # 2.1
+    vulnerable_communities=Column(Boolean,nullable=True)
     age_range = Column(Boolean, nullable=True)
-    non_english = Column(Boolean, nullable=True)
     uj_employees = Column(Boolean, nullable=True)
-    other_sec2 = Column(String(255), nullable=True)
+    vulnerable=Column(Boolean,nullable=True)
+    non_english = Column(Boolean, nullable=True)
+    own_students=Column(Boolean,nullable=True)
+    poverty = Column(Boolean,nullable=True)
+    no_education = Column(Boolean,nullable=True)
+    assessment_other_specify = Column(String(255),nullable=True)
+    vulnerable_comments_1 = Column(Text,nullable=True)
 
+    # Risk Assessment 2.2
+    disclosure = Column(Boolean,nullable=True)
+    discomfiture = Column(Boolean,nullable=True)
+    deception = Column(Boolean,nullable=True)
+    sensitive = Column(Boolean,nullable=True)
+    prejudice = Column(Boolean,nullable=True)
+    intrusive_techniques = Column(Boolean,nullable=True)
+    illegal_activities = Column(Boolean,nullable=True)
+    personal = Column(Boolean,nullable=True)
+    available_records = Column(Boolean,nullable=True)
+    inventories = Column(Boolean,nullable=True)
+    risk_activities = Column(Boolean,nullable=True)
+    activity_specify = Column(String(255),nullable=True)
+    vulnerable_comments_2 = Column(Text,nullable=True)
+
+    # Risk Assessment 2.3
+    incentives = Column(Boolean,nullable=True)
+    financial_costs = Column(Boolean,nullable=True)
+    reward = Column(Boolean,nullable=True)
+    conflict = Column(Boolean,nullable=True)
+    uj_premises = Column(Boolean,nullable=True)
+    uj_facilities = Column(Boolean,nullable=True)
+    uj_funding = Column(Boolean,nullable=True)
+    vulnerable_comments_3 = Column(Text,nullable=True)
+
+    # Risk Rating and Justification
+    risk_rating = Column(String(20),nullable=True)
+    risk_justification = Column(Text,nullable=True)
+    benefits_description = Column(Text,nullable=True)
+    risk_mitigation = Column(Text,nullable=True)
+    interviews_one = Column(Boolean, nullable=True)
+    documents_one = Column(Boolean, nullable=True)
+    other_sec2 = Column(String(255), nullable=True)
+   
     # section 3
     title_provision=Column(String(255),nullable=True)
     abstract=Column(String(255),nullable=True)
@@ -211,73 +254,79 @@ class FormA(Base):
     indemnity_arrangements = Column(Text,nullable=True)
     other_committee = Column(Text,nullable=True)
     # section 5
-    paradigm = Column(String(100),nullable=True)  # Quantitative, Qualitative, Mixed
-    paradigm_explanation = Column(Text,nullable=True)
-    design = Column(Text,nullable=True)
+     # 5.1
+    quantitative = Column(Boolean, default=False)
+    qualitative = Column(Boolean, default=False)
+    mixed_methods = Column(Boolean, default=False)
+    paradigm_explanation = Column(Text)
 
-    participants_description = Column(Text,nullable=True)
-    population = Column(String(255),nullable=True)
-    sampling_method = Column(String(255),nullable=True)
-    sample_size = Column(Integer,nullable=True)
-    inclusion_criteria = Column(Text,nullable=True)
-    duration_timing = Column(Text,nullable=True)
-    contact_details_method = Column(Text,nullable=True)
+    # 5.2
+    design = Column(Text)
 
-    conflict_interest = Column(Boolean,nullable=True)
-    conflict_explanation = Column(Text,nullable=True)
+    # 5.3 - Participant details
+    participants_description = Column(Text)
+    duration_timing = Column(Text)
+    contact_details_method = Column(Text)
+    conflict_interest = Column(Boolean,default=False)
+    conflict_explanation = Column(Text)
 
-    questionnaire_type = Column(String(50),nullable=True)  # Self-designed or Existing
-    permission_obtained = Column(Boolean,nullable=True)
-    open_source = Column(Boolean,nullable=True)
-    instrument_attachment_reason = Column(Text,nullable=True)
-    data_collection_procedure = Column(Text,nullable=True)
+    # 5.4 - Instruments
+    questionnaire_type = Column(String(20))  # Self-designed / Existing
+    permission_obtained = Column(Text)
+    open_source = Column(Text)
+    instrument_attachment_reason = Column(Text)
+    data_collection_procedure = Column(Text)
+    interview_type = Column(Text)
+    interview_recording = Column(Text)
+    use_focus_groups = Column(Boolean, default=False)
+    focus_recording = Column(Boolean, default=False)
+    data_collectors = Column(Text)
+    intervention = Column(Boolean, default=False)
+    intervention_details = Column(Text)
+    sensitive_data = Column(Text)
+    translator = Column(Boolean, default=False)
+    translator_procedure = Column(Text)
 
-    interview_type = Column(String(255),nullable=True)  # Comma-separated: In-depth, Semi-structured, etc.
-    interview_recording = Column(String(255),nullable=True)  # Comma-separated: Audio, Video
-    use_focus_groups = Column(Boolean,nullable=True)
-    focus_recording = Column(String(255),nullable=True)  # Comma-separated
-    focus_group_questions_path = Column(String(255),nullable=True)
-
-    data_collectors = Column(Text,nullable=True)
-    intervention = Column(Boolean,nullable=True)
-    intervention_details = Column(Text,nullable=True)
-
-    sensitive_data = Column(Text,nullable=True)
-    translator = Column(Boolean,nullable=True)
-    translator_procedure = Column(Text,nullable=True)
-    secondary_data = Column(Boolean,nullable=True)
-    secondary_data_details = Column(Text,nullable=True)
+    # 5.5 - Secondary Data
+    uses_secondary_data = Column(Boolean, default=False)
+    secondary_data_type = Column(String(10))  # public/private
+    private_permission = Column(String(10))   # yes/no
+    public_data_description = Column(Text)
+    private_permission_file = Column(String(256))  # file path
+    ###
     # section 6
-    informed_consent = Column(Text,nullable=True)
-    sa.Column('data_storage', sa.Text(), nullable=True)  # Store JSON or comma-separated values
-    study_benefits = Column(Text,nullable=True)
-    participant_risks = Column(Text,nullable=True)
-    adverse_steps = Column(Text,nullable=True)
-    community_participation = Column(Text,nullable=True)
-    community_effects = Column(Text,nullable=True)
-    sa.Column('privacy', sa.Text(), nullable=True)  # Store JSON or comma-separated values
+    informed_consent = Column(Text)
+    data_storage = Column(PickleType)  # Stores list of selected options
+    study_benefits = Column(Text)
+    participant_risks = Column(Text)
+    adverse_steps = Column(Text)
+    community_participation = Column(Text)
+    community_effects = Column(Text)
+    privacy = Column(PickleType)  # Stores list of selected privacy practices
 
-
+    # 6.9 checklist items
     # Questions 6.9a to 6.9s — stored as a dictionary
-    q6_9a = Column(Boolean,nullable=True)
-    q6_9b=Column(Boolean,nullable=True)
-    q6_9c=Column(Boolean,nullable=True)
-    q6_9d=Column(Boolean,nullable=True)
-    q6_9e=Column(Boolean,nullable=True)
-    q6_9f=Column(Boolean,nullable=True)
-    q6_9g=Column(Boolean,nullable=True)
-    q6_9h=Column(Boolean,nullable=True)
-    q6_9i=Column(Boolean,nullable=True)
-    q6_9j=Column(Boolean,nullable=True)
-    q6_9k=Column(Boolean,nullable=True)
-    q6_9l=Column(Boolean,nullable=True)
-    q6_9m=Column(Boolean,nullable=True)
-    q6_9n=Column(Boolean,nullable=True)
-    q6_9o=Column(Boolean,nullable=True)
-    q6_9p=Column(Boolean,nullable=True)
-    q6_9q=Column(Boolean,nullable=True)
-    q6_9r=Column(Boolean,nullable=True)
-    q6_9s=Column(Boolean,nullable=True)
+    q6_9a = Column(Boolean,nullable=True,default=False)
+    q6_9b=Column(Boolean,nullable=True,default=False)
+    q6_9c=Column(Boolean,nullable=True,default=False)
+    q6_9d=Column(Boolean,nullable=True,default=False)
+    q6_9e=Column(Boolean,nullable=True,default=False)
+    q6_9f=Column(Boolean,nullable=True,default=False)
+    q6_9g=Column(Boolean,nullable=True,default=False)
+    q6_9h=Column(Boolean,nullable=True,default=False)
+    q6_9i=Column(Boolean,nullable=True,default=False)
+    q6_9j=Column(Boolean,nullable=True,default=False)
+    q6_9k=Column(Boolean,nullable=True,default=False)
+    q6_9l=Column(Boolean,nullable=True,default=False)
+    q6_9m=Column(Boolean,nullable=True,default=False)
+    q6_9n=Column(Boolean,nullable=True,default=False)
+    q6_9o=Column(Boolean,nullable=True,default=False)
+    q6_9p=Column(Boolean,nullable=True,default=False)
+    q6_9q=Column(Boolean,nullable=True,default=False)
+    q6_9r=Column(Boolean,nullable=True,default=False)
+    q6_9s=Column(Boolean,nullable=True,default=False)
+   
+
     results_feedback = Column(Text,nullable=True)
     products_access = Column(Text,nullable=True)
     publication_plans = Column(Text,nullable=True)
@@ -408,7 +457,7 @@ class FormC(Base):
     exemption_reason = Column(Text,nullable=True)
 
     # section 4
-    declaration_name = Column(String(255), nullable=True)  # from the embedded paragraph
+    eclaration_name = Column(String(255), nullable=True)  # from the embedded paragraph
     full_name = Column(String(255), nullable=True)
     submission_date = Column(DateTime, nullable=True)
 
@@ -422,7 +471,15 @@ class FormC(Base):
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
-    
+
+class FormD(Base):
+    __tablename__ = "form_d"
+
+    #Schema
+    form_id = Column(String(255), primary_key=True, default=generate_uuid)
+    user_id = Column(String(255), nullable=False)
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
 
     # try:

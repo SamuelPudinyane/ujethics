@@ -76,7 +76,7 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <form id="formBFinal" action="{{url_for('form_a_sec3')}}" method="post" enctype="multipart/form-data">
+    <form id="formBFinal" action="{{url_for('form_b_sec3')}}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -161,7 +161,7 @@
 
 </div>
 
-<!-- Confirmation Modal -->
+<!-- Confirmation Modal 
 <div id="confirmationModal" class="modal-overlay">
   <div class="modal-content">
     <h3>Form B Submitted Successfully!</h3>
@@ -169,7 +169,7 @@
     <button onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
   </div>
 </div>
-
+-->
 <!-- Script -->
 <script>
   // Hide alert after 3 seconds
@@ -181,11 +181,11 @@
         alert.style.display = 'none'; // or use .remove() if you prefer
       }
     }, 3000); // 3000ms = 3 seconds
-
-  document.getElementById('formBFinal').addEventListener('submit', function (e) {
-    e.preventDefault();
-    document.getElementById('confirmationModal').style.display = 'flex';
-  });
+//
+ // document.getElementById('formBFinal').addEventListener('submit', function (e) {
+ //   e.preventDefault();
+ //   document.getElementById('confirmationModal').style.display = 'flex';
+ // });
 </script>
 
 </body>

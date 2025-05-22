@@ -1,5 +1,5 @@
 from flask import Flask,flash, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormUploads, Documents,FormARequirements
+from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements
 from utils.helpers import generate_reset_token, send_email, validate_password
 import json
 from db_queries import getFormAData, getSupervisorsList
@@ -41,7 +41,17 @@ def index():
 
 @app.route('/student-dashboard', methods=['GET'])
 def student_dashboard():
-    return render_template('dashboard.html')
+    user_id=session.get('id')
+
+    if not user_id:
+        return "Unauthorized access. Please log in.", 401
+    
+    formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+    formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+    formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+    formD = db_session.query(FormD).filter_by(user_id=user_id).first()
+  
+    return render_template('dashboard.html',formA=formA,formB=formB,formC=formC,formD=formD)
 
 @app.route('/quiz', methods=['GET'])
 def quiz():
@@ -63,7 +73,7 @@ def login_page():
         email = request.form.get('email')
         user_password = request.form.get('password')
         user = db_session.query(User).filter_by(email=email).first()
-        print("user ",user)
+       
         
         if user:
             if user.verify_password(user_password):
@@ -74,10 +84,10 @@ def login_page():
                 # render appropriate template depending on role
                 # NB: role is an enum, hence the .value
                 role = user.role.value or 'student'
-                print("role ",role)
+                
                 if role == 'student':
                     student_info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
-                    print("====> Student")
+                    
                     if student_info and student_info.watched_demo and student_info.test_score is not None and student_info.test_score >= 80:
                         return render_template('dashboard.html', name = session['name'])
                     else:
@@ -482,51 +492,207 @@ def form_a_sec2 ():
         form = db_session.query(FormA).filter_by(user_id=user_id).first()
         if not form:
             return "No existing Form A record found for this user.", 404
+        # 1
         
-        if data.get('survey')=='yes':
-            survey=True
+        if data.get('survey')=='Yes':
+            form.survey=True
         else:
-            survey=False
-        if data.get('focus_groups')=='yes':
-            focus_groups=True
+            form.survey=False
+
+        if data.get('focus_groups')=='Yes':
+            form.focus_groups=True
         else:
-            focus_groups=False
-        if data.get('observations')=='yes':
-            observations=True
+            form.focus_groups=False
+
+        if data.get('observations')=='Yes':
+            form.observations=True
         else:
-            observations=False
-        if data.get('interviews')=='yes':
-            interviews=True
+            form.observations=False
+
+        if data.get('interviews')=='Yes':
+            form.interviews=True
         else:
-            interviews=False
-        if data.get('documents')=='yes':
-            documents=True
+            form.interviews=False
+
+        if data.get('documents')=='Yes':
+            form.documents=True
         else:
-            documents=False
-        if data.get('age_range')=='yes':
-            age_range=True
-        else:
-            age_range=False
-        if data.get('non_english')=='yes':
-            non_english=True
-        else:
-            non_english=False
-        if data.get('uj_employees')=='yes':
-            uj_employees=True
-        else:
-            uj_employees=False
-        form.other_sec2 = data.get('vulnerable_other_specify')
+            form.documents=False
         
-        form.survey=survey
-        form.focus_groups=focus_groups
-        form.observations=observations
-        form.interviews=interviews
-        form.documents=documents
-        form.age_range=age_range
-        form.non_english=non_english
-        form.uj_employees=uj_employees
+        if data.get('vulnerable_other_specify')=='Yes':
+            form.vulnerable_other_specify=True
+        else:
+            form.vulnerable_other_specify=False
+
+        # section 2.1
+        if data.get('vulnerable_communities')=='Yes':
+            form.vulnerable_communities=True
+        else:
+            form.vulnerable_communities=False
+
+        if data.get('age_range')=='Yes':
+            form.age_range=True
+        else:
+            form.age_range=False
+
+        if data.get('uj_employees')=='Yes':
+            form.uj_employees=True
+        else:
+            form.uj_employees=False
+
+        if data.get('vulnerable')=='Yes':
+            form.vulnerable=True
+        else:
+            form.vulnerable=False
+
+        if data.get('non_english')=='Yes':
+            form.non_english=True
+        else:
+            form.non_english=False
+
+        if data.get('own_students')=='Yes':
+            form.own_students=True
+        else:
+            form.own_students=False
+
+        if data.get('poverty')=='Yes':
+            form.poverty=True
+        else:
+            form.poverty=False
         
-    
+        if data.get('no_education')=='Yes':
+            form.no_education=True
+        else:
+            form.no_education=False
+        
+        if data.get('assessment_other_specify')=='Yes':
+            form.assessment_other_specify=True
+        else:
+            form.assessment_other_specify=False
+
+        if data.get('vulnerable_comments_1')=='Yes':
+            form.vulnerable_comments_1=True
+        else:
+            form.vulnerable_comments_1=False
+
+        # 2.2
+        if data.get('disclosure')=='Yes':
+            form.disclosure=True
+        else:
+            form.disclosure=False
+
+        if data.get('discomfiture')=='Yes':
+            form.discomfiture=True
+        else:
+            form.discomfiture=False
+
+        if data.get('deception')=='Yes':
+            form.deception=True
+        else:
+            form.deception=False
+        
+        if data.get('sensitive')=='Yes':
+            form.sensitive=True
+        else:
+            form.sensitive=False
+
+        if data.get('prejudice')=='Yes':
+            form.prejudice=True
+        else:
+            form.prejudice=False
+
+        
+        if data.get('intrusive_techniques')=='Yes':
+            form.intrusive_techniques=True
+        else:
+            form.intrusive_techniques=False
+
+        if data.get('illegal_activities')=='Yes':
+            form.illegal_activities=True
+        else:
+            form.illegal_activities=False
+
+        if data.get('personal')=='Yes':
+            form.personal=True
+        else:
+            form.personal=False
+            
+        if data.get('available_records')=='Yes':
+            form.available_records=True
+        else:
+            form.available_records=False
+
+        if data.get('inventories')=='Yes':
+            form.inventories=True
+        else:
+            form.inventories=False
+
+        if data.get('risk_activities')=='Yes':
+            form.risk_activities=True
+        else:
+            form.risk_activities=False
+
+        if data.get('activity_specify')=='Yes':
+            form.activity_specify=True
+        else:
+            form.activity_specify=False
+        
+        if data.get('vulnerable_comments_2')=='Yes':
+            form.vulnerable_comments_2=True
+        else:
+            form.vulnerable_comments_2=False
+        
+        # Risk Assessment 2.3
+        if data.get('incentives')=='Yes':
+            form.incentives=True
+        else:
+            form.incentives=False
+
+        if data.get('financial_costs')=='Yes':
+            form.financial_costs=True
+        else:
+            form.financial_costs=False
+
+        if data.get('reward')=='Yes':
+            form.reward=True
+        else:
+            form.reward=False
+        
+        if data.get('conflict')=='Yes':
+            form.conflict=True
+        else:
+            form.conflict=False
+
+        if data.get('uj_premises')=='Yes':
+            form.uj_premises=True
+        else:
+            form.uj_premises=False
+  
+        if data.get('uj_facilities')=='Yes':
+            form.uj_facilities=True
+        else:
+            form.uj_facilities=False
+
+        if data.get('uj_funding')=='Yes':
+            form.uj_funding=True
+        else:
+            form.uj_funding=False
+        
+        if data.get('vulnerable_comments_3')=='Yes':
+            form.vulnerable_comments_3=True
+        else:
+            form.vulnerable_comments_3=False
+
+        form.risk_rating = data.get('risk_rating')
+        form.risk_justification = data.get('risk_justification')
+        form.benefits_description = data.get('benefits_description')
+        form.risk_mitigation = data.get('risk_mitigation')
+
+        form.interviews_one = data.get('interviews') == 'Yes'
+        form.documents_one = data.get('documents') == 'Yes'
+        form.other_sec2 = data.get('other_sec2', '')
+        
+        
         db_session.add(form)
         db_session.commit()
         message= 'Form A submitted successfully'
@@ -574,30 +740,34 @@ def form_a_sec3 ():
             return "No existing Form A record found for this user.", 404
         
 
-        form.title_provision=data.get('title_provisional')
-        form.abstract=data.get('abstract')
-        form.questions=data.get('questions')
-        form.purpose_objectives=data.get('purpose_objectives')
+        # Section 3: Project Information
+        form.title_provision = data.get('title_provision', '')
+        form.abstract = data.get('abstract', '')
+        form.questions = data.get('questions', '')
+        form.purpose_objectives = data.get('purpose_objectives', '')
 
-        form.org_name=data.get('org_name')
-        form.org_contact=data.get('org_contact')
-        form.org_role=data.get('org_role')
-        form.org_permission=data.get('org_permission')
+        # Section 4: Organisational Permissions and Affiliations
+        form.org_name = data.get('org_name', '')
+        form.org_contact = data.get('org_contact', '')
+        form.org_role = data.get('org_role', '')
+        form.org_permission = data.get('org_permission', '')
 
-        form.researcher_affiliation=data.get('researcher_affiliation')
-        form.affiliation_details=data.get('affiliation_details')
+        form.researcher_affiliation = data.get('researcher_affiliation', '')
+        form.affiliation_details = data.get('affiliation_details', '')
 
-        form.collective_involvement=data.get('collective_involvement')
-        form.collective_details=data.get('collective_details')
+        form.collective_involvement = data.get('collective_involvement', '')
+        form.collective_details = data.get('collective_details', '')
+        # Funding Information
+        form.is_funded = data.get('is_funded', '')
+        form.fund_org = data.get('fund_org', '')
+        form.fund_contact = data.get('fund_contact', '')
+        form.fund_role = data.get('fund_role', '')
+        form.fund_amount = data.get('fund_amount', '')
 
-        form.is_funded=data.get('is_funded')
-        form.fund_org=data.get('fund_org')
-        form.fund_contact=data.get('fund_contact')
-        form.fund_role=data.get('fund_role')
-        form.fund_amount=data.get('fund_amount')
+        # Indemnity & Other Committee Info
+        form.indemnity_arrangements = data.get('indemnity_arrangements', '')
+        form.other_committee = data.get('other_committee', '')
 
-        form.indemnity_arrangements=data.get('indemnity_arrangements')
-        form.other_committee=data.get('other_committee')
     
 
         db_session.add(form)
@@ -627,80 +797,60 @@ def form_a_sec4():
         if not form:
             return "No existing Form A record found for this user.", 404
 
-        # Update form fields from form data
-        form.paradigm = ','.join(request.form.getlist('paradigm'))
+        # 5.1 Research Paradigm
+        form.quantitative = request.form.getlist('quantitative[]')=='yes'
+        form.qualitative = request.form.getlist('qualitative[]')=='yes'
+        form.mixed_methods = request.form.getlist('mixed_methods[]')=='yes'
         form.paradigm_explanation = request.form.get('paradigm_explanation')
-        form.design = request.form.get('design')
-        form.participants_description = request.form.get('participants_description')
-        form.population = request.form.get('population')
-        form.sampling_method = request.form.get('sampling_method')
-        
-        # Convert to int safely if possible
-        sample_size = request.form.get('sample_size')
-        form.sample_size = int(sample_size) if sample_size and sample_size.isdigit() else None
 
-        form.inclusion_criteria = request.form.get('inclusion_criteria')
+        # 5.2 Research Design
+        form.design = request.form.get('design')
+
+        # 5.3 Participant Details
+        form.participants_description = request.form.get('participants_description')
+        form.population = request.form.getlist('population[]')
+        form.sampling_method = request.form.getlist('sampling_method[]')
+        form.sample_size = request.form.getlist('sample_size[]')
+        form.inclusion_criteria = request.form.getlist('inclusion_criteria[]')
         form.duration_timing = request.form.get('duration_timing')
         form.contact_details_method = request.form.get('contact_details_method')
-
-        if request.form.get('conflict_interest')=='yes':
-            form.conflict_interest = True
-        else: 
-            form.conflict_interest=False
-        
+        form.conflict_interest = request.form.get('conflict_interest')=='yes'
         form.conflict_explanation = request.form.get('conflict_explanation')
-        form.questionnaire_type = request.form.get('questionnaire_type')
 
-        if request.form.get('permission_obtained') == 'yes':
-            form.permission_obtained = True
-        
-        if request.form.get('open_source'):
-            form.open_source = True
-        
+        # 5.4 Instruments
+        form.questionnaire_type = request.form.get('questionnaire_type')
+        form.permission_obtained = request.form('permission_obtained')
+        form.open_source= request.form('open_source')
         form.instrument_attachment_reason = request.form.get('instrument_attachment_reason')
         form.data_collection_procedure = request.form.get('data_collection_procedure')
-        form.interview_type = ','.join(request.form.getlist('interview_type'))
-        form.interview_recording = ','.join(request.form.getlist('interview_recording'))
-
-        if request.form.get('use_focus_groups')== 'yes':
-            form.use_focus_groups = True
-        else:
-            form.use_focus_groups=False
-    
-        form.focus_recording = ','.join(request.form.getlist('focus_recording'))
+        form.interview_type = request.form.getlist('interview_type')
+        form.interview_recording = request.form.getlist('interview_recording')
+        form.use_focus_groups = request.form.get('use_focus_groups')=='Yes'
+        form.focus_recording = request.form.getlist('focus_recording')
         form.data_collectors = request.form.get('data_collectors')
-
-        if request.form.get('intervention')=='yes':
-            form.intervention = True
-        else:
-            form.intervention=False
-
+        form.intervention = request.form.get('intervention')=='Yes'
         form.intervention_details = request.form.get('intervention_details')
         form.sensitive_data = request.form.get('sensitive_data')
-
-        if request.form.get('translator')=='yes':
-            form.translator = True
-        else:
-            form.translator=False
-
+        form.translator = request.form.get('translator')
         form.translator_procedure = request.form.get('translator_procedure')
 
-        if request.form.get('secondary_data')=='yes':
-            form.secondary_data = True
-        else:
-            form.secondary_data=False
+        # 5.5 Secondary Data Usage
+        form.uses_secondary_data = request.form.get('secondaryData')=='yes'
+        form.secondary_data_type = request.form.get('dataType')
+        form.private_permission= request.form.get('privatePermission')
 
-        form.secondary_data_details = request.form.get('secondary_data_details')
+        if request.form.get('dataType') == 'public':
+            form.public_data_description = request.form.get('public_data_description')
 
         # Handle file upload
-        file = request.files.get('focus_group_questions')
+        file = request.files.get('private_permission')
         if file and file.filename:
             upload_folder = app.config.get('UPLOAD_FOLDER', 'uploads')
             os.makedirs(upload_folder, exist_ok=True)
             filename = secure_filename(file.filename)
             file_path = os.path.join(upload_folder, filename)
             file.save(file_path)
-            form.focus_group_questions_filename = filename
+            form.private_permission_file = filename
 
         # Save changes to DB
         db_session.commit()
@@ -804,7 +954,7 @@ def form_a_sec6 ():
         db_session.add(form)
         db_session.commit()
         messages="Form A submitted successfully."
-        return redirect(url_for('dashboard'))  # or any final confirmation route
+        return redirect(url_for('student_dashboard'))  # or any final confirmation route
 
     
     return render_template('form-a-section6.html')
@@ -1001,32 +1151,30 @@ def form_b_sec2():
 
 @app.route('/form_b_sec3', methods=['GET','POST'])
 def form_b_sec3():
+    print("im here form 3")
     user_id = session.get('id')
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
-    
+    print("user logged in ")
     if request.method == 'POST':
-        try:
-            form = db_session.query(FormB).filter_by(user_id=user_id).first()
-            if not form:
-                form = FormB(user_id=user_id)
+        
+        form = db_session.query(FormB).filter_by(user_id=user_id).first()
+        if not form:
+            form = FormB(user_id=user_id)
           
-            form.original_clearance=request.form.get('original_clearance')
-            form.participant_permission=request.form.get('participant_permission')
-            form.data_safekeeping=request.form.get('data_safekeeping')
-            form.risk_level=request.form.get('risk_level')
-            form.risk_comments=request.form.get('risk_comments')
-            form.declaration_name=request.form.get('declaration_name')
-            form.full_name=request.form.get('full_name')
-            form.declaration_date=datetime.strptime(request.form.get('declaration_date'), '%Y-%m-%d')
+        form.original_clearance=request.form.get('original_clearance')
+        form.participant_permission=request.form.get('participant_permission')
+        form.data_safekeeping=request.form.get('data_safekeeping')
+        form.risk_level=request.form.get('risk_level')
+        form.risk_comments=request.form.get('risk_comments')
+        form.declaration_name=request.form.get('declaration_name')
+        form.full_name=request.form.get('full_name')
+        form.declaration_date=datetime.strptime(request.form.get('declaration_date'), '%Y-%m-%d')
             
-            db_session.add(form)
-            db_session.commit()
-            return render_template('dashboard.html', messages=[], show_modal=True)
-        except Exception as e:
-            db_session.rollback()
-            flash(f"An error occurred: {str(e)}", 'danger')
-            return render_template('form_b_section3.html', messages=[str(e)], show_modal=False)
+        db_session.add(form)
+        db_session.commit()
+        return redirect(url_for('student_dashboard'))
+        
     return render_template('form_b_section3.html', messages=[], show_modal=False)
 
 
@@ -1139,6 +1287,40 @@ def form_c_sec4():
         message="form submitted succesfully"
         return render_template("dashboard.html",messages=[message])
     return render_template("form-c-section4.html")
+
+
+@app.route('/form_a_answers', methods=['GET','POST'])
+def form_a_answers():
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    form = db_session.query(FormA).filter_by(user_id=user_id).first()
+    return render_template("form_a_answers.html",forma=form)
+
+@app.route('/form_b_answers', methods=['GET','POST'])
+def form_b_answers():
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    form = db_session.query(FormB).filter_by(user_id=user_id).first()
+    
+    return render_template("form_b_answers.html",formb=form)
+
+@app.route('/form_c_answers', methods=['GET','POST'])
+def form_c_answers():
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    form = db_session.query(FormC).filter_by(user_id=user_id).first()
+    return render_template("form_c_answers.html",formc=form)
+
+@app.route('/form_d_answers', methods=['GET','POST'])
+def form_d_answers():
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    form = db_session.query(FormD).filter_by(user_id=user_id).first()
+    return render_template("form_d_answers.html",form=form)
 
 @app.route('/api/form-b', methods=['POST'])
 def submit_form_b():

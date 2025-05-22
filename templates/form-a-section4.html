@@ -1,215 +1,169 @@
 <!-- FORM A: SECTION 1-5 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Form A – Human Research Ethics | JBS Ethics</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/form_a.css" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/form_a.css') }}"
-    />
-  </head>
-  <body>
-    <!-- Navbar -->
-    <header class="navbar">
-      <div class="nav-content">
-        <img
-          src="{{ url_for('static',filename='img/image.png')}}"
-          alt="UJ JBS Logo"
-          class="logo uj"
-        />
-        <span class="nav-title">Form A – Section 5: Methodology</span>
+<head>
+  <meta charset="UTF-8">
+  <title>Form A – Human Research Ethics | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/form_a.css">
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}"> -->
+</head>
+<body>
 
-        <!-- Logout -->
-        <div style="text-align: right">
-          <a href="logout.html" class="btn-logout">Logout</a>
-        </div>
-      </div>
-    </header>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <!-- <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj"> -->
+       <img src="/static/img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form A – Section 5: Methodology</span>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Top Bar -->
-      <div class="form-header">
-        <button class="approve-btn">💾 Save Draft</button>
-        <strong>Step 5 of 7</strong>
-      </div>
+                <!-- Logout -->
+    <div style="text-align: right;">
 
-      <!-- Progress Bar -->
-      <div class="progress-bar">
-        <div class="progress-fill">70%</div>
-      </div>
+      <a href="/templates/login/logout.html" class="btn-logout">Logout</a>
+    </div>
+    </div>
+  </header>
 
-      <form action="{{url_for('form_a_sec4')}}" method="post">
-        <!-- Error Messages -->
-        {% if messages %}
-        <div
-          id="alertMessage"
-          class="alert alert-danger alert-dismissible fade show"
-        >
-          {% for message in messages %} {{ message }} {% endfor %}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        {% endif %}
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-        <!-- Section 5: Methodology -->
-        <section id="section-5">
-          <h2>SECTION 5 – METHODOLOGY</h2>
+  <!-- Main Content -->
+  <main class="main-content">
+    <form action="{{url_for('form_a_sec4')}}" method="post">
+  <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <!-- Top Bar -->
+    <div class="form-header">
+      <button class="approve-btn">💾 Save Draft</button>
+      <strong>Step 5 of 7</strong>
+    </div>
 
-          <label
-            >5.1 Research Paradigm (Substantiate your choice of paradigm)</label
-          ><br />
-          <input type="checkbox" name="paradigm" value="Quantitative" />
-          Quantitative<br />
-          <input type="checkbox" name="paradigm" value="Qualitative" />
-          Qualitative<br />
-          <input type="checkbox" name="paradigm" value="Mixed" /> Mixed
-          Methods<br />
-          <textarea
-            name="paradigm_explanation"
-            rows="3"
-            placeholder="Explain your paradigm selection"
-          ></textarea>
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 70%">70%</div>
+    </div>
 
-          <label>5.2 Research Design / Approach</label>
-          <textarea
-            name="design"
-            rows="4"
-            placeholder="Describe your research design and phases"
-          ></textarea>
 
-          <h3>5.3 Details of the participants</h3>
+  <!-- Section 5: Methodology -->
+  <section id="section-5">
+    <h2>SECTION 5 – METHODOLOGY</h2>
 
-          <label>5.3.1 Participant Group Description</label>
-          <textarea name="participants_description" rows="3"></textarea>
+    <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
+    <table id="methodTypeTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Quantitative Methods</th>
+          <th>Qualitative Methods</th>
+          <th>Mixed Methods</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center"><input type="checkbox" name="quantitative[]" value="yes"></td>
+          <td class="text-center"><input type="checkbox" name="qualitative[]" value="yes"></td>
+          <td class="text-center"><input type="checkbox" name="mixed_methods[]" value="yes"></td>
+        </tr>
+      </tbody>
+    </table>
+    <textarea name="paradigm_explanation" rows="3" placeholder="Explain your paradigm selection"></textarea>
 
-          <label>Population</label>
-          <input type="text" name="population" />
+    <label>5.2 Research Design / Approach</label>
+    <textarea name="design" rows="4" placeholder="Name & describe the research design you intend to use, e.g. descriptive correlation, case study, grounded theory, etc. If your research will proceed in different phases, describe each phase sequentially"></textarea>
 
-          <label>Sampling Method</label>
-          <input type="text" name="sampling_method" />
+    <h3>5.3 Details of the participants</h3>
 
-          <label>Sample Size</label>
-          <input type="number" name="sample_size" />
+    <h4>5.3.1 Participant Group Description</h4>
+    <textarea name="participants_description" rows="3"></textarea>
 
-          <label>Inclusion Criteria</label>
-          <textarea name="inclusion_criteria" rows="2"></textarea>
+    <table id="participantsTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Population</th>
+          <th>Sampling Method</th>
+          <th>Sample Size</th>
+          <th>Inclusion Criteria</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" name="population[]" class="form-control" /></td>
+          <td><input type="text" name="sampling_method[]" class="form-control" /></td>
+          <td><input type="number" name="sample_size[]" class="form-control" /></td>
+          <td><textarea name="inclusion_criteria[]" rows="2" class="form-control"></textarea></td>
+          <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <button type="button" class="btn btn-secondary" onclick="addRow()">Add Row</button>
 
-          <label>5.3.4 Duration and Timing of Data Collection</label>
-          <textarea name="duration_timing" rows="2"></textarea>
 
-          <label>5.3.5 How will you obtain participant contact details?</label>
-          <textarea name="contact_details_method" rows="2"></textarea>
+    <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.</label>
+    <textarea name="duration_timing" rows="2"></textarea>
 
-          <label>5.3.6 Conflict of interest or unequal relationship?</label
-          ><br />
-          <input type="radio" name="conflict_interest" value="No" /> No
-          <input type="radio" name="conflict_interest" value="Yes" /> Yes
-          <textarea
-            name="conflict_explanation"
-            rows="2"
-            placeholder="If yes, explain mitigation"
-          ></textarea>
+    <label>5.3.3 Explain how you will obtain the contact details of participantslabel>
+    <textarea name="contact_details_method" rows="2"></textarea>
 
-          <h3>5.4 Research Instruments for Data Collection</h3>
-          <label>Questionnaire(s):</label><br />
-          <input type="radio" name="questionnaire_type" value="Self-designed" />
-          Self-designed<br />
-          <input type="radio" name="questionnaire_type" value="Existing" />
-          Existing<br />
-          <label>If existing, permission obtained?</label>
-          <input type="checkbox" name="permission_obtained" /> Yes
-          <input type="checkbox" name="open_source" /> Open Source<br />
-          <textarea
-            name="instrument_attachment_reason"
-            rows="2"
-            placeholder="Attach or justify"
-          ></textarea>
+    <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?</label><br>
+    <input type="radio" name="conflict_interest" value="No"> No
+    <input type="radio" name="conflict_interest" value="Yes"> Yes
+    <textarea name="conflict_explanation" rows="2" placeholder="If yes, give details and explain how it will be mitigated"></textarea>
 
-          <label>Describe the data collection procedure</label>
-          <textarea name="data_collection_procedure" rows="3"></textarea>
+    <h3>5.4 Research Instruments for Data Collection</h3>
+    <label>5.4.1 Indicate which data collection methds will be used</label><br>
+    <label>5.4.1.1 Questionnaire(s):</label><br>
+    <input type="radio" name="questionnaire_type" value="Self-designed"> Self-designed<br>
+    <input type="radio" name="questionnaire_type" value="Existing"> Existing<br>
+    <label>If existing, permission obtained?</label>
+    <input type="checkbox" name="permission_obtained"> Yes
+    <input type="checkbox" name="open_source"> Open Source<br>
+    <textarea name="instrument_attachment_reason" rows="2" placeholder="Attach or justify"></textarea>
 
-          <label>Interviews</label><br />
-          <input type="checkbox" name="interview_type" value="In-depth" />
-          In-depth
-          <input
-            type="checkbox"
-            name="interview_type"
-            value="Semi-structured"
-          />
-          Semi-structured
-          <input type="checkbox" name="interview_type" value="Unstructured" />
-          Unstructured<br />
+    <label>5.4.2 Describe the data collection procedure</label>
+    <textarea name="data_collection_procedure" rows="3"></textarea>
 
-          <label>Will interviews be recorded?</label><br />
-          <input type="checkbox" name="interview_recording" value="Audio" />
-          Audio
-          <input type="checkbox" name="interview_recording" value="Video" />
-          Video<br />
+    <label>5.4.2.1 Interviews</label><br>
+    <input type="checkbox" name="interview_type" value="In-depth"> In-depth
+    <input type="checkbox" name="interview_type" value="Semi-structured"> Semi-structured
+    <input type="checkbox" name="interview_type" value="Unstructured"> Unstructured<br>
 
-          <label>Focus Groups</label><br />
-          <input type="radio" name="use_focus_groups" value="Yes" /> Yes
-          <input type="radio" name="use_focus_groups" value="No" /> No<br />
-          <label>Will focus groups be recorded?</label><br />
-          <input type="checkbox" name="focus_recording" value="Audio" /> Audio
-          <input type="checkbox" name="focus_recording" value="Video" /> Video
-          <br /><br />
-          <label>Attach focus group/interview questions</label>
-          <input
-            type="file"
-            name="focus_group_questions"
-            accept=".pdf,.doc,.docx"
-          />
+    <label>Will interviews be recorded?</label><br>
+    <input type="checkbox" name="interview_recording" value="Audio"> Audio
+    <input type="checkbox" name="interview_recording" value="Video"> Video<br>
 
-          <label>5.7 Who will collect the data?</label>
-          <textarea
-            name="data_collectors"
-            rows="2"
-            placeholder="Mention yourself, fieldworkers, confidentiality measures"
-          ></textarea>
+    <label>5.4.2.2 Focus Groups</label><br>
+    <input type="radio" name="use_focus_groups" value="Yes"> Yes
+    <input type="radio" name="use_focus_groups" value="No"> No<br>
+    <label>Will focus groups be recorded?</label><br>
+    <input type="checkbox" name="focus_recording" value="Audio"> Audio
+    <input type="checkbox" name="focus_recording" value="Video"> Video
+    <br><br>
+    
 
-          <label>5.8 Will participants be subjected to any intervention?</label
-          ><br />
-          <input type="radio" name="intervention" value="No" /> No
-          <input type="radio" name="intervention" value="Yes" /> Yes<br />
-          <textarea
-            name="intervention_details"
-            rows="2"
-            placeholder="If yes, explain the intervention"
-          ></textarea>
+    <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?</label>
+    <textarea name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
 
-          <label>5.9 Sensitive data or vulnerable populations?</label>
-          <textarea name="sensitive_data" rows="2"></textarea>
+    <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?</label><br>
+    <input type="radio" name="intervention" value="No"> No
+    <input type="radio" name="intervention" value="Yes"> Yes<br>
+    <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea>
 
-          <label>5.10 Will a translator be required?</label><br />
-          <input type="radio" name="translator" value="No" /> No
-          <input type="radio" name="translator" value="Yes" /> Yes
-          <textarea
-            name="translator_procedure"
-            rows="2"
-            placeholder="Explain how translator will be used"
-          ></textarea>
+    <label>5.4.5 Sensitive data or vulnerable populations?</label>
+    <textarea name="sensitive_data" rows="2"></textarea>
 
-          <label>5.12 Secondary data to be used?</label><br />
-          <input type="radio" name="secondary_data" value="No" /> No
-          <input type="radio" name="secondary_data" value="Yes" /> Yes
-          <textarea
-            name="secondary_data_details"
-            rows="2"
-            placeholder="Details and attach proof if applicable"
-          ></textarea>
-        </section>
+    <label>5.4.6 Will a translator be required?</label><br>
+    <input type="radio" name="translator" value="No"> No
+    <input type="radio" name="translator" value="Yes"> Yes
+    <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
+
     <h3>5.5 Secondary Data Usage</h3>
 
     <label>Will secondary data be used?</label><br>
@@ -254,21 +208,19 @@
         <!-- Navigation Buttons -->
         <div class="form-navigation">
           <a href="form-a-section3.html" class="revise-btn">⬅ Section 3</a>
-          <button type="submit" class="approve-btn"
-            >Next ➔ Section 4</
-          >
+          <a href="form-a-section5.html"  class="approve-btn">Next ➔ Section 4</a>
         </div>
       </form>
+  
     </main>
-
+  
     <!-- Footer -->
     <footer class="footer">
-      <p>
-        &copy; 2025 Johannesburg Business School | University of Johannesburg
-      </p>
+      <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>
 
     <script>
+      
       // Hide alert after 3 seconds
       setTimeout(function () {
         const alert = document.getElementById("alertMessage");
@@ -278,6 +230,52 @@
           alert.style.display = "none"; // or use .remove() if you prefer
         }
       }, 3000); // 3000ms = 3 seconds
-    </script>
-  </body>
+   
+      function addRow() {
+        const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
+        const newRow = table.rows[0].cloneNode(true);
+        // Clear input values
+        Array.from(newRow.querySelectorAll('input, textarea')).forEach(input => input.value = '');
+        table.appendChild(newRow);
+      }
+    
+      function removeRow(button) {
+        const row = button.closest('tr');
+        const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
+        if (table.rows.length > 1) {
+          row.remove();
+        } else {
+          alert("You must have at least one row.");
+        }
+      }
+
+      function handleSecondaryData() {
+    const selection = document.getElementById('secondaryData').value;
+    document.getElementById('secondaryDetails').style.display = selection === 'yes' ? 'block' : 'none';
+    resetFields(); // Reset all nested logic
+  }
+
+  function handleDataType() {
+    const dataType = document.getElementById('dataType').value;
+    document.getElementById('privateDataSection').style.display = dataType === 'private' ? 'block' : 'none';
+    document.getElementById('publicDataSection').style.display = dataType === 'public' ? 'block' : 'none';
+    document.getElementById('uploadPrivatePermission').style.display = 'none'; // Hide by default
+  }
+
+  function handlePrivatePermission() {
+    const permission = document.getElementById('privatePermission').value;
+    document.getElementById('uploadPrivatePermission').style.display = permission === 'no' ? 'block' : 'none';
+  }
+
+  function resetFields() {
+    document.getElementById('dataType').value = "";
+    document.getElementById('privatePermission').value = "";
+    document.getElementById('privateDataSection').style.display = 'none';
+    document.getElementById('publicDataSection').style.display = 'none';
+    document.getElementById('uploadPrivatePermission').style.display = 'none';
+  }
+    </>
+
+
+</body>
 </html>

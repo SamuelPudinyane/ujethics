@@ -15,19 +15,10 @@
   <!-- Navbar -->
   <header class="navbar">
     <div class="nav-content">
+      
       <div>
         <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
         <span class="nav-title">Ethics Application System</span>
-      </div>
-      <div>
-        <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
-        <span class="nav-title">Ethics Application System</span>
-      </div>
-
-      <!-- Logout -->
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <h5>Welcome, {{name}}</h5>
-        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
       </div>
       <!-- Logout -->
       <div style="display: flex; align-items: center; gap: 10px;">
@@ -42,7 +33,6 @@
 
     <!-- Form Selection -->
     <section>
-      <h3>Select a Form to Start</h3>
       <h3>Select a Form to Start</h3>
       <div class="form-card-grid">
         <div class="form-card" onclick="location.href='{{url_for('form_a_upload')}}'">
@@ -95,27 +85,44 @@
         <tbody>
           <tr>
             <td>Form A</td>
-            <td>{{date}}</td>
-            <td>Awaiting Supervisor</td>
-            <td><a href="feedback.html?form=A">View</a></td>
+            <td>{{formA.submitted_at}}</td>
+            <td>{% if formA.declaration_date %}
+                Awaiting Supervisor
+                {% else %}
+                Not Started
+                {% endif %}</td>
+            <td><a href="{{url_for('form_a_answers')}}">View</a></td>
           </tr>
           <tr>
             <td>Form B</td>
-            <td>—</td>
-            <td>Not Started</td>
-            <td>—</td>
+            <td>{{formB.submitted_at}}</td>
+            <td>{% if formB.declaration_date %}
+                Awaiting Supervisor
+                {% else %}
+                Not Started
+                {% endif %}
+            </td>
+            <td><a href="{{url_for('form_b_answers')}}">View</a></td>
           </tr>
           <tr>
             <td>Form C</td>
-            <td>—</td>
-            <td>Not Started</td>
-            <td>—</td>
+            <td>{{formC.submitted_at}}</td>
+            <td>{% if formC.declaration_date %}
+                Awaiting Supervisor
+                {% else %}
+                Not Started
+                {% endif %}</td>
+            <td><a href="{{url_for('form_c_answers')}}">View</a></td>
           </tr>
           <tr>
             <td>Form D</td>
-            <td>—</td>
-            <td>Not Started</td>
-            <td>—</td>
+            <td>{{formD.submitted_at}}</td>
+            <td>{% if formD.declaration_date %}
+                Awaiting Supervisor
+                {% else %}
+                Not Started
+                {% endif %}</td>
+            <td><a href="{{url_for('form_a_answers')}}">View</a></td>
           </tr>
         </tbody>
       </table>

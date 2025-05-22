@@ -23,7 +23,6 @@
       <div style="text-align: right;">
 
         <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
-        <a href="{{ url_for('logout')}}" class="btn-logout">Logout</a>
       </div>
     </div>
   </header>
@@ -41,10 +40,7 @@
     <div class="progress-bar">
       <div class="progress-fill" style="width: 28%">28%</div>
     </div>
-    <!-- Progress Bar -->
-    <div class="progress-bar">
-      <div class="progress-fill" style="width: 28%">28%</div>
-    </div>
+
 
     <h1>FORM A</h1>
     <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
@@ -109,7 +105,7 @@
       <thead>
         <tr>
           <th>Research includes direct involvement of:</th>
-          <th>YES, if NO leave unchecked</th>
+          <th>Tick where applicable</th>
          
         </tr>
       </thead>
@@ -123,7 +119,6 @@
           <td>Non-English-speaking participants</td>
           <td><input type="checkbox" name="non_english" value="yes"></td>
           
-          <td><input type="checkbox" name="uj_employees"></td>
 
         </tr>
         <tr>
@@ -143,8 +138,7 @@
         </tr>
         <tr>
           <td>UJ employees or students</td>
-          <td><input type="radio" name="uj_employees" value="yes"></td>
-          <td><input type="radio" name="uj_employees" value="no"></td>
+          <td><input type="checkbox" name="uj_employees" value="yes"></td>
         </tr>
       </tbody>
     </table>
