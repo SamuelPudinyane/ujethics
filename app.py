@@ -159,15 +159,14 @@ def register():
         
         try:
             # Hash the password properly
-            hashed_password = User.hash_password(password)
-            print("Hashed password:", hashed_password)  # Debug print
+            
             
             # Create new user
             new_user = User(
                 full_name=full_name,
                 student_number=student_number,
                 email=email,
-                password=hashed_password,  # Make sure this is the hashed version
+                password=password,  # Make sure this is the hashed version
                 supervisor_id=supervisor_id,
                 role=UserRole.STUDENT
             )

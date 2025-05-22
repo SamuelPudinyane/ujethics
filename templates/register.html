@@ -26,7 +26,8 @@
     <h2 class="centered-text">Register</h2>
     <p id="message" style="color: red;"></p>
     <form action="{{ url_for('register') }}" id="registerForm" method="post">
-       {% if messages %}
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+      {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
