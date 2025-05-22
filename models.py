@@ -417,57 +417,81 @@ class FormC(Base):
     __tablename__ = "form_c"
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
     user_id = Column(String(255), nullable=False)
-    applicant_name = Column(String, nullable=True)
-    student_number = Column(Integer, nullable=True)
-    institution = Column(String, nullable=True)
-    department = Column(String, nullable=True)
-    degree = Column(String, nullable=True)
-    project_title = Column(String, nullable=True)
-    mobile_number = Column(String, nullable=True)
-    email_address = Column(String(120), nullable=True)
-    supervisor_name = Column(String, nullable=True)
-    supervisor_email = Column(String, nullable=True)
-    # section 2
-    # Section 2.1 - Vulnerable groups
-    vulnerable = Column(PickleType, nullable=True)  # List of selected checkboxes
-    vulnerable_other = Column(Text, nullable=True)
-    vulnerable_comments = Column(Text, nullable=True)
+    # Section 1
+    application_name = Column(String(100))
+    student_number = Column(String(50))
+    institution = Column(String(100))
+    department = Column(String(100))
+    degree = Column(String(100))
+    project_title = Column(String(200))
+    mobile_number = Column(String(20))
+    email_address = Column(String(120))
+    supervisor_name = Column(String(200))
+    supervisor_email = Column(String(200))
 
-    # Section 2.2 - Research activity types
-    activity = Column(PickleType, nullable=True)  # List of selected checkboxes
-    activity_other = Column(Text, nullable=True)
-    activity_comments = Column(Text, nullable=True)
+    # Section 2
+    # Vulnerable Populations
+    vulnerable = Column(Boolean, default=False)
+    age_under_18_or_over_65 = Column(Boolean, default=False)
+    uj_employees = Column(Boolean, default=False)
+    non_vulnerable_context = Column(Boolean, default=False)
+    non_english = Column(Boolean, default=False)
+    own_students = Column(Boolean, default=False)
+    poverty = Column(Boolean, default=False)
+    no_education = Column(Boolean, default=False)
+    vulnerable_other_description = Column(Text, nullable=True)
+ 
+    # Research Activities Risk Assessment
+    consent_violation = Column(Boolean, default=False)
+    discomfiture = Column(Boolean, default=False)
+    deception = Column(Boolean, default=False)
+    sensitive_issues = Column(Boolean, default=False)
+    prejudicial_info = Column(Boolean, default=False)
+    intrusive = Column(Boolean, default=False)
+    illegal = Column(Boolean, default=False)
+    direct_social_info = Column(Boolean, default=False)
+    identifiable_records = Column(Boolean, default=False)
+    psychology_tests = Column(Boolean, default=False)
+    researcher_risk = Column(Boolean, default=False)
+    activity_other_description = Column(Text, nullable=True)
 
-    # Section 2.3 - Additional considerations
-    consideration = Column(PickleType, nullable=True)  # List of selected checkboxes
-    consideration_comments = Column(Text, nullable=True)
+    # Additional Research Considerations
+    incentives = Column(Boolean, default=False)
+    participant_costs = Column(Boolean, default=False)
+    researcher_interest = Column(Boolean, default=False)
+    conflict_of_interest = Column(Boolean, default=False)
+    uj_premises = Column(Boolean, default=False)
+    uj_facilities = Column(Boolean, default=False)
+    uj_funding = Column(Boolean, default=False)
 
-    # Risk level and justification
-    risk_level = Column(String(50), nullable=True)
-    justify = Column(Text, nullable=True)
-    risk_benefits = Column(Text, nullable=True)
-    risk_mitigation = Column(Text, nullable=True)
+    # - Risk Assessment (store as JSON for flexibility)
+    vulnerable_groups = Column(JSON)
+    vulnerable_comments = Column(Text)
+    research_activities = Column(JSON)
+    activities_comments = Column(Text)
+    additional_considerations = Column(JSON)
+    considerations_comments = Column(Text)
+    risk_level = Column(String(20))
+    risk_justification = Column(Text)
+    risk_benefits = Column(Text)
+    risk_mitigation = Column(Text)
 
-    # section 3
-    
-    executive_summary = Column(Text,nullable=True)
-    research_questions = Column(Text,nullable=True)
-    research_purpose = Column(Text,nullable=True)
-    secondary_data_info = Column(Text,nullable=True)
-    exemption_reason = Column(Text,nullable=True)
+    # Section 3
+    summary_title = Column(Text)
+    executive_summary = Column(Text)
+    research_questions = Column(Text)
+    research_purpose = Column(Text)
+    secondary_data_info = Column(Text)
+    exemption_reason = Column(Text)
 
-    # section 4
-    eclaration_name = Column(String(255), nullable=True)  # from the embedded paragraph
-    full_name = Column(String(255), nullable=True)
-    submission_date = Column(DateTime, nullable=True)
-
-    ethical_clearance = Column(Boolean, nullable=True)
-    clearance_details = Column(String, nullable=True)
-    participant_consent = Column(Boolean, nullable=True)
-    consent_details = Column(String, nullable=True)
-    risk_assessment = Column(String, nullable=True)
-    declaration_full_name = Column(String, nullable=True)
-    declaration_date = Column(DateTime, nullable=True)
+    # Section 4 - Declaration
+    declaration_name = Column(String(200))
+    full_name = Column(String(200))
+    submission_date = Column(DateTime)
+    supervisor_comments = Column(Text)
+    supervisor_signature = Column(String(200))
+    supervisor_date = Column(DateTime)
+    status = Column(String(50), default="submitted")
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
