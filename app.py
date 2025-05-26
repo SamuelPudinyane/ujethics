@@ -1294,16 +1294,18 @@ def form_a_answers():
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
     form = db_session.query(FormA).filter_by(user_id=user_id).first()
-    return render_template("form_a_answers.html",forma=form)
+    print(form)
+    return render_template("form_a_answers.html",formA=form)
 
 @app.route('/form_b_answers', methods=['GET','POST'])
 def form_b_answers():
     user_id=session.get('id')
+    
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
     form = db_session.query(FormB).filter_by(user_id=user_id).first()
-    
-    return render_template("form_b_answers.html",formb=form)
+    print(form)
+    return render_template("form_b_answers.html",formB=form)
 
 @app.route('/form_c_answers', methods=['GET','POST'])
 def form_c_answers():

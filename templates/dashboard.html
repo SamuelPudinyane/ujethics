@@ -85,7 +85,8 @@
         <tbody>
           <tr>
             <td>Form A</td>
-            <td>{{formA.submitted_at}}</td>
+            <td>{% if formA.submitted_at %}
+              {{formA.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif %}</td>
             <td>{% if formA.declaration_date %}
                 Awaiting Supervisor
                 {% else %}
@@ -95,7 +96,7 @@
           </tr>
           <tr>
             <td>Form B</td>
-            <td>{{formB.submitted_at}}</td>
+            <td>{% if formB.submitted_at %}{{formB.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif%}</td>
             <td>{% if formB.declaration_date %}
                 Awaiting Supervisor
                 {% else %}
@@ -106,7 +107,7 @@
           </tr>
           <tr>
             <td>Form C</td>
-            <td>{{formC.submitted_at}}</td>
+            <td>{% if formC.submitted_at %}{{formC.submitted_at.strftime('%H:%M %d/%m/%Y')}} {% endif %}</td>
             <td>{% if formC.declaration_date %}
                 Awaiting Supervisor
                 {% else %}
@@ -116,7 +117,7 @@
           </tr>
           <tr>
             <td>Form D</td>
-            <td>{{formD.submitted_at}}</td>
+            <td>{% if formD.submitted_at %}{{formD.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif%}</td>
             <td>{% if formD.declaration_date %}
                 Awaiting Supervisor
                 {% else %}
