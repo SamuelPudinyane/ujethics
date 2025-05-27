@@ -1239,6 +1239,7 @@ def reject_form_a(id):
     forma.supervisor_comments = request.form.get('supervisor_comments')
     forma.supervisor_signature = request.form.get('supervisor_signature')
     forma.supervisor_date = request.form.get('supervisor_date')
+    forma.rejected_or_accepted=False
     db_session.add(forma)
     db_session.commit()
     return render_template("supervisor-dashborad.html",formA=forma)
@@ -1256,6 +1257,7 @@ def accept_form_a(id):
     forma.supervisor_comments = request.form.get('supervisor_comments')
     forma.supervisor_signature = request.form.get('supervisor_signature')
     forma.supervisor_date = request.form.get('supervisor_date')
+    forma.rejected_or_accepted=True
     db_session.add(forma)
     db_session.commit()
     return render_template("supervisor-dashborad.html",formA=forma)
@@ -1272,6 +1274,7 @@ def reject_form_b(id):
     formb.supervisor_comments = request.form.get('supervisor_comments')
     formb.supervisor_signature = request.form.get('supervisor_signature')
     formb.supervisor_date = request.form.get('supervisor_date')
+    formb.rejected_or_accepted=False
     db_session.add(formb)
     db_session.commit()
     return render_template("supervisor-dashborad.html",formB=formb)
@@ -1288,6 +1291,7 @@ def accept_form_b(id):
     formb.supervisor_comments = request.form.get('supervisor_comments')
     formb.supervisor_signature = request.form.get('supervisor_signature')
     formb.supervisor_date = request.form.get('supervisor_date')
+    formb.rejected_or_accepted=True
     db_session.add(formb)
     db_session.commit()
     return render_template("supervisor-dashborad.html",formB=formb)
@@ -1304,6 +1308,7 @@ def reject_form_c(id):
     formc.supervisor_comments = request.form.get('supervisor_comments')
     formc.supervisor_signature = request.form.get('supervisor_signature')
     formc.supervisor_date = request.form.get('supervisor_date')
+    formc.rejected_or_accepted=False
     db_session.add(formc)
     db_session.commit()
     return render_template("supervisor-dashborad.html",formC=formc)
@@ -1321,6 +1326,7 @@ def accept_form_c(id):
     formc.supervisor_comments = request.form.get('supervisor_comments')
     formc.supervisor_signature = request.form.get('supervisor_signature')
     formc.supervisor_date = request.form.get('supervisor_date')
+    formc.rejected_or_accepted=True
     db_session.add(formc)
     db_session.commit()
     return render_template("supervisor-dashborad.html",formC=formc)
