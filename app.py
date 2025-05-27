@@ -288,7 +288,7 @@ def dashboard ():
 @app.route('/api/form-a/requirements', methods=['POST'])
 def submit_form_a_requirements():
     try:
-        UPLOAD_FOLDER = 'uploads/form_a'
+        UPLOAD_FOLDER = 'static/uploads/form_a'
         
         # Get form data
         needs_permission = request.form.get('need_permission') == 'Yes'
@@ -844,7 +844,7 @@ def form_a_sec4():
         # Handle file upload
         file = request.files.get('private_permission')
         if file and file.filename:
-            upload_folder = app.config.get('UPLOAD_FOLDER', 'uploads')
+            upload_folder = app.config.get('UPLOAD_FOLDER', 'static/uploads')
             os.makedirs(upload_folder, exist_ok=True)
             filename = secure_filename(file.filename)
             file_path = os.path.join(upload_folder, filename)
@@ -978,7 +978,7 @@ def get_form_b(form_id):
 
 @app.route('/form_b_upload', methods=['GET','POST'])
 def form_b_upload():
-    UPLOAD_FOLDER = 'uploads/form_b'
+    UPLOAD_FOLDER = 'static/uploads/form_b'
     user_id = session.get('id')
     print("something")
     if not user_id:
@@ -1206,6 +1206,124 @@ def form_c_sec1():
 
     return render_template("form-c-section1.html")
 
+
+@app.route('/form_a_supervisor/<string:id>',methods=['GET','POST'])
+def form_a_supervisor(id):
+    form = db_session.query(FormA).filter_by(id=id).first()
+    
+    return render_template("form_a_supervisor.html",formA=form)
+    
+@app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
+def form_b_supervisor(id):
+    form = db_session.query(FormB).filter_by(form_id=id).first()
+
+    return render_template("form_b_supervisor.html",formB=form)
+
+@app.route('/form_c_supervisor/<string:id>',methods=['GET','POST'])
+def form_c_supervisor(id):
+    form = db_session.query(FormC).filter_by(form_id=id).first()
+
+    return render_template("form_c_supervisor.html",formC=form)
+
+
+@app.route('/reject_form_a/<string:id>',methods=['GET','POST'])
+def reject_form_a(id):
+
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+        
+    forma = db_session.query(FormA).filter_by(id=id).first()
+    if not forma:
+        forma = FormA(id=id)
+    forma.supervisor_comments = request.form.get('supervisor_comments')
+    forma.supervisor_signature = request.form.get('supervisor_signature')
+    forma.supervisor_date = request.form.get('supervisor_date')
+    db_session.add(forma)
+    db_session.commit()
+    return render_template("supervisor-dashborad.html",formA=forma)
+
+@app.route('/accept_form_a/<string:id>')
+def accept_form_a(id):
+    
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+        
+    forma = db_session.query(FormA).filter_by(id=id).first()
+    if not forma:
+        forma = FormA(id=id)
+    forma.supervisor_comments = request.form.get('supervisor_comments')
+    forma.supervisor_signature = request.form.get('supervisor_signature')
+    forma.supervisor_date = request.form.get('supervisor_date')
+    db_session.add(forma)
+    db_session.commit()
+    return render_template("supervisor-dashborad.html",formA=forma)
+
+@app.route('/reject_form_b/<string:id>')
+def reject_form_b(id):
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+        
+    formb = db_session.query(FormB).filter_by(form_id=id).first()
+    if not formb:
+        formb = FormB(form_id=id)
+    formb.supervisor_comments = request.form.get('supervisor_comments')
+    formb.supervisor_signature = request.form.get('supervisor_signature')
+    formb.supervisor_date = request.form.get('supervisor_date')
+    db_session.add(formb)
+    db_session.commit()
+    return render_template("supervisor-dashborad.html",formB=formb)
+
+@app.route('/accept_form_b/<string:id>')
+def accept_form_b(id):
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+        
+    formb = db_session.query(FormB).filter_by(form_id=id).first()
+    if not formb:
+        formb = FormB(form_id=id)
+    formb.supervisor_comments = request.form.get('supervisor_comments')
+    formb.supervisor_signature = request.form.get('supervisor_signature')
+    formb.supervisor_date = request.form.get('supervisor_date')
+    db_session.add(formb)
+    db_session.commit()
+    return render_template("supervisor-dashborad.html",formB=formb)
+
+@app.route('/reject_form_c/<string:id>')
+def reject_form_c(id):
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+        
+    formc = db_session.query(FormC).filter_by(form_id=id).first()
+    if not formc:
+        formc = FormC(form_id=id)
+    formc.supervisor_comments = request.form.get('supervisor_comments')
+    formc.supervisor_signature = request.form.get('supervisor_signature')
+    formc.supervisor_date = request.form.get('supervisor_date')
+    db_session.add(formc)
+    db_session.commit()
+    return render_template("supervisor-dashborad.html",formC=formc)
+
+
+@app.route('/reject_form_c/<string:id>')
+def accept_form_c(id):
+    user_id=session.get('id')
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+        
+    formc = db_session.query(FormC).filter_by(form_id=id).first()
+    if not formc:
+        formc = FormC(form_id=id)
+    formc.supervisor_comments = request.form.get('supervisor_comments')
+    formc.supervisor_signature = request.form.get('supervisor_signature')
+    formc.supervisor_date = request.form.get('supervisor_date')
+    db_session.add(formc)
+    db_session.commit()
+    return render_template("supervisor-dashborad.html",formC=formc)
 
 @app.route('/form_c_sec2', methods=['GET','POST'])
 def form_c_sec2():
@@ -1444,6 +1562,28 @@ def request_reset():
         return "Reset email sent!"
     return "Email not found", 404
 
+
+@app.route('/supervisor_dashboard', methods=['GET','POST'])
+def supervisor_dashboard():
+    supervisor_id=session.get('id')
+    supervisor_id="bea65156-03ff-45c8-bd41-9d07f4bc48d2"
+    if not supervisor_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    formA = db_session.query(FormA).all()
+    formB = db_session.query(FormB).all()
+    formC = db_session.query(FormC).all()
+    
+    supervisor_formA = db_session.query(FormA).join(User, FormA.user_id == User.user_id).filter(User.supervisor_id == supervisor_id).all()
+    supervisor_formB = db_session.query(FormB).join(User, FormB.user_id == User.user_id).filter(User.supervisor_id == supervisor_id).all()
+    supervisor_formC = db_session.query(FormC).join(User, FormC.user_id == User.user_id).filter(User.supervisor_id == supervisor_id).all()
+  
+    # supervisor_formA=db_session.query(FormA).filter(FormA.user_id == users.user_id).all()
+    # supervisor_formB=db_session.query(FormB).filter(FormB.user_id == users.user_id).all()
+    # supervisor_formC=db_session.query(FormC).filter(FormC.user_id == users.user_id).all()
+    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    
+    return render_template("supervisor-dashboard.html",supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
 def validate_reset_token(token):
     user = User.query.filter_by(reset_token=token).first()
