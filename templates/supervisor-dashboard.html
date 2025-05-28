@@ -54,7 +54,14 @@
             <td>Form A</td>
             <td>{{forma.declaration_name}}</td>
             <td>{{forma.student_number}}</td>
-            <td><span class="badge status-pending">Waiting Review</span></td>
+            <td><span class="badge status-pending">
+              {{
+  'Rejected' if forma.rejected_or_accepted is not none and not forma.rejected_or_accepted and forma.supervisor_comments
+  else 'Accepted' if forma.rejected_or_accepted and forma.supervisor_comments
+  else 'Waiting Review'
+}}
+
+            </span></td>
             <td>{{forma.declaration_date}}</td>
             <td>
               
@@ -74,23 +81,32 @@
             <td>Form B</td>
             <td>{{formb.declaration_name}}</td>
             <td>{{formb.student_number}}</td>
-            <td><span class="badge status-pending">Waiting Review</span></td>
+            <td><span class="badge status-pending">
+        {{
+  'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_comments
+  else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_comments
+  else 'Waiting Review'
+        }}
+            </span></td>
             <td>{{formb.declaration_date}}</td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
                   {% for formR in supervisor_formA_req %}
                   {% if formR.proposal_path %}
-                 
+                      
                       <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
                   {% if formR.impact_assessment_path %}
+                  
                       <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
                   {% if formR.permission_letter_path %}
+                
                       <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
                   {% if formR.prior_clearance_path %}
+               
                       <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                   {% if formR.reseach_tools_path %}
@@ -117,7 +133,12 @@
             <td>Form C</td>
             <td>{{formc.declaration_name}}</td>
             <td>{{formc.student_number}}</td>
-            <td><span class="badge status-pending">Waiting Review</span></td>
+            <td><span class="badge status-pending">{{
+  'Rejected' if formc.rejected_or_accepted is not none and not formc.rejected_or_accepted and formc.supervisor_comments
+  else 'Accepted' if formc.rejected_or_accepted and formc.supervisor_comments
+  else 'Waiting Review'
+}}
+</span></td>
             <td>{{formc.declaration_date}}</td>
             <td>
               

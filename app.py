@@ -17,7 +17,7 @@ from flask_wtf.csrf import CSRFProtect
 # Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 CORS(app) 
 csrf = CSRFProtect(app)
 app.secret_key = os.getenv('SECRET_KEY')
@@ -1139,7 +1139,8 @@ def form_b_sec2():
             form.methodology_alignment=False
 
         form.data_acknowledgment = form_data.get('data_acknowledgment')
-
+        form.rejected_or_accepted=False
+        form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
         message="Section 2 saved successfully."
@@ -1169,7 +1170,8 @@ def form_b_sec3():
         form.declaration_name=request.form.get('declaration_name')
         form.full_name=request.form.get('full_name')
         form.declaration_date=datetime.strptime(request.form.get('declaration_date'), '%Y-%m-%d')
-            
+        form.rejected_or_accepted=False
+        form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
         return redirect(url_for('student_dashboard'))
@@ -1198,7 +1200,8 @@ def form_c_sec1():
         form.email_address=request.form.get('email')
         form.supervisor_name=request.form.get('supervisor_name')
         form.supervisor_email=request.form.get('supervisor_email')
-        
+        form.rejected_or_accepted=False
+        form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
         message="form submitted succesfully"
@@ -1242,9 +1245,9 @@ def reject_form_a(id):
     forma.rejected_or_accepted=False
     db_session.add(forma)
     db_session.commit()
-    return render_template("supervisor-dashborad.html",formA=forma)
+    return redirect(url_for('student_dashboard'))
 
-@app.route('/accept_form_a/<string:id>')
+@app.route('/accept_form_a/<string:id>',methods=['GET','POST'])
 def accept_form_a(id):
     
     user_id=session.get('id')
@@ -1260,9 +1263,9 @@ def accept_form_a(id):
     forma.rejected_or_accepted=True
     db_session.add(forma)
     db_session.commit()
-    return render_template("supervisor-dashborad.html",formA=forma)
+    return redirect(url_for('supervisor_dashboard'))
 
-@app.route('/reject_form_b/<string:id>')
+@app.route('/reject_form_b/<string:id>',methods=['GET','POST'])
 def reject_form_b(id):
     user_id=session.get('id')
     if not user_id:
@@ -1277,9 +1280,9 @@ def reject_form_b(id):
     formb.rejected_or_accepted=False
     db_session.add(formb)
     db_session.commit()
-    return render_template("supervisor-dashborad.html",formB=formb)
+    return redirect(url_for('supervisor_dashboard'))
 
-@app.route('/accept_form_b/<string:id>')
+@app.route('/accept_form_b/<string:id>',methods=['GET','POST'])
 def accept_form_b(id):
     user_id=session.get('id')
     if not user_id:
@@ -1294,9 +1297,9 @@ def accept_form_b(id):
     formb.rejected_or_accepted=True
     db_session.add(formb)
     db_session.commit()
-    return render_template("supervisor-dashborad.html",formB=formb)
+    return redirect(url_for('supervisor_dashboard'))
 
-@app.route('/reject_form_c/<string:id>')
+@app.route('/reject_form_c/<string:id>',methods=['GET','POST'])
 def reject_form_c(id):
     user_id=session.get('id')
     if not user_id:
@@ -1311,10 +1314,10 @@ def reject_form_c(id):
     formc.rejected_or_accepted=False
     db_session.add(formc)
     db_session.commit()
-    return render_template("supervisor-dashborad.html",formC=formc)
+    return redirect(url_for('supervisor_dashboard'))
 
 
-@app.route('/reject_form_c/<string:id>')
+@app.route('/reject_form_c/<string:id>',methods=['GET','POST'])
 def accept_form_c(id):
     user_id=session.get('id')
     if not user_id:
@@ -1329,7 +1332,7 @@ def accept_form_c(id):
     formc.rejected_or_accepted=True
     db_session.add(formc)
     db_session.commit()
-    return render_template("supervisor-dashborad.html",formC=formc)
+    return redirect(url_for('supervisor_dashboard'))
 
 @app.route('/form_c_sec2', methods=['GET','POST'])
 def form_c_sec2():

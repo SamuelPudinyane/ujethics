@@ -58,6 +58,7 @@
           <span class="info-icon">Applies when data is publicly available and anonymized. No permissions or human
             engagement required.</span>
         </div>
+        <!--
         <div class="form-card" onclick="location.href='form-a-upload.html'">
           <h5>Form D</h5>
           <p>Both Primary and Secondary Data Collection</p>ℹ️
@@ -67,6 +68,7 @@
           <span class="info-icon">Use when your research involves both human interaction and the use of secondary
             data.</span>
         </div>
+        -->
       </div>
     </section>
 
@@ -86,14 +88,25 @@
           <tr>
             <td>Form A</td>
             <td>{% if formA.submitted_at %}
-              {{formA.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif %}</td>
+              {{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
             <td>{% if not formA.supervisor_comments and formA.submitted_at %}
                 Awaiting Supervisor
-                {% elif formA.supervisor_comments%}
-                {{'Rejected' if formA.rejected_or_accepted else 'Accpted and form awaiting Ethics committee'}}
+                {% elif not formA.rejected_or_accepted and formA.supervisor_comments %}
+                Rejected
                 <br>
                 {{formA.supervisor_comments}}
-                <em>{{formA.supervisor_date.strftime('%H:%M %d/%m/%Y')}}</em>
+                <br>
+                <em>{% if formA.supervisor_date%}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
+                  {% endif %}
+                </em>
+                {% elif formA.rejected_or_accepted %}
+                {{'Accpted and form awaiting Ethics committee' if formA.rejected_or_accepted else 'Rejected'}}
+                <br>
+                {{formA.supervisor_comments}}
+                <br>
+                <em>{% if formA.supervisor_date %}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
+                  {% endif %}
+                </em>
                 {% else %}
                 Not Started
                 {% endif %}</td>
@@ -101,14 +114,27 @@
           </tr>
           <tr>
             <td>Form B</td>
-            <td>{% if formB.submitted_at %}{{formB.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif%}</td>
+            <td>{% if formB.submitted_at %}
+              {{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
             <td>{% if not formB.supervisor_comments and formB.submitted_at %}
                 Awaiting Supervisor
-                {% elif formB.supervisor_comments%}
-                {{'Rejected' if formB.rejected_or_accepted else 'Accpted and form awaiting Ethics committee'}}
+                {% elif not formB.rejected_or_accepted and formB.supervisor_comments %}
+                Rejected
                 <br>
                 {{formB.supervisor_comments}}
-                <em>{{formB.supervisor_date.strftime('%H:%M %d/%m/%Y')}}</em>
+                <br>
+                <>
+                  {% if formB.supervisor_date%}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
+
+                {% endif %}</em>
+                {% elif formB.rejected_or_accepted %}
+                {{'Accpted and form awaiting Ethics committee' if formB.rejected_or_accepted else 'Rejected'}}
+                <br>
+                {{formB.supervisor_comments}}
+                <br>
+                <em>{% if formB.supervisor_date %}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
+                  {% endif %}
+                </em>
                 {% else %}
                 Not Started
                 {% endif %}
@@ -117,20 +143,21 @@
           </tr>
           <tr>
             <td>Form C</td>
-            <td>{% if formC.submitted_at %}{{formC.submitted_at.strftime('%H:%M %d/%m/%Y')}} {% endif %}</td>
+            <td>{% if formC.submitted_at %}{{formC.submitted_at.strftime('%d/%m/%Y')}} {% endif %}</td>
             <td>{% if not formC.supervisor_comments and formC.submitted_at %}
                 Awaiting Supervisor
                 {% elif formC.supervisor_comments%}
-                {{'Rejected' if formC.rejected_or_accepted else 'Accpted and form awaiting Ethics committee'}}
+                {{'Accpted and form awaiting Ethics committee' if formC.rejected_or_accepted else 'Rejected'}}
                 <br>
                 {{formC.supervisor_comments}}
-                <em>{{formC.supervisor_date.strftime('%H:%M %d/%m/%Y')}}</em>
+                <em>{{formC.supervisor_date.strftime('%d/%m/%Y')}}</em>
                 {% else %}
                 Not Started
                 {% endif %}</td>
             <td><a href="{{url_for('form_c_answers')}}">View</a></td>
           </tr>
           <tr>
+            <!--
             <td>Form D</td>
             <td>{% if formD.submitted_at %}{{formD.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif%}</td>
             <td>{% if formD.declaration_date %}
@@ -138,7 +165,7 @@
                 {% else %}
                 Not Started
                 {% endif %}</td>
-            <td><a href="{{url_for('form_a_answers')}}">View</a></td>
+            <td><a href="{{url_for('form_a_answers')}}">View</a></td>-->
           </tr>
         </tbody>
       </table>

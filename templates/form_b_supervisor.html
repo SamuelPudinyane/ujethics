@@ -257,7 +257,9 @@
       </label>
 
       <hr>
-
+    </form>
+    <form id="supervisorForm" method="POST" >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div id="supervisorDeclaration" >
     
       <h3>SUPERVISOR'S SECTION</h3>
@@ -290,8 +292,8 @@
     </div>
       <br>
     
-      <a href="{{url_for('reject_form_b')}}" class="btn btn-danger">Reject</a> <a class="btn btn-success" href="{{url_for('accept_form_b')}}">Accept</a>
-      
+       <button type="submit" class="btn btn-danger" onclick="submitForm('reject')">Reject</button>
+  <button type="submit" class="btn btn-success" onclick="submitForm('accept')">Accept</button>
         </form>
   </main>
 
@@ -342,6 +344,15 @@
   closeModalBtn.addEventListener("click", () => {
     window.location.href = "supervisor-dashboard.html";
   });
+
+  function submitForm(action) {
+    const form = document.getElementById('supervisorForm');
+    if (action === 'reject') {
+      form.action = "{{ url_for('reject_form_b', id=formB.form_id) }}";
+    } else if (action === 'accept') {
+      form.action = "{{ url_for('accept_form_b', id=formB.form_id) }}";
+    }
+  }
 </script>
 
 </body>

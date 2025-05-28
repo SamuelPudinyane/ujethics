@@ -352,7 +352,7 @@ class FormA(Base):
 
     supervisor_comments = Column(Text,nullable=True)
     supervisor_signature = Column(String(255),nullable=True)
-    rejected_or_accepted=Column(Boolean)
+    rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
     def __repr__(self):
         return f'<FormA {self.applicant_name} ({self.student_number})>'
@@ -427,7 +427,7 @@ class FormB(Base):
 
     supervisor_comments = Column(Text,nullable=True)
     supervisor_signature = Column(String(255),nullable=True)
-    rejected_or_accepted=Column(Boolean)
+    rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
@@ -512,10 +512,10 @@ class FormC(Base):
     supervisor_signature = Column(String(200),nullable=True)
     supervisor_date = Column(DateTime,nullable=True)
     status = Column(String(50), default="submitted")
-    
+
     supervisor_comments = Column(Text,nullable=True)
     supervisor_signature = Column(String(255),nullable=True)
-    rejected_or_accepted=Column(Boolean)
+    rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
