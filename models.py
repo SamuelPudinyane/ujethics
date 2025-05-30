@@ -513,8 +513,6 @@ class FormC(Base):
     supervisor_date = Column(DateTime,nullable=True)
     status = Column(String(50), default="submitted")
 
-    supervisor_comments = Column(Text,nullable=True)
-    supervisor_signature = Column(String(255),nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
     def to_dict(self):

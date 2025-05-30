@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form B – Researcher's Details | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/form_a.css" />
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}"> -->
+
+  <style>
+        .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 400px;
+      max-width: 90%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      color: #2E1A46;
+    }
+
+    .modal-content button {
+      margin-top: 1rem;
+      background-color: #2E1A46;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    span{
+        font-weight: normal;
+        font-size:14px;
+    }
+</style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form B – Researcher's Details</span>
+
+      <!-- Logout -->
+      <div style="text-align: right;">
+        <a href="/templates/login/logout.html" class="btn-logout">Logout</a>
+      </div>
+    </div>
+  </header>
+<form  action="{{url_for('student_edit_formb')}}" method="post" enctype="multipart/form-data">
+      <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="formb_id" value="{{ formB.form_id }}">
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <h2>Researcher's Details</h2>
+      <label>Applicant Name
+    </label><input type="text" name="applicant_name" value="{{formB.applicant_name}}">
+      <label>Student/Staff Number 
+        </label><br>
+        <input type="text" name="student_number" value="{{formB.student_number}}">
+      <label>Institution 
+       </label><br>
+        <input type="text" name="institution" value="University of Johannesburg">
+      <label>UJ Department and School <br>
+        <input type="text" name="department" value="{{formB.department}}">
+        </label>
+      <label>Degree Registered For <br>
+        <input type="text" name="degree" value="{{formB.degree}}">
+        </label>
+      <label>Title/Working Title of Project or Study <br>
+        <input type="text" name="study_title" value="{{formB.study_title}}">
+        </label>
+      <label>Mobile Number <br>
+        <input type="text" name="mobile" value="{{formB.mobile}}">
+        </label>
+      <label>Email Address <br>
+        <input type="text" name="email" value="{{formB.email}}">
+     </label>
+      <label>Supervisor(s) <br>
+        <input type="text" name="supervisor" value="{{formB.supervisor}}">
+        </label>
+      <label>Supervisor Email Address <br>
+        <input type="text" name="supervisor_email" value="{{formB.supervisor_email}}">
+     </label>
+   
+
+
+  </main>
+
+  <!-- Section 2 -->
+
+  
+    <!-- Main Content -->
+    <main class="main-content">
+
+    
+      <h2>Research Project and Data Information</h2>
+
+      <label>1. Short Description of the Research Project (±200 words)
+        <br>
+        <input type="text" name="project_description" value="{{formB.project_description}}">
+      
+      </label>
+
+
+      <hr>
+
+      <h3>2. Details of the Data</h3>
+
+      <label>2.1 Nature of the Data <br>
+        <input type="text" name="data_nature" value="{{formB.data_nature}}">
+   
+</label>
+ 
+
+      <label>2.2 Origin/Source of Research Data
+        <br>
+        <input type="text" name="data_origin" value="{{formB.data_origin}}">
+      </label>
+ 
+
+      <div class="question-block">
+        <label>2.3 Are the sources of the research data in the public domain?
+            <br>
+            <input type="text" name="data_public" value="{{'Yes' if formB.data_public else 'No'}}">
+        </label>
+        
+      </div>
+
+      <label>Provide evidence or explanation (if applicable)
+        <br>
+        <input type="text" name="public_evidence" value="{{formB.public_evidence}}">
+        
+      </label>
+   
+
+      <label>2.4 If data is not public, what are the access conditions?
+        <br>
+        <input type="text" name="access_conditions" value="{{formB.access_conditions}}">
+    
+      </label>
+    
+
+      <div class="question-block">
+        <label>2.5 Does the database contain personal information/identifiers?
+            <br>
+            <input type="text" name="personal_info" value="{{'Yes' if formB.personal_info else 'No'}}">
+        </label>
+        
+      
+      </div>
+
+      <div class="question-block">
+        <label>2.6 If yes, has the data been anonymized?
+            <br>
+            <input type="text" name="data_anonymized" value="{{formB.data_anonymized}}">
+
+        </label>
+       
+      </div>
+
+      <label>Comment / Justification:<br>
+        <input type="text" name="anonymization_comment" value="{{formB.anonymization_comment}}">
+    </label>
+
+     
+      <div class="question-block">
+        <label>2.7 Private database: does it contain confidential private company data requiring permission?
+            <br>
+            <input type="text" name="private_permission" value="{{'Yes' if formB.private_permission else 'No'}}">
+           
+        </label>
+      </div>
+
+      <label>Provide permission details (or attach separately):
+        <br>
+        <input type="text" name="permission_details" value="{{formB.permission_details}}">
+     
+      </label>
+     
+
+      <div class="question-block">
+        <label>2.8 Will data shortcomings/incompleteness be reported?
+            <br>
+            <input type="text" name="shortcommings_report" value="{{'Yes' if formB.shortcommings_report else 'No'}}">
+
+        </label>
+       
+      </div>
+
+      <label>2.9 How will data limitations be reported?
+        <br>
+         <input type="text" name="limitations_reporting" value="{{formB.limitations_reporting}}">
+    
+      </label>
+    
+
+      <div class="question-block">
+        <label>2.10 Are the research methodology and design aligned with secondary data use?
+            <br>
+            <input type="text" name="methodology_alighnment" value="{{'Yes' if formB.methodology_alighnment else 'No'}}">
+
+        </label>
+       
+      </div>
+
+      <label>2.11 How will original owners of the data be acknowledged?
+        <br>
+          <input type="text" name="data_acknowledgment" value="{{formB.data_acknowledgment}}">
+       
+      </label>
+    
+   
+  </main>
+
+  <!-- Section 3 -->
+
+   <!-- Main Content -->
+  <main class="main-content">
+    
+      <h2>Ethical Considerations</h2>
+
+      <div class="question-block">
+        <label>3.1 Was ethical clearance granted for the original data gathering phase?
+            <br>
+            <input type="text" name="original_clearance" value="{{formB.original_clearance}}">
+          
+        </label>
+        
+      </div>
+
+      <div class="question-block">
+        <label>3.2 Did participants in the original study grant permission for future use of the data?
+            <br>
+            <input type="text" name="participant_permission" value="{{formB.participant_permission}}">
+      
+        </label>
+       
+      </div>
+
+      <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:
+        <br>
+        <input type="text" name="data_safekeeping" value="{{formB.data_safekeeping}}">
+
+      </label>
+ 
+
+      <hr>
+
+      <h2>Risk Assessment</h2>
+
+      <div class="question-block">
+        <label>The study presents:
+            <br>
+            <input type="text" name="risk_level" value="{{formB.risk_level}}">
+        
+        </label>
+        
+      </div>
+
+      <label>Comments:
+        <br>
+         <input type="text" name="risk_comments" value="{{formB.risk_comments}}">
+      
+      </label>
+    
+
+      <hr>
+
+      <h2>Declaration</h2>
+
+      <p class="form-note">
+        I, <input type="text" name="declaration_name" value="{{formB.declaration_name}}">
+        (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics. 
+      </p>
+
+      <label>Full Name
+        <br><input type="text" name="full_name" value="{{formB.full_name}}">
+      </label>
+
+      <label>Date
+        <br><input type="text" name="declaration_date" value="{{formB.declaration_date}}">
+        
+      </label>
+
+      <hr>
+
+      <div id="supervisorDeclaration" style="display: none;">
+    
+      <h3>SUPERVISOR'S SECTION</h3>
+      <p><strong>Supervisor's Review and Declaration</strong></p>
+    
+      <div class="form-group">
+        <label for="supervisor_comments">Supervisor Comments:</label>
+        <textarea id="supervisor_comments" name="supervisor_comments" rows="4"
+          placeholder="Provide feedback or concerns regarding the student's submission..."></textarea>
+      </div>
+    
+      <p><strong>Declaration by Supervisor (where applicable):</strong></p>
+      <p>
+        To the best of my knowledge, the student has addressed all the aspects that relate to ethical clearance for the
+        study and is complying with the requirements as set forth in the Policy on Research Ethics of UJ and the Charter and
+        standard operating procedure of the Johannesburg Business Schools’ Research Ethics Committee.
+      </p>
+    
+      <div class="form-group">
+        <label for="supervisor_signature">Signature of Supervisor</label>
+        <input type="text" name="supervisor_signature" id="supervisor_signature"
+          placeholder="Type your full name as signature" >
+      </div>
+    
+      <div class="form-group">
+        <label for="supervisor_date">Date</label>
+        <input type="date" name="supervisor_date" id="supervisor_date" >
+      </div>
+    
+    </div>
+      
+    
+    
+      <button type="submit" class="approve-btn">✅ Submit Form </button>
+    
+  </main>
+  
+</form>
+
+
+
+
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+  </footer>
+
+  
+<!-- Script -->
+<script>
+  // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
+
+</script>
+
+</body>
+</html>
