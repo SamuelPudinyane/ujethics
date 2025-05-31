@@ -1185,21 +1185,22 @@ def form_c_sec1():
         user_id=session.get('id')
         if not user_id:
             return jsonify({'error': 'Unauthorized'}), 401
-        
+        user = db_session.query(User).filter(User.user_id == user_id).first()
+        supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
         form = db_session.query(FormC).filter_by(user_id=user_id).first()
         if not form:
                 form = FormC(user_id=user_id)
        
-        form.applicant_name=request.form.get('applicant_name')
+        form.application_name=request.form.get('applicant_name')
         form.student_number=request.form.get('student_number')
         form.institution=request.form.get('institution')
         form.department=request.form.get('department')
         form.degree=request.form.get('degree')
         form.project_title=request.form.get('title')
         form.mobile_number=request.form.get('mobile')
-        form.email_address=request.form.get('email')
-        form.supervisor_name=request.form.get('supervisor_name')
-        form.supervisor_email=request.form.get('supervisor_email')
+        form.email_address=user.email,
+        form.supervisor_name=supervisor.full_name,
+        form.supervisor_email=supervisor.email,
         form.rejected_or_accepted=False
         form.supervisor_comments=""
         db_session.add(form)
@@ -1345,21 +1346,41 @@ def form_c_sec2():
         if not form:
             form = FormC(user_id=user_id)
         form.vulnerable=request.form.get('vulnerable'),
-        form.vulnerable_other=request.form.get('vulnerable_other'),
+        form.age_under_18_or_over_65=request.form.get('age_under_18_or_over_65'),
+        form.uj_employees=request.form.get('uj_employee'),
+        form.non_vulnerable_context=request.form.get('non_vulnerable_context'),
+        form.non_english=request.form.get('non_english'),
+        form.own_students=request.form.get('own_student'),
+        form.poverty=request.form.get('poverty'),
+        form.no_education=request.form.get('non_education'),
+        form.vulnerable_other_description=request.form.get('vulnerable_other_description'),
         form.vulnerable_comments=request.form.get('vulnerable_comments'),
-
-        form.activity=request.form.get('activity'),
-        form.activity_other=request.form.get('activity_other'),
+        form.consent_violation=request.form.get('consent_violation'),
+        form.discomfiture=request.form.get('discomfiture'),
+        form.deception=request.form.get('deception'),
+        form.sensitive_issues=request.form.get('sensitive_issues'),
+        form.prejudicial_info=request.form.get('prejuditial_info'),
+        form.intrusive=request.form.get('intrusive'),
+        form.illegal=request.form.get('illegal'),
+        form.direct_social_info=request.form.get('direct_social_info'),
+        form.identifiable_records=request.form.get('identifiable_records'),
+        form.psychology_tests=request.form.get('psychology_tests'),
+        form.researcher_risk=request.form.get('reseacher_risk'),
+        form.activity_other_description=request.form.get('activity_other_description'),
         form.activity_comments=request.form.get('activity_comments'),
-
-        form.consideration=request.form.get('consideration'),
-        form.consideration_comments=request.form.get('consideration_comments'),
-
+        form.incentives=request.form.get('incentives'),
+        form.participant_costs=request.form.get('participant_costs'),
+        form.researcher_interest=request.form.get('researcher_interest'),
+        form.conflict_of_interest=request.form.get('conflict_of_interest'),
+        form.uj_premises=request.form.get('uj_premises'),
+        form.uj_facilities=request.form.get('uj_facilities'),
+        form.uj_funding=request.form.get('uj_funding'),
+        form.consideration_comments=request.form.get('consideration_comments'),    
         form.risk_level=request.form.get('risk_level'),
-        form.justify=request.form.get('justify'),
+        form.risk_justification=request.form.get('risk_justification'),
         form.risk_benefits=request.form.get('risk_benefits'),
         form.risk_mitigation=request.form.get('risk_mitigation'),
-        
+
         db_session.add(form)
         db_session.commit()
         message="form submitted succesfully"
@@ -1380,7 +1401,7 @@ def form_c_sec3():
         if not form:
             form = FormC(user_id=user_id)
         
-        form.project_title=request.form.get('project_title')
+        form.summary_title=request.form.get('summary_title')
         form.executive_summary=request.form.get('executive_summary')
         form.research_questions=request.form.get('research_questions')
         form.research_purpose=request.form.get('research_purpose')
@@ -1878,6 +1899,87 @@ def student_edit_formb():
         db_session.commit()
         return redirect(url_for('student_dashboard'))
     return render_template("student_edit_formb.html",formB=form)
+
+@app.route('/student_edit_formc', methods=['GET','POST'])
+def student_edit_formc():
+    user_id=session.get('id')
+    
+    if not user_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    user = db_session.query(User).filter(User.user_id == user_id).first()
+    supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
+    form = db_session.query(FormC).filter_by(user_id=user_id).first()
+    if request.method=="POST":
+        
+        form=FormC(
+            user_id=user_id,
+            application_name=request.form.get('applicant_name'),
+            student_number=request.form.get('student_number'),
+            institution=request.form.get('institution'),
+            department=request.form.get('department'),
+            degree=request.form.get('degree'),
+            project_title=request.form.get('title'),
+            mobile_number=request.form.get('mobile'),
+            email=user.email,
+            supervisor=supervisor.full_name,
+            supervisor_email=supervisor.email,
+
+            vulnerable=request.form.get('vulnerable'),
+            age_under_18_or_over_65=request.form.get('age_under_18_or_over_65'),
+            uj_employees=request.form.get('uj_employee'),
+
+            non_vulnerable_context=request.form.get('non_vulnerable_context'),
+            non_english=request.form.get('non_english'),
+            own_students=request.form.get('own_student'),
+
+            poverty=request.form.get('poverty'),
+            no_education=request.form.get('non_education'),
+            vulnerable_other_description=request.form.get('vulnerable_other_description'),
+            vulnerable_comments=request.form.get('vulnerable_comments'),
+
+            consent_violation=request.form.get('consent_violation'),
+            discomfiture=request.form.get('discomfiture'),
+            deception=request.form.get('deception'),
+            sensitive_issues=request.form.get('sensitive_issues'),
+            prejudicial_info=request.form.get('prejuditial_info'),
+            intrusive=request.form.get('intrusive'),
+            illegal=request.form.get('illegal'),
+            direct_social_info=request.form.get('direct_social_info'),
+            identifiable_records=request.form.get('identifiable_records'),
+            psychology_tests=request.form.get('psychology_tests'),
+            researcher_risk=request.form.get('reseacher_risk'),
+            activity_other_description=request.form.get('activity_other_description'),
+
+            activity_comments=request.form.get('activity_comments'),
+
+            incentives=request.form.get('incentives'),
+            participant_costs=request.form.get('participant_costs'),
+            researcher_interest=request.form.get('researcher_interest'),
+            conflict_of_interest=request.form.get('conflict_of_interest'),
+            uj_premises=request.form.get('uj_premises'),
+            uj_facilities=request.form.get('uj_facilities'),
+            uj_funding=request.form.get('uj_funding'),
+            consideration_comments=request.form.get('consideration_comments'),
+            
+            risk_level=request.form.get('risk_level'),
+            risk_justification=request.form.get('risk_justification'),
+            risk_benefits=request.form.get('risk_benefits'),
+            risk_mitigation=request.form.get('risk_mitigation'),
+
+            summary_title=request.form.get('summary_title'),
+            executive_summary=request.form.get('executive_summary'),
+            research_questions=request.form.get('research_questions'),
+            research_purpose=request.form.get('research_purpose'),
+            secondary_data_info=request.form.get('secondary_data_info'),
+            exemption_reason=request.form.get('exemption_reason'),
+            declaration_name=request.form.get('declaration_name'),
+            full_name=request.form.get('full_name'),
+            submission_date=request.form.get('submission_date'),
+        )
+        db_session.add(form)
+        db_session.commit()
+        return redirect(url_for('student_dashboard'))
+    return render_template('student_edit_formc.html',formc=form)
 
 @app.route('/form_c_answers', methods=['GET','POST'])
 def form_c_answers():

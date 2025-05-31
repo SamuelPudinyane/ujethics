@@ -460,7 +460,7 @@ class FormC(Base):
     poverty = Column(Boolean, default=True)
     no_education = Column(Boolean, default=True)
     vulnerable_other_description = Column(Text, nullable=True)
- 
+    vulnerable_comments=Column(String,nullable=True)
     # Research Activities Risk Assessment
     consent_violation = Column(Boolean, default=True)
     discomfiture = Column(Boolean, default=True)
@@ -474,7 +474,7 @@ class FormC(Base):
     psychology_tests = Column(Boolean, default=True)
     researcher_risk = Column(Boolean, default=True)
     activity_other_description = Column(Text, nullable=True)
-
+    activity_comments=Column(String,nullable=True)
     # Additional Research Considerations
     incentives = Column(Boolean, default=True)
     participant_costs = Column(Boolean, default=True)
@@ -485,6 +485,7 @@ class FormC(Base):
     uj_funding = Column(Boolean, default=True)
 
     # - Risk Assessment 
+    consideration_comments=Column(String,nullable=True)
     vulnerable_groups = Column(String,nullable=True)
     vulnerable_comments = Column(Text,nullable=True)
     research_activities = Column(Text,nullable=True)
@@ -508,6 +509,7 @@ class FormC(Base):
     declaration_name = Column(String(200),nullable=True)
     full_name = Column(String(200),nullable=True)
     submission_date = Column(DateTime,nullable=True)
+    
     supervisor_comments = Column(Text,nullable=True)
     supervisor_signature = Column(String(200),nullable=True)
     supervisor_date = Column(DateTime,nullable=True)
