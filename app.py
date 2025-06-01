@@ -22,7 +22,9 @@ CORS(app)
 csrf = CSRFProtect(app)
 app.secret_key = os.getenv('SECRET_KEY')
 
+###import dummy_data
 
+###dummy_data
 
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 
@@ -113,18 +115,7 @@ def login_page():
 
 
 
-# hashed_password = User.hash_password("supervisor")
-# new_user = User(
-#                 full_name="Dr. Thabo Ndlovu",
-#                 email="thabo.ndlovu@uj.ac.za",
-#                 password=hashed_password,
-#                 student_number="",
-#                 supervisor_id="",
-#                 role="SUPERVISOR"
-#             )
 
-# db_session.add(new_user)
-# db_session.commit()
 
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
