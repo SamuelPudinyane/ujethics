@@ -4,7 +4,7 @@ users = [
     User(
         full_name="Dr. Sarah Molefe",
         email="sarah.molefe@uj.ac.za",
-        password=User.hash_password("supervisor1"),
+        password="supervisor1",
         student_number="",
         supervisor_id="",
         role="SUPERVISOR"
@@ -12,15 +12,15 @@ users = [
     User(
         full_name="Prof. Kabelo Mokoena",
         email="kabelo.mokoena@uj.ac.za",
-        password=User.hash_password("supervisor2"),
+        password="supervisor2",
         student_number="",
         supervisor_id="",
-        role="SUPERVISOR"
+        role="ADMIN"
     ),
     User(
         full_name="Dr. Ayanda Dlamini",
         email="ayanda.dlamini@uj.ac.za",
-        password=User.hash_password("supervisor3"),
+        password="supervisor3",
         student_number="",
         supervisor_id="",
         role="DEAN"
@@ -28,7 +28,7 @@ users = [
     User(
         full_name="Prof. Neo Masemola",
         email="neo.masemola@uj.ac.za",
-        password=User.hash_password("supervisor4"),
+        password="supervisor4",
         student_number="",
         supervisor_id="",
         role="REC"
@@ -36,7 +36,7 @@ users = [
     User(
         full_name="Dr. Linda Mthembu",
         email="linda.mthembu@uj.ac.za",
-        password=User.hash_password("supervisor5"),
+        password="supervisor5",
         student_number="",
         supervisor_id="",
         role="REVIEWER"

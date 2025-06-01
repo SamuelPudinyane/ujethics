@@ -62,7 +62,7 @@ def quiz():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return render_template('login.html')
+    return redirect(url_for('login_page'))
 
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
@@ -94,13 +94,13 @@ def login_page():
                         return render_template('dashboard.html', name = session['name'])
                     else:
                         return render_template('video.html')
-                elif role == 'supervisor':
-                    return render_template('supervisor-dashboard.html')
-                elif role == 'admin':
-                    return render_template('chair-dashboard.html')
-                elif role == 'rec':
+                elif role == 'SUPERVISOR':
+                    return redirect(url_for('supervisor_dashboard'))
+                elif role == 'ADMIN':
+                    return redirect(url_for('chair_dashboard'))
+                elif role == 'REC':
                     return render_template('committee-dashboard.html')
-                elif role == 'dean':
+                elif role == 'DEAN':
                     return render_template('dean-dashboard.html')
                 else:
                     return render_template( 'video.html') #default fallback 
