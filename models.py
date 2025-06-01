@@ -161,7 +161,7 @@ class FormARequirements(Base):
 
 class FormA(Base):
     __tablename__ = 'form_a'
-    id = Column(String(255), primary_key=True, default=generate_uuid)
+    form_id = Column(String(255), primary_key=True, default=generate_uuid)
     user_id = Column(String(255), nullable=False)
     attachment_id = Column(String(255), nullable=False) #id of "form-a-upload", stored in current session
     applicant_name = Column(String(120), nullable=False)

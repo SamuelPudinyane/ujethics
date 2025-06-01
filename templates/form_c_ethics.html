@@ -350,8 +350,8 @@
     </div>
       <br>
     
-       <button type="submit" class="btn btn-danger" onclick="submitForm('reject')">Reject</button>
-  <button type="submit" class="btn btn-success" onclick="submitForm('accept')">Accept</button>
+       <button type="submit" class="btn btn-danger" name="reject" value="Reject">Reject</button>
+  <button type="submit" class="btn btn-success" name="accept" value="Accept">Accept</button>
         </form>   
     </div>
 
@@ -404,14 +404,14 @@
     window.location.href = "supervisor-dashboard.html";
   });
 
-  function submitForm(action) {
-    const form = document.getElementById('supervisorForm');
-    if (action === 'reject') {
-      form.action = "{{ url_for('reject_form_c', id=formC.form_id) }}";
-    } else if (action === 'accept') {
-      form.action = "{{ url_for('accept_form_c', id=formC.form_id) }}";
-    }
-  }
+  ///function submitForm(action) {
+    ////const form = document.getElementById('supervisorForm');
+    ///if (action === 'reject') {
+    ///  form.action = "{{ url_for('reject_form_c', id=formC.form_id) }}";
+    ///} else if (action === 'accept') {
+    ///  form.action = "{{ url_for('accept_form_c', id=formC.form_id) }}";
+    ///}
+ /// }
 </script>
 
 </body>

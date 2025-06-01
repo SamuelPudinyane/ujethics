@@ -106,7 +106,7 @@
             <td>{{formb.supervisor}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
-            <td><span class="status-pill approved">{{"Aproved by supervisor" if formb.rejected_or_accepted}}</span></td>
+            <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span></td>
             <td>{{(today - formb.declaration_date.date()).days}} days</td>
             <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >View</a></td>
           </tr>

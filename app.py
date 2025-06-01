@@ -2147,18 +2147,56 @@ def chair_formc_view(id):
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
 
-@app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET'])
+@app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])
 def chair_form_view(id,form_name):
-    print(form_name)
+  
     if form_name=="FORM A":
-        formA = db_session.query(FormA).filter_by(User_id=id).first()
+        formA = db_session.query(FormA).filter_by(form_id=id).first()
+        if request.method=="POST":
+            formA.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
+            formA.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
+            formA.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            if request.form.get('accept')=='Accept':
+                formA.ethics_commetee_status=True
+                formA.rejected_or_accepted=True
+            else:
+                formA.ethics_commetee_status=False
+                formA.rejected_or_accepted=False
+            db_session.add(formA)
+            db_session.commit()
         return render_template("form_a_ethics.html",formA=formA)
     elif form_name=="FORM B":
-        formB = db_session.query(FormB).filter_by(user_id=id).first()
-        print("results ",formB)
+        formB = db_session.query(FormB).filter_by(form_id=id).first()
+        if request.method=="POST":
+            formB.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
+            formB.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
+            formB.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            
+            if request.form.get('accept')=='Accept':
+                formB.ethics_commetee_status=True
+                formB.rejected_or_accepted=True
+                print("something positive ", formB.ethics_commetee_status)
+            else:
+                formB.ethics_commetee_status=False
+                formB.rejected_or_accepted=False
+                print("something negative")
+            db_session.add(formB)
+            db_session.commit()
         return render_template("form_b_ethics.html",formB=formB)
     elif form_name=="FORM C":
-        formC = db_session.query(FormC).filter_by(user_id=id).first()
+        formC = db_session.query(FormC).filter_by(form_id=id).first()
+        if request.method=="POST":
+            formC.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
+            formC.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
+            formC.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            if request.form.get('accept')=='Accept':
+                formC.ethics_commetee_status=True
+                formC.rejected_or_accepted=True
+            else:
+                formC.ethics_commetee_status=False
+                formC.rejected_or_accepted=False
+            db_session.add(formC)
+            db_session.commit()
         return render_template("form_c_ethics.html",formC=formC)
 
 @app.route('/request-reset', methods=['POST'])

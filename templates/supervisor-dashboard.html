@@ -82,11 +82,15 @@
             <td>{{formb.declaration_name}}</td>
             <td>{{formb.student_number}}</td>
             <td><span class="badge status-pending">
+              {% if formb.ethics_commettee_status %}
+              {{"Accepted by ethics commettee"}}
+              {% else %}
         {{
   'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_comments
   else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_comments
   else 'Waiting Review'
         }}
+        {% endif %}
             </span></td>
             <td>{{formb.declaration_date}}</td>
             <td>
