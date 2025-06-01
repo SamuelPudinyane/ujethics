@@ -928,9 +928,9 @@
 function submitForm(action) {
     const form = document.getElementById('supervisorForm');
     if (action === 'reject') {
-      form.action = "{{ url_for('reject_form_a', id=formA.id) }}";
+      form.action = "{{ url_for('reject_form_a', id=formA.form_id) }}";
     } else if (action === 'accept') {
-      form.action = "{{ url_for('accept_form_a', id=formA.id) }}";
+      form.action = "{{ url_for('accept_form_a', id=formA.form_id) }}";
     }
   }
   

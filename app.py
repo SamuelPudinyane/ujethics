@@ -95,7 +95,7 @@ def login_page():
                 elif role == 'supervisor':
                     return render_template('supervisor-dashboard.html')
                 elif role == 'admin':
-                    return render_template('admin-dashboard.html')
+                    return render_template('chair-dashboard.html')
                 elif role == 'rec':
                     return render_template('committee-dashboard.html')
                 elif role == 'dean':
@@ -110,6 +110,7 @@ def login_page():
             return render_template('login.html', messages=[error])
 
     return render_template('login.html')
+
 
 
 # hashed_password = User.hash_password("supervisor")
@@ -1213,7 +1214,7 @@ def form_c_sec1():
 
 @app.route('/form_a_supervisor/<string:id>',methods=['GET','POST'])
 def form_a_supervisor(id):
-    form = db_session.query(FormA).filter_by(id=id).first()
+    form = db_session.query(FormA).filter_by(form_id=id).first()
     
     return render_template("form_a_supervisor.html",formA=form)
     
@@ -1237,9 +1238,9 @@ def reject_form_a(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
         
-    forma = db_session.query(FormA).filter_by(id=id).first()
+    forma = db_session.query(FormA).filter_by(form_id=id).first()
     if not forma:
-        forma = FormA(id=id)
+        forma = FormA(form_id=id)
     forma.supervisor_comments = request.form.get('supervisor_comments')
     forma.supervisor_signature = request.form.get('supervisor_signature')
     forma.supervisor_date = request.form.get('supervisor_date')
@@ -1255,9 +1256,9 @@ def accept_form_a(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
         
-    forma = db_session.query(FormA).filter_by(id=id).first()
+    forma = db_session.query(FormA).filter_by(form_id=id).first()
     if not forma:
-        forma = FormA(id=id)
+        forma = FormA(form_id=id)
     forma.supervisor_comments = request.form.get('supervisor_comments')
     forma.supervisor_signature = request.form.get('supervisor_signature')
     forma.supervisor_date = request.form.get('supervisor_date')
