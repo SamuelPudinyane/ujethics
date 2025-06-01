@@ -354,6 +354,11 @@ class FormA(Base):
     supervisor_signature = Column(String(255),nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
+
+    ethics_commettee_comments=Column(Text,nullable=True)
+    ethics_commettee_signature=Column(Text,nullable=True)
+    ethics_commettee_date=Column(DateTime,nullable=True)
+    ethics_commetee_status=Column(Boolean,default=False)
     def __repr__(self):
         return f'<FormA {self.applicant_name} ({self.student_number})>'
     
@@ -429,6 +434,11 @@ class FormB(Base):
     supervisor_signature = Column(String(255),nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
+
+    ethics_commettee_comments=Column(Text,nullable=True)
+    ethics_commettee_signature=Column(Text,nullable=True)
+    ethics_commettee_date=Column(DateTime,nullable=True)
+    ethics_commetee_status=Column(Boolean,default=False)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
     
@@ -517,6 +527,11 @@ class FormC(Base):
 
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
+
+    ethics_commettee_comments=Column(Text,nullable=True)
+    ethics_commettee_signature=Column(Text,nullable=True)
+    ethics_commettee_date=Column(DateTime,nullable=True)
+    ethics_commetee_status=Column(Boolean,default=False)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 

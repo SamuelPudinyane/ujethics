@@ -11,8 +11,8 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
-
-
+from datetime import date
+from sqlalchemy import desc
 
 # Load environment variables from .env file
 load_dotenv()
@@ -2103,6 +2103,63 @@ def get_form_c(form_id):
     return jsonify(form_c.to_dict()), 200
 
 
+
+@app.route('/chair_dashboard', methods=['GET','POST'])
+def chair_dashboard():
+    submitted_form_a = (db_session.query(FormA)
+    .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
+    .distinct(FormA.user_id)
+    .all())
+    submitted_form_b = (db_session.query(FormB)
+    .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
+    .distinct(FormB.user_id)
+    .all())
+    submitted_form_c = (db_session.query(FormC)
+    .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
+    .distinct(FormC.user_id)
+    .all())
+
+    print("form B ",submitted_form_b)
+    today = date.today()
+    return render_template('chair-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
+
+
+@app.route('/chair_forma_view<string:id>', methods=['GET'])
+def chair_forma_view(id):
+    form = db_session.query(FormA).filter_by(user_id=id).order_by(desc(FormA.submitted_at)).all()
+    form_name="FORM A"
+    today = date.today()
+    return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
+
+
+@app.route('/chair_formb_view<string:id>', methods=['GET'])
+def chair_formb_view(id):
+    form = db_session.query(FormB).filter_by(user_id=id).order_by(desc(FormB.submitted_at)).all()
+    form_name="FORM B"
+    today = date.today()
+    return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
+
+@app.route('/chair_formc_view<string:id>', methods=['GET'])
+def chair_formc_view(id):
+    form = db_session.query(FormC).filter_by(user_id=id).order_by(desc(FormC.submission_date)).all()
+    form_name="FORM C"
+    today = date.today()
+    return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
+
+
+@app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET'])
+def chair_form_view(id,form_name):
+    print(form_name)
+    if form_name=="FORM A":
+        formA = db_session.query(FormA).filter_by(User_id=id).first()
+        return render_template("form_a_ethics.html",formA=formA)
+    elif form_name=="FORM B":
+        formB = db_session.query(FormB).filter_by(user_id=id).first()
+        print("results ",formB)
+        return render_template("form_b_ethics.html",formB=formB)
+    elif form_name=="FORM C":
+        formC = db_session.query(FormC).filter_by(user_id=id).first()
+        return render_template("form_c_ethics.html",formC=formC)
 
 @app.route('/request-reset', methods=['POST'])
 def request_reset():

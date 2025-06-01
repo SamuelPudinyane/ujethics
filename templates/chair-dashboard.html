@@ -47,10 +47,11 @@
 
     <section class="admin-content">
       <h3>Submitted Student Forms</h3>
-
+     {% if submitted_form_a %}
       <!-- Table -->
-      <table class="status-table">
-        <thead>
+      <table class="table table-bordered table-striped status-table ">
+        <h3>Form A</h3>
+        <thead class="table-dark">
           <tr>
             <th>Student Number</th>
             <th>Student Name</th>
@@ -59,47 +60,94 @@
             <th>Date Submitted</th>
             <th>Review Status</th>
             <th>Days Since Submission</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
+          {% for forma in submitted_form_a %}
           <tr>
-            <td>216018061</td>
-            <td>Musawenkosi Nyathi</td>
-            <td>Dr. Henn</td>
-            <td>Form A</td>
-            <td>2025-04-24</td>
-            <td><span class="status-pill approved">Approved</span></td>
-            <td>10 days</td>
+            <td>{{forma.student_number}}</td>
+            <td>{{forma.full_name}}</td>
+            <td>{{forma.supervisor}}</td>
+            <td>FORM A</td>
+            <td>{{forma.declaration_date}}</td>
+            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span></td>
+            <td>{{(today - forma.declaration_date.date()).days}} days</td>
+            <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
           </tr>
-          <tr>
-            <td>216056789</td>
-            <td>Jane Doe</td>
-            <td>Prof. Naidoo</td>
-            <td>Form B</td>
-            <td>2025-04-27</td>
-            <td><span class="status-pill minor-changes">Minor Changes</span></td>
-            <td>7 days</td>
-          </tr>
-          <tr>
-            <td>215043210</td>
-            <td>John Smith</td>
-            <td>Dr. Mokoena</td>
-            <td>Form A</td>
-            <td>2025-04-29</td>
-            <td><span class="status-pill resubmission">Resubmission</span></td>
-            <td>5 days</td>
-          </tr>
-          <tr>
-            <td>214032119</td>
-            <td>Thando Nkosi</td>
-            <td>Prof. Zulu</td>
-            <td>Form C</td>
-            <td>2025-04-30</td>
-            <td><span class="status-pill rejected">Rejected</span></td>
-            <td>4 days</td>
-          </tr>
+          {% endfor %}
+          
         </tbody>
       </table>
+      
+      <br>
+      {% endif %}
+      {% if submitted_form_b %}
+      <!-- Table -->
+      <table class="table table-bordered table-striped status-table ">
+        <h3>Form B</h3>
+        <thead class="table-dark">
+          <tr>
+            <th>Student Number</th>
+            <th>Student Name</th>
+            <th>Supervisor</th>
+            <th>Form Type</th>
+            <th>Date Submitted</th>
+            <th>Review Status</th>
+            <th>Days Since Submission</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for formb in submitted_form_b %}
+          <tr>
+            <td>{{formb.student_number}}</td>
+            <td>{{formb.full_name}}</td>
+            <td>{{formb.supervisor}}</td>
+            <td>FORM B</td>
+            <td>{{formb.declaration_date}}</td>
+            <td><span class="status-pill approved">{{"Aproved by supervisor" if formb.rejected_or_accepted}}</span></td>
+            <td>{{(today - formb.declaration_date.date()).days}} days</td>
+            <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >View</a></td>
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+      <br>
+      {% endif %}
+      {% if submitted_form_c %}
+      <!-- Table -->
+      <table class="table table-bordered table-striped status-table ">
+        <h3>Form C</h3>
+        <thead class="table-dark">
+          <tr>
+            <th>Student Number</th>
+            <th>Student Name</th>
+            <th>Supervisor</th>
+            <th>Form Type</th>
+            <th>Date Submitted</th>
+            <th>Review Status</th>
+            <th>Days Since Submission</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for formc in submitted_form_c %}
+          <tr>
+            <td>{{formc.student_number}}</td>
+            <td>{{formc.full_name}}</td>
+            <td>{{formc.supervisor}}</td>
+            <td>FORM C</td>
+            <td>{{formc.declaration_date}}</td>
+            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span></td>
+            <td>{{(today - formc.declaration_date.date()).days}} days</td>
+            <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >View</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
     </section>
 
     <footer class="footer">
