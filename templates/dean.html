@@ -17,11 +17,10 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
-      <h3>Supervisor Portal</h3>
+      <h3>Dean Portal</h3>
     </div>
     <nav class="sidebar-nav">
       <a href="supervisor-dashboard.html" class="active">🏠 Dashboard</a>
-      <a href="students.html">👥 My Students</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -29,11 +28,58 @@
   <!-- Main -->
   <main class="admin-main">
     <header class="topbar">
-      <h2>Supervisor Dashboard</h2>
+      <h2>Dean Dashboard</h2>
     </header>
 
     <section class="admin-content">
       <h3>Student Submissions</h3>
+      <div class="container mt-5">
+  <div class="row">
+    <div class="col-md mb-4">
+      <div class="card shadow-sm border-start border-primary border-4">
+        <div class="card-body">
+          <h5 class="card-title">Form A</h5>
+          <p class="card-text fs-4">{{ supervisor_formA|length }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md mb-4">
+      <div class="card shadow-sm border-start border-success border-4">
+        <div class="card-body">
+          <h5 class="card-title">Form B</h5>
+          <p class="card-text fs-4">{{ supervisor_formB|length }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md mb-4">
+      <div class="card shadow-sm border-start border-warning border-4">
+        <div class="card-body">
+          <h5 class="card-title">Form C</h5>
+          <p class="card-text fs-4">{{ supervisor_formC|length }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md mb-4">
+      <div class="card shadow-sm border-start border-danger border-4">
+        <div class="card-body">
+          <h5 class="card-title">Form A Requirements</h5>
+          <p class="card-text fs-4">{{ supervisor_formA_req|length }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md mb-4">
+      <div class="card shadow-sm border-start border-danger border-4">
+        <div class="card-body">
+          <h5 class="card-title"># students</h5>
+          <p class="card-text fs-4">{{ students|length }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <table class="status-table">
         <thead>

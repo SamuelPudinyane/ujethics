@@ -99,9 +99,9 @@ def login_page():
                 elif role == 'ADMIN':
                     return redirect(url_for('chair_dashboard'))
                 elif role == 'REC':
-                    return render_template('committee-dashboard.html')
+                    return redirect(url_for('ethics_reviewer_committee'))
                 elif role == 'DEAN':
-                    return render_template('dean-dashboard.html')
+                    return redirect(url_for('dean_dashboard'))
                 else:
                     return render_template( 'video.html') #default fallback 
             else:
@@ -2191,6 +2191,81 @@ def chair_form_view(id,form_name):
             db_session.commit()
         return render_template("form_c_ethics.html",formC=formC)
 
+
+
+@app.route('/ethics_reviewer_committee', methods=['GET','POST'])
+def ethics_reviewer_committee():
+    submitted_form_a = (db_session.query(FormA)
+    .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
+    .distinct(FormA.user_id)
+    .all())
+    submitted_form_b = (db_session.query(FormB)
+    .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
+    .distinct(FormB.user_id)
+    .all())
+    submitted_form_c = (db_session.query(FormC)
+    .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
+    .distinct(FormC.user_id)
+    .all())
+
+    print("form B ",submitted_form_b)
+    today = date.today()
+    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
+
+@app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
+def ethics_reviewer_committee_forms(id,form_name):
+  
+    if form_name=="FORM A":
+        formA = db_session.query(FormA).filter_by(form_id=id).first()
+        if request.method=="POST":
+            formA.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
+            formA.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
+            formA.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            if request.form.get('accept')=='Accept':
+                formA.ethics_commetee_status=True
+                formA.rejected_or_accepted=True
+            else:
+                formA.ethics_commetee_status=False
+                formA.rejected_or_accepted=False
+            db_session.add(formA)
+            db_session.commit()
+        return render_template("form_a_ethics.html",formA=formA)
+    elif form_name=="FORM B":
+        formB = db_session.query(FormB).filter_by(form_id=id).first()
+        if request.method=="POST":
+            formB.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
+            formB.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
+            formB.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            
+            if request.form.get('accept')=='Accept':
+                formB.ethics_commetee_status=True
+                formB.rejected_or_accepted=True
+                
+            else:
+                formB.ethics_commetee_status=False
+                formB.rejected_or_accepted=False
+               
+            db_session.add(formB)
+            db_session.commit()
+        return render_template("form_b_ethics.html",formB=formB)
+    elif form_name=="FORM C":
+        formC = db_session.query(FormC).filter_by(form_id=id).first()
+        if request.method=="POST":
+            formC.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
+            formC.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
+            formC.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            if request.form.get('accept')=='Accept':
+                formC.ethics_commetee_status=True
+                formC.rejected_or_accepted=True
+            else:
+                formC.ethics_commetee_status=False
+                formC.rejected_or_accepted=False
+            db_session.add(formC)
+            db_session.commit()
+        return render_template("ethics_reviewer_committee_forms.html",formC=formC)
+
+
+
 @app.route('/request-reset', methods=['POST'])
 def request_reset():
     email = request.form.get('email')
@@ -2227,6 +2302,18 @@ def supervisor_dashboard():
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     
     return render_template("supervisor-dashboard.html",supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+
+@app.route('/dean_dashboard', methods=['GET','POST'])
+def dean_dashboard():
+    role="STUDENT"
+    supervisor_formA = db_session.query(FormA).join(User, FormA.user_id == User.user_id).all()
+    supervisor_formB = db_session.query(FormB).join(User, FormB.user_id == User.user_id).all()
+    supervisor_formC = db_session.query(FormC).join(User, FormC.user_id == User.user_id).all()
+    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    students=db_session.query(User).filter(User.role==role).all()
+    print(students)
+    return render_template('dean.html',students=students,supervisor_formA_req=supervisor_formA_req,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+
 
 def validate_reset_token(token):
     user = User.query.filter_by(reset_token=token).first()

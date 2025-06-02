@@ -41,10 +41,10 @@ def generate_uuid():
 class UserRole(enum.Enum):
     STUDENT = "STUDENT"
     SUPERVISOR = "SUPERVISOR"
-    ADMIN = "ADMIN"
-    REC = "REC"
-    REVIEWER = "REVIEWER"
-    DEAN = "DEAN"
+    ADMIN = "ADMIN" ##ethics
+    REC = "REC" #rec commette final 
+    REVIEWER = "REVIEWER" #ethics sent the form to reviwer, review send it to rec only if its high risk and medium
+    DEAN = "DEAN" ##chairman, no responsibility
 
 
 
