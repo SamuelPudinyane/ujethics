@@ -695,7 +695,7 @@ def form_a_sec2 ():
         
         db_session.add(form)
         db_session.commit()
-        message= 'Form A submitted successfully'
+        message= 'Form A sec 2 submitted successfully'
         return render_template("form-a-section3.html",messsages=[message])
     return render_template('form-a-section2.html')
 
@@ -808,10 +808,10 @@ def form_a_sec4():
 
         # 5.3 Participant Details
         form.participants_description = request.form.get('participants_description')
-        form.population = request.form.getlist('population[]')
-        form.sampling_method = request.form.getlist('sampling_method[]')
-        form.sample_size = request.form.getlist('sample_size[]')
-        form.inclusion_criteria = request.form.getlist('inclusion_criteria[]')
+        form.population = ','.join(request.form.getlist('population[]'))
+        form.sampling_method = ','.join(request.form.getlist('sampling_method[]'))
+        form.sample_size = ','.join(request.form.getlist('sample_size[]'))
+        form.inclusion_criteria =','.join(request.form.getlist('inclusion_criteria[]'))
         form.duration_timing = request.form.get('duration_timing')
         form.contact_details_method = request.form.get('contact_details_method')
         form.conflict_interest = request.form.get('conflict_interest')=='yes'
@@ -819,14 +819,14 @@ def form_a_sec4():
 
         # 5.4 Instruments
         form.questionnaire_type = request.form.get('questionnaire_type')
-        form.permission_obtained = request.form('permission_obtained')
-        form.open_source= request.form('open_source')
+        form.permission_obtained = request.form.get('permission_obtained')
+        form.open_source= request.form.get('open_source')
         form.instrument_attachment_reason = request.form.get('instrument_attachment_reason')
         form.data_collection_procedure = request.form.get('data_collection_procedure')
         form.interview_type = request.form.getlist('interview_type')
-        form.interview_recording = request.form.getlist('interview_recording')
+        form.interview_recording = ','.join(request.form.getlist('interview_recording'))
         form.use_focus_groups = request.form.get('use_focus_groups')=='Yes'
-        form.focus_recording = request.form.getlist('focus_recording')
+        form.focus_recording = ','.join(request.form.getlist('focus_recording'))
         form.data_collectors = request.form.get('data_collectors')
         form.intervention = request.form.get('intervention')=='Yes'
         form.intervention_details = request.form.get('intervention_details')

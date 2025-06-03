@@ -296,7 +296,7 @@ class FormA(Base):
     instrument_attachment_reason = Column(Text)
     data_collection_procedure = Column(Text)
     interview_type = Column(Text)
-    interview_recording = Column(Text)
+    interview_recording = Column(String,nullable=True)
     use_focus_groups = Column(Boolean, default=False)
     focus_recording = Column(Boolean, default=False)
     data_collectors = Column(Text)
