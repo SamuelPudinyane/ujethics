@@ -13,6 +13,7 @@ from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from datetime import date
 from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
 
 # Load environment variables from .env file
 load_dotenv()
@@ -95,12 +96,16 @@ def login_page():
                     else:
                         return render_template('video.html')
                 elif role == 'SUPERVISOR':
+                    session['supervisor_role']='SUPERVISOR'
                     return redirect(url_for('supervisor_dashboard'))
                 elif role == 'ADMIN':
+                    session['admin_role']='ADMIN'
                     return redirect(url_for('chair_dashboard'))
                 elif role == 'REC':
+                    session['rec_role']='REC'
                     return redirect(url_for('ethics_reviewer_committee'))
                 elif role == 'DEAN':
+                    session['dean_role']='DEAN'
                     return redirect(url_for('dean_dashboard'))
                 else:
                     return render_template( 'video.html') #default fallback 
@@ -2284,6 +2289,7 @@ def request_reset():
 @app.route('/supervisor_dashboard', methods=['GET','POST'])
 def supervisor_dashboard():
     supervisor_id=session.get('id')
+    supervisor_role=session['supervisor_role']
     supervisor_id="bea65156-03ff-45c8-bd41-9d07f4bc48d2"
     if not supervisor_id:
         return jsonify({'error': 'Unauthorized'}), 401
@@ -2301,7 +2307,7 @@ def supervisor_dashboard():
     # supervisor_formC=db_session.query(FormC).filter(FormC.user_id == users.user_id).all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     
-    return render_template("supervisor-dashboard.html",supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+    return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
 @app.route('/dean_dashboard', methods=['GET','POST'])
 def dean_dashboard():
@@ -2314,6 +2320,26 @@ def dean_dashboard():
     print(students)
     return render_template('dean.html',students=students,supervisor_formA_req=supervisor_formA_req,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
+
+
+@app.route('/supervisor_student', methods=['GET', 'POST'])
+def supervisor_student ():
+    supervisor_id=session['id']
+    supervisor_data = (
+    db_session.query(User)
+    .options(
+        joinedload(User.form_a),
+        joinedload(User.form_b),
+        joinedload(User.form_c),
+        joinedload(User.form_a_requirements)
+    )
+    .filter(User.role == "STUDENT", User.supervisor_id == supervisor_id)
+    .all()
+        )
+
+    print(supervisor_data)
+
+    return render_template('students.html',students=supervisor_data)
 
 def validate_reset_token(token):
     user = User.query.filter_by(reset_token=token).first()
