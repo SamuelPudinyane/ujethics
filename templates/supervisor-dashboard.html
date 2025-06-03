@@ -17,11 +17,11 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
-      <h3>Supervisor Portal</h3>
+      <h3>{{supervisor_role}} Portal</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="supervisor-dashboard.html" class="active">🏠 Dashboard</a>
-      <a href="students.html">👥 My Students</a>
+      <a href="{{url_for('supervisor_dashboard')}}" class="active">🏠 Dashboard</a>
+      <a href="{{url_for('supervisor_student')}}">👥 My Students</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -29,7 +29,7 @@
   <!-- Main -->
   <main class="admin-main">
     <header class="topbar">
-      <h2>Supervisor Dashboard</h2>
+      <h2>{{supervisor_role}} Dashboard</h2>
     </header>
 
     <section class="admin-content">

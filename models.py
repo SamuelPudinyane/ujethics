@@ -65,7 +65,10 @@ class User(Base):
     role = Column(Enum(UserRole), nullable=False, default=UserRole.STUDENT)
     reset_token = Column(String, nullable=True)
     reset_token_expiry = Column(DateTime, nullable=True)
-
+    form_a = relationship("FormA", backref="user", lazy=True)
+    form_b = relationship("FormB", backref="user", lazy=True)
+    form_c = relationship("FormC", backref="user", lazy=True)
+    form_a_requirements = relationship("FormARequirements", backref="user", lazy=True)
 
     def __init__(self, full_name, student_number, email, password, supervisor_id, role):
         self.full_name = full_name
@@ -152,7 +155,7 @@ class FormARequirements(Base):
     __tablename__ = "form_a_requirements"
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
-    user_id = Column(String(150), nullable=False)  # Link to user who submitted
+    user_id = Column(String(150),ForeignKey("users.user_id"), nullable=False)  # Link to user who submitted
     needs_permission = Column(Boolean, nullable=False)
     permission_letter_path = Column(String(255), nullable=True)
     has_prior_clearance = Column(Boolean, nullable=False)
@@ -168,7 +171,7 @@ class FormARequirements(Base):
 class FormA(Base):
     __tablename__ = 'form_a'
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
-    user_id = Column(String(255), nullable=False)
+    user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
     attachment_id = Column(String(255), nullable=False) #id of "form-a-upload", stored in current session
     applicant_name = Column(String(120), nullable=False)
     student_number = Column(String(50), nullable=False)
@@ -377,7 +380,7 @@ Base.metadata.create_all(engine)
 class FormB(Base):
     __tablename__ = "form_b"
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
-    user_id = Column(String(255), nullable=False)
+    user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
     need_permission = Column(Boolean, nullable=True)  # "Yes" or "No"
     permission_letter = Column(String(255), nullable=True)  # file path or filename
 
@@ -452,7 +455,7 @@ class FormB(Base):
 class FormC(Base):
     __tablename__ = "form_c"
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
-    user_id = Column(String(255), nullable=False)
+    user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
     # Section 1
     application_name = Column(String(100))
     student_number = Column(String(50))

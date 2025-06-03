@@ -16,12 +16,12 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img src="img/image.png" alt="UJ Logo" class="sidebar-logo" />
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ Logo" class="sidebar-logo" />
       <h3>Supervisor Portal</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="supervisor-dashboard.html">🏠 Dashboard</a>
-      <a href="supervisor-students.html" class="active">👨‍🎓 Students</a>
+      <a href="{{url_for('supervisor_dashboard')}}">🏠 Dashboard</a>
+      <a href="{{url_for('supervisor_student')}}" class="active">👨‍🎓 Students</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -39,27 +39,23 @@
         <thead>
           <tr>
             <th>Student Number</th>
-            <th>First Name</th>
-            <th>Surname</th>
+            <th>Full Name</th>
             <th>Status</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
+          {% for student in students %}
           <tr>
-            <td>216018061</td>
-            <td>Thabo</td>
-            <td>Mokoena</td>
-            <td><span class="badge status-complete">Submitted</span></td>
-            <td><a href="edit-form.html?student_id=216018061" class="view-btn">View</a></td>
+            <td>{{student.student_number}}</td>
+            <td>{{student.full_name}}</td>
+            <td><span class="badge status-complete">
+              
+              {{'SUBMITTED' if student.form_a else 'SUBMITTED' if student.form_b else 'SUBMITTED' if student.form_c else 'NO SUBMISSIONS'}}
+              
+            </span></td>
           </tr>
-          <tr>
-            <td>218079005</td>
-            <td>Anele</td>
-            <td>Nkosi</td>
-            <td><span class="badge status-pending">Not Submitted</span></td>
-            <td><a href="#" class="disabled-btn">Pending</a></td>
-          </tr>
+          {% endfor %}
+          
         </tbody>
       </table>
     </section>

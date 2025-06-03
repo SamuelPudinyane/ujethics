@@ -100,8 +100,9 @@
                   {% endif %}
                 </em>
                 {% elif formA.rejected_or_accepted %}
-                {{'Rejected by supervisor' if not formA.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.ethics_commetee_status else  'Accepted by ethics Admin' if formA.ethics_commetee_status and formA.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}
+                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formA.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.ethics_commetee_status else  'Accepted by ethics Admin' if formA.ethics_commetee_status and formA.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}</span>
                 <br>
+                <strong>Comment: </strong>
                 {{formA.supervisor_comments}}
                 <br>
                 <em>{% if formA.supervisor_date %}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
@@ -128,8 +129,9 @@
 
                 {% endif %}</em>
                 {% elif formB.rejected_or_accepted %}
-                {{'Rejected by supervisor' if not formB.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.ethics_commetee_status else  'Accepted by ethics Admin' if formB.ethics_commetee_status and formB.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}
+                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formB.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.ethics_commetee_status else  'Accepted by ethics Admin' if formB.ethics_commetee_status and formB.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}</span>
                 <br>
+                <strong>Comment: </strong>
                 {{formB.supervisor_comments}}
                 <br>
                 <em>{% if formB.supervisor_date %}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
@@ -147,8 +149,9 @@
             <td>{% if not formC.supervisor_comments and formC.submitted_at %}
                 Awaiting Supervisor
                 {% elif formC.supervisor_comments%}
-                {{'Rejected by supervisor' if not formC.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.ethics_commetee_status else  'Accepted by ethics Admin' if formC.ethics_commetee_status and formC.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}
+                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formC.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.ethics_commetee_status else  'Accepted by ethics Admin' if formC.ethics_commetee_status and formC.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}</span>
                 <br>
+                <strong>Comment: </strong>
                 {{formC.supervisor_comments}}
                 <em>{{formC.supervisor_date.strftime('%d/%m/%Y')}}</em>
                 {% else %}
