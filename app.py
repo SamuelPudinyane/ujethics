@@ -284,92 +284,100 @@ def dashboard ():
 
 @app.route('/api/form-a/requirements', methods=['POST'])
 def submit_form_a_requirements():
-    try:
-        UPLOAD_FOLDER = 'static/uploads/form_a'
-        
-        # Get form data
-        needs_permission = request.form.get('need_permission') == 'Yes'
-        has_prior_clearance = request.form.get('has_clearance') == 'Yes'
-        company_requires_jbs = request.form.get('company_requires_jbs') == 'Yes'
 
-        # Get user ID from session (adjust based on your auth system)
-        user_id = session.get('id')
-        if not user_id:
-            return jsonify({'error': 'Unauthorized'}), 401
-        
-        # Create uploads directory if it doesn't exist
-        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-        
-        # Handle file uploads
-        def save_file(file_field_name):
-            if file_field_name not in request.files:
-                return None
-            file = request.files[file_field_name]
-            if file.filename == '':
-                return None
-            if file and allowed_file(file.filename):
-                filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
-                file_path = os.path.join(UPLOAD_FOLDER, filename)
-                file.save(file_path)
-                return file_path
-            return None
-        
-        # Save files based on form field names (corrected from request.form to request.files)
-        permission_letter_path = save_file('permission_letter') if needs_permission else None
-        prior_clearance_path = save_file('prior_clearance') if has_prior_clearance else None
-        research_tools_path = save_file('research_tools')
-        proposal_path = save_file('proposal')
-        impact_assessment_path = save_file('impact_assessment')
-        
-        # Validate required files
-        if not all([research_tools_path, proposal_path, impact_assessment_path]):
-            return jsonify({'error': 'Missing required files'}), 400
+    if request.method=='POST':
+        try:
+            UPLOAD_FOLDER = 'static/uploads/form_a'
             
-        # Check if form exists for this user
-        form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
-        print("path ",impact_assessment_path)
-        if form:
-            # Update existing form
-            form.needs_permission = needs_permission
-            form.has_prior_clearance = has_prior_clearance
-            form.company_requires_jbs = company_requires_jbs
+            # Get form data
+            needs_permission = request.form.get('need_permission') == 'Yes'
+            has_prior_clearance = request.form.get('has_clearance') == 'Yes'
+            company_requires_jbs = request.form.get('company_requires_jbs') == 'Yes'
+
+            # Get user ID from session (adjust based on your auth system)
+            user_id = session.get('id')
+            if not user_id:
+                return jsonify({'error': 'Unauthorized'}), 401
             
-            if permission_letter_path:
-                form.permission_letter_path = permission_letter_path
-            if prior_clearance_path:
-                form.prior_clearance_path = prior_clearance_path
-            if research_tools_path:
-                form.research_tools_path = research_tools_path
-            if proposal_path:
-                form.proposal_path = proposal_path
-            if impact_assessment_path:
-                form.impact_assessment_path = impact_assessment_path
-        else:
-            # Create new record
-            form = FormARequirements(
-                user_id=user_id,
-                needs_permission=needs_permission,
-                permission_letter_path=permission_letter_path,
-                has_prior_clearance=has_prior_clearance,
-                prior_clearance_path=prior_clearance_path,
-                company_requires_jbs=company_requires_jbs,
-                research_tools_path=research_tools_path,
-                proposal_path=proposal_path,
-                impact_assessment_path=impact_assessment_path
-            )
+            # Create uploads directory if it doesn't exist
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+            
+            # Handle file uploads
+            def save_file(file_field_name):
+                if file_field_name not in request.files:
+                    return None
+                file = request.files[file_field_name]
+                if file.filename == '':
+                    return None
+                if file and allowed_file(file.filename):
+                    filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+                    file_path = os.path.join(UPLOAD_FOLDER, filename)
+                    file.save(file_path)
+                    return file_path
+                return None
+            
+            # Save files based on form field names (corrected from request.form to request.files)
+            permission_letter_path = save_file('permission_letter') if needs_permission else None
+            prior_clearance_path = save_file('prior_clearance_path') if has_prior_clearance else None
+            research_tools_path = save_file('research_tools_path')
+            prior_clearance = save_file('prior_clearance')
+            prior_clearance1 = save_file('prior_clearance1')
+            need_jbs_clearance1 = save_file('need_jbs_clearance1')
+            proposal_path = save_file('proposal_path')
+            impact_assessment_path = save_file('impact_assessment_path')
+            
+            # Validate required files
+            if not all([research_tools_path, proposal_path, impact_assessment_path]):
+                return jsonify({'error': 'Missing required files'}), 400
+                
+            # Check if form exists for this user
+            form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
+            print("path ",impact_assessment_path)
+            if form:
+                # Update existing form
+                form.needs_permission = needs_permission
+                form.has_prior_clearance = has_prior_clearance
+                form.company_requires_jbs = company_requires_jbs
+                form.prior_clearance=prior_clearance
+                form.prior_clearance1=prior_clearance1
+                form.need_jbs_clearance1=need_jbs_clearance1
+                
+                if permission_letter_path:
+                    form.permission_letter = permission_letter_path
+                if prior_clearance_path:
+                    form.prior_clearance_path = prior_clearance_path
+                if research_tools_path:
+                    form.research_tools_path = research_tools_path
+                if proposal_path:
+                    form.proposal_path = proposal_path
+                if impact_assessment_path:
+                    form.impact_assessment_path = impact_assessment_path
+            else:
+                # Create new record
+                form = FormARequirements(
+                    user_id=user_id,
+                    needs_permission=needs_permission,
+                    permission_letter=permission_letter_path,
+                    has_clearance=has_prior_clearance,
+                    prior_clearance_path=prior_clearance_path,
+                    company_requires_jbs=company_requires_jbs,
+                    research_tools_path=research_tools_path,
+                    proposal_path=proposal_path,
+                    impact_assessment_path=impact_assessment_path,
+                    prior_clearance=prior_clearance,
+                    prior_clearance1=prior_clearance1,
+                    need_jbs_clearance1=need_jbs_clearance1
+                )
+            
+            db_session.add(form)
+            db_session.commit()
+            
+            return redirect(url_for('form_a_sec1'))
+            
+        except Exception as e:
+            db_session.rollback()
+            return jsonify({'error': str(e)}), 500
         
-        db_session.add(form)
-        db_session.commit()
-        
-        return jsonify({
-            'message': 'Form A requirements submitted successfully',
-            'id': str(form.id)
-        }), 201
-        
-    except Exception as e:
-        db_session.rollback()
-        return jsonify({'error': str(e)}), 500
-    
 
 
 
@@ -674,11 +682,7 @@ def form_a_sec2 ():
         else:
             form.uj_funding=False
         
-        if data.get('vulnerable_comments_3')=='Yes':
-            form.vulnerable_comments_3=True
-        else:
-            form.vulnerable_comments_3=False
-
+        form.vulnerable_comments_3=data.get('vulnerable_comments_3')
         form.risk_rating = data.get('risk_rating')
         form.risk_justification = data.get('risk_justification')
         form.benefits_description = data.get('benefits_description')
@@ -977,7 +981,7 @@ def get_form_b(form_id):
 def form_b_upload():
     UPLOAD_FOLDER = 'static/uploads/form_b'
     user_id = session.get('id')
-    print("something")
+ 
     if not user_id:
         return "Unauthorized", 401
     
@@ -1439,7 +1443,7 @@ def form_a_answers():
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
     form = db_session.query(FormA).filter_by(user_id=user_id).first()
-    print(form)
+
     return render_template("form_a_answers.html",formA=form)
 
 
@@ -2116,7 +2120,6 @@ def chair_dashboard():
     .distinct(FormC.user_id)
     .all())
 
-    print("form B ",submitted_form_b)
     today = date.today()
     return render_template('chair-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
@@ -2213,7 +2216,6 @@ def ethics_reviewer_committee():
     .distinct(FormC.user_id)
     .all())
 
-    print("form B ",submitted_form_b)
     today = date.today()
     return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
@@ -2317,7 +2319,7 @@ def dean_dashboard():
     supervisor_formC = db_session.query(FormC).join(User, FormC.user_id == User.user_id).all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     students=db_session.query(User).filter(User.role==role).all()
-    print(students)
+   
     return render_template('dean.html',students=students,supervisor_formA_req=supervisor_formA_req,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
 
@@ -2337,7 +2339,6 @@ def supervisor_student ():
     .all()
         )
 
-    print(supervisor_data)
 
     return render_template('students.html',students=supervisor_data)
 

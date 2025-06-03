@@ -85,8 +85,6 @@ class User(Base):
 
     def verify_password(self, plain_password: str) -> bool:
         try:
-            print(f"Stored: {self.password}")
-            print(f"Input: {plain_password}")
             # Convert stored hash back to bytes
             stored_hash = self.password.encode('utf-8')
             # Verify the password
@@ -155,15 +153,21 @@ class FormARequirements(Base):
     __tablename__ = "form_a_requirements"
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
-    user_id = Column(String(150),ForeignKey("users.user_id"), nullable=False)  # Link to user who submitted
-    needs_permission = Column(Boolean, nullable=False)
-    permission_letter_path = Column(String(255), nullable=True)
-    has_prior_clearance = Column(Boolean, nullable=False)
+    user_id = Column(String(255),ForeignKey("users.user_id"), nullable=True)  # Link to user who submitted
+    needs_permission = Column(Boolean, nullable=True)
+    permission_letter = Column(String(255), nullable=True)
+    has_clearance = Column(Boolean, nullable=True)
     prior_clearance_path = Column(String(255), nullable=True)
-    company_requires_jbs = Column(Boolean, nullable=False)
-    research_tools_path = Column(String(255), nullable=False)
-    proposal_path = Column(String(255), nullable=False)
-    impact_assessment_path = Column(String(255), nullable=False)
+    company_requires_jbs = Column(Boolean, nullable=True)
+    prior_clearance=Column(Boolean,nullable=True)
+    need_jbs_clearance=Column(String(255),nullable=True)
+    prior_clearance1=Column(String(255),nullable=True)
+    need_jbs_clearance1=Column(Boolean,nullable=True)
+    research_tools_path = Column(String(255), nullable=True)
+    proposal_path = Column(String(255), nullable=True)
+    impact_assessment_path = Column(String(255), nullable=True)
+    has_ethics_evidence=Column(Boolean,nullable=True)
+    ethics_evidence=Column(Boolean,nullable=True)
     submitted_at = Column(DateTime, server_default=func.now(), nullable=False)
 
 

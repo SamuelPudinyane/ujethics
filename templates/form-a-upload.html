@@ -55,10 +55,7 @@
 
       <!-- Logout -->
       <div style="text-align: right;">
-      <!-- Logout -->
-      <div style="text-align: right;">
 
-        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
       </div>
         <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
       </div>
@@ -67,20 +64,15 @@
 
   <main class="main-content">
     <h2>Before You Start Form A</h2>
-    <form id="formARequirements" enctype="multipart/form-data">
+    <form id="formARequirements" action="{{url_for('submit_form_a_requirements')}}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="question-block">
         <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
-        <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
-        <input type="radio" name="need_permission" value="No" checked required> No
         <input type="radio" name="need_permission" value="No" checked required> No
       </div>
 
-      <div class="question-block hidden" id="companyLetterUpload">
-       
-        <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
-       
+      <div class="question-block hidden" id="companyLetterUpload">       
         <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
         <input type="file" name="permission_letter" accept=".pdf,.docx">
       </div>
@@ -89,12 +81,11 @@
         <label>2. Do you have prior ethical clearance from the original study?</label><br>
         <input type="radio" name="has_clearance" value="Yes" required> Yes
         <input type="radio" name="has_clearance" value="No" checked required> No
-        <input type="radio" name="has_clearance" value="No" checked required> No
       </div>
 
       <div class="question-block hidden" id="clearanceUpload">
         <label>Upload Ethical Clearance Document</label>
-        <input type="file" name="prior_clearance" accept=".pdf,.docx">
+        <input type="file" name="prior_clearance_path" accept=".pdf,.docx">
       </div>
 
       <div class="question-block">
@@ -112,33 +103,33 @@
       <div class="question-block hidden" id="jbsClearanceUpload">
         <label>Please Upload the proof from company <small>(letter/email screenshot)</small></label>
         <input type="file" name="need_jbs_clearance" accept=".pdf,.docx, .png, .jpg">
-        <input type="radio" name="company_requires_jbs" value="No" checked required> No
+
       </div>
 
       
       <div class="question-block hidden" id="clearanceUpload">
         <label>Upload Ethical Clearance Document</label>
-        <input type="file" name="prior_clearance" accept=".pdf,.docx">
+        <input type="file" name="prior_clearance1" accept=".pdf,.docx">
       </div>
 
       <div class="question-block hidden" id="jbsClearanceUpload">
         <label>Please Upload the proof from company <small>(letter/email screenshot)</small></label>
-        <input type="file" name="need_jbs_clearance" accept=".pdf,.docx, .png, .jpg">
+        <input type="file" name="need_jbs_clearance1" accept=".pdf,.docx, .png, .jpg">
       </div>
 
       <div class="question-block">
         <label>4. Upload Survey / Questionnaire / Focus Group Questions</label>
-        <input type="file" name="research_tools" accept=".pdf,.docx" required>
+        <input type="file" name="research_tools_path" accept=".pdf,.docx" required>
       </div>
 
       <div class="question-block">
         <label>5. Upload Research Proposal</label>
-        <input type="file" name="proposal" accept=".pdf,.docx" required>
+        <input type="file" name="proposal_path" accept=".pdf,.docx" required>
       </div>
 
       <div class="question-block">
         <label>5. Upload Personal Impact Assessment Form</label>
-        <input type="file" name="impact_assessment" accept=".pdf,.docx" required>
+        <input type="file" name="impact_assessment_path" accept=".pdf,.docx" required>
       </div>
 
       <div class="form-navigation">
@@ -153,55 +144,7 @@
   </footer>
 
   <script>
-    function toggleUpload(name, containerId) {
-      const radios = document.getElementsByName(name);
-      const container = document.getElementById(containerId);
-
-      radios.forEach(radio => {
-        radio.addEventListener('change', () => {
-          container.classList.toggle('hidden', radio.value !== 'Yes' || !radio.checked);
-        });
-      });
-    }
-
-    toggleUpload('need_permission', 'companyLetterUpload');
-    toggleUpload('has_clearance', 'clearanceUpload');
-    toggleUpload('company_requires_jbs', 'jbsClearanceUpload');
-    toggleUpload('company_requires_jbs', 'jbsClearanceUpload');
-
-    document.getElementById("formARequirements").addEventListener("submit", async function(e) {
-    e.preventDefault();
     
-    // Validate files
-    const researchTools = document.querySelector('input[name="research_tools"]').files[0];
-    const proposal = document.querySelector('input[name="proposal"]').files[0];
-    const impactAssessment = document.querySelector('input[name="impact_assessment"]').files[0];
-    
-    if (!researchTools || !proposal || !impactAssessment) {
-        alert("Please upload all required files!");
-        return;
-    }
-
-    const formData = new FormData(this);
-    
-    try {
-        const response = await fetch('/api/form-a/requirements', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            const error = await response.text();
-            throw new Error(error);
-        }
-        
-        window.location.href = "{{ url_for('form_a_sec1') }}";
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Submission failed: " + error.message);
-    }
-});
-
   </script>
 
 </body>
