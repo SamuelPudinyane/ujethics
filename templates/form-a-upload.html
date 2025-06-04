@@ -71,15 +71,12 @@
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="question-block">
         <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
-        <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
-        <input type="radio" name="need_permission" value="No" checked required> No
         <input type="radio" name="need_permission" value="No" checked required> No
       </div>
 
       <div class="question-block hidden" id="companyLetterUpload">
        
-        <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
        
         <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
         <input type="file" name="permission_letter" accept=".pdf,.docx">
@@ -88,7 +85,6 @@
       <div class="question-block">
         <label>2. Do you have prior ethical clearance from the original study?</label><br>
         <input type="radio" name="has_clearance" value="Yes" required> Yes
-        <input type="radio" name="has_clearance" value="No" checked required> No
         <input type="radio" name="has_clearance" value="No" checked required> No
       </div>
 
@@ -112,7 +108,6 @@
       <div class="question-block hidden" id="jbsClearanceUpload">
         <label>Please Upload the proof from company <small>(letter/email screenshot)</small></label>
         <input type="file" name="need_jbs_clearance" accept=".pdf,.docx, .png, .jpg">
-        <input type="radio" name="company_requires_jbs" value="No" checked required> No
       </div>
 
       
