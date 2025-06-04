@@ -29,7 +29,18 @@
 
   <!-- Main Content -->
   <main class="main-content">
+<form id="" action="{{url_for('form_a_sec2')}}" method="post" enctype="multipart/form-data">
+        <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
 
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <h1>FORM A</h1>
     <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
 
@@ -265,9 +276,9 @@
         </tr>
         <tr>
           <td>
-
+           <label>Other (Specify)</label>
           </td>
-          <td></td>
+          <td><input type="text" name="vulnerable_comments_3"></td>
         </tr>
       </tbody>
     </table>
@@ -281,36 +292,22 @@
         <option value="medium">Medium</option>
         <option value="high">High</option>
       </select>
+      <label for="risk_justification"> Please justify your risk level (Mandatory) </label>
+      <input type="text" name="risk_justification" required>
+      <label for="benefits_description"> For medium and high risk, describe the potential benefits of the study: </label>
+      <input type="text" name="benefits_description" required>
+      <label for="risk_mitigation"> For medium and high risk, describe how potential risks will be mitigated against: </label>
+      <input type="text" name="risk_mitigation" required>
     </div>
 
 
 
-    </tr>
-    <tr>
-      <td>Interviews</td>
-      <td><input type="checkbox" name="interviews"></td>
-
-    </tr>
-    <tr>
-      <td>Documents</td>
-      <td><input type="checkbox" name="documents"></td>
-
-    </tr>
-    <tr>
-      <td colspan="2">
-        <label>Other (Specify)</label>
-     
-      </td>
-
-    </tr>
-    </tbody>
-    </table>
 
 
     <!-- Navigation Buttons -->
     <div class="form-navigation">
-      <a href="a-section1-supervisor.html" class="revise-btn">⬅ Section 1</a>
-      <a href="a-section3-supervisor.html" class="approve-btn">Next ➔ Section 3</a>
+      <a href="{{url_for('form_a_sec1')}}" class="revise-btn">⬅ Section 1</a>
+      <button type="submit" class="approve-btn">Next ➔ Section 3</button>
     </div>
     </form>
 

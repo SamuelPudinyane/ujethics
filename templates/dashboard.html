@@ -37,26 +37,21 @@
       <div class="form-card-grid">
         <div class="form-card" onclick="location.href='{{url_for('form_a_upload')}}'">
           <h5>Form A</h5>
-          <p>Primary Data Collection (Human Interaction)</p>
-          <span class="info-icon" title="Use when your research involves human interaction such as interviews, surveys, or focus groups.">ℹ️</span>
+          <p>Primary Data Collection (Human Interaction)</p><span class="info-icon" title="Use when your research involves human interaction such as interviews, surveys, or focus groups.">ℹ️</span>
         </div>
         <div class="form-card" onclick="location.href='{{url_for('form_b_upload')}}'">
           <h5>Form B</h5>
-          <p>Secondary Data (No Human Interaction)</p>ℹ️
-          <span class="info-icon">Use for secondary/existing data only. No human interaction is involved, but
-            permissions may be needed.</span>
-          <p>Secondary Data (No Human Interaction)</p>ℹ️
-          <span class="info-icon">Use for secondary/existing data only. No human interaction is involved, but
-            permissions may be needed.</span>
+          <p>Secondary Data (No Human Interaction)</p>
+          <span class="info-icon" title="Use for secondary/existing data only. No human interaction is involved, but
+            permissions may be needed.">ℹ️</span>
+          
         </div>
         <div class="form-card" onclick="location.href='{{url_for('form_c_sec1')}}'">
           <h5>Form C</h5>
-          <p>Public Data – Clearance Exemption</p>ℹ️
-          <span class="info-icon">Applies when data is publicly available and anonymized. No permissions or human
-            engagement required.</span>
-          <p>Public Data – Clearance Exemption</p>ℹ️
-          <span class="info-icon">Applies when data is publicly available and anonymized. No permissions or human
-            engagement required.</span>
+          <p>Public Data – Clearance Exemption</p>
+          <span class="info-icon" title="Applies when data is publicly available and anonymized. No permissions or human
+            engagement required.">ℹ️</span>
+        
         </div>
         <!--
         <div class="form-card" onclick="location.href='form-a-upload.html'">
@@ -100,7 +95,7 @@
                   {% endif %}
                 </em>
                 {% elif formA.rejected_or_accepted %}
-                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formA.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.ethics_commetee_status else  'Accepted by ethics Admin' if formA.ethics_commetee_status and formA.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}</span>
+                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formA.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.ethics_commetee_status else  'Accepted by ethics Admin' if formA.ethics_commetee_status and formA.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
                 <br>
                 <strong>Comment: </strong>
                 {{formA.supervisor_comments}}
@@ -124,12 +119,12 @@
                 <br>
                 {{formB.supervisor_comments}}
                 <br>
-                <>
+               <em>
                   {% if formB.supervisor_date%}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
 
                 {% endif %}</em>
                 {% elif formB.rejected_or_accepted %}
-                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formB.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.ethics_commetee_status else  'Accepted by ethics Admin' if formB.ethics_commetee_status and formB.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}</span>
+                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formB.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.ethics_commetee_status else  'Accepted by ethics Admin' if formB.ethics_commetee_status and formB.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
                 <br>
                 <strong>Comment: </strong>
                 {{formB.supervisor_comments}}
@@ -149,7 +144,7 @@
             <td>{% if not formC.supervisor_comments and formC.submitted_at %}
                 Awaiting Supervisor
                 {% elif formC.supervisor_comments%}
-                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formC.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.ethics_commetee_status else  'Accepted by ethics Admin' if formC.ethics_commetee_status and formC.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rector commitee for final review'}}</span>
+                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formC.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.ethics_commetee_status else  'Accepted by ethics Admin' if formC.ethics_commetee_status and formC.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
                 <br>
                 <strong>Comment: </strong>
                 {{formC.supervisor_comments}}

@@ -21,8 +21,14 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
+# connection_string = (
+#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
+
 connection_string = (
-    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
@@ -79,8 +85,6 @@ class User(Base):
 
     def verify_password(self, plain_password: str) -> bool:
         try:
-            print(f"Stored: {self.password}")
-            print(f"Input: {plain_password}")
             # Convert stored hash back to bytes
             stored_hash = self.password.encode('utf-8')
             # Verify the password
@@ -149,15 +153,21 @@ class FormARequirements(Base):
     __tablename__ = "form_a_requirements"
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
-    user_id = Column(String(150),ForeignKey("users.user_id"), nullable=False)  # Link to user who submitted
-    needs_permission = Column(Boolean, nullable=False)
-    permission_letter_path = Column(String(255), nullable=True)
-    has_prior_clearance = Column(Boolean, nullable=False)
+    user_id = Column(String(255),ForeignKey("users.user_id"), nullable=True)  # Link to user who submitted
+    needs_permission = Column(Boolean, nullable=True)
+    permission_letter = Column(String(255), nullable=True)
+    has_clearance = Column(Boolean, nullable=True)
     prior_clearance_path = Column(String(255), nullable=True)
-    company_requires_jbs = Column(Boolean, nullable=False)
-    research_tools_path = Column(String(255), nullable=False)
-    proposal_path = Column(String(255), nullable=False)
-    impact_assessment_path = Column(String(255), nullable=False)
+    company_requires_jbs = Column(Boolean, nullable=True)
+    prior_clearance=Column(Boolean,nullable=True)
+    need_jbs_clearance=Column(String(255),nullable=True)
+    prior_clearance1=Column(String(255),nullable=True)
+    need_jbs_clearance1=Column(Boolean,nullable=True)
+    research_tools_path = Column(String(255), nullable=True)
+    proposal_path = Column(String(255), nullable=True)
+    impact_assessment_path = Column(String(255), nullable=True)
+    has_ethics_evidence=Column(Boolean,nullable=True)
+    ethics_evidence=Column(Boolean,nullable=True)
     submitted_at = Column(DateTime, server_default=func.now(), nullable=False)
 
 
@@ -286,18 +296,18 @@ class FormA(Base):
     instrument_attachment_reason = Column(Text)
     data_collection_procedure = Column(Text)
     interview_type = Column(Text)
-    interview_recording = Column(Text)
-    use_focus_groups = Column(Boolean, default=False)
-    focus_recording = Column(Boolean, default=False)
+    interview_recording = Column(String,nullable=True)
+    use_focus_groups = Column(Boolean, default=True)
+    focus_recording = Column(String, default=True)
     data_collectors = Column(Text)
-    intervention = Column(Boolean, default=False)
+    intervention = Column(Boolean, default=True)
     intervention_details = Column(Text)
     sensitive_data = Column(Text)
-    translator = Column(Boolean, default=False)
+    translator = Column(Boolean, default=True)
     translator_procedure = Column(Text)
 
     # 5.5 - Secondary Data
-    uses_secondary_data = Column(Boolean, default=False)
+    uses_secondary_data = Column(Boolean, default=True)
     secondary_data_type = Column(String(10))  # public/private
     private_permission = Column(String(10))   # yes/no
     public_data_description = Column(Text)
@@ -319,25 +329,25 @@ class FormA(Base):
      
     # 6.9 checklist items
     # Questions 6.9a to 6.9s — stored as a dictionary
-    q6_9a = Column(Boolean,nullable=True,default=False)
-    q6_9b=Column(Boolean,nullable=True,default=False)
-    q6_9c=Column(Boolean,nullable=True,default=False)
-    q6_9d=Column(Boolean,nullable=True,default=False)
-    q6_9e=Column(Boolean,nullable=True,default=False)
-    q6_9f=Column(Boolean,nullable=True,default=False)
-    q6_9g=Column(Boolean,nullable=True,default=False)
-    q6_9h=Column(Boolean,nullable=True,default=False)
-    q6_9i=Column(Boolean,nullable=True,default=False)
-    q6_9j=Column(Boolean,nullable=True,default=False)
-    q6_9k=Column(Boolean,nullable=True,default=False)
-    q6_9l=Column(Boolean,nullable=True,default=False)
-    q6_9m=Column(Boolean,nullable=True,default=False)
-    q6_9n=Column(Boolean,nullable=True,default=False)
-    q6_9o=Column(Boolean,nullable=True,default=False)
-    q6_9p=Column(Boolean,nullable=True,default=False)
-    q6_9q=Column(Boolean,nullable=True,default=False)
-    q6_9r=Column(Boolean,nullable=True,default=False)
-    q6_9s=Column(Boolean,nullable=True,default=False)
+    q6_9a = Column(Boolean,nullable=True,default=True)
+    q6_9b=Column(Boolean,nullable=True,default=True)
+    q6_9c=Column(Boolean,nullable=True,default=True)
+    q6_9d=Column(Boolean,nullable=True,default=True)
+    q6_9e=Column(Boolean,nullable=True,default=True)
+    q6_9f=Column(Boolean,nullable=True,default=True)
+    q6_9g=Column(Boolean,nullable=True,default=True)
+    q6_9h=Column(Boolean,nullable=True,default=True)
+    q6_9i=Column(Boolean,nullable=True,default=True)
+    q6_9j=Column(Boolean,nullable=True,default=True)
+    q6_9k=Column(Boolean,nullable=True,default=True)
+    q6_9l=Column(Boolean,nullable=True,default=True)
+    q6_9m=Column(Boolean,nullable=True,default=True)
+    q6_9n=Column(Boolean,nullable=True,default=True)
+    q6_9o=Column(Boolean,nullable=True,default=True)
+    q6_9p=Column(Boolean,nullable=True,default=True)
+    q6_9q=Column(Boolean,nullable=True,default=True)
+    q6_9r=Column(Boolean,nullable=True,default=True)
+    q6_9s=Column(Boolean,nullable=True,default=True)
    
 
     results_feedback = Column(Text,nullable=True)
