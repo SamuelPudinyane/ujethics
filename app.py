@@ -2292,10 +2292,10 @@ def request_reset():
 def supervisor_dashboard():
     supervisor_id=session.get('id')
     supervisor_role=session['supervisor_role']
-    supervisor_id="bea65156-03ff-45c8-bd41-9d07f4bc48d2"
+    #supervisor_id="bea65156-03ff-45c8-bd41-9d07f4bc48d2"
     if not supervisor_id:
         return jsonify({'error': 'Unauthorized'}), 401
-    
+    print("im here")
     formA = db_session.query(FormA).all()
     formB = db_session.query(FormB).all()
     formC = db_session.query(FormC).all()
