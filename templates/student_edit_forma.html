@@ -67,7 +67,7 @@
   <main class="main-content">
 
     <!-- Form -->
-    <form id="formAsection1" action="url_for('student_edit_forma')" method="post" enctype="multipart/form-data">
+    <form id="formAsection1" action="{{url_for('student_edit_forma')}}" method="post" enctype="multipart/form-data">
         <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -82,7 +82,7 @@
             <input type="hidden" name="formb_id" value="{{ formA.id }}">
       <div class="form-section">
         <label for="applicant-name">Applicant Name
-        </label><input type="text" name="applicant_name" value="{{formA.application_name}}">
+        </label><input type="text" name="applicant_name" value="{{formA.applicant_name}}">
         <label for="student-number">Student / Staff Number
         </label><input type="text" name="student_number" value="{{formA.student_number}}">
         <label for="institution">Institution
@@ -132,7 +132,7 @@
         </tr>
         <tr>
           <td>Focus groups</td>
-          <td><input type="text" name="focus_group" value="{{formA.focus_group}}"></td>
+          <td><input type="text" name="focus_group" value="{{formA.focus_groups}}"></td>
 
         </tr>
         <tr>
@@ -176,7 +176,7 @@
         </tr>
         <tr>
           <td>People under the age of 18 or over 65</td>
-          <td><input type="text" name="age_group" value="{{formA.age_group}}"></td>
+          <td><input type="text" name="age_range" value="{{formA.age_range}}"></td>
 
         </tr>
         <tr>
@@ -259,7 +259,7 @@
         </tr>
         <tr>
           <td>Using intrusive techniques</td>
-          <td><input type="text" name="intrusive_technique" value="{{formA.intrusive_technique}}"></td>
+          <td><input type="text" name="intrusive_techniques" value="{{formA.intrusive_techniques}}"></td>
 
         </tr>
         <tr>

@@ -21,17 +21,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-# connection_string = (
-#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-#     "driver=ODBC+Driver+17+for+SQL+Server&"
-#     "trusted_connection=yes"
-# )
-
 connection_string = (
-    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
+
+# connection_string = (
+#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
 
 engine = create_engine(connection_string, echo=True)
 
@@ -154,20 +154,20 @@ class FormARequirements(Base):
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=True)  # Link to user who submitted
-    needs_permission = Column(Boolean, nullable=True)
+    needs_permission = Column(Boolean,default=False, nullable=True)
     permission_letter = Column(String(255), nullable=True)
-    has_clearance = Column(Boolean, nullable=True)
+    has_clearance = Column(Boolean,default=False, nullable=True)
     prior_clearance_path = Column(String(255), nullable=True)
-    company_requires_jbs = Column(Boolean, nullable=True)
-    prior_clearance=Column(Boolean,nullable=True)
+    company_requires_jbs = Column(Boolean,default=False, nullable=True)
+    prior_clearance = Column(String(255), nullable=True)
+    need_jbs_clearance1 = Column(String(255), nullable=True)
     need_jbs_clearance=Column(String(255),nullable=True)
     prior_clearance1=Column(String(255),nullable=True)
-    need_jbs_clearance1=Column(Boolean,nullable=True)
     research_tools_path = Column(String(255), nullable=True)
     proposal_path = Column(String(255), nullable=True)
     impact_assessment_path = Column(String(255), nullable=True)
-    has_ethics_evidence=Column(Boolean,nullable=True)
-    ethics_evidence=Column(Boolean,nullable=True)
+    has_ethics_evidence=Column(Boolean,default=False,nullable=True)
+    ethics_evidence = Column(Boolean, default=False, nullable=True)
     submitted_at = Column(DateTime, server_default=func.now(), nullable=False)
 
 

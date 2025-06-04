@@ -69,16 +69,10 @@
       <div class="question-block">
         <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
         <input type="radio" name="need_permission" value="Yes" required> Yes
-        <input type="radio" name="need_permission" value="No" checked required> No
+        <input type="radio" name="need_permission" value="No" checked  required> No
       </div>
 
-<<<<<<< HEAD
-      <div class="question-block hidden" id="companyLetterUpload">
-       
-       
-=======
       <div class="question-block hidden" id="companyLetterUpload">       
->>>>>>> 4d2a715a67c9e05a5e0d7a8848227e6383671df0
         <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
         <input type="file" name="permission_letter" accept=".pdf,.docx">
       </div>
@@ -109,14 +103,10 @@
       <div class="question-block hidden" id="jbsClearanceUpload">
         <label>Please Upload the proof from company <small>(letter/email screenshot)</small></label>
         <input type="file" name="need_jbs_clearance" accept=".pdf,.docx, .png, .jpg">
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d2a715a67c9e05a5e0d7a8848227e6383671df0
       </div>
 
       
-      <div class="question-block hidden" id="clearanceUpload">
+      <div class="question-block hidden" id="clearanceUpload1">
         <label>Upload Ethical Clearance Document</label>
         <input type="file" name="prior_clearance1" accept=".pdf,.docx">
       </div>
@@ -153,7 +143,36 @@
   </footer>
 
   <script>
-    
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const permissionRadios = document.querySelectorAll('input[name="need_permission"]');
+    const clearanceRadios = document.querySelectorAll('input[name="has_clearance"]');
+    const jbsRadios = document.querySelectorAll('input[name="company_requires_jbs"]');
+
+    const companyLetterUpload = document.getElementById("companyLetterUpload");
+    const clearanceUpload = document.getElementById("clearanceUpload1");
+    const jbsClearanceUpload = document.getElementById("jbsClearanceUpload1");
+
+    permissionRadios.forEach(r => {
+      r.addEventListener("change", () => {
+        companyLetterUpload.classList.toggle("hidden", r.value !== "Yes");
+      });
+    });
+
+    clearanceRadios.forEach(r => {
+      r.addEventListener("change", () => {
+        clearanceUpload.classList.toggle("hidden", r.value === "No");
+      });
+    });
+
+    jbsRadios.forEach(r => {
+      r.addEventListener("change", () => {
+        jbsClearanceUpload.classList.toggle("hidden", r.value === "No");
+      });
+    });
+  });
+</script>
+
   </script>
 
 </body>

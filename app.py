@@ -233,7 +233,7 @@ def reset_password():
         return jsonify({'message': message}), 400
 
     # Update password
-    user.password = User.hash_password(new_password)
+    user.password = new_password
     user.reset_token = None
     user.reset_token_expiry = None
     session.commit()
@@ -282,7 +282,7 @@ def dashboard ():
 # FORM A =====================================================================================================
 
 
-@app.route('/api/form-a/requirements', methods=['POST'])
+@app.route('/submit_form_a_requirements', methods=['POST'])
 def submit_form_a_requirements():
 
     if request.method=='POST':
@@ -291,7 +291,7 @@ def submit_form_a_requirements():
             
             # Get form data
             needs_permission = request.form.get('need_permission') == 'Yes'
-            has_prior_clearance = request.form.get('has_clearance') == 'Yes'
+            has_clearance = request.form.get('has_clearance') == 'Yes'
             company_requires_jbs = request.form.get('company_requires_jbs') == 'Yes'
 
             # Get user ID from session (adjust based on your auth system)
@@ -318,11 +318,11 @@ def submit_form_a_requirements():
             
             # Save files based on form field names (corrected from request.form to request.files)
             permission_letter_path = save_file('permission_letter') if needs_permission else None
-            prior_clearance_path = save_file('prior_clearance_path') if has_prior_clearance else None
+            prior_clearance_path = save_file('prior_clearance_path') if has_clearance else None
             research_tools_path = save_file('research_tools_path')
-            prior_clearance = save_file('prior_clearance')
-            prior_clearance1 = save_file('prior_clearance1')
-            need_jbs_clearance1 = save_file('need_jbs_clearance1')
+            prior_clearance = save_file('prior_clearance') if company_requires_jbs else None
+            prior_clearance1 = save_file('prior_clearance1') if company_requires_jbs else None
+            need_jbs_clearance1 = save_file('need_jbs_clearance1') if company_requires_jbs else None
             proposal_path = save_file('proposal_path')
             impact_assessment_path = save_file('impact_assessment_path')
             
@@ -332,11 +332,11 @@ def submit_form_a_requirements():
                 
             # Check if form exists for this user
             form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
-            print("path ",impact_assessment_path)
+         
             if form:
                 # Update existing form
                 form.needs_permission = needs_permission
-                form.has_prior_clearance = has_prior_clearance
+                form.has_clearance = has_clearance
                 form.company_requires_jbs = company_requires_jbs
                 form.prior_clearance=prior_clearance
                 form.prior_clearance1=prior_clearance1
@@ -358,7 +358,7 @@ def submit_form_a_requirements():
                     user_id=user_id,
                     needs_permission=needs_permission,
                     permission_letter=permission_letter_path,
-                    has_clearance=has_prior_clearance,
+                    has_clearance=has_clearance,
                     prior_clearance_path=prior_clearance_path,
                     company_requires_jbs=company_requires_jbs,
                     research_tools_path=research_tools_path,
@@ -569,10 +569,7 @@ def form_a_sec2 ():
         else:
             form.no_education=False
         
-        if data.get('assessment_other_specify')=='Yes':
-            form.assessment_other_specify=True
-        else:
-            form.assessment_other_specify=False
+        form.assessment_other_specify==data.get('assessment_other_specify')
 
         if data.get('vulnerable_comments_1')=='Yes':
             form.vulnerable_comments_1=True
@@ -747,26 +744,26 @@ def form_a_sec3 ():
         form.purpose_objectives = data.get('purpose_objectives', '')
 
         # Section 4: Organisational Permissions and Affiliations
-        form.org_name = data.get('org_name', '')
-        form.org_contact = data.get('org_contact', '')
-        form.org_role = data.get('org_role', '')
-        form.org_permission = data.get('org_permission', '')
+        form.org_name = data.getlist('org_name')
+        form.org_contact = data.getlist('org_contact')
+        form.org_role = data.getlist('org_role')
+        form.org_permission = data.get('org_permission1')
 
-        form.researcher_affiliation = data.get('researcher_affiliation', '')
-        form.affiliation_details = data.get('affiliation_details', '')
+        form.researcher_affiliation = data.get('researcher_affiliation')
+        form.affiliation_details = data.get('affiliation_details')
 
-        form.collective_involvement = data.get('collective_involvement', '')
-        form.collective_details = data.get('collective_details', '')
+        form.collective_involvement = data.get('collective_involvement')
+        form.collective_details = data.get('collective_details')
         # Funding Information
-        form.is_funded = data.get('is_funded', '')
-        form.fund_org = data.get('fund_org', '')
-        form.fund_contact = data.get('fund_contact', '')
-        form.fund_role = data.get('fund_role', '')
-        form.fund_amount = data.get('fund_amount', '')
+        form.is_funded = data.get('is_funded')
+        form.fund_org = data.get('fund_org')
+        form.fund_contact = data.get('fund_contact')
+        form.fund_role = data.get('fund_role')
+        form.fund_amount = data.get('fund_amount')
 
         # Indemnity & Other Committee Info
-        form.indemnity_arrangements = data.get('indemnity_arrangements', '')
-        form.other_committee = data.get('other_committee', '')
+        form.indemnity_arrangements = data.get('indemnity_arrangements')
+        form.other_committee = data.get('other_committee')
 
     
 
@@ -798,9 +795,9 @@ def form_a_sec4():
             return "No existing Form A record found for this user.", 404
 
         # 5.1 Research Paradigm
-        form.quantitative = request.form.getlist('quantitative[]')=='yes'
-        form.qualitative = request.form.getlist('qualitative[]')=='yes'
-        form.mixed_methods = request.form.getlist('mixed_methods[]')=='yes'
+        form.quantitative = 'yes' in request.form.getlist('quantitative[]')
+        form.qualitative = 'yes' in request.form.getlist('qualitative[]')
+        form.mixed_methods = 'yes' in request.form.getlist('mixed_methods[]')
         form.paradigm_explanation = request.form.get('paradigm_explanation')
 
         # 5.2 Research Design
@@ -810,7 +807,7 @@ def form_a_sec4():
         form.participants_description = request.form.get('participants_description')
         form.population = ','.join(request.form.getlist('population[]'))
         form.sampling_method = ','.join(request.form.getlist('sampling_method[]'))
-        form.sample_size = ','.join(request.form.getlist('sample_size[]'))
+        form.sampling_size = ','.join(request.form.getlist('sample_size[]'))
         form.inclusion_criteria =','.join(request.form.getlist('inclusion_criteria[]'))
         form.duration_timing = request.form.get('duration_timing')
         form.contact_details_method = request.form.get('contact_details_method')
@@ -819,8 +816,8 @@ def form_a_sec4():
 
         # 5.4 Instruments
         form.questionnaire_type = request.form.get('questionnaire_type')
-        form.permission_obtained = request.form.get('permission_obtained')
-        form.open_source= request.form.get('open_source')
+        form.permission_obtained = 'permission_obtained' in request.form
+        form.open_source= 'open_source' in request.form
         form.instrument_attachment_reason = request.form.get('instrument_attachment_reason')
         form.data_collection_procedure = request.form.get('data_collection_procedure')
         form.interview_type = request.form.getlist('interview_type')
@@ -831,16 +828,22 @@ def form_a_sec4():
         form.intervention = request.form.get('intervention')=='Yes'
         form.intervention_details = request.form.get('intervention_details')
         form.sensitive_data = request.form.get('sensitive_data')
-        form.translator = request.form.get('translator')
+        form.translator = request.form.get('translator')=='Yes'
         form.translator_procedure = request.form.get('translator_procedure')
 
         # 5.5 Secondary Data Usage
-        form.uses_secondary_data = request.form.get('secondaryData')=='yes'
-        form.secondary_data_type = request.form.get('dataType')
-        form.private_permission= request.form.get('privatePermission')
-
-        if request.form.get('dataType') == 'public':
-            form.public_data_description = request.form.get('public_data_description')
+        secondary_data = request.form.get('secondary_data')  # This should be added as a hidden input for access
+        if secondary_data == 'yes':
+            form.uses_secondary_data = True
+            form.secondary_data_type = request.form.get('data_type')
+            if form.secondary_data_type == 'private':
+                form.private_permission = request.form.get('privatePermission') == 'yes'
+                # Handle file upload for permission if required
+                # Add logic for saving file securely if uploaded
+            elif form.secondary_data_type == 'public':
+                form.public_data_description = request.form.get('public_data_description')
+        else:
+            form.uses_secondary_data = False
 
         # Handle file upload
         file = request.files.get('private_permission')
@@ -1450,7 +1453,8 @@ def form_a_answers():
 @app.route('/student_edit_forma', methods=['GET','POST'])
 def student_edit_forma():
     user_id=session.get('id')
-    
+    public_data_description=""
+    private_permission_file=""
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
     user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -1530,10 +1534,7 @@ def student_edit_forma():
         else:
             no_education=False
         
-        if request.form.get('assessment_other_specify')=='Yes':
-            assessment_other_specify=True
-        else:
-            assessment_other_specify=False
+        form.assessment_other_specify=request.form.get('assessment_other_specify')
 
         if request.form.get('vulnerable_comments_1')=='Yes':
             vulnerable_comments_1=True
@@ -1643,10 +1644,7 @@ def student_edit_forma():
         else:
             uj_funding=False
         
-        if request.form.get('vulnerable_comments_3')=='Yes':
-            vulnerable_comments_3=True
-        else:
-            vulnerable_comments_3=False
+        form.vulnerable_comments_3=request.form.get('vulnerable_comments_3')
         
         if request.form.get('dataType') == 'public':
                 public_data_description = request.form.get('public_data_description')
@@ -1689,7 +1687,7 @@ def student_edit_forma():
             own_students=own_students,
             poverty=poverty,
             no_education=no_education,
-            assessment_other_specify=assessment_other_specify,
+            assessment_other_specify=request.form.get('assessment_other_specify'),
             vulnerable_comments_1=vulnerable_comments_1,
             disclosure=disclosure,
             discomfiture=discomfiture,
@@ -1711,7 +1709,7 @@ def student_edit_forma():
             uj_premises=uj_premises,
             uj_facilities=uj_facilities,
             uj_funding=uj_funding,
-            vulnerable_comments_3=vulnerable_comments_3,
+            vulnerable_comments_3=request.form.get('vulnerable_comments_3'),
             risk_rating = request.form.get('risk_rating'),
             risk_justification = request.form.get('risk_justification'),
             benefits_description = request.form.get('benefits_description'),
@@ -1727,26 +1725,26 @@ def student_edit_forma():
             purpose_objectives = request.form.get('purpose_objectives', ''),
 
             # Section 4: Organisational Permissions and Affiliations
-            org_name = request.form.get('org_name', ''),
-            org_contact = request.form.get('org_contact', ''),
-            org_role = request.form.get('org_role', ''),
-            org_permission = request.form.get('org_permission', ''),
+            org_name = request.form.getlist('org_name'),
+            org_contact = request.form.getlist('org_contact'),
+            org_role = request.form.getlist('org_role'),
+            org_permission = request.form.get('org_permission1'),
 
-            researcher_affiliation = request.form.get('researcher_affiliation', ''),
-            affiliation_details = request.form.get('affiliation_details', ''),
+            researcher_affiliation = request.form.get('researcher_affiliation'),
+            affiliation_details = request.form.get('affiliation_details'),
 
-            collective_involvement = request.form.get('collective_involvement', ''),
-            collective_details = request.form.get('collective_details', ''),
+            collective_involvement = request.form.get('collective_involvement'),
+            collective_details = request.form.get('collective_details'),
             # Funding Information
-            is_funded = request.form.get('is_funded', ''),
-            fund_org = request.form.get('fund_org', ''),
-            fund_contact = request.form.get('fund_contact', ''),
-            fund_role = request.form.get('fund_role', ''),
-            fund_amount = request.form.get('fund_amount', ''),
+            is_funded = request.form.get('is_funded'),
+            fund_org = request.form.get('fund_org'),
+            fund_contact = request.form.get('fund_contact'),
+            fund_role = request.form.get('fund_role'),
+            fund_amount = request.form.get('fund_amount'),
 
             # Indemnity & Other Committee Info
-            indemnity_arrangements = request.form.get('indemnity_arrangements', ''),
-            other_committee = request.form.get('other_committee', ''),
+            indemnity_arrangements = request.form.get('indemnity_arrangements'),
+            other_committee = request.form.get('other_committee'),
             # 5.1 Research Paradigm
             quantitative = request.form.getlist('quantitative[]')=='yes',
             qualitative = request.form.getlist('qualitative[]')=='yes',
@@ -1760,7 +1758,7 @@ def student_edit_forma():
             participants_description = request.form.get('participants_description'),
             population = request.form.getlist('population[]'),
             sampling_method = request.form.getlist('sampling_method[]'),
-            sample_size = request.form.getlist('sample_size[]'),
+            sampling_size = request.form.getlist('sample_size[]'),
             inclusion_criteria = request.form.getlist('inclusion_criteria[]'),
             duration_timing = request.form.get('duration_timing'),
             contact_details_method = request.form.get('contact_details_method'),
@@ -1769,8 +1767,8 @@ def student_edit_forma():
 
             # 5.4 Instruments
             questionnaire_type = request.form.get('questionnaire_type'),
-            permission_obtained = request.form('permission_obtained'),
-            open_source= request.form('open_source'),
+            permission_obtained = request.form.get('permission_obtained'),
+            open_source= request.form.get('open_source'),
             instrument_attachment_reason = request.form.get('instrument_attachment_reason'),
             data_collection_procedure = request.form.get('data_collection_procedure'),
             interview_type = request.form.getlist('interview_type'),
