@@ -62,12 +62,8 @@
       </div>
     </div>
   </header>
-
-  <!-- Main Content -->
-  <main class="main-content">
-
-    <!-- Form -->
-    <form id="formAsection1" action="{{url_for('chair_form_view',id=formA.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
+ <!-- Form -->
+    <form id="formAsection1" action="{{url_for('ethics_reviewer_committee_forms',id=formA.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -79,6 +75,10 @@
             {% endif %}
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <!-- Main Content -->
+  <main class="main-content">
+
+   
       <div class="form-section">
         <label for="applicant-name">Applicant Name
           <br><span>{{formA.application_name}}</span>
@@ -880,10 +880,10 @@
     
        <button type="submit" class="btn btn-danger" name'reject' value="Reject">Reject</button>
   <button type="submit" class="btn btn-success" name='accept' value="Accept">Accept</button>
-        </form>
+   
       </main>
 
-
+     </form>
   <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
@@ -931,17 +931,6 @@
   submitToStudentBtn.addEventListener("click", () => {
     supervisorDeclaration.style.display = "none";
   });
-
-  
-///function submitForm(action) {
-  ///  const form = document.getElementById('supervisorForm');
-  ///  if (action === 'reject') {
- ////     form.action = "{{ url_for('reject_form_a', id=formA.id) }}";
-  ///  } else if (action === 'accept') {
-   ///   form.action = "{{ url_for('accept_form_a', id=formA.id) }}";
-   /// }
-  //}
-  
 
   </script>
 </body>

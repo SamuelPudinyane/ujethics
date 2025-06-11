@@ -65,7 +65,7 @@
       </div>
     </div>
   </header>
-<form action="{{url_for('chair_form_view',id=formB.form_id,form_name='FORM B')}}" method="post"  enctype="multipart/form-data">
+<form action="{{url_for('ethics_reviewer_committee_forms',id=formB.form_id,form_name='FORM B')}}" method="post"  enctype="multipart/form-data">
   <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -354,14 +354,6 @@
     window.location.href = "supervisor-dashboard.html";
   });
 
-  ///function submitForm(action) {
-   /// const form = document.getElementById('supervisorForm');
-   /// if (action === 'reject') {
-    ///  form.action = "{{ url_for('reject_form_b', id=formB.form_id) }}";
-    ///} else if (action === 'accept') {
-    ///  form.action = "{{ url_for('accept_form_b', id=formB.form_id) }}";
-    ///}
-  ///}
 </script>
 
 </body>

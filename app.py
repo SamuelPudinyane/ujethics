@@ -1245,44 +1245,34 @@ def form_c_supervisor(id):
     return render_template("form_c_supervisor.html",formC=form)
 
 
-@app.route('/reject_form_a/<string:id>',methods=['GET','POST'])
-def reject_form_a(id):
+@app.route('/reject_or_Accept_form_a/<string:id>',methods=['GET','POST'])
+def reject_or_Accept_form_a(id):
 
     user_id=session.get('id')
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
-        
-    forma = db_session.query(FormA).filter_by(form_id=id).first()
-    if not forma:
-        forma = FormA(form_id=id)
-    forma.supervisor_comments = request.form.get('supervisor_comments')
-    forma.supervisor_signature = request.form.get('supervisor_signature')
-    forma.supervisor_date = request.form.get('supervisor_date')
-    forma.rejected_or_accepted=False
-    db_session.add(forma)
-    db_session.commit()
-    return redirect(url_for('student_dashboard'))
 
-@app.route('/accept_form_a/<string:id>',methods=['GET','POST'])
-def accept_form_a(id):
-    
-    user_id=session.get('id')
-    if not user_id:
-        return jsonify({'error': 'Unauthorized'}), 401
-        
     forma = db_session.query(FormA).filter_by(form_id=id).first()
     if not forma:
         forma = FormA(form_id=id)
-    forma.supervisor_comments = request.form.get('supervisor_comments')
-    forma.supervisor_signature = request.form.get('supervisor_signature')
-    forma.supervisor_date = request.form.get('supervisor_date')
-    forma.rejected_or_accepted=True
-    db_session.add(forma)
-    db_session.commit()
+    if request.method=="POST":
+ 
+        forma.supervisor_comments = request.form.get('supervisor_comments')
+        forma.supervisor_signature = request.form.get('supervisor_signature')
+        forma.supervisor_date = request.form.get('supervisor_date')
+        if request.form.get('accept')=='Accept':
+        
+            forma.rejected_or_accepted=True
+        else:
+            forma.rejected_or_accepted=False
+
+        db_session.add(forma)
+        db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
 
-@app.route('/reject_form_b/<string:id>',methods=['GET','POST'])
-def reject_form_b(id):
+
+@app.route('/reject_or_Accept_form_b/<string:id>',methods=['GET','POST'])
+def reject_or_Accept_form_b(id):
     user_id=session.get('id')
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
@@ -1290,12 +1280,20 @@ def reject_form_b(id):
     formb = db_session.query(FormB).filter_by(form_id=id).first()
     if not formb:
         formb = FormB(form_id=id)
-    formb.supervisor_comments = request.form.get('supervisor_comments')
-    formb.supervisor_signature = request.form.get('supervisor_signature')
-    formb.supervisor_date = request.form.get('supervisor_date')
-    formb.rejected_or_accepted=False
-    db_session.add(formb)
-    db_session.commit()
+    if request.method=="POST":
+ 
+        formb.supervisor_comments = request.form.get('supervisor_comments')
+        formb.supervisor_signature = request.form.get('supervisor_signature')
+        formb.supervisor_date = request.form.get('supervisor_date')
+        if request.form.get('accept')=='Accept':
+        
+            formb.rejected_or_accepted=True
+        else:
+            formb.rejected_or_accepted=False
+
+        
+        db_session.add(formb)
+        db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
 
 @app.route('/accept_form_b/<string:id>',methods=['GET','POST'])

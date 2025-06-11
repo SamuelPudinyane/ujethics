@@ -61,6 +61,19 @@
     </div>
   </header>
 
+  <form action="{{url_for('ethics_reviewer_committee_forms',id=formC.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
+  <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+   
   <!-- Main Content -->
   <main class="main-content">
 
@@ -352,13 +365,13 @@
     
        <button type="submit" class="btn btn-danger" name="reject" value="Reject">Reject</button>
   <button type="submit" class="btn btn-success" name="accept" value="Accept">Accept</button>
-        </form>   
+         
     </div>
 
 
 
   </main>
-
+</form>  
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>
@@ -404,14 +417,7 @@
     window.location.href = "supervisor-dashboard.html";
   });
 
-  ///function submitForm(action) {
-    ////const form = document.getElementById('supervisorForm');
-    ///if (action === 'reject') {
-    ///  form.action = "{{ url_for('reject_form_c', id=formC.form_id) }}";
-    ///} else if (action === 'accept') {
-    ///  form.action = "{{ url_for('accept_form_c', id=formC.form_id) }}";
-    ///}
- /// }
+
 </script>
 
 </body>

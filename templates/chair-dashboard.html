@@ -8,47 +8,52 @@
   <link rel="stylesheet" href="css/supervisor.css" />
   <link rel="stylesheet" href="css/review.css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/review.css') }}">
-  <style>
-    .status-pill {
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      color: #fff;
-      text-align: center;
-      display: inline-block;
-    }
-    .approved { background-color: #27ae60; }
-    .minor-changes { background-color: #f1c40f; }
-    .resubmission { background-color: #e67e22; }
-    .rejected { background-color: #e74c3c; }
-  </style>
-</head>
+ 
 <body>
 
 <div class="admin-wrapper">
 
-  <!-- Sidebar -->
+   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="sidebar-logo">
-      <h3>Dean & Chairman Panel</h3>
+      <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
+      <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="chair-dashboard.html">📋 Student Tracker</a>
-      <a href="{{url_for('logout')}}">🔒 Logout</a>
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="user-list.html">👥 User Management</a>
+      <a href="/templates/login/logout.html">🔒 Logout</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
   <main class="admin-main">
     <header class="topbar">
-      <h2>Chairman/Dean – Ethics Application Overview</h2>
+      <h2>Ethics Submission</h2>
+      <p id="currentMonthLabel" style="color: #4F2365;"></p>
     </header>
 
     <section class="admin-content">
-      <h3>Submitted Student Forms</h3>
+      <h3>Submitted Forms Overview</h3>
+      <!-- Filters -->
+      <div class="filter-row">
+        <input type="text" id="filterName" placeholder="Filter by Name" />
+        <input type="text" id="filterStudent" placeholder="Filter by Student Number" />
+        <select id="filterStatus">
+          <option value="">All Statuses</option>
+          <option value="Supervisor Approved">Supervisor Approved</option>
+          <option value="Returned">Returned</option>
+          <option value="Pending">Pending</option>
+        </select>
+        <button onclick="applyFilters()">🔍 Apply Filters</button>
+      </div>
+
      {% if submitted_form_a %}
       <!-- Table -->
+      
+      <form id="bulkAssignForm">
       <table class="table table-bordered table-striped status-table ">
         <h3>Form A</h3>
         <thead class="table-dark">
@@ -74,7 +79,7 @@
             <td>{{forma.declaration_date}}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span></td>
             <td>{{forma.risk_level}}</td>
-            <td>{{(today - forma.declaration_date.date()).days}} days</td>
+            <td>{{forma.declaration_date}} days</td>
             <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}
@@ -83,8 +88,7 @@
       </table>
       
       <br>
-      {% endif %}
-      {% if submitted_form_b %}
+      {% elif submitted_form_b %}
       <!-- Table -->
       <table class="table table-bordered table-striped status-table ">
         <h3>Form B</h3>
@@ -119,8 +123,8 @@
         </tbody>
       </table>
       <br>
-      {% endif %}
-      {% if submitted_form_c %}
+      
+      {% elif submitted_form_c %}
       <!-- Table -->
       <table class="table table-bordered table-striped status-table ">
         <h3>Form C</h3>
@@ -153,6 +157,8 @@
           {% endfor %}
         </tbody>
       </table>
+      {% else %}
+      <span style="display: block; text-align: center;">No Submission</span>
       {% endif %}
     </section>
 

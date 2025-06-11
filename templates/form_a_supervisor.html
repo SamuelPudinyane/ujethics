@@ -65,10 +65,8 @@
 
   <!-- Main Content -->
   <main class="main-content">
-
-    <!-- Form -->
-    <form id="formAsection1" method="post" enctype="multipart/form-data">
-       <!-- Error Messages -->
+<form  action="{{url_for('reject_or_Accept_form_a',id=formA.form_id)}}" method="POST" >
+  <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
                     {% for message in messages %}
@@ -79,6 +77,7 @@
             {% endif %}
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+       
       <div class="form-section">
         <label for="applicant-name">Applicant Name
           <br><span>{{formA.application_name}}</span>
@@ -113,7 +112,7 @@
       </div>
 
  
-    </form>
+   
   </main>
 
   <!-- Section 2 -->
@@ -476,7 +475,7 @@
 
     </div>
 
-    </form>
+  
 
   </main>
 
@@ -660,7 +659,7 @@
   </section>
 
 
-      </form>
+   
   
     </main>
 
@@ -817,14 +816,14 @@
     </div>
   
 
-      </form>
+
   
     </main>
   
     <!-- Section 6 -->
 
     <main class="main-content">
-  <form id="formA">
+ 
 
 
     <h3>SECTION 7: Declaration</h3>
@@ -879,8 +878,8 @@
       </div>
       <br>
     
-      <button type="submit" class="btn btn-danger" onclick="submitForm('reject')">Reject</button>
-  <button type="submit" class="btn btn-success" onclick="submitForm('accept')">Accept</button>
+      <button type="submit" name="reject" value="Reject" class="btn btn-danger" >Reject</button>
+  <button type="submit" name="accept" value="Accept" class="btn btn-success" >Accept</button>
     </div>
 
 
@@ -938,17 +937,6 @@
   submitToStudentBtn.addEventListener("click", () => {
     supervisorDeclaration.style.display = "none";
   });
-
-  
-function submitForm(action) {
-    const form = document.getElementById('supervisorForm');
-    if (action === 'reject') {
-      form.action = "{{ url_for('reject_form_a', id=formA.form_id) }}";
-    } else if (action === 'accept') {
-      form.action = "{{ url_for('accept_form_a', id=formA.form_id) }}";
-    }
-  }
-  
 
   </script>
 </body>
