@@ -14,7 +14,7 @@ from flask_wtf.csrf import CSRFProtect
 from datetime import date
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
-
+from collections import defaultdict
 # Load environment variables from .env file
 load_dotenv()
 
@@ -100,7 +100,7 @@ def login_page():
                     return redirect(url_for('supervisor_dashboard'))
                 elif role == 'ADMIN':
                     session['admin_role']='ADMIN'
-                    return redirect(url_for('chair_dashboard'))
+                    return redirect(url_for('chair_landing'))
                 elif role == 'REC':
                     session['rec_role']='REC'
                     return redirect(url_for('ethics_reviewer_committee'))
@@ -2282,6 +2282,7 @@ def ethics_reviewer_committee():
     .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
     .distinct(FormA.user_id)
     .all())
+    
     submitted_form_b = (db_session.query(FormB)
     .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
     .distinct(FormB.user_id)
@@ -2293,6 +2294,59 @@ def ethics_reviewer_committee():
 
     today = date.today()
     return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
+
+@app.route('/chair_landing',methods=['POST','GET'])
+def chair_landing():
+    ##form A retrival
+    formAs = (db_session.query(FormA)
+    .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
+    .distinct(FormA.user_id)
+    .all())
+
+    forms_by_yearA = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
+
+    for form in formAs:
+        if form.submitted_at:
+            year = form.submitted_at.year
+            month = form.submitted_at.strftime("%Y-%m")
+            forms_by_yearA[year][month].append(form)
+
+    sorted_yearsA = sorted(forms_by_yearA.keys(), reverse=True)
+
+    ## form B retrival
+    formBs = (db_session.query(FormB)
+    .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
+    .distinct(FormB.user_id)
+    .all())
+
+    forms_by_yearB = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
+
+    for form in formBs:
+        if form.submitted_at:
+            year = form.submitted_at.year
+            month = form.submitted_at.strftime("%Y-%m")
+            forms_by_yearB[year][month].append(form)
+
+    sorted_yearsB = sorted(forms_by_yearB.keys(), reverse=True)
+
+    ## form c retrival
+    formCs = (db_session.query(FormB)
+    .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
+    .distinct(FormC.user_id)
+    .all())
+
+    forms_by_yearC = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
+
+    for form in formCs:
+        if form.submission_date:
+            year = form.submission_date.year
+            month = form.submission_date.strftime("%Y-%m")
+            forms_by_yearC[year][month].append(form)
+
+    sorted_yearsC = sorted(forms_by_yearC.keys(), reverse=True)
+
+    return render_template("chair-landing-dashboard.html", forms_by_yearA=forms_by_yearA, sorted_yearsA=sorted_yearsA,sorted_yearsB=sorted_yearsB,forms_by_yearB=forms_by_yearB,sorted_yearsC=sorted_yearsC,forms_by_yearC=forms_by_yearC)
+
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):

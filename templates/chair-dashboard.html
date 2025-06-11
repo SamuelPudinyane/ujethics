@@ -73,13 +73,13 @@
           {% for forma in submitted_form_a %}
           <tr>
             <td>{{forma.student_number}}</td>
-            <td>{{forma.full_name}}</td>
+            <td>{{forma.applicant_name}}</td>
             <td>{{forma.supervisor}}</td>
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span></td>
-            <td>{{forma.risk_level}}</td>
-            <td>{{forma.declaration_date}} days</td>
+            <td>{{forma.risk_rating}}</td>
+            <td>{{forma.declaration_date}}</td>
             <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}
@@ -109,13 +109,13 @@
           {% for formb in submitted_form_b %}
           <tr>
             <td>{{formb.student_number}}</td>
-            <td>{{formb.full_name}}</td>
+            <td>{{formb.applicant_name}}</td>
             <td>{{formb.supervisor}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
             <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span></td>
             <td>{{formb.risk_level}}</td>
-            <td>{{formb.declaration_date}} days</td>
+            <td>{{formb.declaration_date}}</td>
             <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}
@@ -145,13 +145,13 @@
           {% for formc in submitted_form_c %}
           <tr>
             <td>{{formc.student_number}}</td>
-            <td>{{formc.full_name}}</td>
+            <td>{{formc.applicant_name}}</td>
             <td>{{formc.supervisor}}</td>
             <td>FORM C</td>
             <td>{{formc.declaration_date}}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span></td>
             <td>{{formc.risk_level}}</td>
-            <td>{{(today - formc.declaration_date.date()).days}} days</td>
+            <td>{{(today - formc.declaration_date.date()).days}}</td>
             <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}

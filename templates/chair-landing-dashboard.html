@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Select Submission Month | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/static/css/supervisor.css">
+  <link rel="stylesheet" href="/static/css/review.css">
+  <style>
+    .folder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .folder-card {
+      text-align: center;
+      padding: 2rem;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .folder-card:hover {
+      transform: scale(1.05);
+      background-color: #e9f3ff;
+    }
+
+    .folder-icon {
+      font-size: 3rem;
+      color: #4F2365;
+    }
+
+    .folder-label {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: #022169;
+    }
+
+    .navbar {
+      background: #022169;
+      color: white;
+      padding: 1rem 2rem;
+    }
+
+    .navbar h2 {
+      margin: 0;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background: #939598;
+      color: white;
+      margin-top: 2rem;
+    }
+    .year-section {
+      margin-bottom: 2rem;
+    }
+    .month-header {
+      font-weight: bold;
+      color: #022169;
+      margin-top: 1rem;
+    }
+    .form-list {
+      margin-left: 1rem;
+      list-style-type: square;
+    }
+  </style>
+</head>
+<body>
+
+   <div class="admin-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
+      <h3>JBS Ethics Application</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="user-list.html">👥 User Management</a>
+      <a href="/templates/login/logout.html">🔒 Logout</a>
+    </nav>
+  </aside>
+
+
+  <!-- Main Dashboard Content -->
+ <main class="admin-main">
+    <header class="topbar">
+      <h2>Submission Folders</h2>
+    </header>
+
+    <section class="admin-content">
+       <div class="folder-grid">
+        {% for year in sorted_yearsA %}
+    <div class="year-section">
+      <h3>{{ year }}</h3>
+      <h2>FORM A</h2>
+      {% for month, forms in forms_by_yearA[year]|dictsort %}
+      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee')}}" >📁</a>
+      
+      {% endfor %}
+      </div>
+       {% endfor %}
+    <!-- Add more months as needed -->
+  </div>
+  <hr>
+  <div class="folder-grid">
+        {% for year in sorted_yearsB %}
+    <div class="year-section">
+      <h3>{{ year }}</h3>
+      <h2>FORM B</h2>
+      {% for month, forms in forms_by_yearB[year]|dictsort %}
+      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee')}}" >📁</a>
+      
+      {% endfor %}
+      </div>
+       {% endfor %}
+    <!-- Add more months as needed -->
+  </div>
+  <hr>
+  <div class="folder-grid">
+        {% for year in sorted_yearsC %}
+    <div class="year-section">
+      <h3>{{ year }}</h3>
+      <h2>FORM C</h2>
+      {% for month, forms in forms_by_yearC[year]|dictsort %}
+      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee')}}" >📁</a>
+      
+      {% endfor %}
+      </div>
+       {% endfor %}
+    <!-- Add more months as needed -->
+  </div>
+    </section>
+ 
+</main>
+   </div>
+
+<footer class="footer">
+  &copy; 2025 Johannesburg Business School | JBS Ethics System
+</footer>
+
+<script>
+  function goToDashboard(month) {
+    // You could use query params to pass the month, e.g., ?month=2025-04
+    window.location.href = `submission.html?month=${month}`;
+  }
+</script>
+
+</body>
+</html>
