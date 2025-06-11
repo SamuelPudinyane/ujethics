@@ -74,7 +74,7 @@
             <td>{{form.declaration_date}}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if form.rejected_or_accepted and not form.ethics_commetee_status else 'Approved by Ethics Commettee' if form.ethics_commetee_status else 'previous form version'}}</span></td>
             <td>{{form.risk_level}}</td>
-            <td>{{(today - form.declaration_date.date()).days}} days</td>
+            <td>{{form.declaration_date}} days</td>
             <td><a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" >View</a></td>
           </tr>
           

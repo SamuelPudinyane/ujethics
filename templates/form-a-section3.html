@@ -94,7 +94,7 @@
           <label>3.1 Title or provisional title of the research project:</label>
           <input
             type="text"
-            name="title_provisional"
+            name="title_provision"
             placeholder="10 –16 words"
             required
           />
@@ -120,6 +120,10 @@
             >4.1 Does your project involve organisations or institutions that
             need to grant permission for research activities?</label
           >
+          <label><input type="radio" name="grant_permission" value="No"> No</label>
+          <label><input type="radio" name="grant_permission" value="Yes"> Yes</label>
+          <div id="permission_table_wrapper" style="display:none; margin-top: 1rem;">
+          <p>Please complete the table below if permission is required.</p>
           <table>
             <thead>
               <tr>
@@ -136,17 +140,17 @@
                 <td><input type="text" name="org_role[]" /></td>
                 <td>
                   <label
-                    ><input type="radio" name="org_permission_1" value="Yes" />
+                    ><input type="radio" name="org_permission" value="Yes" />
                     Yes</label
                   >
                   <label
-                    ><input type="radio" name="org_permission_1" value="No" />
+                    ><input type="radio" name="org_permission" value="No" />
                     No</label
                   >
                   <label
                     ><input
                       type="radio"
-                      name="org_permission_1"
+                      name="org_permission"
                       value="Pending"
                     />
                     Pending</label
@@ -155,7 +159,7 @@
               </tr>
             </tbody>
           </table>
-
+</div>
           <label
             >4.2 Are any researchers affiliated with the organisations
             above?</label
@@ -168,7 +172,9 @@
             ><input type="radio" name="researcher_affiliation" value="Yes" />
             Yes (Explain below)</label
           >
-          <textarea name="affiliation_details" rows="3"></textarea>
+          <div id="affiliation_comment" style="display:none;" placeholfder="Please provide details of the affiliation">
+  <textarea name="affiliation_details" rows="3"></textarea>
+</div>
 
           <label
             >4.3 Does your research involve collectives or communities?</label
@@ -180,8 +186,9 @@
           <label
             ><input type="radio" name="collective_involvement" value="Yes" />
             Yes (Explain below)</label
-          >
-          <textarea name="collective_details" rows="3"></textarea>
+          ><div id="collective_comment" style="display:none;" placeholder="Please provide details of the collective/community involvement">
+  <textarea name="collective_details" rows="3"></textarea>
+</div><textarea name="collective_details" rows="3"></textarea>
 
           <label>4.4 Is your project funded or sponsored?</label>
           <label><input type="radio" name="is_funded" value="No" /> No</label>
@@ -250,6 +257,66 @@
         alert.style.display = 'none'; // or use .remove() if you prefer
       }
     }, 3000); // 3000ms = 3 seconds
+
+     // Show/hide organisation permission table
+  document.querySelectorAll('input[name="grant_permission"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      document.getElementById('permission_table_wrapper').style.display = this.value === 'Yes' ? 'block' : 'none';
+    });
+  });
+
+  // Add row to organisation permission table
+  function addPermissionRow() {
+    const tbody = document.getElementById('permission_table_body');
+    const newIndex = tbody.children.length + 1;
+
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td><input type="text" name="org_name[]"></td>
+      <td><input type="text" name="org_contact[]"></td>
+      <td><input type="text" name="org_role[]"></td>
+      <td>
+        <p style="margin-bottom: 0.5rem;">Has permission been granted and letter attached?</p>
+        <hr>
+        <label><input type="radio" name="org_permission_${newIndex}" value="Yes"> Yes</label>
+        <label><input type="radio" name="org_permission_${newIndex}" value="No"> No</label>
+        <label><input type="radio" name="org_permission_${newIndex}" value="Pending"> Pending</label>
+      </td>
+    `;
+    tbody.appendChild(newRow);
+  }
+
+  // Show/hide comment boxes
+  document.querySelectorAll('input[name="researcher_affiliation"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      document.getElementById('affiliation_comment').style.display = this.value === 'Yes' ? 'block' : 'none';
+    });
+  });
+
+  document.querySelectorAll('input[name="collective_involvement"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      document.getElementById('collective_comment').style.display = this.value === 'Yes' ? 'block' : 'none';
+    });
+  });
+
+  document.querySelectorAll('input[name="is_funded"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      document.getElementById('funding_table').style.display = this.value === 'Yes' ? 'block' : 'none';
+    });
+  });
+
+  // Add new funding row
+  function addFundingRow() {
+    const tbody = document.getElementById('funding_body');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td><input type="text" name="fund_org[]"></td>
+      <td><input type="text" name="fund_contact[]"></td>
+      <td><input type="text" name="fund_role[]"></td>
+      <td><input type="text" name="fund_amount[]"></td>
+    `;
+    tbody.appendChild(newRow);
+  }
   </script>
   </body>
 </html>

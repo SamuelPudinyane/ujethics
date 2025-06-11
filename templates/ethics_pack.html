@@ -64,36 +64,74 @@
 
   <!-- Main Content -->
   <main class="main-content">
-  
-    <h2>Download Ethics Templates</h2>
-    <p>Below are the downloadable templates you will need to complete your ethics application. Please make sure to customize and include them in your submissions where required.</p>
+   <h2>Select the Nature of Your Research</h2>
+  <p>To determine the required ethical templates, please answer the questions below:</p>
 
-    <div class="template-grid">
-      <div class="template-card">
-        <h4>Personal Impact Assessment Form (For Form A)</h4>
-        <a href="docs/Cover_Letter_Template.docx" download>⬇ Download</a>
-      </div>
-      <div class="template-card">
-        <h4>Consent Form Template</h4>
-        <a href="docs/Consent_Form_Template.docx" download>⬇ Download</a>
-      </div>
-      <div class="template-card">
-        <h4>Questionnaire / Survey Template</h4>
-        <a href="docs/Questionnaire_Template.docx" download>⬇ Download</a>
-      </div>
-      <div class="template-card">
-        <h4>Permission Letter Template</h4>
-        <a href="docs/Permission_Letter_Template.docx" download>⬇ Download</a>
-      </div>
-      <div class="template-card">
-        <h4>Focus Group Guide</h4>
-        <a href="docs/Focus_Group_Guide.docx" download>⬇ Download</a>
-      </div>
-      <div class="template-card">
-        <h4>Checklist</h4>
-        <a href="docs/Ethics_Checklist_SOP.pdf" download>⬇ Download</a>
-      </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="formType" id="formA" value="A">
+      <label class="form-check-label" for="formA">
+        Will you be interacting with humans and collecting primary data (From A)?
+      </label>
     </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="formType" id="formB" value="B">
+      <label class="form-check-label" for="formB">
+        Will you be collecting secondary data only (e.g. reports, documents) (Form B)? 
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="formType" id="formC" value="C">
+      <label class="form-check-label" for="formC">
+        Are you requesting exemption (no human interaction or data collection) (Form C)? 
+      </label>
+    </div>
+
+
+  <div id="templateA" class="template-grid" style="display:none;">
+    <h3>Templates for Form A</h3>
+    <br>
+    <div class="template-card">
+      <h4>Personal Impact Assessment Form</h4>
+      <a href="docs/Cover_Letter_Template.docx" download>⬇ Download</a>
+    </div>
+    <div class="template-card">
+      <h4>Consent Form Template</h4>
+      <a href="docs/Consent_Form_Template.docx" download>⬇ Download</a>
+    </div>
+    <div class="template-card">
+      <h4>Questionnaire / Survey Template</h4>
+      <a href="docs/Questionnaire_Template.docx" download>⬇ Download</a>
+    </div>
+    <div class="template-card">
+      <h4>Focus Group Guide</h4>
+      <a href="docs/Focus_Group_Guide.docx" download>⬇ Download</a>
+    </div>
+  </div>
+
+  <div id="templateB" class="template-grid" style="display:none;">
+    <h3>Templates for Form B</h3>
+    <br>
+    <div class="template-card">
+      <h4>Permission Letter Template</h4>
+      <a href="docs/Permission_Letter_Template.docx" download>⬇ Download</a>
+    </div>
+    <div class="template-card">
+      <h4>Checklist</h4>
+      <a href="docs/Ethics_Checklist_SOP.pdf" download>⬇ Download</a>
+    </div>
+  </div>
+
+  <div id="templateC" class="template-grid" style="display:none;">
+    <h3>Templates for Form C</h3>
+    <br>
+    <div class="template-card">
+      <h4>Exemption Request Template</h4>
+      <a href="docs/Exemption_Request_Template.docx" download>⬇ Download</a>
+    </div>
+  </div>
+
 
     <a href="{{url_for('student_dashboard')}}" class="approve-btn next-btn">Proceed to Dashboard ➔</a>
   </main>
@@ -110,6 +148,21 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
+<script>
+  const formRadios = document.querySelectorAll('input[name="formType"]');
+  const templateA = document.getElementById('templateA');
+  const templateB = document.getElementById('templateB');
+  const templateC = document.getElementById('templateC');
+  const proceedBtn = document.getElementById('proceedBtn');
 
+  formRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      templateA.style.display = radio.value === 'A' ? 'grid' : 'none';
+      templateB.style.display = radio.value === 'B' ? 'grid' : 'none';
+      templateC.style.display = radio.value === 'C' ? 'grid' : 'none';
+      proceedBtn.style.display = 'block';
+    });
+  });
+</script>
 </body>
 </html>

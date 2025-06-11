@@ -80,6 +80,7 @@
           </tr>
         </thead>
         <tbody>
+          {% if formA %}
           <tr>
             <td>Form A</td>
             <td>{% if formA.submitted_at %}
@@ -108,6 +109,8 @@
                 {% endif %}</td>
             <td><a href="{{url_for('student_edit_forma')}}">View</a></td>
           </tr>
+          {% endif %}
+          {% if formB %}
           <tr>
             <td>Form B</td>
             <td>{% if formB.submitted_at %}
@@ -138,7 +141,10 @@
             </td>
             <td><a href="{{url_for('student_edit_formb')}}">View</a></td>
           </tr>
+          {% endif %}
+          {% if formC %}
           <tr>
+            
             <td>Form C</td>
             <td>{% if formC.submitted_at %}{{formC.submitted_at.strftime('%d/%m/%Y')}} {% endif %}</td>
             <td>{% if not formC.supervisor_comments and formC.submitted_at %}
@@ -153,18 +159,10 @@
                 Not Started
                 {% endif %}</td>
             <td><a href="{{url_for('student_edit_formc')}}">View</a></td>
+
           </tr>
-          <tr>
-            <!--
-            <td>Form D</td>
-            <td>{% if formD.submitted_at %}{{formD.submitted_at.strftime('%H:%M %d/%m/%Y')}}{% endif%}</td>
-            <td>{% if formD.declaration_date %}
-                Awaiting Supervisor
-                {% else %}
-                Not Started
-                {% endif %}</td>
-            <td><a href="{{url_for('form_a_answers')}}">View</a></td>-->
-          </tr>
+          {% endif %}
+         
         </tbody>
       </table>
     </section>

@@ -57,7 +57,7 @@
       <h2>Research Project and Data Information</h2>
 
       <label>1. Short Description of the Research Project (±200 words)</label>
-      <textarea name="project_description" rows="5" required></textarea>
+      <textarea name="project_description" rows="5" required placeholder="Summarize your project aims, scope, and relevance."></textarea>
 
       <hr>
 
@@ -77,14 +77,17 @@
         </div>
       </div>
 
-      <label>Provide evidence or explanation (if applicable)</label>
-      <textarea name="public_evidence" rows="3"></textarea>
+      <!-- Shown only if data_public = No -->
+        <div id="public_data_fields" style="display: none;">
+          <label>2.3.1Provide evidence or explanation (if applicable)</label>
+          <textarea name="public_evidence" rows="3" placeholder="Explain why the data is not publicly accessible."></textarea>
 
-      <label>2.4 If data is not public, what are the access conditions?</label>
-      <textarea name="access_conditions" rows="3"></textarea>
+          <label>2.3.2 If data is not public, what are the access conditions?</label>
+          <textarea name="access_conditions" rows="3" placeholder="Mention access terms, restrictions, or data agreements."></textarea>
+        </div>
 
       <div class="question-block">
-        <label>2.5 Does the database contain personal information/identifiers?</label>
+        <label>2.4 Does the database contain personal information/identifiers?</label>
         <div class="yes-no">
           <input type="radio" name="personal_info" value="Yes" required> Yes
           <input type="radio" name="personal_info" value="No" required> No
@@ -93,7 +96,7 @@
       </div>
 
       <div class="question-block">
-        <label>2.6 If yes, has the data been anonymized?</label>
+        <label>2.5 If yes, has the data been anonymized?</label>
         <div class="yes-no">
           <input type="radio" name="data_anonymized" value="Yes"> Yes
           <input type="radio" name="data_anonymized" value="No"> No
@@ -105,37 +108,40 @@
       <textarea name="anonymization_comment" rows="3" placeholder="Provide justification for anonymization or not"></textarea>
      
       <div class="question-block">
-        <label>2.7 Private database: does it contain confidential private company data requiring permission?</label>
+        <label>2.6 Private database: does it contain confidential private company data requiring permission?</label>
         <div class="yes-no">
-          <input type="radio" name="private_permission" value="Yes" required> Yes
-          <input type="radio" name="private_permission" value="No" required> No
+          <input type="radio" name="private_permission" value="Yes" nchange="togglePrivatePermission()" required> Yes
+          <input type="radio" name="private_permission" value="No" nchange="togglePrivatePermission()" required> No
         </div>
       </div>
 
-      <label>Provide permission details (or attach separately):</label>
-      <textarea name="permission_details" rows="3"></textarea>
+      <div id="permission_details_box" style="display: none;">
+        <label>Provide permission details (or attach separately):</label>
+        <textarea name="permission_details" rows="3"
+          placeholder="Describe the permission granted or attach documentation."></textarea>
+      </div>
 
       <div class="question-block">
-        <label>2.8 Will data shortcomings/incompleteness be reported?</label>
+        <label>2.7 Will data shortcomings/incompleteness be reported?</label>
         <div class="yes-no">
           <input type="radio" name="shortcomings_reported" value="Yes" required> Yes
           <input type="radio" name="shortcomings_reported" value="No" required> No
         </div>
       </div>
 
-      <label>2.9 How will data limitations be reported?</label>
-      <textarea name="limitations_reporting" rows="3"></textarea>
+      <label>2.8 How will data limitations be reported?</label>
+      <textarea name="limitations_reporting" rows="3" placeholder="Describe how you'll address or disclose any gaps or limitations."></textarea>
 
       <div class="question-block">
-        <label>2.10 Are the research methodology and design aligned with secondary data use?</label>
+        <label>2.9 Are the research methodology and design aligned with secondary data use?</label>
         <div class="yes-no">
           <input type="radio" name="methodology_alignment" value="Yes" required> Yes
           <input type="radio" name="methodology_alignment" value="No" required> No
         </div>
       </div>
 
-      <label>2.11 How will original owners of the data be acknowledged?</label>
-      <textarea name="data_acknowledgment" rows="3"></textarea>
+      <label>2.10 How will original owners of the data be acknowledged?</label>
+      <textarea name="data_acknowledgment" rows="3" placeholder="Mention citation, attribution in publications, or formal agreements."></textarea>
 
       <!-- Navigation Buttons -->
       <div class="form-navigation">
@@ -160,7 +166,26 @@
         alert.style.display = 'none'; // or use .remove() if you prefer
       }
     }, 3000); // 3000ms = 3 seconds
+function togglePublicData() {
+    const value = document.querySelector('input[name="data_public"]:checked').value;
+    document.getElementById('public_data_fields').style.display = value === "No" ? 'block' : 'none';
+  }
 
+  function togglePersonalInfo() {
+    const value = document.querySelector('input[name="personal_info"]:checked').value;
+    document.getElementById('personal_info_box').style.display = value === "Yes" ? 'block' : 'none';
+  }
+
+  function toggleAnonymization() {
+    const value = document.querySelector('input[name="data_anonymized"]:checked').value;
+    document.getElementById('anonymization_box').style.display = value === "No" ? 'block' : 'none';
+  }
+
+  function togglePrivatePermission() {
+    const value = document.querySelector('input[name="private_permission"]:checked').value;
+    document.getElementById('permission_details_box').style.display = value === "Yes" ? 'block' : 'none';
+  }
+</script>
 </script>
 </body>
 </html>

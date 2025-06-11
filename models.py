@@ -231,6 +231,7 @@ class FormA(Base):
     uj_facilities = Column(Boolean,nullable=True)
     uj_funding = Column(Boolean,nullable=True)
     vulnerable_comments_3 = Column(Text,nullable=True)
+    apply_comments=Column(String,nullable=True)
 
     # Risk Rating and Justification
     risk_rating = Column(String(20),nullable=True)
@@ -247,6 +248,7 @@ class FormA(Base):
     questions=Column(String(255),nullable=True)
     purpose_objectives=Column(String(255),nullable=True)
     # section 4
+    grant_permission=Column(String,nullable=True)
     org_name = Column(String(255),nullable=True)
     org_contact = Column(String(255),nullable=True)
     org_role = Column(String(255),nullable=True)
@@ -296,6 +298,9 @@ class FormA(Base):
     instrument_attachment_reason = Column(Text)
     data_collection_procedure = Column(Text)
     interview_type = Column(Text)
+    in_depth=Column(String,nullable=True)
+    semi_structured=Column(String,nullable=True)
+    unstructured=Column(String,nullable=True)
     interview_recording = Column(String,nullable=True)
     use_focus_groups = Column(Boolean, default=True)
     focus_recording = Column(String, default=True)
@@ -325,7 +330,11 @@ class FormA(Base):
     adverse_steps = Column(Text)
     community_participation = Column(Text)
     community_effects = Column(Text)
-    privacy = Column(PickleType)  # Stores list of selected privacy practices
+    privacy = Column(PickleType,nullable=True)  # Stores list of selected privacy practices
+    remove_identifiers=Column(String,nullable=True)
+    encryption=Column(String,nullable=True)
+    pseudonyms=Column(String,nullable=True)
+    focus_group_warning=Column(String,nullable=True)
      
     # 6.9 checklist items
     # Questions 6.9a to 6.9s — stored as a dictionary
@@ -439,7 +448,7 @@ class FormB(Base):
     # Declaration
     declaration_name = Column(String(150), nullable=True)
     full_name = Column(String(150), nullable=True)
-    declaration_date = Column(DateTime, nullable=True)
+    declaration_date = Column(String, nullable=True)
 
     submitted_at = Column(DateTime, server_default=func.now())
 
@@ -461,7 +470,7 @@ class FormC(Base):
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
     # Section 1
-    application_name = Column(String(100))
+    applicant_name = Column(String(100))
     student_number = Column(String(50))
     institution = Column(String(100))
     department = Column(String(100))
@@ -474,38 +483,38 @@ class FormC(Base):
 
     # Section 2
     # Vulnerable Populations
-    vulnerable = Column(Boolean, default=True)
-    age_under_18_or_over_65 = Column(Boolean, default=True)
-    uj_employees = Column(Boolean, default=True)
-    non_vulnerable_context = Column(Boolean, default=True)
-    non_english = Column(Boolean, default=True)
-    own_students = Column(Boolean, default=True)
-    poverty = Column(Boolean, default=True)
-    no_education = Column(Boolean, default=True)
+    vulnerable = Column(Boolean, default=False)
+    age_under_18_or_over_65 = Column(Boolean, default=False)
+    uj_employees = Column(Boolean, default=False)
+    non_vulnerable_context = Column(Boolean, default=False)
+    non_english = Column(Boolean, default=False)
+    own_students = Column(Boolean, default=False)
+    poverty = Column(Boolean, default=False)
+    no_education = Column(Boolean, default=False)
     vulnerable_other_description = Column(Text, nullable=True)
     vulnerable_comments=Column(String,nullable=True)
     # Research Activities Risk Assessment
-    consent_violation = Column(Boolean, default=True)
-    discomfiture = Column(Boolean, default=True)
-    deception = Column(Boolean, default=True)
-    sensitive_issues = Column(Boolean, default=True)
-    prejudicial_info = Column(Boolean, default=True)
-    intrusive = Column(Boolean, default=True)
-    illegal = Column(Boolean, default=True)
-    direct_social_info = Column(Boolean, default=True)
-    identifiable_records = Column(Boolean, default=True)
-    psychology_tests = Column(Boolean, default=True)
-    researcher_risk = Column(Boolean, default=True)
+    consent_violation = Column(Boolean, default=False)
+    discomfiture = Column(Boolean, default=False)
+    deception = Column(Boolean, default=False)
+    sensitive_issues = Column(Boolean, default=False)
+    prejudicial_info = Column(Boolean, default=False)
+    intrusive = Column(Boolean, default=False)
+    illegal = Column(Boolean, default=False)
+    direct_social_info = Column(Boolean, default=False)
+    identifiable_records = Column(Boolean, default=False)
+    psychology_tests = Column(Boolean, default=False)
+    researcher_risk = Column(Boolean, default=False)
     activity_other_description = Column(Text, nullable=True)
     activity_comments=Column(String,nullable=True)
     # Additional Research Considerations
     incentives = Column(Boolean, default=True)
-    participant_costs = Column(Boolean, default=True)
-    researcher_interest = Column(Boolean, default=True)
-    conflict_of_interest = Column(Boolean, default=True)
-    uj_premises = Column(Boolean, default=True)
-    uj_facilities = Column(Boolean, default=True)
-    uj_funding = Column(Boolean, default=True)
+    participant_costs = Column(Boolean, default=False)
+    researcher_interest = Column(Boolean, default=False)
+    conflict_of_interest = Column(Boolean, default=False)
+    uj_premises = Column(Boolean, default=False)
+    uj_facilities = Column(Boolean, default=False)
+    uj_funding = Column(Boolean, default=False)
 
     # - Risk Assessment 
     consideration_comments=Column(String,nullable=True)

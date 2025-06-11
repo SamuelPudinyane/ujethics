@@ -523,10 +523,6 @@ def form_a_sec2 ():
         else:
             form.documents=False
         
-        if data.get('vulnerable_other_specify')=='Yes':
-            form.vulnerable_other_specify=True
-        else:
-            form.vulnerable_other_specify=False
 
         # section 2.1
         if data.get('vulnerable_communities')=='Yes':
@@ -570,7 +566,7 @@ def form_a_sec2 ():
             form.no_education=False
         
         form.assessment_other_specify==data.get('assessment_other_specify')
-
+        form.vulnerable_other_specify=data.get('vulnerable_other_specify')
         if data.get('vulnerable_comments_1')=='Yes':
             form.vulnerable_comments_1=True
         else:
@@ -684,7 +680,7 @@ def form_a_sec2 ():
         form.risk_justification = data.get('risk_justification')
         form.benefits_description = data.get('benefits_description')
         form.risk_mitigation = data.get('risk_mitigation')
-
+        form.apply_comments=data.get('apply_comments')
         form.interviews_one = data.get('interviews') == 'Yes'
         form.documents_one = data.get('documents') == 'Yes'
         form.other_sec2 = data.get('other_sec2', '')
@@ -744,11 +740,12 @@ def form_a_sec3 ():
         form.purpose_objectives = data.get('purpose_objectives', '')
 
         # Section 4: Organisational Permissions and Affiliations
+        form.grant_permission=data.get('grant_permission')
         form.org_name = data.getlist('org_name')
         form.org_contact = data.getlist('org_contact')
         form.org_role = data.getlist('org_role')
         form.org_permission = data.get('org_permission1')
-
+        
         form.researcher_affiliation = data.get('researcher_affiliation')
         form.affiliation_details = data.get('affiliation_details')
 
@@ -756,10 +753,10 @@ def form_a_sec3 ():
         form.collective_details = data.get('collective_details')
         # Funding Information
         form.is_funded = data.get('is_funded')
-        form.fund_org = data.get('fund_org')
-        form.fund_contact = data.get('fund_contact')
-        form.fund_role = data.get('fund_role')
-        form.fund_amount = data.get('fund_amount')
+        form.fund_org = data.getlist('fund_org')
+        form.fund_contact = data.getlist('fund_contact')
+        form.fund_role = data.getlist('fund_role')
+        form.fund_amount = data.getlist('fund_amount')
 
         # Indemnity & Other Committee Info
         form.indemnity_arrangements = data.get('indemnity_arrangements')
@@ -825,6 +822,9 @@ def form_a_sec4():
         form.use_focus_groups = request.form.get('use_focus_groups')=='Yes'
         form.focus_recording = ','.join(request.form.getlist('focus_recording'))
         form.data_collectors = request.form.get('data_collectors')
+        form.in_depth=request.form.get("in_depth")
+        form.semi_structured=request.form.get("semi_structured")
+        form.unstructured=request.form.get("unstructured")
         form.intervention = request.form.get('intervention')=='Yes'
         form.intervention_details = request.form.get('intervention_details')
         form.sensitive_data = request.form.get('sensitive_data')
@@ -833,18 +833,21 @@ def form_a_sec4():
 
         # 5.5 Secondary Data Usage
         secondary_data = request.form.get('secondary_data')  # This should be added as a hidden input for access
-        if secondary_data == 'yes':
+        
+        if secondary_data == 'Yes':
             form.uses_secondary_data = True
             form.secondary_data_type = request.form.get('data_type')
             if form.secondary_data_type == 'private':
-                form.private_permission = request.form.get('privatePermission') == 'yes'
+                form.private_permission = request.form.get('privatePermission') == 'Yes'
                 # Handle file upload for permission if required
                 # Add logic for saving file securely if uploaded
             elif form.secondary_data_type == 'public':
                 form.public_data_description = request.form.get('public_data_description')
+            else:
+                form.secondary_data_type=='both'
         else:
             form.uses_secondary_data = False
-
+        
         # Handle file upload
         file = request.files.get('private_permission')
         if file and file.filename:
@@ -885,12 +888,19 @@ def form_a_sec5 ():
         
         
         form.informed_consent=request.form.get('informed_consent')
-        form.data_storage=request.form.getlist('data_storage[]')
+        form.secure_location=request.form.getlist('secure_location')
+        form.password_protected=request.form.getlist('password_protected')
+        form.protected_place=request.form.getlist('protected_place')
+        form.retention=request.form.getlist('retention')
         form.study_benefits=request.form.get('study_benefits')
         form.participant_risks=request.form.get('participant_risks')
         form.adverse_steps=request.form.get('adverse_steps')
         form.community_participation=request.form.get('community_participation')
         form.community_effects=request.form.get('community_effects')
+        form.remove_identifiers=request.form.getlist("remove_identifiers")
+        form.encryption=request.form.getlist("encryption")
+        form.pseudonyms=request.form.getlist("pseudonyms")
+        form.focus_group_warning=request.form.getlist("focus_group_warning")
         form.privacy=request.form.getlist('privacy[]')
         form.q6_9a= request.form.get("q6_9a")=='yes'
         form.q6_9b=request.form.get("q6_9b")=='yes'
@@ -1155,11 +1165,11 @@ def form_b_sec2():
 
 @app.route('/form_b_sec3', methods=['GET','POST'])
 def form_b_sec3():
-    print("im here form 3")
+   
     user_id = session.get('id')
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
-    print("user logged in ")
+   
     if request.method == 'POST':
         
         form = db_session.query(FormB).filter_by(user_id=user_id).first()
@@ -1174,6 +1184,7 @@ def form_b_sec3():
         form.declaration_name=request.form.get('declaration_name')
         form.full_name=request.form.get('full_name')
         form.declaration_date=datetime.strptime(request.form.get('declaration_date'), '%Y-%m-%d')
+        form.submitted_at=datetime.now()
         form.rejected_or_accepted=False
         form.supervisor_comments=""
         db_session.add(form)
@@ -1195,7 +1206,7 @@ def form_c_sec1():
         if not form:
                 form = FormC(user_id=user_id)
        
-        form.application_name=request.form.get('applicant_name')
+        form.applicant_name=request.form.get('applicant_name')
         form.student_number=request.form.get('student_number')
         form.institution=request.form.get('institution')
         form.department=request.form.get('department')
@@ -1432,7 +1443,7 @@ def form_c_sec4():
             form = FormC(user_id=user_id)
         form.declaration_name=request.form.get('declaration_name'),
         form.full_name=request.form.get('full_name'),
-        form.submission_date=datetime.strptime(request.form.get('submission_date'), '%Y-%m-%d')
+        form.submission_date=datetime.now().strptime(request.form.get('submission_date'), '%Y-%m-%d')
         db_session.add(form)
         db_session.commit()
         message="form submitted succesfully"
@@ -1459,7 +1470,7 @@ def student_edit_forma():
         return jsonify({'error': 'Unauthorized'}), 401
     user = db_session.query(User).filter(User.user_id == user_id).first()
     supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
-    form = db_session.query(FormA).filter_by(user_id=user_id).first()
+    form = db_session.query(FormA).filter_by(user_id=user_id).order_by(FormA.submitted_at.desc()).first()
     form_requirements = db_session.query(FormARequirements).filter(FormARequirements.user_id == user_id).first()
 
     if request.method=="POST":
@@ -1649,6 +1660,57 @@ def student_edit_forma():
         if request.form.get('dataType') == 'public':
                 public_data_description = request.form.get('public_data_description')
 
+        if request.form.get('researcher_affiliation')=='Yes':
+            researcher_affiliation=True
+        else:
+            researcher_affiliation=False
+
+        if request.form.get('collective_involvement')=='Yes':
+            collective_involvement=True
+        else:
+            collective_involvement=False
+       
+        secondary_data = request.form.get('secondary_data')  # This should be added as a hidden input for access
+     
+        if secondary_data == 'Yes':
+            form.uses_secondary_data = True
+            form.secondary_data_type = request.form.get('data_type')
+            if form.secondary_data_type == 'private':
+                form.private_permission = request.form.get('privatePermission') == 'Yes'
+                # Handle file upload for permission if required
+                # Add logic for saving file securely if uploaded
+            elif form.secondary_data_type == 'public':
+                form.public_data_description = request.form.get('public_data_description')
+            
+        else:
+            form.uses_secondary_data = False
+            
+        if request.form.get('translator')=='Yes':
+            translator=True
+        else:
+            translator=False
+
+        if request.form.get('intervention')=='Yes':
+            intervention=True
+        else:
+            intervention=False
+
+
+        if request.form.get('use_focus_groups')=='Yes':
+            use_focus_groups=True
+
+        else:
+            use_focus_groups=False
+
+
+        if request.form.get('conflict_interest')=='Yes':
+            conflict_interest=True
+        else:
+            conflict_interest=False
+
+        
+
+
             # Handle file upload
         file = request.files.get('private_permission')
         if file and file.filename:
@@ -1659,7 +1721,8 @@ def student_edit_forma():
             file.save(file_path)
             private_permission_file = filename
 
-           
+        interviews_one = request.form.get('interviews') == 'Yes'
+        documents_one = request.form.get('documents') == 'Yes'
         form=FormA(
             user_id=user_id,
             attachment_id=form_requirements.id,
@@ -1715,40 +1778,43 @@ def student_edit_forma():
             benefits_description = request.form.get('benefits_description'),
             risk_mitigation = request.form.get('risk_mitigation'),
 
-            interviews_one = request.form.get('interviews') == 'Yes',
-            documents_one = request.form.get('documents') == 'Yes',
-            other_sec2 = request.form.get('other_sec2', ''),
+            interviews_one = interviews_one,
+            documents_one = documents_one,
+            other_sec2 = request.form.get('other_sec2'),
              # Section 3: Project Information
-            title_provision = request.form.get('title_provision', ''),
-            abstract = request.form.get('abstract', ''),
-            questions = request.form.get('questions', ''),
-            purpose_objectives = request.form.get('purpose_objectives', ''),
+            title_provision = request.form.get('title_provision'),
+            abstract = request.form.get('abstract'),
+            questions = request.form.get('questions'),
+            purpose_objectives = request.form.get('purpose_objectives'),
 
             # Section 4: Organisational Permissions and Affiliations
-            org_name = request.form.getlist('org_name'),
-            org_contact = request.form.getlist('org_contact'),
-            org_role = request.form.getlist('org_role'),
-            org_permission = request.form.get('org_permission1'),
-
-            researcher_affiliation = request.form.get('researcher_affiliation'),
+            grant_permission=request.form.get('grant_permission'),
+            org_name = request.form.get('org_name[]'),
+            org_contact = request.form.get('org_contact[]'),
+            org_role = request.form.get('org_role[]'),
+            org_permission = request.form.get('org_permission'),
+            
+            researcher_affiliation = researcher_affiliation,
             affiliation_details = request.form.get('affiliation_details'),
 
-            collective_involvement = request.form.get('collective_involvement'),
+            collective_involvement = collective_involvement,
+            
+
             collective_details = request.form.get('collective_details'),
             # Funding Information
             is_funded = request.form.get('is_funded'),
-            fund_org = request.form.get('fund_org'),
-            fund_contact = request.form.get('fund_contact'),
-            fund_role = request.form.get('fund_role'),
-            fund_amount = request.form.get('fund_amount'),
+            fund_org = request.form.get('fund_org[]'),
+            fund_contact = request.form.get('fund_contact[]'),
+            fund_role = request.form.get('fund_role[]'),
+            fund_amount = request.form.get('fund_amount[]'),
 
             # Indemnity & Other Committee Info
             indemnity_arrangements = request.form.get('indemnity_arrangements'),
             other_committee = request.form.get('other_committee'),
             # 5.1 Research Paradigm
-            quantitative = request.form.getlist('quantitative[]')=='yes',
-            qualitative = request.form.getlist('qualitative[]')=='yes',
-            mixed_methods = request.form.getlist('mixed_methods[]')=='yes',
+            quantitative = "Yes" in request.form.getlist('quantitative[]'),
+            qualitative ="Yes" in request.form.getlist('qualitative[]'),
+            mixed_methods = "Yes" in request.form.getlist('mixed_methods[]'),
             paradigm_explanation = request.form.get('paradigm_explanation'),
 
             # 5.2 Research Design
@@ -1762,7 +1828,7 @@ def student_edit_forma():
             inclusion_criteria = request.form.getlist('inclusion_criteria[]'),
             duration_timing = request.form.get('duration_timing'),
             contact_details_method = request.form.get('contact_details_method'),
-            conflict_interest = request.form.get('conflict_interest')=='yes',
+            conflict_interest = conflict_interest,
             conflict_explanation = request.form.get('conflict_explanation'),
 
             # 5.4 Instruments
@@ -1773,58 +1839,70 @@ def student_edit_forma():
             data_collection_procedure = request.form.get('data_collection_procedure'),
             interview_type = request.form.getlist('interview_type'),
             interview_recording = request.form.getlist('interview_recording'),
-            use_focus_groups = request.form.get('use_focus_groups')=='Yes',
+            use_focus_groups = use_focus_groups,
             focus_recording = request.form.getlist('focus_recording'),
             data_collectors = request.form.get('data_collectors'),
-            intervention = request.form.get('intervention')=='Yes',
+            in_depth=request.form.get("in_depth"),
+            semi_structured=request.form.get("semi_structured"),
+            unstructured=request.form.get("unstructured"),
+            intervention =intervention, 
             intervention_details = request.form.get('intervention_details'),
             sensitive_data = request.form.get('sensitive_data'),
-            translator = request.form.get('translator'),
+            translator = translator,
             translator_procedure = request.form.get('translator_procedure'),
 
             # 5.5 Secondary Data Usage
-            uses_secondary_data = request.form.get('secondaryData')=='yes',
-            secondary_data_type = request.form.get('dataType'),
+            
             private_permission= request.form.get('privatePermission'),
             public_data_description=public_data_description,
             private_permission_file=private_permission_file,
             informed_consent=request.form.get('informed_consent'),
+            secure_location=request.form.getlist('secure_location[]'),
+            password_protected=request.form.getlist('password_protected[]'),
+            protected_place=request.form.getlist('protected_place[]'),
+            retention=request.form.getlist('retention[]'),
             data_storage=request.form.getlist('data_storage[]'),
             study_benefits=request.form.get('study_benefits'),
             participant_risks=request.form.get('participant_risks'),
             adverse_steps=request.form.get('adverse_steps'),
             community_participation=request.form.get('community_participation'),
             community_effects=request.form.get('community_effects'),
+            remove_identifiers=request.form.getlist("remove_identifiers"),
+            encryption=request.form.getlist("encryption"),
+            pseudonyms=request.form.getlist("pseudonyms"),
+            focus_group_warning=request.form.getlist("focus_group_warning"),
             privacy=request.form.getlist('privacy[]'),
-            q6_9a= request.form.get("q6_9a")=='yes',
-            q6_9b=request.form.get("q6_9b")=='yes',
-            q6_9c=request.form.get("q6_9c")=='yes',
-            q6_9d=request.form.get("q6_9d")=='yes',
-            q6_9e=request.form.get("q6_9e")=='yes',
-            q6_9f=request.form.get("q6_9f")=='yes',
-            q6_9g=request.form.get("q6_9g")=='yes',
-            q6_9h=request.form.get("q6_9h")=='yes',
-            q6_9i=request.form.get("q6_9i")=='yes',
-            q6_9j=request.form.get("q6_9j")=='yes',
-            q6_9k=request.form.get("q6_9k")=='yes',
-            q6_9l=request.form.get("q6_9l")=='yes',
-            q6_9m=request.form.get("q6_9m")=='yes',
-            q6_9n=request.form.get("q6_9n")=='yes',
-            q6_9o=request.form.get("q6_9o")=='yes',
-            q6_9p=request.form.get("q6_9p")=='yes',
-            q6_9q=request.form.get("q6_9q")=='yes',
-            q6_9r=request.form.get("q6_9r")=='yes',
-            q6_9s=request.form.get("q6_9s")=='yes',
+            q6_9a= request.form.get("q6_9a")=='Yes',
+            q6_9b=request.form.get("q6_9b")=='Yes',
+            q6_9c=request.form.get("q6_9c")=='Yes',
+            q6_9d=request.form.get("q6_9d")=='Yes',
+            q6_9e=request.form.get("q6_9e")=='Yes',
+            q6_9f=request.form.get("q6_9f")=='Yes',
+            q6_9g=request.form.get("q6_9g")=='Yes',
+            q6_9h=request.form.get("q6_9h")=='Yes',
+            q6_9i=request.form.get("q6_9i")=='Yes',
+            q6_9j=request.form.get("q6_9j")=='Yes',
+            q6_9k=request.form.get("q6_9k")=='Yes',
+            q6_9l=request.form.get("q6_9l")=='Yes',
+            q6_9m=request.form.get("q6_9m")=='Yes',
+            q6_9n=request.form.get("q6_9n")=='Yes',
+            q6_9o=request.form.get("q6_9o")=='Yes',
+            q6_9p=request.form.get("q6_9p")=='Yes',
+            q6_9q=request.form.get("q6_9q")=='Yes',
+            q6_9r=request.form.get("q6_9r")=='Yes',
+            q6_9s=request.form.get("q6_9s")=='Yes',
             results_feedback=request.form.get('results_feedback'),
             products_access=request.form.get('products_access'),
             publication_plans=request.form.get('publication_plans'),
             participant_comp=request.form.get('participant_comp'),
             participant_costs=request.form.get('participant_costs'),
             ethics_reporting=request.form.get('ethics_reporting'),
+            submitted_at=datetime.now(),
             declaration_name = request.form.get('declaration_name'),
             applicant_signature = request.form.get('applicant_signature'),
             declaration_date=datetime.now()
         )
+       
         db_session.add(form)
         db_session.commit()
         return redirect(url_for('student_dashboard'))
@@ -1838,7 +1916,7 @@ def student_edit_formb():
         return jsonify({'error': 'Unauthorized'}), 401
     user = db_session.query(User).filter(User.user_id == user_id).first()
     supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
-    form = db_session.query(FormB).filter_by(user_id=user_id).first()
+    form = db_session.query(FormB).filter_by(user_id=user_id).order_by(FormB.submitted_at.desc()).first()
     if request.method=="POST":
         data_public= request.form.get('data_public')=='Yes'
         personal_info=request.form.get('personal_info')== 'Yes'
@@ -1890,6 +1968,7 @@ def student_edit_formb():
                 declaration_name=request.form.get('declaration_name'),
                 full_name=request.form.get('full_name'),
                 declaration_date = datetime.now(),
+                submitted_at=datetime.now()
 
             )
    
@@ -1912,52 +1991,52 @@ def student_edit_formc():
         
         form=FormC(
             user_id=user_id,
-            application_name=request.form.get('applicant_name'),
+            applicant_name=request.form.get('applicant_name'),
             student_number=request.form.get('student_number'),
             institution=request.form.get('institution'),
             department=request.form.get('department'),
             degree=request.form.get('degree'),
-            project_title=request.form.get('title'),
-            mobile_number=request.form.get('mobile'),
-            email=user.email,
-            supervisor=supervisor.full_name,
+            project_title=request.form.get('project_title'),
+            mobile_number=request.form.get('mobile_number'),
+            email_address=user.email,
+            supervisor_name=supervisor.full_name,
             supervisor_email=supervisor.email,
+            vulnerable=True if request.form.get('vulnerable') else False,
+            
+            age_under_18_or_over_65=True if request.form.get('age_under_18_or_over_65') else False,
+            uj_employees=True if request.form.get('uj_employee') else False,
 
-            vulnerable=request.form.get('vulnerable'),
-            age_under_18_or_over_65=request.form.get('age_under_18_or_over_65'),
-            uj_employees=request.form.get('uj_employee'),
+            non_vulnerable_context=True if request.form.get('non_vulnerable_context') else False,
+            non_english=True if request.form.get('non_english')else False,
+            own_students=True if request.form.get('own_student') else False,
 
-            non_vulnerable_context=request.form.get('non_vulnerable_context'),
-            non_english=request.form.get('non_english'),
-            own_students=request.form.get('own_student'),
-
-            poverty=request.form.get('poverty'),
-            no_education=request.form.get('non_education'),
-            vulnerable_other_description=request.form.get('vulnerable_other_description'),
+            poverty=True if request.form.get('poverty') else False,
+            no_education=True if request.form.get('non_education') else False,
+            vulnerable_other_description=True if request.form.get('vulnerable_other_description') else False,
             vulnerable_comments=request.form.get('vulnerable_comments'),
 
-            consent_violation=request.form.get('consent_violation'),
-            discomfiture=request.form.get('discomfiture'),
-            deception=request.form.get('deception'),
-            sensitive_issues=request.form.get('sensitive_issues'),
-            prejudicial_info=request.form.get('prejuditial_info'),
-            intrusive=request.form.get('intrusive'),
-            illegal=request.form.get('illegal'),
-            direct_social_info=request.form.get('direct_social_info'),
-            identifiable_records=request.form.get('identifiable_records'),
-            psychology_tests=request.form.get('psychology_tests'),
-            researcher_risk=request.form.get('reseacher_risk'),
+            consent_violation=True if request.form.get('consent_violation') else False,
+            discomfiture=True if request.form.get('discomfiture') else False,
+            deception=True if request.form.get('deception') else False,
+            sensitive_issues=True if request.form.get('sensitive_issues') else False,
+            prejudicial_info=True if request.form.get('prejuditial_info') else False,
+            intrusive=True if request.form.get('intrusive') else False,
+            illegal=True if request.form.get('illegal') else False,
+            direct_social_info=True if request.form.get('direct_social_info') else False,
+            identifiable_records=True if request.form.get('identifiable_records') else False,
+            psychology_tests=True if request.form.get('psychology_tests') else False,
+            researcher_risk=True if request.form.get('reseacher_risk') else False,
             activity_other_description=request.form.get('activity_other_description'),
 
             activity_comments=request.form.get('activity_comments'),
 
-            incentives=request.form.get('incentives'),
-            participant_costs=request.form.get('participant_costs'),
-            researcher_interest=request.form.get('researcher_interest'),
-            conflict_of_interest=request.form.get('conflict_of_interest'),
-            uj_premises=request.form.get('uj_premises'),
-            uj_facilities=request.form.get('uj_facilities'),
-            uj_funding=request.form.get('uj_funding'),
+            incentives=True if request.form.get('incentives') else False,
+            participant_costs=True if request.form.get('participant_costs') else False,
+            researcher_interest=True if request.form.get('researcher_interest') else False,
+            conflict_of_interest=True if request.form.get('conflict_of_interest') else False,
+            uj_premises=True if request.form.get('uj_premises') else False,
+            uj_facilities=True if request.form.get('uj_facilities') else False,
+            uj_funding=True if request.form.get('uj_funding') else False,
             consideration_comments=request.form.get('consideration_comments'),
             
             risk_level=request.form.get('risk_level'),
@@ -2021,26 +2100,26 @@ def submit_form_b():
             email_address=data["email_address"],
             supervisor_name=data["supervisor_name"],
             supervisor_email=data["supervisor_email"],
-            project_description=data.get("project_description"),
-            data_nature=data.get("data_nature"),
-            data_origin=data.get("data_origin"),
-            data_public=data.get("data_public"),
-            public_evidence=data.get("public_evidence"),
-            access_conditions=data.get("access_conditions"),
-            personal_info=data.get("personal_info"),
-            data_anonymized=data.get("data_anonymized"),
-            anonymization_comment=data.get("anonymization_comment"),
-            private_permission=data.get("private_permission"),
-            permission_details=data.get("permission_details"),
-            shortcomings_reported=data.get("shortcomings_reported"),
-            limitations_reporting=data.get("limitations_reporting"),
-            methodology_alignment=data.get("methodology_alignment"),
-            data_acknowledgment=data.get("data_acknowledgment"),
-            original_clearance=data.get("original_clearance"),
-            participant_permission=data.get("participant_permission"),
-            data_safekeeping=data.get("data_safekeeping"),
-            risk_level=data.get("risk_level"),
-            risk_comments=data.get("risk_comments"),
+            project_description=data["project_description"],
+            data_nature=data["data_nature"],
+            data_origin=data["data_origin"],
+            data_public=data["data_public"],
+            public_evidence=data["public_evidence"],
+            access_conditions=data["access_conditions"],
+            personal_info=data["personal_info"],
+            data_anonymized=data["data_anonymized"],
+            anonymization_comment=data["anonymization_comment"],
+            private_permission=data["private_permission"],
+            permission_details=data["permission_details"],
+            shortcomings_reported=data["shortcomings_reported"],
+            limitations_reporting=data["limitations_reporting"],
+            methodology_alignment=data["methodology_alignment"],
+            data_acknowledgment=data["data_acknowledgment"],
+            original_clearance=data["original_clearance"],
+            participant_permission=data["participant_permission"],
+            data_safekeeping=data["data_safekeeping"],
+            risk_level=data["risk_level"],
+            risk_comments=data["risk_comments"],
             declaration_full_name=data["declaration_full_name"],
             declaration_date=datetime.strptime(data["declaration_date"], "%Y-%m-%d")
         )
@@ -2078,11 +2157,11 @@ def submit_form_c():
             email_address=data["email_address"],
             supervisor_name=data["supervisor_name"],
             supervisor_email=data["supervisor_email"],
-            ethical_clearance=data.get("ethical_clearance"),
-            clearance_details=data.get("clearance_details"),
-            participant_consent=data.get("participant_consent"),
-            consent_details=data.get("consent_details"),
-            risk_assessment=data.get("risk_assessment"),
+            ethical_clearance=data["ethical_clearance"],
+            clearance_details=data["clearance_details"],
+            participant_consent=data["participant_consent"],
+            consent_details=data["consent_details"],
+            risk_assessment=data["risk_assessment"],
             declaration_full_name=data["declaration_full_name"],
             declaration_date=datetime.strptime(data["declaration_date"], "%Y-%m-%d")
         )
@@ -2150,6 +2229,7 @@ def chair_form_view(id,form_name):
   
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
+     
         if request.method=="POST":
             formA.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
             formA.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
@@ -2162,6 +2242,7 @@ def chair_form_view(id,form_name):
                 formA.rejected_or_accepted=False
             db_session.add(formA)
             db_session.commit()
+            
         return render_template("form_a_ethics.html",formA=formA)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
@@ -2173,11 +2254,9 @@ def chair_form_view(id,form_name):
             if request.form.get('accept')=='Accept':
                 formB.ethics_commetee_status=True
                 formB.rejected_or_accepted=True
-                print("something positive ", formB.ethics_commetee_status)
             else:
                 formB.ethics_commetee_status=False
                 formB.rejected_or_accepted=False
-                print("something negative")
             db_session.add(formB)
             db_session.commit()
         return render_template("form_b_ethics.html",formB=formB)

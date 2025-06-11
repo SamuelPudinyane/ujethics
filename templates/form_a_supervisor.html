@@ -67,7 +67,18 @@
   <main class="main-content">
 
     <!-- Form -->
-    <form id="formAsection1" enctype="multipart/form-data">
+    <form id="formAsection1" method="post" enctype="multipart/form-data">
+       <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="form-section">
         <label for="applicant-name">Applicant Name
           <br><span>{{formA.application_name}}</span>
@@ -294,7 +305,7 @@
 
       </tbody>
     </table>
-
+   <label>Comments: <span>{{formA.vulnerable_comments}}</span></label>
     <hr>
 
     <table>
@@ -345,43 +356,25 @@
         </tr>
         <tr>
           <td>
-
+          <label>Other (Specify)</label>
           </td>
-          <td></td>
+          <td>
+            <span>{{formA.vulnerable_comments_3}}</span>
+          </td>
         </tr>
       </tbody>
     </table>
-
+   <label>Comments: <span>{{formA.apply_comments}}</span></label>
     <div class="mb-3">
       <label><strong>Rate your project (Negligible, Low, Medium, High Risk):
         <br><span>{{formA.risk_rating}}</span>
       </strong>
+      <label for="risk_justification"> Please justify your risk level (Mandatory): <span>{{formA.risk_justification}}</span></label>
+      <label for="benefits_description"> For medium and high risk, describe the potential benefits of the study: <span>{{formA.benefits_description}}</span></label>
+      <label for="risk_mitigation"> For medium and high risk, describe how potential risks will be mitigated against: <span>{{formA.risk_mitigation}}</span></label>
     </div>
 
 
-
-    </tr>
-    <tr>
-      <td>Interviews</td>
-      <td>{{formA.interviews_one}}</td>
-
-    </tr>
-    <tr>
-      <td>Documents</td>
-      <td>{{formA.documents_one}}</td>
-
-    </tr>
-    <tr>
-      <td colspan="2">
-        <label>Other </label>
-     
-      </td>
-      <td>{{formA.other_sec2}}</td>
-    </tr>
-    </tbody>
-    </table>
-
-    </form>
 
   </main>
 
@@ -416,6 +409,8 @@
     <h2>Section 4: Details of Proposed Research</h2>
     <div class="section">
       <label>4.1 Does your project involve organisations or institutions that need to grant permission for research activities?</label>
+      <span>{{formA.grant_permission}}<span>
+        <br>
       <table>
         <thead>
           <tr>
@@ -430,7 +425,7 @@
             <td><span>{{formA.org_name}}</span></td>
                 <td><span>{{formA.org_contact}}</span></td>
                 <td><span>{{formA.org_role}}</span></td>
-                <td><span>{{formA.org_permision}}</span></td>
+                <td><span>{{formA.org_permission}}</span></td>
           </tr>
         </tbody>
       </table>
@@ -460,8 +455,8 @@
           <tr>
             <td>{{formA.fund_org}}</td>
                 <td>{{formA.fund_contact}}</td>
-                <td>{{formA.role}}</td>
-                <td>{{formA.amount}}</td>
+                <td>{{formA.fund_role}}</td>
+                <td>{{formA.fund_amount}}</td>
           </tr>
           <!-- add button to add row -->
           <tr>
@@ -506,13 +501,13 @@
       <tbody>
         <tr>
           <td class="text-center">{{formA.quantitative}}</td>
-          <td class="text-center">{{formA.qualiotative}}</td>
+          <td class="text-center">{{formA.qualitative}}</td>
           <td class="text-center">{{formA.mixed_methods}}</td>
         </tr>
       </tbody>
     </table>
 
-
+    <label>Explain your paradigm selection: <span>{{formA.paradigm_explanation}}</span></label>
     <label>5.2 Research Design / Approach
       <br><span>{{formA.design}}</span>
     </label>
@@ -563,37 +558,59 @@
 
     <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methds will be used</label><br>
-    <label>5.4.1.1 Questionnaire(s):
-      <br><span>{{formA.questionnaire_type}}</span>
-    </label><br>
-    <label>If existing, permission obtained?
-      <br><span>{{formA.permission_obtained}}</span>
-      <br><span>{{formA.open_source}}</span>
-    </label>
-    <br><span>{{formA.instrument_attrachment_reason}}</span>
-   <br>
-
-    <label>5.4.2 Describe the data collection procedure
-      <br><span>{{formA.data_collection_procedure}}</span>
-    </label>
+     <div id="data-methods">
+            <label>Questionnaire: <span>{{formA.questionnaire}}</span></label><br>
+            <label>Interview: <span>{{formA.interview}}</span></label><br>
+            <label>Focus Group: <span>{{formA.focus}}</span></label><br>
+            <label>Observation: <span>{{formA.observation}}</span></label><br>
+            <label>Documents: <span>{{formA.documents}}</span></label><br>
+            <label>Other: <span>{{formA.other}}</span></label><br>
+    </div>
+      
+    <!-- Questionnaire -->
+    <label>5.4.1.1 Questionnaire(s):</label>
+      <br>
+      {% if formA.questionnaire%}<span>Questionnaire Type: {{formA.questionnaire_type}}</span>{% endif %}
     <br>
-
+    {% if formA.questionnaire_type=='Existing'%}<label>Permisson obtained? </label>
+    <br><span>{% if formA.permission%}{{formA.permission}}{% endif %} </span>
+    <br><span>{% if formA.open_source%}{{formA.open_source}}{% endif %} </span>{% endif %}
+    <br>
+    <label>Justification: </label><span>{{formA.instrument_attrachment_reason}}</span>
+    
+    <!-- Interview -->
+    <label>5.4.2.1 Interviews</label><br>
+    <span>{{formA.interview_type}}</span>
+    <label>Will interviews be recorded?</label><br>
+    <span>{% if formA.interview_recording=='Audio'%}{{formA.interview_recording}}{% endif%}</span>
+    <br>
+    <span>{% if formA.interview_recording=='Video'%}{{formA.interview_recording}}{% endif%}</span>
+    
+    <!-- Focus Group -->
+    <label>5.4.2.2 Focus Groups: </label>
+    <br><span>{{formA.use_focus_groups}}</span>
+   <label>Will focus groups be recorded?</label><br>
+   <span>{% if formA.focus_recording=='Audio'%}{{formA.focus_recording}}{% endif%}</span>
+   <span>{% if formA.focus_recording=='Video'%}{{formA.focus_recording}}{% endif%}</span>
+   <br>
+   <!-- Observation -->
+    <label>Please describe your observation protocol:</label>
+    <br><span>{{formA.observation_details}}</span>
+    <br>
+    <label>What type of documents will be analyzed?</label><br>
+    <span>{{formA.documents_details}}</span>
     <label>5.4.2.1 Interviews
       <br><span>{{formA.interview_type}}</span>
     </label><br>
-
-    <label>Will interviews be recorded?
-      <br><span>{{formA.interview_recording}}</span>
-    </label><br>
-
-    <label>5.4.2.2 Focus Groups
-      <br><span>{{'Yes' if formA.use_focus_group else 'No'}}</span>
-    </label><br>
-    <label>Will focus groups be recorded?
-      <br><span>{{formA.focus_recording}}</span>
-    </label><br>
+  <!-- Other -->
+  <label>Please describe other data collection method(s):</label>
+  <br>
+  <span>{{formA.other_details}}</span>
+    <!-- General Data Collection Procedure -->
+     <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
+     <br>
+     <span>{{formA.data_collection_procedure}}</span>
     
-
     <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?
       <br></span>{{formA.data_collectors}}<span>
     </label>
@@ -622,31 +639,24 @@
     </label><br>
    
     
-    <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
-    
       <label>Is the data Public or Private?
-        <br><span>{{formA.private_permission}}
+        <br><span>{{formA.data_type}}
       </label><br>
    
     
       <!-- Private Data Section -->
-      <div id="privateDataSection" style="display: none; margin-top: 1rem;">
         <label>Is the data from a company that has provided permission?
           <br><span>{{formA.org_permision}}</span>
         </label>
     
-        <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
           <label>Please upload the permission for use of private data:</label>
-          <br><span>{{formA.private_permission_file}}</span>
-        </div>
-      </div>
-    
+          <br><a href="{{url_for('static',filename=formA.private_permission_file)}}" target="_blank">View Document</a>
+        
       <!-- Public Data Section -->
-      <div id="publicDataSection" style="display: none; margin-top: 1rem;">
         <label>What type of public data is going to be used?</label>
               <br><span>{{formA.public_data_description}}</span>
-      </div>
-    </div>
+      
+   
   </section>
 
 
@@ -717,7 +727,14 @@
   
     <div class="question-block">
       <label>6.8 Select all data privacy practices applied:
-        <br><span>{{formA.privacy}}</span>
+        <br>
+        <span>{{formA.remove_identifiers}}</span>
+        <br>
+        <span>{{formA.encryption}}</span>
+        <br>
+        <span>{{formA.pseudonyms}}</span>
+        <br>
+        <span>{{formA.focus_group_warning}}</span>
       </label>
     </div>
   
@@ -815,7 +832,7 @@
 
     <div class="form-group">
       <label for="declaration-name">
-        I, <span>{{formA.declaration_name}}</span>
+        I, <strong><u>{{formA.declaration_name}}</u></strong>
         (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity considering UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics. 
       </label>
     </div>
@@ -831,9 +848,7 @@
     </div>
 
     <hr>
-</form>
-<form method='POST' id="supervisorForm">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
     <div id="supervisorDeclaration" >
     
       <h3>SUPERVISOR'S SECTION</h3>
