@@ -386,10 +386,26 @@ class FormA(Base):
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
 
-    ethics_commettee_comments=Column(Text,nullable=True)
-    ethics_commettee_signature=Column(Text,nullable=True)
-    ethics_commettee_date=Column(DateTime,nullable=True)
-    ethics_commetee_status=Column(Boolean,default=False)
+    reviewer_name1=Column(String(255),nullable=True)
+    reviewer_name2=Column(String(255),nullable=True)
+    review_date=Column(String(255),nullable=True)
+    review_org_permission_status=Column(String(255),nullable=True)
+    review_org_permission_comments=Column(String(255),nullable=True)
+    review_waiver_status=Column(String(255),nullable=True)
+    review_waiver_comments=Column(String(255),nullable=True)
+    review_form_status=Column(String(255),nullable=True)
+    review_form_comments=Column(String(255),nullable=True)
+    review_questions_status=Column(String(255),nullable=True)
+    review_questions_comments=Column(String(255),nullable=True)
+    review_consent_status=Column(String(255),nullable=True)
+    review_consent_comments=Column(String(255),nullable=True)
+    review_proposal_status=Column(String(255),nullable=True)
+    review_proposal_comments=Column(String(255),nullable=True)
+    review_additional_comments=Column(String(255),nullable=True)
+    review_recommendation=Column(String(255),nullable=True)
+    review_supervisor_signature=Column(String(255),nullable=True)
+    review_signature_date=Column(DateTime,nullable=True)
+
     def __repr__(self):
         return f'<FormA {self.applicant_name} ({self.student_number})>'
     
@@ -474,10 +490,26 @@ class FormB(Base):
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
 
-    ethics_commettee_comments=Column(Text,nullable=True)
-    ethics_commettee_signature=Column(Text,nullable=True)
-    ethics_commettee_date=Column(DateTime,nullable=True)
-    ethics_commetee_status=Column(Boolean,default=False)
+    reviewer_name1=Column(String(255),nullable=True)
+    reviewer_name2=Column(String(255),nullable=True)
+    review_date=Column(String(255),nullable=True)
+    review_org_permission_status=Column(String(255),nullable=True)
+    review_org_permission_comments=Column(String(255),nullable=True)
+    review_waiver_status=Column(String(255),nullable=True)
+    review_waiver_comments=Column(String(255),nullable=True)
+    review_form_status=Column(String(255),nullable=True)
+    review_form_comments=Column(String(255),nullable=True)
+    review_questions_status=Column(String(255),nullable=True)
+    review_questions_comments=Column(String(255),nullable=True)
+    review_consent_status=Column(String(255),nullable=True)
+    review_consent_comments=Column(String(255),nullable=True)
+    review_proposal_status=Column(String(255),nullable=True)
+    review_proposal_comments=Column(String(255),nullable=True)
+    review_additional_comments=Column(String(255),nullable=True)
+    review_recommendation=Column(String(255),nullable=True)
+    review_supervisor_signature=Column(String(255),nullable=True)
+    review_signature_date=Column(DateTime,nullable=True)
+
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
     
@@ -574,10 +606,25 @@ class FormC(Base):
     signature_date= Column(DateTime,nullable=True)
     
 
-    ethics_commettee_comments=Column(Text,nullable=True)
-    ethics_commettee_signature=Column(Text,nullable=True)
-    ethics_commettee_date=Column(DateTime,nullable=True)
-    ethics_commetee_status=Column(Boolean,default=False)
+    reviewer_name1=Column(String(255),nullable=True)
+    reviewer_name2=Column(String(255),nullable=True)
+    review_date=Column(String(255),nullable=True)
+    review_org_permission_status=Column(String(255),nullable=True)
+    review_org_permission_comments=Column(String(255),nullable=True)
+    review_waiver_status=Column(String(255),nullable=True)
+    review_waiver_comments=Column(String(255),nullable=True)
+    review_form_status=Column(String(255),nullable=True)
+    review_form_comments=Column(String(255),nullable=True)
+    review_questions_status=Column(String(255),nullable=True)
+    review_questions_comments=Column(String(255),nullable=True)
+    review_consent_status=Column(String(255),nullable=True)
+    review_consent_comments=Column(String(255),nullable=True)
+    review_proposal_status=Column(String(255),nullable=True)
+    review_proposal_comments=Column(String(255),nullable=True)
+    review_additional_comments=Column(String(255),nullable=True)
+    review_recommendation=Column(String(255),nullable=True)
+    review_supervisor_signature=Column(String(255),nullable=True)
+    review_signature_date=Column(DateTime,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 

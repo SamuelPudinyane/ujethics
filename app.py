@@ -2273,55 +2273,207 @@ def chair_formc_view(id):
 
 @app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])
 def chair_form_view(id,form_name):
-  
+    formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
-     
+        
         if request.method=="POST":
-            formA.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
-            formA.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
-            formA.ethics_commettee_date=request.form.get('ethics_commettee_date')
-            if request.form.get('accept')=='Accept':
-                formA.ethics_commetee_status=True
+            reviewer_names=request.form.getlist('reviewer_names[]')
+            review_date=request.form.get('review_date')
+            review_org_permission_status=request.form.get('org_permission_status')
+            review_org_permission_comments=request.form.get('org_permission_comments')
+            review_waiver_status=request.form.get('waiver_status')
+            review_waiver_comments=request.form.get('waiver_comments')
+            review_form_status=request.form.get('form_status')
+            review_form_comments=request.form.get('form_comments')
+            review_questions_status=request.form.get('questions_status')
+            review_questions_comments=request.form.get('questions_comments')
+            review_consent_status=request.form.get('consent_status')
+            review_consent_comments=request.form.get('consent_comments')
+            review_proposal_status=request.form.get('proposal_status')
+            review_proposal_comments=request.form.get('proposal_comments')
+            review_additional_comments=request.form.get('additional_comments')
+            review_recommendation=request.form.get('recommendation')
+            review_supervisor_signature=request.form.get('supervisor_signature')
+            review_signature_date=request.form.get('signature_date')
+            if request.form.get('recommendation')=='Ready for submission':
+                formA.reviewer_name1=reviewer_names[0]
+                ### checks frist if the rewier list is greater than 1
+                formA.reviewer_name2=reviewer_names[1] if len(reviewer_names)>1 else None
+                formA.review_date=review_date
+                formA.review_org_permission_status=review_org_permission_status
+                formA.review_org_permission_comments=review_org_permission_comments
+                formA.review_waiver_status=review_waiver_status
+                formA.review_waiver_comments=review_waiver_comments
+                formA.review_form_status=review_form_status
+                formA.review_form_comments=review_form_comments
+                formA.review_questions_status=review_questions_status
+                formA.review_questions_comments=review_questions_comments
+                formA.review_consent_status=review_consent_status
+                formA.review_consent_comments=review_consent_comments
+                formA.review_proposal_status=review_proposal_status
+                formA.review_proposal_comments=review_proposal_comments
+                formA.review_additional_comments=review_additional_comments
+                formA.review_recommendation=review_recommendation
+                formA.review_supervisor_signature=review_supervisor_signature
+                formA.review_signature_date=review_signature_date
                 formA.rejected_or_accepted=True
             else:
-                formA.ethics_commetee_status=False
+                formA.reviewer_name1=reviewer_names[0]
+                ### checks frist if the rewier list is greater than 1
+                formA.reviewer_name2=reviewer_names[1] if len(reviewer_names)>1 else None
+                formA.review_date=review_date
+                formA.review_org_permission_status=review_org_permission_status
+                formA.review_org_permission_comments=review_org_permission_comments
+                formA.review_waiver_status=review_waiver_status
+                formA.review_waiver_comments=review_waiver_comments
+                formA.review_form_status=review_form_status
+                formA.review_form_comments=review_form_comments
+                formA.review_questions_status=review_questions_status
+                formA.review_questions_comments=review_questions_comments
+                formA.review_consent_status=review_consent_status
+                formA.review_consent_comments=review_consent_comments
+                formA.review_proposal_status=review_proposal_status
+                formA.review_proposal_comments=review_proposal_comments
+                formA.review_additional_comments=review_additional_comments
+                formA.review_recommendation=review_recommendation
                 formA.rejected_or_accepted=False
             db_session.add(formA)
             db_session.commit()
-            
-        return render_template("form_a_ethics.html",formA=formA)
+                
+        return render_template("form_a_ethics.html",formA=formA,formReviewers=formReviewers)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
-            formB.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
-            formB.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
-            formB.ethics_commettee_date=request.form.get('ethics_commettee_date')
-            
-            if request.form.get('accept')=='Accept':
-                formB.ethics_commetee_status=True
+            reviewer_names=request.form.getlist('reviewer_names[]')
+            review_date=request.form.get('review_date')
+            review_org_permission_status=request.form.get('org_permission_status')
+            review_org_permission_comments=request.form.get('org_permission_comments')
+            review_waiver_status=request.form.get('waiver_status')
+            review_waiver_comments=request.form.get('waiver_comments')
+            review_form_status=request.form.get('form_status')
+            review_form_comments=request.form.get('form_comments')
+            review_questions_status=request.form.get('questions_status')
+            review_questions_comments=request.form.get('questions_comments')
+            review_consent_status=request.form.get('consent_status')
+            review_consent_comments=request.form.get('consent_comments')
+            review_proposal_status=request.form.get('proposal_status')
+            review_proposal_comments=request.form.get('proposal_comments')
+            review_additional_comments=request.form.get('additional_comments')
+            review_recommendation=request.form.get('recommendation')
+            review_supervisor_signature=request.form.get('supervisor_signature')
+            review_signature_date=request.form.get('signature_date')
+            if request.form.get('recommendation')=='Ready for submission':
+                formB.reviewer_name1=reviewer_names[0]
+                ### checks frist if the rewier list is greater than 1
+                formB.reviewer_name2=reviewer_names[1] if len(reviewer_names)>1 else None
+                formB.review_date=review_date
+                formB.review_org_permission_status=review_org_permission_status
+                formB.review_org_permission_comments=review_org_permission_comments
+                formB.review_waiver_status=review_waiver_status
+                formB.review_waiver_comments=review_waiver_comments
+                formB.review_form_status=review_form_status
+                formB.review_form_comments=review_form_comments
+                formB.review_questions_status=review_questions_status
+                formB.review_questions_comments=review_questions_comments
+                formB.review_consent_status=review_consent_status
+                formB.review_consent_comments=review_consent_comments
+                formB.review_proposal_status=review_proposal_status
+                formB.review_proposal_comments=review_proposal_comments
+                formB.review_additional_comments=review_additional_comments
+                formB.review_recommendation=review_recommendation
+                formB.review_supervisor_signature=review_supervisor_signature
+                formB.review_signature_date=review_signature_date
                 formB.rejected_or_accepted=True
             else:
-                formB.ethics_commetee_status=False
+                formB.reviewer_name1=reviewer_names[0]
+                ### checks frist if the rewier list is greater than 1
+                formB.reviewer_name2=reviewer_names[1] if len(reviewer_names)>1 else None
+                formB.review_date=review_date
+                formB.review_org_permission_status=review_org_permission_status
+                formB.review_org_permission_comments=review_org_permission_comments
+                formB.review_waiver_status=review_waiver_status
+                formB.review_waiver_comments=review_waiver_comments
+                formB.review_form_status=review_form_status
+                formB.review_form_comments=review_form_comments
+                formB.review_questions_status=review_questions_status
+                formB.review_questions_comments=review_questions_comments
+                formB.review_consent_status=review_consent_status
+                formB.review_consent_comments=review_consent_comments
+                formB.review_proposal_status=review_proposal_status
+                formB.review_proposal_comments=review_proposal_comments
+                formB.review_additional_comments=review_additional_comments
+                formB.review_recommendation=review_recommendation
                 formB.rejected_or_accepted=False
             db_session.add(formB)
             db_session.commit()
-        return render_template("form_b_ethics.html",formB=formB)
+        return render_template("form_b_ethics.html",formB=formB,formReviewers=formReviewers)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
         if request.method=="POST":
-            formC.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
-            formC.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
-            formC.ethics_commettee_date=request.form.get('ethics_commettee_date')
-            if request.form.get('accept')=='Accept':
-                formC.ethics_commetee_status=True
+            reviewer_names=request.form.getlist('reviewer_names[]')
+            review_date=request.form.get('review_date')
+            review_org_permission_status=request.form.get('org_permission_status')
+            review_org_permission_comments=request.form.get('org_permission_comments')
+            review_waiver_status=request.form.get('waiver_status')
+            review_waiver_comments=request.form.get('waiver_comments')
+            review_form_status=request.form.get('form_status')
+            review_form_comments=request.form.get('form_comments')
+            review_questions_status=request.form.get('questions_status')
+            review_questions_comments=request.form.get('questions_comments')
+            review_consent_status=request.form.get('consent_status')
+            review_consent_comments=request.form.get('consent_comments')
+            review_proposal_status=request.form.get('proposal_status')
+            review_proposal_comments=request.form.get('proposal_comments')
+            review_additional_comments=request.form.get('additional_comments')
+            review_recommendation=request.form.get('recommendation')
+            review_supervisor_signature=request.form.get('supervisor_signature')
+            review_signature_date=request.form.get('signature_date')
+            if request.form.get('recommendation')=='Ready for submission':
+                formC.reviewer_name1=reviewer_names[0]
+                ### checks frist if the rewier list is greater than 1
+                formC.reviewer_name2=reviewer_names[1] if len(reviewer_names)>1 else None
+                formC.review_date=review_date
+                formC.review_org_permission_status=review_org_permission_status
+                formC.review_org_permission_comments=review_org_permission_comments
+                formC.review_waiver_status=review_waiver_status
+                formC.review_waiver_comments=review_waiver_comments
+                formC.review_form_status=review_form_status
+                formC.review_form_comments=review_form_comments
+                formC.review_questions_status=review_questions_status
+                formC.review_questions_comments=review_questions_comments
+                formC.review_consent_status=review_consent_status
+                formC.review_consent_comments=review_consent_comments
+                formC.review_proposal_status=review_proposal_status
+                formC.review_proposal_comments=review_proposal_comments
+                formC.review_additional_comments=review_additional_comments
+                formC.review_recommendation=review_recommendation
+                formC.review_supervisor_signature=review_supervisor_signature
+                formC.review_signature_date=review_signature_date
                 formC.rejected_or_accepted=True
             else:
-                formC.ethics_commetee_status=False
+                formC.reviewer_name1=reviewer_names[0]
+                ### checks frist if the rewier list is greater than 1
+                formC.reviewer_name2=reviewer_names[1] if len(reviewer_names)>1 else None
+                formC.review_date=review_date
+                formC.review_org_permission_status=review_org_permission_status
+                formC.review_org_permission_comments=review_org_permission_comments
+                formC.review_waiver_status=review_waiver_status
+                formC.review_waiver_comments=review_waiver_comments
+                formC.review_form_status=review_form_status
+                formC.review_form_comments=review_form_comments
+                formC.review_questions_status=review_questions_status
+                formC.review_questions_comments=review_questions_comments
+                formC.review_consent_status=review_consent_status
+                formC.review_consent_comments=review_consent_comments
+                formC.review_proposal_status=review_proposal_status
+                formC.review_proposal_comments=review_proposal_comments
+                formC.review_additional_comments=review_additional_comments
+                formC.review_recommendation=review_recommendation
                 formC.rejected_or_accepted=False
             db_session.add(formC)
             db_session.commit()
-        return render_template("form_c_ethics.html",formC=formC)
+        return render_template("form_c_ethics.html",formC=formC,formReviewers=formReviewers)
 
 
 
