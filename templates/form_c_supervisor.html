@@ -136,17 +136,17 @@
           <tr><td>People under the age of 18 or over 65</td>
             <td>{{formc.age_under_18_or_over_65}}</td></tr>
           <tr><td>UJ employees or students</td>
-            <td>{{formc.uj_employee}}</td></tr>
+            <td>{{formc.uj_employees}}</td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td>
             <td>{{formc.non_vulnerable_context}}</td></tr>
           <tr><td>Non-English-speaking participants</td>
             <td>{{formc.non_english}}</td></tr>
           <tr><td>A researcher’s own students</td>
-            <td>{{formc.own_student}}</td></tr>
+            <td>{{formc.own_students}}</td></tr>
           <tr><td>People living in poverty</td>
             <td>{{formc.poverty}}</td></tr>
           <tr><td>People with little or no education</td>
-            <td>{{formc.non_education}}</td></tr>
+            <td>{{formc.no_education}}</td></tr>
           <tr><td>Other: Please describe.</td>
             <td>{{formc.vulnerable_other_description}}</td></tr>
         </tbody>
@@ -175,7 +175,7 @@
 <tr><td>Examining sensitive or contentious issues</td>
   <td>{{formc.sensitive_issues}}</td></tr>
 <tr><td>Seeking prejudicial information about participants</td>
-  <td>{{formc.prejuditial_info}}</td></tr>
+  <td>{{formc.prejudicial_info}}</td></tr>
 <tr><td>Using intrusive techniques</td>
   <td>{{formc.intrusive}}</td></tr>
 <tr><td>Study/participation in illegal activities</td>
@@ -187,7 +187,7 @@
 <tr><td>Psychology inventories / scales / tests</td>
   <td>{{formc.psychology_tests}}</td></tr>
 <tr><td>Activities putting researcher/data collector at risk</td>
-  <td>{{formc.reseacher_risk}}</td></tr>
+  <td>{{formc.researcher_risk}}</td></tr>
     <tr><td>Other:  Please describe.</td>
       <td>{{formc.activity_other_description}}</td></tr>
   </tbody>
@@ -312,7 +312,7 @@
       <h2>SECTION 4: Declaration</h2>
 
       <p class="form-note">
-        I, <span> {{formc.declaration_name}} </span>
+        I, <strong> <u>{{formc.declaration_name}}</u> </strong>
         (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
  
         ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
@@ -341,17 +341,17 @@
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{{formc.submitted_at}}</span>
+        <span  id="submission_date" >{{formc.submission_date}}</span>
       </div>
 
       <div class="form-group">
         <label for="supervisor_name">Supervisor Name:</label>
-        <span  id="supervisor_name"  >{{formc.supervisor}}</span>
+        <span  id="supervisor_name"  >{{formc.supervisor_name}}</span>
       </div>
 
       <div class="form-group">
         <label for="research_title">Title of Research:</label>
-        <span  id="research_title" >{{formc.study_title}}</span>
+        <span  id="research_title" >{{formc.project_title}}</span>
       </div>
 
       <div class="form-group">
@@ -490,14 +490,6 @@
     window.location.href = "supervisor-dashboard.html";
   });
 
-  function submitForm(action) {
-    const form = document.getElementById('supervisorForm');
-    if (action === 'reject') {
-      form.action = "{{ url_for('reject_form_c', id=formC.form_id) }}";
-    } else if (action === 'accept') {
-      form.action = "{{ url_for('accept_form_c', id=formC.form_id) }}";
-    }
-  }
 
   function toggleFields() {
   const ready = document.getElementById("ready").checked;

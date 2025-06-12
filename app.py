@@ -53,7 +53,7 @@ def student_dashboard():
     formB = db_session.query(FormB).filter_by(user_id=user_id).first()
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     formD = db_session.query(FormD).filter_by(user_id=user_id).first()
-    print("formC ------------------",formC)
+   
     return render_template('dashboard.html',formA=formA,formB=formB,formC=formC,formD=formD)
 
 @app.route('/quiz', methods=['GET'])
@@ -1240,7 +1240,7 @@ def form_b_supervisor(id):
 def form_c_supervisor(id):
     form = db_session.query(FormC).filter_by(form_id=id).first()
 
-    return render_template("form_c_supervisor.html",formC=form)
+    return render_template("form_c_supervisor.html",formc=form)
 
 
 @app.route('/reject_or_Accept_form_a/<string:id>',methods=['GET','POST'])
@@ -1348,8 +1348,8 @@ def reject_or_Accept_form_b(id):
     return redirect(url_for('supervisor_dashboard'))
 
 
-@app.route('/reject_Accept_form_c/<string:id>',methods=['GET','POST'])
-def accept_form_c(id):
+@app.route('/reject_or_Accept_form_c/<string:id>',methods=['GET','POST'])
+def reject_or_Accept_form_c(id):
     user_id=session.get('id')
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
