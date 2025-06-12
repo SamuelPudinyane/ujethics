@@ -798,25 +798,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr><td>a) Identity and position of the researcher(s)?</td><td><input type="radio" {% if formA.q6_9a %}checked{% endif %} name="q6_9a"> Yes <input type="radio"  name="q6_9a" {% if not formA.q6_9a %}checked{% endif %}> No</td></tr>
-    <tr><td>b) Purpose of the information collection?</td><td><input type="radio" name="q6_9b" {% if formA.q6_9b %}checked{% endif %}> Yes <input type="radio" name="q6_9b" {% if not formA.q6_9b %}checked{% endif %}> No</td></tr>
-    <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><input type="radio" name="q6_9c" {% if formA.q6_9c %}checked{% endif %}> Yes <input type="radio" name="q6_9c" {% if not formA.q6_9c %}checked{% endif %}> No</td></tr>
-    <tr><td>d) Participant’s role in the study?</td><td><input type="radio" name="q6_9d" {% if formA.q6_9d %}checked{% endif %}> Yes <input type="radio" name="q6_9d" {% if not formA.q6_9d %}checked{% endif %}> No</td></tr>
-    <tr><td>e) Expected duration of participation?</td><td><input type="radio" name="q6_9e" {% if formA.q6_9e %}checked{% endif %}> Yes <input type="radio" name="q6_9e" {% if not formA.q6_9e %}checked{% endif %}> No</td></tr>
-    <tr><td>f) Statement of voluntary participation and no penalty?</td><td><input type="radio" name="q6_9f" {% if formA.q6_9f %}checked{% endif %}> Yes <input type="radio" name="q6_9f" {% if not formA.q6_9f %}checked{% endif %}> No</td></tr>
-    <tr><td>g) Benefits to the participant and others?</td><td><input type="radio" name="q6_9g" {% if formA.q6_9g %}checked{% endif %}> Yes <input type="radio" name="q6_9g" {% if not formA.q6_9g %}checked{% endif %}> No</td></tr>
-    <tr><td>h) Risks and steps for harm/injury?</td><td><input type="radio" name="q6_9h" {% if formA.q6_9h %}checked{% endif %}> Yes <input type="radio" name="q6_9h" {% if not formA.q6_9h %}checked{% endif %}> No</td></tr>
-    <tr><td>i) Statement of right to withdraw?</td><td><input type="radio" name="q6_9i" {% if formA.q6_9i %}checked{% endif %}> Yes <input type="radio" name="q6_9i" {% if not formA.q6_9i %}checked{% endif %}> No</td></tr>
-    <tr><td>j) Compensation/gifts/services?</td><td><input type="radio" name="q6_9j" {% if formA.q6_9j %}checked{% endif %}> Yes <input type="radio" name="q6_9j" {% if not formA.q6_9j %}checked{% endif %}> No</td></tr>
-    <tr><td>k) Reimbursement for costs?</td><td><input type="radio" name="q6_9k" {% if formA.q6_9k %}checked{% endif %}> Yes <input type="radio" name="q6_9k" {% if not formA.q6_9k %}checked{% endif %}> No</td></tr>
-    <tr><td>l) Indemnity if applicable?</td><td><input type="radio" name="q6_9l" {% if formA.q6_9l %}checked{% endif %}> Yes <input type="radio" name="q6_9l" {% if not formA.q6_9l %}checked{% endif %}> No</td></tr>
-    <tr><td>m) Period for which records will be kept?</td><td><input type="radio" name="q6_9m" {% if formA.q6_9m %}checked{% endif %}> Yes <input type="radio" name="q6_9m" {% if not formA.q6_9m %}checked{% endif %}> No</td></tr>
-    <tr><td>n) Steps for confidentiality and secure storage?</td><td><input type="radio" name="q6_9n" {% if formA.q6_9n %}checked{% endif %}> Yes <input type="radio" name="q6_9n" {% if not formA.q6_9n %}checked{% endif %}> No</td></tr>
-    <tr><td>o) Disclosure of information to third parties?</td><td><input type="radio" name="q6_9o" {% if formA.q6_9o %}checked{% endif %}> Yes <input type="radio" name="q6_9o" {% if not formA.q6_9o %}checked{% endif %}> No</td></tr>
-    <tr><td>p) Privacy protection in publications?</td><td><input type="radio" name="q6_9p" {% if formA.q6_9p %}checked{% endif %}> Yes <input type="radio" name="q6_9p" {% if not formA.q6_9p %}checked{% endif %}> No</td></tr>
-    <tr><td>q) Feedback to participants?</td><td><input type="radio" name="q6_9q" {% if formA.q6_9q %}checked{% endif %}> Yes <input type="radio" name="q6_9q" {% if not formA.q6_9q %}checked{% endif %}> No</td></tr>
-    <tr><td>r) Exclusions to confidentiality disclosed?</td><td><input type="radio" name="q6_9r" {% if formA.q6_9r %}checked{% endif %}> Yes <input type="radio" name="q6_9r" {% if not formA.q6_9r %}checked{% endif %}> No</td></tr>
-    <tr><td>s) Consent for audio/video recording?</td><td><input type="radio" name="q6_9s" {% if formA.q6_9s %}checked{% endif %}> Yes <input type="radio" name="q6_9s" {% if not formA.q6_9s %}checked{% endif %}> No</td></tr>
+    <tr><td>a) Identity and position of the researcher(s)?</td><td><input type="checkbox" {% if formA.q6_9a %}checked{% endif %} name="q6_9a"></td></tr>
+    <tr><td>b) Purpose of the information collection?</td><td><input type="checkbox" name="q6_9b" {% if formA.q6_9b %}checked{% endif %}></td></tr>
+    <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><input type="checkbox" name="q6_9c" {% if formA.q6_9c %}checked{% endif %}></td></tr>
+    <tr><td>d) Participant’s role in the study?</td><td><input type="checkbox" name="q6_9d" {% if formA.q6_9d %}checked{% endif %}></td></tr>
+    <tr><td>e) Expected duration of participation?</td><td><input type="checkbox" name="q6_9e" {% if formA.q6_9e %}checked{% endif %}></td></tr>
+    <tr><td>f) Statement of voluntary participation and no penalty?</td><td><input type="checkbox" name="q6_9f" {% if formA.q6_9f %}checked{% endif %}></td></tr>
+    <tr><td>g) Benefits to the participant and others?</td><td><input type="checkbox" name="q6_9g" {% if formA.q6_9g %}checked{% endif %}></td></tr>
+    <tr><td>h) Risks and steps for harm/injury?</td><td><input type="checkbox" name="q6_9h" {% if formA.q6_9h %}checked{% endif %}></td></tr>
+    <tr><td>i) Statement of right to withdraw?</td><td><input type="checkbox" name="q6_9i" {% if formA.q6_9i %}checked{% endif %}></td></tr>
+    <tr><td>j) Compensation/gifts/services?</td><td><input type="checkbox" name="q6_9j" {% if formA.q6_9j %}checked{% endif %}></td></tr>
+    <tr><td>k) Reimbursement for costs?</td><td><input type="checkbox" name="q6_9k" {% if formA.q6_9k %}checked{% endif %}></td></tr>
+    <tr><td>l) Indemnity if applicable?</td><td><input type="checkbox" name="q6_9l" {% if formA.q6_9l %}checked{% endif %}></td></tr>
+    <tr><td>m) Period for which records will be kept?</td><td><input type="checkbox" name="q6_9m" {% if formA.q6_9m %}checked{% endif %}></td></tr>
+    <tr><td>n) Steps for confidentiality and secure storage?</td><td><input type="checkbox" name="q6_9n" {% if formA.q6_9n %}checked{% endif %}></td></tr>
+    <tr><td>o) Disclosure of information to third parties?</td><td><input type="checkbox" name="q6_9o" {% if formA.q6_9o %}checked{% endif %}></td></tr>
+    <tr><td>p) Privacy protection in publications?</td><td><input type="checkbox" name="q6_9p" {% if formA.q6_9p %}checked{% endif %}></td></tr>
+    <tr><td>q) Feedback to participants?</td><td><input type="checkbox" name="q6_9q" {% if formA.q6_9q %}checked{% endif %}></td></tr>
+    <tr><td>r) Exclusions to confidentiality disclosed?</td><td><input type="checkbox" name="q6_9r" {% if formA.q6_9r %}checked{% endif %}></td></tr>
+    <tr><td>s) Consent for audio/video recording?</td><td><input type="checkbox" name="q6_9s" {% if formA.q6_9s %}checked{% endif %}></td></tr>
   </tbody>
 </table>
 
