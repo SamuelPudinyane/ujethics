@@ -185,8 +185,9 @@
           {% if supervisor_formC %}
           {% for formc in supervisor_formC %}
           <br>
+        
           <tr>
-            <td>Form C</td>
+            <td>Form C {{supervisor_formC}}</td>
             <td>{{formc.declaration_name}}</td>
             <td>{{formc.student_number}}</td>
             <td><span class="badge status-pending">{{

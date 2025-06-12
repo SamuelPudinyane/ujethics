@@ -78,18 +78,18 @@
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td><td><input {% if formc.vulnerable%}checked{% endif %} type="checkbox" name="vulnerable"></td></tr>
           <tr><td>People under the age of 18 or over 65</td><td><input type="checkbox" {% if formc.age_under_18_or_over_65%}checked{% endif %} name="age_under_18_or_over_65"></td></tr>
-          <tr><td>UJ employees or students</td><td><input type="checkbox" name="uj_employees" {% if formc.uj_employee%}checked{% endif %}></td></tr>
+          <tr><td>UJ employees or students</td><td><input type="checkbox" name="uj_employees" {% if formc.uj_employees%}checked{% endif %}></td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td><td><input type="checkbox" {% if formc.non_vulnerable_context %}checked{% endif %} name="non_vulnerable_context"></td></tr>
           <tr><td>Non-English-speaking participants</td><td><input type="checkbox" {% if formc.non_english %}checked{% endif %} name="non_english"></td></tr>
           <tr><td>A researcher’s own students</td><td><input type="checkbox" {% if formc.own_student %}checked{% endif %} name="own_students"></td></tr>
           <tr><td>People living in poverty</td><td><input type="checkbox" {% if formc.poverty%}checked{% endif %} name="poverty"></td></tr>
           <tr><td>People with little or no education</td><td><input type="checkbox" {% if formc.non_education %}checked{% endif %} name="non_education"></td></tr>
-          <tr><td>Other: Please describe.</td><td><textarea name="vulnerable_other_description" value="{{formc.vulnerable_other_description}}" class="form-control" rows="2"></textarea></td></tr>
+          <tr><td>Other: Please describe.</td><td><textarea name="vulnerable_other_description" class="form-control" rows="2">{{formc.vulnerable_other_description}}</textarea></td></tr>
         </tbody>
       </table>
       
       <label><strong>Comments (e.g. “No participants”):</strong></label>
-      <textarea name="vulnerable_comments" class="form-control" rows="2"></textarea>
+      <textarea name="vulnerable_comments"  class="form-control" rows="2">{{formc.vulnerable_comments}}</textarea>
       
       <hr>
 
@@ -106,19 +106,19 @@
     <tr><td>Causing discomfiture beyond normal inconvenience</td><td><input type="checkbox" {% if formc.discomfiture%}checked{% endif %} name="discomfiture"></td></tr>
     <tr><td>Deception of participants or covert observation</td><td><input type="checkbox" {% if formc.deception%}checked{% endif %} name="deception"></td></tr>
     <tr><td>Examining sensitive or contentious issues</td><td><input type="checkbox" {% if formc.sensitive_issues%}checked{% endif%} name="sensitive_issues"></td></tr>
-    <tr><td>Seeking prejudicial information about participants</td><td><input type="checkbox" {% if formc.prejuditial_info%}checked{% endif%} name="prejuditial_info"></td></tr>
+    <tr><td>Seeking prejudicial information about participants</td><td><input type="checkbox" {% if formc.prejudicial_info%}checked{% endif%} name="prejudicial_info"></td></tr>
     <tr><td>Using intrusive techniques</td><td><input type="checkbox" value="{{formc.intrusive}}" name="intrusive"></td></tr>
     <tr><td>Study/participation in illegal activities</td><td><input type="checkbox" {% if formc.illegal%}checked{% endif %} name="illegal"></td></tr>
     <tr><td>Collecting personal/social info directly from participants</td><td><input type="checkbox" {% if formc.direct_social_info%}checked{% endif %} name="direct_social_info"></td></tr>
     <tr><td>Identifiable info collected from available records (staff/student records)</td><td><input type="checkbox" {% if formc.identifiable_records%}checked{% endif %} name="identifiable_records"></td></tr>
     <tr><td>Psychology inventories / scales / tests</td><td><input type="checkbox" {% if formc.psychology_tests%}checked{% endif %} name="psychology_tests"></td></tr>
-    <tr><td>Activities putting researcher/data collector at risk</td><td><input type="checkbox" {% if formc.reseacher_risk%}checked{% endif %} name="reseacher_risk"></td></tr>
+    <tr><td>Activities putting researcher/data collector at risk</td><td><input type="checkbox" {% if formc.researcher_risk%}checked{% endif %} name="researcher_risk"></td></tr>
     <tr><td>Other:  Please describe.</td><td><textarea name="activity_other_description" value="{{formc.activity_other_description}}" class="form-control" rows="2"></textarea></td></tr>
   </tbody>
 </table>
 
 <label><strong>Comments:</strong></label>
-<textarea name="activity_comments" vaulue="formc.activity_comments" class="form-control" rows="2"></textarea>
+<textarea name="activity_comments" class="form-control" rows="2">{{formc.activity_comments}}</textarea>
       <hr>
 
       <h4>2.3 Additional Research Considerations</h4>
@@ -141,7 +141,7 @@
       </table>
       
       <label><strong>Comments:</strong></label>
-      <textarea name="consideration_comments" value="{{formc.consideration_comments}}" class="form-control" rows="2"></textarea>
+      <textarea name="consideration_comments"  class="form-control" rows="2">{{formc.consideration_comments}}</textarea>
       
       <hr>
       
@@ -157,13 +157,14 @@
       
       <br>
       <label><strong>Justify the Risk Level</strong></label>
-      <textarea name="risk_justification" value="{{formc.risk_justification}}" class="form-control" rows="3"></textarea>
+     
+      <textarea type="text" name="risk_justification" class="form-control" rows="3">{{formc.risk_justification}}</textarea>
       
       <label><strong>If Medium or High Risk, describe potential benefits:</strong></label>
-      <textarea name="risk_benefits" value="{{formc.risk_benefits}}" class="form-control" rows="3"></textarea>
+      <textarea name="risk_benefits"  class="form-control" rows="3">{{formc.risk_benefits}}</textarea>
       
       <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong></label>
-      <textarea name="risk_mitigation" value="{{formc.risk_mitigation}}" class="form-control" rows="3"></textarea>
+      <textarea name="risk_mitigation" class="form-control" rows="3">{{formc.risk_mitigation}}</textarea>
       
 
   </main>
@@ -179,27 +180,27 @@
 
       <div class="form-group">
         <label for="executive_summary">3.2 Executive Summary of the Study</label>
-        <textarea id="executive_summary" value="{{formc.executive_summary}}" name="executive_summary" rows="5" placeholder="Summarize your study in 100–250 words" required></textarea>
+        <textarea id="executive_summary" name="executive_summary" rows="5" placeholder="Summarize your study in 100–250 words" required>{{formc.executive_summary}}</textarea>
       </div>
 
       <div class="form-group">
         <label for="research_questions">3.3 Research Questions / Hypotheses</label>
-        <textarea id="research_questions" value="{{formc.research_questions}}" name="research_questions" rows="4" placeholder="List your main research questions or hypotheses" required></textarea>
+        <textarea id="research_questions"  name="research_questions" rows="4" placeholder="List your main research questions or hypotheses" required>{{formc.research_questions}}</textarea>
       </div>
 
       <div class="form-group">
         <label for="research_purpose">3.4 Research Purpose and Objectives / Anticipated Outcomes</label>
-        <textarea id="research_purpose" value="{{formc.research_purpose}}" name="research_purpose" rows="4" placeholder="What is the purpose and intended outcomes?" required></textarea>
+        <textarea id="research_purpose" name="research_purpose" rows="4" placeholder="What is the purpose and intended outcomes?" required>{{formc.research_purpose}}</textarea>
       </div>
 
       <div class="form-group">
         <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?</label>
-        <textarea id="secondary_data_info" value="{{formc.secondary_data_info}}" name="secondary_data_info" rows="4" placeholder="Explain if using secondary data sources" required></textarea>
+        <textarea id="secondary_data_info"  name="secondary_data_info" rows="4" placeholder="Explain if using secondary data sources" required>{{formc.secondary_data_info}}</textarea>
       </div>
 
       <div class="form-group">
         <label for="exemption_reason">3.6 Why does your study meet exemption requirements?</label>
-        <textarea id="exemption_reason" value="{{formc.exemption_reason}}" name="exemption_reason" rows="4" placeholder="Explain why ethical exemption applies" required></textarea>
+        <textarea id="exemption_reason"  name="exemption_reason" rows="4" placeholder="Explain why ethical exemption applies" required>{{formc.exemption_reason}}</textarea>
       </div>
 
 
