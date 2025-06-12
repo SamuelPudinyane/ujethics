@@ -56,8 +56,8 @@
             <td>{{forma.student_number}}</td>
             <td><span class="badge status-pending">
               {{
-  'Rejected' if forma.rejected_or_accepted is not none and not forma.rejected_or_accepted and forma.supervisor_comments
-  else 'Accepted' if forma.rejected_or_accepted and forma.supervisor_comments
+  'Rejected' if forma.rejected_or_accepted is not none and not forma.rejected_or_accepted and forma.supervisor_feedback
+  else 'Accepted' if forma.rejected_or_accepted and forma.supervisor_feedback
   else 'Waiting Review'
 }}
 
@@ -66,14 +66,14 @@
               {% if forma.supervisor_comments and not forma.ethics_commettee_comments%}
               <strong>Supervisors comments</strong>
               <br>
-              {{forma.supervisor_comments}}
+              {{forma.supervisor_feedback}}
               {% elif forma.ethics_commettee_comments %}
               <strong>Ethics Admin comments</strong>
               <br>
               {{forma.ethics_commettee_comments}}
               {% endif %}
             </td>
-            <td>{{forma.declaration_date}}</td>
+            <td>{% if forma.signature_date%}{{forma.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -126,17 +126,17 @@
               {{"Accepted by ethics commettee"}}
               {% else %}
         {{
-  'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_comments
-  else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_comments
+  'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_feedback
+  else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_feedback
   else 'Waiting Review'
         }}
         {% endif %}
             </span></td>
             <td>
-              {% if formb.supervisor_comments and not formb.ethics_commettee_comments%}
+              {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
               <strong>Supervisors comments</strong>
               <br>
-              {{formb.supervisor_comments}}
+              {{formb.supervisor_feedback}}
               {% elif formb.ethics_commettee_comments %}
               <strong>Ethics Admin comments</strong>
               <br>
@@ -144,7 +144,7 @@
               
               {% endif %}
             </td>
-            <td>{{formb.declaration_date}}</td>
+            <td>{% if formb.signature_date %}{{formb.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -191,23 +191,23 @@
             <td>{{formc.declaration_name}}</td>
             <td>{{formc.student_number}}</td>
             <td><span class="badge status-pending">{{
-  'Rejected' if formc.rejected_or_accepted is not none and not formc.rejected_or_accepted and formc.supervisor_comments
-  else 'Accepted' if formc.rejected_or_accepted and formc.supervisor_comments
+  'Rejected' if formc.rejected_or_accepted is not none and not formc.rejected_or_accepted and formc.supervisor_feedback
+  else 'Accepted' if formc.rejected_or_accepted and formc.supervisor_feedback
   else 'Waiting Review'
 }}
 </span></td>
 <td>
-              {% if formc.supervisor_comments and not formc.ethics_commettee_comments%}
+              {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}
               <strong>Supervisors comments</strong>
               <br>
-              {{formc.supervisor_comments}}
+              {{formc.supervisor_feedback}}
               {% elif formc.ethics_commettee_comments %}
               <strong>Ethics Admin comments</strong>
               <br>
               {{formc.ethics_commettee_comments}}
               {% endif %}
             </td>
-            <td>{{formc.declaration_date}}</td>
+            <td>{% if formc.signature_date%}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
