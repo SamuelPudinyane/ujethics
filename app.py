@@ -135,8 +135,7 @@ def register():
         supervisor_id = request.form.get('supervisors')
         
         # Debug print to verify raw inputs
-        print("Raw inputs:", full_name, student_number, email, password, supervisor_id)
-        
+       
         # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
             msg = "Only University of Johannesburg email allowed"
@@ -173,7 +172,6 @@ def register():
             
             # Debug: Verify what was stored
             stored_user = db_session.query(User).filter_by(email=email).first()
-            print("Stored password:", stored_user.password)  # Should start with $2b$
             
             msg = 'You have successfully registered!'
             return render_template("login.html", messages=[msg])
@@ -313,7 +311,10 @@ def submit_form_a_requirements():
                     filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
                     file_path = os.path.join(UPLOAD_FOLDER, filename)
                     file.save(file_path)
-                    return file_path
+
+                    relative_path = os.path.relpath(file_path, start='static')
+                   
+                    return relative_path.replace("\\", "/")
                 return None
             
             # Save files based on form field names (corrected from request.form to request.files)
@@ -2665,6 +2666,7 @@ def supervisor_dashboard():
     # supervisor_formC=db_session.query(FormC).filter(FormC.user_id == users.user_id).all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     
+
     return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
 @app.route('/dean_dashboard', methods=['GET','POST'])
