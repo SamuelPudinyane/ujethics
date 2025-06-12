@@ -372,10 +372,19 @@ class FormA(Base):
     applicant_signature = Column(String(255), nullable=True)
     declaration_date = Column(String, nullable=True)
 
-    supervisor_comments = Column(Text,nullable=True)
-    supervisor_signature = Column(String(255),nullable=True)
+    supervisor_comments = Column(Text,nullable=True)###
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
+    org_permission_comment= Column(String(255),nullable=True)
+    waiver_comment= Column(String(255),nullable=True)
+    form_a_comment= Column(String(255),nullable=True)
+    questions_comment= Column(String(255),nullable=True)
+    consent_comment= Column(String(255),nullable=True)
+    proposal_comment= Column(String(255),nullable=True)
+    supervisor_feedback= Column(String(255),nullable=True)
+    recommendation= Column(String(255),nullable=True)
+    supervisor_signature = Column(String(255),nullable=True)
+    signature_date= Column(DateTime,nullable=True)
 
     ethics_commettee_comments=Column(Text,nullable=True)
     ethics_commettee_signature=Column(Text,nullable=True)
@@ -452,10 +461,18 @@ class FormB(Base):
 
     submitted_at = Column(DateTime, server_default=func.now())
 
-    supervisor_comments = Column(Text,nullable=True)
-    supervisor_signature = Column(String(255),nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
+    org_permission_comment= Column(String(255),nullable=True)
+    waiver_comment= Column(String(255),nullable=True)
+    form_a_comment= Column(String(255),nullable=True)
+    questions_comment= Column(String(255),nullable=True)
+    consent_comment= Column(String(255),nullable=True)
+    proposal_comment= Column(String(255),nullable=True)
+    supervisor_feedback= Column(String(255),nullable=True)
+    recommendation= Column(String(255),nullable=True)
+    supervisor_signature = Column(String(255),nullable=True)
+    signature_date= Column(DateTime,nullable=True)
 
     ethics_commettee_comments=Column(Text,nullable=True)
     ethics_commettee_signature=Column(Text,nullable=True)
@@ -543,12 +560,19 @@ class FormC(Base):
     submission_date = Column(DateTime,nullable=True)
     
     supervisor_comments = Column(Text,nullable=True)
-    supervisor_signature = Column(String(200),nullable=True)
-    supervisor_date = Column(DateTime,nullable=True)
-    status = Column(String(50), default="submitted")
-
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
+    org_permission_comment= Column(String(255),nullable=True)
+    waiver_comment= Column(String(255),nullable=True)
+    form_a_comment= Column(String(255),nullable=True)
+    questions_comment= Column(String(255),nullable=True)
+    consent_comment= Column(String(255),nullable=True)
+    proposal_comment= Column(String(255),nullable=True)
+    supervisor_feedback= Column(String(255),nullable=True)
+    recommendation= Column(String(255),nullable=True)
+    supervisor_signature = Column(String(255),nullable=True)
+    signature_date= Column(DateTime,nullable=True)
+    
 
     ethics_commettee_comments=Column(Text,nullable=True)
     ethics_commettee_signature=Column(Text,nullable=True)

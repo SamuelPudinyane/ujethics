@@ -44,6 +44,52 @@
       border-radius: 5px;
       cursor: pointer;
     }
+      body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f8f8f8;
+    }
+    h1 {
+      text-align: center;
+      color: #022169;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f0f0f0;
+      text-align: left;
+    }
+    label {
+      font-weight: bold;
+    }
+    .section {
+      margin-top: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      resize: vertical;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
   </style>
 </head>
 
@@ -848,39 +894,103 @@
     <hr>
 <div id="supervisorDeclaration" >
     
-      <h3>ETHICS COMMETTEE SECTION</h3>
-      <p><strong>Ethics Commttee's Review and Declaration</strong></p>
-    
-      <div class="form-group">
-        <label for="ethics_commettee_comments">Ethics Commettee Comments:</label>
-        <textarea id="ethics_commettee_comments" name="ethics_commettee_comments" rows="4"
-          placeholder="Provide feedback or concerns regarding the student's submission..."></textarea>
-      </div>
-    
-      <p><strong>Declaration by Ethics Commettee (where applicable):</strong></p>
-      <p>
-        To the best of my knowledge, the student has addressed all the aspects that relate to ethical clearance for the
-        study and is complying with the requirements as set forth in the Policy on Research Ethics of UJ and the Charter and
-        standard operating procedure of the Johannesburg Business Schools’ Research Ethics Committee.
-      </p>
-    
-      <div class="form-group">
-        <label for="supervisor_signature">Signature of Supervisor</label>
-        <input type="text" name="ethics_commettee_signature" id="supervisor_signature"
-          placeholder="Type your full name as signature" required>
-      </div>
-    
-      <div class="form-group">
-        <label for="supervisor_date">Date</label>
-        <input type="date" name="ethics_commettee_date" id="supervisor_date" required>
-      </div>
-    
-    </div>
-      <br>
-    
-       <button type="submit" class="btn btn-danger" name'reject' value="Reject">Reject</button>
-  <button type="submit" class="btn btn-success" name='accept' value="Accept">Accept</button>
-   
+      <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+
+  <div class="section">
+    <label>Student Name:</label>
+    <span>{{formA.declaration_name}}</span>
+
+    <label>Date of Submission:</label>
+    <span>{{formA.submitted_at}}</span>
+
+    <label>Date of Re-submission:</label>
+    <span>{{formA.declaration_date}}</span>
+
+    <label>Supervisor:</label>
+    <span>{{formA.supervisor}}</span>
+
+    <label>Title of Research:</label>
+    <span>{{formA.study_title}}</span>
+
+    <label>Reviewer:</label>
+    <input type="text" name="reviewer_name">
+
+    <label>Date of Review:</label>
+    <input type="date" name="review_date">
+  </div>
+
+  <div class="section">
+    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Submitted (Yes or No)</th>
+          <th>Reviewer Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Organisational permission</strong><br>
+            • Can be an email or formal letter.<br>
+            • Include permission to access relevant business documents.<br>
+            • If not requested, use the “Request for Permission” template.
+          </td>
+          <td><input type="text" name="org_permission_status"></td>
+          <td><textarea name="org_permission_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Signed waiver from business</strong><br>
+            • Use template provided in “Ethical clearance templates”.
+          </td>
+          <td><input type="text" name="waiver_status"></td>
+          <td><textarea name="waiver_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Form A – Ethics Application Form</strong><br>
+            • Must be completed and co-signed by supervisor.<br>
+            • Submit updated version if changes were made since proposal.
+          </td>
+          <td><input type="text" name="formA_status"></td>
+          <td><textarea name="formA_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Interview Questions and/or Questionnaire</strong><br>
+            • As close to final as possible.<br>
+            • If preliminary, indicate clearly.<br>
+            • Sensitive/invasive questions increase risk – avoid where possible.
+          </td>
+          <td><input type="text" name="questions_status"></td>
+          <td><textarea name="questions_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Participant Information Sheet & Informed Consent</strong><br>
+            • Use and adapt the provided template for your study.
+          </td>
+          <td><input type="text" name="consent_status"></td>
+          <td><textarea name="consent_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Refined Concept Proposal</strong><br>
+            • Should match the version submitted with Literature Review.
+          </td>
+          <td><input type="text" name="proposal_status"></td>
+          <td><textarea name="proposal_comments"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
+    <textarea name="additional_comments"></textarea>
+  </div>
       </main>
 
      </form>

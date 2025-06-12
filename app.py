@@ -1154,7 +1154,6 @@ def form_b_sec2():
 
         form.data_acknowledgment = form_data.get('data_acknowledgment')
         form.rejected_or_accepted=False
-        form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
         message="Section 2 saved successfully."
@@ -1186,7 +1185,6 @@ def form_b_sec3():
         form.declaration_date=datetime.strptime(request.form.get('declaration_date'), '%Y-%m-%d')
         form.submitted_at=datetime.now()
         form.rejected_or_accepted=False
-        form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
         return redirect(url_for('student_dashboard'))
@@ -1256,14 +1254,40 @@ def reject_or_Accept_form_a(id):
     if not forma:
         forma = FormA(form_id=id)
     if request.method=="POST":
- 
-        forma.supervisor_comments = request.form.get('supervisor_comments')
-        forma.supervisor_signature = request.form.get('supervisor_signature')
-        forma.supervisor_date = request.form.get('supervisor_date')
-        if request.form.get('accept')=='Accept':
-        
+        supervisor_date=request.form.get('supervisor_date')
+        org_permission_comment=request.form.get('org_permission_comment')
+        waiver_comment=request.form.get('waiver_comment')
+        form_a_comment=request.form.get('form_a_comment')
+        questions_comment=request.form.get('questions_comment')
+        consent_comment=request.form.get('consent_comment')
+        proposal_comment=request.form.get('proposal_comment')
+        supervisor_feedback=request.form.get('supervisor_feedback')
+        recommendation=request.form.get('recommendation')
+        supervisor_signature=request.form.get('supervisor_signature')
+        signature_date=request.form.get('signature_date')
+        if request.form.get('recommendation')=='Ready for submission':
+            forma.supervisor_date=supervisor_date
+            forma.org_permission_comment=org_permission_comment
+            forma.waiver_comment=waiver_comment
+            forma.form_a_comment=form_a_comment
+            forma.questions_comment=questions_comment
+            forma.consent_comment=consent_comment
+            forma.proposal_comment=proposal_comment
+            forma.supervisor_feedback=supervisor_feedback
+            forma.recommendation=recommendation
+            forma.supervisor_signature=supervisor_signature
+            forma.signature_date=signature_date
             forma.rejected_or_accepted=True
         else:
+            forma.supervisor_date=supervisor_date
+            forma.org_permission_comment=org_permission_comment
+            forma.waiver_comment=waiver_comment
+            forma.form_a_comment=form_a_comment
+            forma.questions_comment=questions_comment
+            forma.consent_comment=consent_comment
+            forma.proposal_comment=proposal_comment
+            forma.supervisor_feedback=supervisor_feedback
+            forma.recommendation=recommendation
             forma.rejected_or_accepted=False
 
         db_session.add(forma)
@@ -1282,13 +1306,40 @@ def reject_or_Accept_form_b(id):
         formb = FormB(form_id=id)
     if request.method=="POST":
  
-        formb.supervisor_comments = request.form.get('supervisor_comments')
-        formb.supervisor_signature = request.form.get('supervisor_signature')
-        formb.supervisor_date = request.form.get('supervisor_date')
-        if request.form.get('accept')=='Accept':
-        
+        supervisor_date=request.form.get('supervisor_date')
+        org_permission_comment=request.form.get('org_permission_comment')
+        waiver_comment=request.form.get('waiver_comment')
+        form_a_comment=request.form.get('form_a_comment')
+        questions_comment=request.form.get('questions_comment')
+        consent_comment=request.form.get('consent_comment')
+        proposal_comment=request.form.get('proposal_comment')
+        supervisor_feedback=request.form.get('supervisor_feedback')
+        recommendation=request.form.get('recommendation')
+        supervisor_signature=request.form.get('supervisor_signature')
+        signature_date=request.form.get('signature_date')
+        if request.form.get('recommendation')=='Ready for submission':
+            formb.supervisor_date=supervisor_date
+            formb.org_permission_comment=org_permission_comment
+            formb.waiver_comment=waiver_comment
+            formb.form_a_comment=form_a_comment
+            formb.questions_comment=questions_comment
+            formb.consent_comment=consent_comment
+            formb.proposal_comment=proposal_comment
+            formb.supervisor_feedback=supervisor_feedback
+            formb.recommendation=recommendation
+            formb.supervisor_signature=supervisor_signature
+            formb.signature_date=signature_date
             formb.rejected_or_accepted=True
         else:
+            formb.supervisor_date=supervisor_date
+            formb.org_permission_comment=org_permission_comment
+            formb.waiver_comment=waiver_comment
+            formb.form_a_comment=form_a_comment
+            formb.questions_comment=questions_comment
+            formb.consent_comment=consent_comment
+            formb.proposal_comment=proposal_comment
+            formb.supervisor_feedback=supervisor_feedback
+            formb.recommendation=recommendation
             formb.rejected_or_accepted=False
 
         
@@ -1296,42 +1347,8 @@ def reject_or_Accept_form_b(id):
         db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
 
-@app.route('/accept_form_b/<string:id>',methods=['GET','POST'])
-def accept_form_b(id):
-    user_id=session.get('id')
-    if not user_id:
-        return jsonify({'error': 'Unauthorized'}), 401
-        
-    formb = db_session.query(FormB).filter_by(form_id=id).first()
-    if not formb:
-        formb = FormB(form_id=id)
-    formb.supervisor_comments = request.form.get('supervisor_comments')
-    formb.supervisor_signature = request.form.get('supervisor_signature')
-    formb.supervisor_date = request.form.get('supervisor_date')
-    formb.rejected_or_accepted=True
-    db_session.add(formb)
-    db_session.commit()
-    return redirect(url_for('supervisor_dashboard'))
 
-@app.route('/reject_form_c/<string:id>',methods=['GET','POST'])
-def reject_form_c(id):
-    user_id=session.get('id')
-    if not user_id:
-        return jsonify({'error': 'Unauthorized'}), 401
-        
-    formc = db_session.query(FormC).filter_by(form_id=id).first()
-    if not formc:
-        formc = FormC(form_id=id)
-    formc.supervisor_comments = request.form.get('supervisor_comments')
-    formc.supervisor_signature = request.form.get('supervisor_signature')
-    formc.supervisor_date = request.form.get('supervisor_date')
-    formc.rejected_or_accepted=False
-    db_session.add(formc)
-    db_session.commit()
-    return redirect(url_for('supervisor_dashboard'))
-
-
-@app.route('/reject_form_c/<string:id>',methods=['GET','POST'])
+@app.route('/reject_Accept_form_c/<string:id>',methods=['GET','POST'])
 def accept_form_c(id):
     user_id=session.get('id')
     if not user_id:
@@ -1340,10 +1357,42 @@ def accept_form_c(id):
     formc = db_session.query(FormC).filter_by(form_id=id).first()
     if not formc:
         formc = FormC(form_id=id)
-    formc.supervisor_comments = request.form.get('supervisor_comments')
-    formc.supervisor_signature = request.form.get('supervisor_signature')
-    formc.supervisor_date = request.form.get('supervisor_date')
-    formc.rejected_or_accepted=True
+    if request.method=="POST":
+        supervisor_date=request.form.get('supervisor_date')
+        org_permission_comment=request.form.get('org_permission_comment')
+        waiver_comment=request.form.get('waiver_comment')
+        form_a_comment=request.form.get('form_a_comment')
+        questions_comment=request.form.get('questions_comment')
+        consent_comment=request.form.get('consent_comment')
+        proposal_comment=request.form.get('proposal_comment')
+        supervisor_feedback=request.form.get('supervisor_feedback')
+        recommendation=request.form.get('recommendation')
+        supervisor_signature=request.form.get('supervisor_signature')
+        signature_date=request.form.get('signature_date')
+        if request.form.get('recommendation')=='Ready for submission':
+            formc.supervisor_date=supervisor_date
+            formc.org_permission_comment=org_permission_comment
+            formc.waiver_comment=waiver_comment
+            formc.form_a_comment=form_a_comment
+            formc.questions_comment=questions_comment
+            formc.consent_comment=consent_comment
+            formc.proposal_comment=proposal_comment
+            formc.supervisor_feedback=supervisor_feedback
+            formc.recommendation=recommendation
+            formc.supervisor_signature=supervisor_signature
+            formc.signature_date=signature_date
+            formc.rejected_or_accepted=True
+        else:
+            formc.supervisor_date=supervisor_date
+            formc.org_permission_comment=org_permission_comment
+            formc.waiver_comment=waiver_comment
+            formc.form_a_comment=form_a_comment
+            formc.questions_comment=questions_comment
+            formc.consent_comment=consent_comment
+            formc.proposal_comment=proposal_comment
+            formc.supervisor_feedback=supervisor_feedback
+            formc.recommendation=recommendation
+            formc.rejected_or_accepted=False
     db_session.add(formc)
     db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
