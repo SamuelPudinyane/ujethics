@@ -50,7 +50,7 @@
         <!-- Section Title -->
         <h2>Upload Proposal for Ethics Exemption (Form C)</h2>
 
-        <form id="formCUpload">
+        <form id="formCUpload" action="{{url_for('submit_form_c_requirements')}}" method="post" enctype="multipart/form-data">
             <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -69,8 +69,8 @@
 
         <!-- Navigation -->
         <div class="form-navigation">
-            <a href="dashboard.html" class="revise-btn">⬅ Back</a>
-            <a href="form-c-section1.html" class="approve-btn">Next ➔ Form C</a>
+            <a href="{{url_for('dashboard')}}" class="revise-btn">⬅ Back</a>
+            <button type="submit" class="approve-btn">Next ➔ Form C</button>
         </div>
         </form>
     </main>
@@ -84,12 +84,7 @@
     </footer>
 
    <script>
-  document.getElementById('formCUpload').addEventListener('submit', function (e) {
-    e.preventDefault();
-    // Add form validation, file upload handling, or backend submission here
-    alert('Proposal uploaded successfully!');
-    window.location.href = 'dashboard.html';
-  });
+
 </script>
 
 

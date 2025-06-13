@@ -212,26 +212,11 @@
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
                   {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
+                  {% if formR.files %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=formR.files) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.impact_assessment_path %}
                   
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
-                  {% endif %}
-                  {% if formR.permission_letter_path %}
-                
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
-                  {% endif %}
-                  {% if formR.prior_clearance_path %}
-               
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
-                  {% endif %}
-                  {% if formR.reseach_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
-                  {% endif %}
-                <br>
                 {% endfor %}
                 {% endif %}
                 <br>

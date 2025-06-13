@@ -285,7 +285,7 @@ def submit_form_a_requirements():
 
     if request.method=='POST':
         try:
-            UPLOAD_FOLDER = 'static/uploads/form_a'
+            UPLOAD_FOLDER = 'static/uploads/form'
             
             # Get form data
             needs_permission = request.form.get('need_permission') == 'Yes'
@@ -323,7 +323,8 @@ def submit_form_a_requirements():
             research_tools_path = save_file('research_tools_path')
             prior_clearance = save_file('prior_clearance') if company_requires_jbs else None
             prior_clearance1 = save_file('prior_clearance1') if company_requires_jbs else None
-            need_jbs_clearance1 = save_file('need_jbs_clearance1') if company_requires_jbs else None
+            need_jbs_clearance = save_file('need_jbs_clearance') if company_requires_jbs else None
+            need_jbs_clearance1 = save_file('need_jbs_clearance1')
             proposal_path = save_file('proposal_path')
             impact_assessment_path = save_file('impact_assessment_path')
             
@@ -339,24 +340,33 @@ def submit_form_a_requirements():
                 form.needs_permission = needs_permission
                 form.has_clearance = has_clearance
                 form.company_requires_jbs = company_requires_jbs
-                form.prior_clearance=prior_clearance
                 form.prior_clearance1=prior_clearance1
                 form.need_jbs_clearance1=need_jbs_clearance1
-                
+                form.form_type="FORM A"
                 if permission_letter_path:
                     form.permission_letter = permission_letter_path
                 if prior_clearance_path:
-                    form.prior_clearance_path = prior_clearance_path
+                    form.prior_clearance = prior_clearance_path
                 if research_tools_path:
                     form.research_tools_path = research_tools_path
+                if prior_clearance:
+                    form.prior_clearance=prior_clearance
+                if prior_clearance1:
+                    form.prior_clearance1=prior_clearance1
+                if need_jbs_clearance:
+                    form.need_jbs_clearance=need_jbs_clearance
+                if need_jbs_clearance1:
+                    form.need_jbs_clearance1=need_jbs_clearance1
                 if proposal_path:
                     form.proposal_path = proposal_path
                 if impact_assessment_path:
                     form.impact_assessment_path = impact_assessment_path
+                
             else:
                 # Create new record
                 form = FormARequirements(
                     user_id=user_id,
+                    form_type="FORM A",
                     needs_permission=needs_permission,
                     permission_letter=permission_letter_path,
                     has_clearance=has_clearance,
@@ -367,6 +377,7 @@ def submit_form_a_requirements():
                     impact_assessment_path=impact_assessment_path,
                     prior_clearance=prior_clearance,
                     prior_clearance1=prior_clearance1,
+                    need_jbs_clearance=need_jbs_clearance,
                     need_jbs_clearance1=need_jbs_clearance1
                 )
             
@@ -380,6 +391,166 @@ def submit_form_a_requirements():
             return jsonify({'error': str(e)}), 500
         
 
+
+
+@app.route('/submit_form_c_requirements', methods=['POST'])
+def submit_form_c_requirements():
+
+    if request.method=='POST':
+        try:
+            UPLOAD_FOLDER = 'static/uploads/form'
+            
+
+            # Get user ID from session (adjust based on your auth system)
+            user_id = session.get('id')
+            if not user_id:
+                return jsonify({'error': 'Unauthorized'}), 401
+            
+            # Create uploads directory if it doesn't exist
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+            
+            # Handle file uploads
+            def save_file(file_field_name):
+                if file_field_name not in request.files:
+                    return None
+                file = request.files[file_field_name]
+                if file.filename == '':
+                    return None
+                if file and allowed_file(file.filename):
+                    filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+                    file_path = os.path.join(UPLOAD_FOLDER, filename)
+                    file.save(file_path)
+
+                    relative_path = os.path.relpath(file_path, start='static')
+                   
+                    return relative_path.replace("\\", "/")
+                return None
+            
+            # Save files based on form field names (corrected from request.form to request.files)
+            proposal_path = save_file('proposal')
+            print("----------",proposal_path)
+            # Validate required files
+            if not all([proposal_path]):
+                return jsonify({'error': 'Missing required files'}), 400
+                
+            # Check if form exists for this user
+            form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
+         
+            if form:
+                # Update existing form
+                form.user_id=user_id
+                form.form_type="FORM C"
+                form.updated_at=datetime.now()
+                
+                if proposal_path:
+                    form.files = proposal_path
+                
+            else:
+                # Create new record
+                form = FormARequirements(
+                    user_id=user_id,
+                    form_type="FORM C",
+                    updated_at=datetime.now(),
+                    files = proposal_path
+                )
+            
+            db_session.add(form)
+            db_session.commit()
+            
+            return redirect(url_for('form_c_sec1'))
+            
+        except Exception as e:
+            db_session.rollback()
+            return jsonify({'error': str(e)}), 500
+
+
+
+
+@app.route('/submit_form_b_requirements', methods=['POST'])
+def submit_form_b_requirements():
+
+    if request.method=='POST':
+        try:
+            UPLOAD_FOLDER = 'static/uploads/form'
+            
+             # Get form data
+            needs_permission = request.form.get('need_permission') == 'Yes'
+            has_clearance = request.form.get('has_clearance') == 'Yes'
+            has_ethics_evidence=request.form.get('has_ethics_evidence')=='Yes'
+            # Get user ID from session (adjust based on your auth system)
+            user_id = session.get('id')
+            if not user_id:
+                return jsonify({'error': 'Unauthorized'}), 401
+            
+            # Create uploads directory if it doesn't exist
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+            
+            # Handle file uploads
+            def save_file(file_field_name):
+                if file_field_name not in request.files:
+                    return None
+                file = request.files[file_field_name]
+                if file.filename == '':
+                    return None
+                if file and allowed_file(file.filename):
+                    filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+                    file_path = os.path.join(UPLOAD_FOLDER, filename)
+                    file.save(file_path)
+
+                    relative_path = os.path.relpath(file_path, start='static')
+                   
+                    return relative_path.replace("\\", "/")
+                return None
+            
+            # Save files based on form field names (corrected from request.form to request.files)
+            permission_letter_path = save_file('permission_letter_path') if needs_permission else None
+            prior_clearance_path = save_file('prior_clearance_path') if has_clearance else None
+            ethics_evidence_path=save_file('ethics_evidence') if has_ethics_evidence else None
+            proposal_path = save_file('proposal_path')
+            
+                
+            # Check if form exists for this user
+            form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
+         
+            if form:
+                # Update existing form
+                form.needs_permission = needs_permission
+                form.has_clearance = has_clearance
+                form.has_ethics_evidence=has_ethics_evidence
+                form.form_type="FORM B"
+                if permission_letter_path:
+                    form.permission_letter = permission_letter_path
+                if prior_clearance_path:
+                    form.prior_clearance_path = prior_clearance_path
+                if ethics_evidence_path:
+                    form.ethics_evidence = ethics_evidence_path
+                if proposal_path:
+                    form.proposal_path = proposal_path
+              
+            else:
+                # Create new record
+                form = FormARequirements(
+                    user_id=user_id,
+                    form_type="FORM B",
+                    needs_permission=needs_permission,
+                    permission_letter=permission_letter_path,
+                    has_clearance=has_clearance,
+                    prior_clearance_path=prior_clearance_path,
+                    has_ethics_evidence=has_ethics_evidence,
+                    ethics_evidence=ethics_evidence_path,
+                    proposal_path=proposal_path,
+                    
+                )
+            
+            db_session.add(form)
+            db_session.commit()
+            
+            return redirect(url_for('form_c_sec1'))
+            
+        except Exception as e:
+            db_session.rollback()
+            return jsonify({'error': str(e)}), 500
+        
 
 
 @app.route('/submit_form_a_upload', methods=['GET', 'POST'])
@@ -1192,6 +1363,10 @@ def form_b_sec3():
         
     return render_template('form_b_section3.html', messages=[], show_modal=False)
 
+
+@app.route('/form_c_upload', methods=['GET'])
+def form_c_upload ():
+    return render_template('form-c-upload.html')
 
 @app.route('/form_c_sec1', methods=['GET','POST'])
 def form_c_sec1():
