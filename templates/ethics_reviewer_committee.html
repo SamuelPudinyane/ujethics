@@ -34,6 +34,11 @@
       <h3>Dean & Reviewer Panel</h3>
     </div>
     <nav class="sidebar-nav">
+     
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="user-list.html">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -68,11 +73,11 @@
           <tr>
             <td>{{forma.student_number}}</td>
             <td>{{forma.full_name}}</td>
-            <td>{{forma.supervisor}}</td>
+            <td>{{forma.supervisor_name}}</td>
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span></td>
-            <td>{{forma.risk_level}}</td>
+            <td>{{forma.risk_rating}}</td>
             <td>{{forma.declaration_date}} days</td>
             <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
           </tr>
@@ -105,7 +110,7 @@
           <tr>
             <td>{{formb.student_number}}</td>
             <td>{{formb.full_name}}</td>
-            <td>{{formb.supervisor}}</td>
+            <td>{{formb.supervisor_name}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
             <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span></td>
@@ -141,12 +146,12 @@
           <tr>
             <td>{{formc.student_number}}</td>
             <td>{{formc.full_name}}</td>
-            <td>{{formc.supervisor}}</td>
+            <td>{{formc.supervisor_name}}</td>
             <td>FORM C</td>
-            <td>{{formc.declaration_date}}</td>
+            <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span></td>
             <td>{{formc.risk_level}}</td>
-            <td>{{formc.declaration_date}} days</td>
+            <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}

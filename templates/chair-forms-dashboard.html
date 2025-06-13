@@ -33,8 +33,11 @@
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="sidebar-logo">
       <h3>Dean & Chairman Panel</h3>
     </div>
-    <nav class="sidebar-nav">
-      <a href="chair-dashboard.html">📋 Student Tracker</a>
+   <nav class="sidebar-nav">
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="user-list.html">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -69,12 +72,12 @@
           <tr>
             <td>{{form.student_number}}</td>
             <td>{{form.full_name}}</td>
-            <td>{{form.supervisor}}</td>
+            <td>{{form.supervisor_name}}</td>
             <td>{{form_name}}</td>
-            <td>{{form.declaration_date}}</td>
+            <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date%}{{form.submission_date}}{% endif%}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if form.rejected_or_accepted and not form.ethics_commetee_status else 'Approved by Ethics Commettee' if form.ethics_commetee_status else 'previous form version'}}</span></td>
-            <td>{{form.risk_level}}</td>
-            <td>{{form.declaration_date}} days</td>
+            <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.rist_rating %}{{ form.rist_rating}} {% endif%}</td>
+            <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date %}{{form.submission_date}}{% endif%}</td>
             <td><a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" >View</a></td>
           </tr>
           

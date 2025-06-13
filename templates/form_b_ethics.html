@@ -267,7 +267,7 @@
       </label>
 
       <label>Date
-        <br><span>{{formB.declaration_date}}</span>
+        <br><span>{% if formB.declaration_date%}{{formB.declaration_date}}{% endif%}</span>
       </label>
 
       <hr>
@@ -279,34 +279,19 @@
 
   <div class="section">
     <label>Student Name:</label>
-    <span>{{formA.declaration_name}}</span>
+    <span>{{formB.declaration_name}}</span>
 
     <label>Date of Submission:</label>
-    <span>{{formA.submitted_at}}</span>
+    <span>{% if formB.submitted_at%}{{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Date of Re-submission:</label>
-    <span>{{formA.declaration_date}}</span>
+    <span>{% if formB.declaration_date%}{{formB.declaration_date.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Supervisor:</label>
-    <span>{{formA.supervisor}}</span>
+    <span>{{formB.supervisor}}</span>
 
     <label>Title of Research:</label>
-    <span>{{formA.study_title}}</span>
-
-    <label>Reviewer(s):</label>
-  <div class="dropdown">
-    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-      Select Reviewers
-    </button>
-    <ul class="dropdown-menu dropdown-checkboxes p-2" aria-labelledby="dropdownMenuButton">
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Dr. M. Nkosi"> Dr. M. Nkosi</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Prof. T. Dlamini"> Prof. T. Dlamini</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Dr. A. Singh"> Dr. A. Singh</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Ms. L. van Wyk"> Ms. L. van Wyk</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Prof. K. Molefe"> Prof. K. Molefe</label></li>
-    </ul>
-  </div>
-
+    <span>{{formB.study_title}}</span>
 
     <label>Date of Review:</label>
     <input type="date" name="review_date">
@@ -347,8 +332,8 @@
             • Must be completed and co-signed by supervisor.<br>
             • Submit updated version if changes were made since proposal.
           </td>
-          <td><input type="text" name="formA_status"></td>
-          <td><textarea name="formA_comments"></textarea></td>
+          <td><input type="text" name="form_status"></td>
+          <td><textarea name="form_comments"></textarea></td>
         </tr>
         <tr>
           <td>
@@ -402,6 +387,19 @@
 
   <!-- Accept Fields (initially hidden) -->
   <div id="acceptFields" style="display: none;">
+    <label>Reviewer(s):</label>
+  <div class="dropdown">
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+      Select Reviewers
+    </button>
+    <ul class="dropdown-menu dropdown-checkboxes p-2" aria-labelledby="dropdownMenuButton">
+      {% for item in formReviewers %}
+      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="{{item.user_id}}"> {{item.full_name}}</label></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
     <div class="form-group">
       <label for="supervisor_signature">Supervisor Signature:</label>
       <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">

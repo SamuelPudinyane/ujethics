@@ -265,7 +265,7 @@
       </label>
 
       <label>Date
-        <br><span>{{formB.declaration_date}}</span>
+        <br><span>{% if formB.declaration_date%}{{formB.declaration_date.strftime('%d/%m/%Y')}}{% endif %}</span>
       </label>
 
       <hr>
@@ -284,7 +284,7 @@
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{{formA.submitted_at}}</span>
+        <span  id="submission_date" >{% if formA.submitted_at%}{{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</span>
       </div>
 
       <div class="form-group">

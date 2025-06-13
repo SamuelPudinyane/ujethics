@@ -34,7 +34,10 @@
       <h3>Dean & Reviewer Panel</h3>
     </div>
     <nav class="sidebar-nav">
-     
+      <a href="admin-dashboard.html">📋 Dashboard</a>
+      <a href="view-changes.html">🔄 Submission Timeline</a>
+      <a href="reviewer-list.html">👤 Reviewer List</a>
+      <a href="user-list.html">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -69,12 +72,12 @@
           <tr>
             <td>{{form.student_number}}</td>
             <td>{{form.full_name}}</td>
-            <td>{{form.supervisor}}</td>
+            <td>{{form.supervisor_name}}</td>
             <td>{{form_name}}</td>
-            <td>{{form.declaration_date}}</td>
+            <td>{% if form.declaration_date%}{{form.declaration_date.strftime('%d/%m/%Y')}}{% elif form.submission_date%}{{form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if form.rejected_or_accepted and not form.ethics_commetee_status else 'Approved by Ethics Commettee' if form.ethics_commetee_status else 'previous form version'}}</span></td>
             <td>{{form.risk_level}}</td>
-            <td>{{(today - form.declaration_date.date()).days}} days</td>
+            <td>{% if form.declaration_date%}{{form.declaration_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><a href="{{url_for('ethics_reviewer_committee_forms',id=form.form_id,form_name=form_name)}}" >View</a></td>
           </tr>
           

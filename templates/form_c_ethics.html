@@ -65,7 +65,7 @@
     </div>
   </header>
 
-  <form action="{{url_for('chair_form_view',id=formC.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
+  <form action="{{url_for('chair_form_view',id=formc.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
   <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -84,7 +84,7 @@
    
       <h2>SECTION 1: Researcher's Details</h2>
       <label>Applicant Name
-        <br><span>{{formc.application_name}}</span>
+        <br><span>{{formc.applicant_name}}</span>
       </label>
       <label>Student/Staff Number
         <br><span>{{formc.student_number}}</span>
@@ -317,7 +317,7 @@
       <h2>SECTION 4: Declaration</h2>
 
       <p class="form-note">
-        I, <span> {{formc.declaration_name}} </span>
+        I, <strong><u> {{formc.declaration_name}} </u></strong>
         (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
  
         ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
@@ -330,41 +330,26 @@
       </div>
 
       <div class="form-group">
-        <label for="submission_date"><span>{{formc.submission_date}}</span></label>
+        <label for="submission_date"><span>{{formc.submission_date.strftime('%d/%m/%Y')}}</span></label>
       </div>
 <hr>
 <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
     <label>Student Name:</label>
-    <span>{{formA.declaration_name}}</span>
+    <span>{{formc.declaration_name}}</span>
 
     <label>Date of Submission:</label>
-    <span>{{formA.submitted_at}}</span>
+    <span>{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Date of Re-submission:</label>
-    <span>{{formA.declaration_date}}</span>
+    <span>{% if formc.signature_date %}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Supervisor:</label>
-    <span>{{formA.supervisor}}</span>
+    <span>{{formc.supervisor_name}}</span>
 
     <label>Title of Research:</label>
-    <span>{{formA.study_title}}</span>
-
-    <label>Reviewer(s):</label>
-  <div class="dropdown">
-    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-      Select Reviewers
-    </button>
-    <ul class="dropdown-menu dropdown-checkboxes p-2" aria-labelledby="dropdownMenuButton">
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Dr. M. Nkosi"> Dr. M. Nkosi</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Prof. T. Dlamini"> Prof. T. Dlamini</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Dr. A. Singh"> Dr. A. Singh</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Ms. L. van Wyk"> Ms. L. van Wyk</label></li>
-      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="Prof. K. Molefe"> Prof. K. Molefe</label></li>
-    </ul>
-  </div>
-
+    <span>{{formc.project_title}}</span>
 
     <label>Date of Review:</label>
     <input type="date" name="review_date">
@@ -406,7 +391,7 @@
             • Submit updated version if changes were made since proposal.
           </td>
           <td><input type="text" name="formA_status"></td>
-          <td><textarea name="formA_comments"></textarea></td>
+          <td><textarea name="form_comments"></textarea></td>
         </tr>
         <tr>
           <td>
@@ -460,6 +445,19 @@
 
   <!-- Accept Fields (initially hidden) -->
   <div id="acceptFields" style="display: none;">
+    <label>Reviewer(s):</label>
+  <div class="dropdown">
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+      Select Reviewers
+    </button>
+    <ul class="dropdown-menu dropdown-checkboxes p-2" aria-labelledby="dropdownMenuButton">
+      {% for item in formReviewers %}
+      <li><label class="form-check"><input class="form-check-input" type="checkbox" name="reviewer_names[]" value="{{item.user_id}}"> {{item.full_name}}</label></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
     <div class="form-group">
       <label for="supervisor_signature">Supervisor Signature:</label>
       <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
@@ -523,7 +521,6 @@
   closeModalBtn.addEventListener("click", () => {
     window.location.href = "supervisor-dashboard.html";
   });
-
 function toggleFields() {
   const ready = document.getElementById("ready").checked;
   const revisions = document.getElementById("revisions").checked;

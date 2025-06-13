@@ -1258,7 +1258,7 @@ def reject_or_Accept_form_a(id):
         supervisor_date=request.form.get('supervisor_date')
         org_permission_comment=request.form.get('org_permission_comment')
         waiver_comment=request.form.get('waiver_comment')
-        form_a_comment=request.form.get('form_a_comment')
+        form_a_comment=request.form.get('form_comment')
         questions_comment=request.form.get('questions_comment')
         consent_comment=request.form.get('consent_comment')
         proposal_comment=request.form.get('proposal_comment')
@@ -1310,7 +1310,7 @@ def reject_or_Accept_form_b(id):
         supervisor_date=request.form.get('supervisor_date')
         org_permission_comment=request.form.get('org_permission_comment')
         waiver_comment=request.form.get('waiver_comment')
-        form_a_comment=request.form.get('form_a_comment')
+        form_a_comment=request.form.get('form_comment')
         questions_comment=request.form.get('questions_comment')
         consent_comment=request.form.get('consent_comment')
         proposal_comment=request.form.get('proposal_comment')
@@ -1362,7 +1362,7 @@ def reject_or_Accept_form_c(id):
         supervisor_date=request.form.get('supervisor_date')
         org_permission_comment=request.form.get('org_permission_comment')
         waiver_comment=request.form.get('waiver_comment')
-        form_a_comment=request.form.get('form_a_comment')
+        form_a_comment=request.form.get('form_comment')
         questions_comment=request.form.get('questions_comment')
         consent_comment=request.form.get('consent_comment')
         proposal_comment=request.form.get('proposal_comment')
@@ -2500,7 +2500,7 @@ def chair_form_view(id,form_name):
                 formC.rejected_or_accepted=False
             db_session.add(formC)
             db_session.commit()
-        return render_template("form_c_ethics.html",formC=formC,formReviewers=formReviewers)
+        return render_template("form_c_ethics.html",formc=formC,formReviewers=formReviewers)
 
 
 
@@ -2558,7 +2558,7 @@ def chair_landing():
     sorted_yearsB = sorted(forms_by_yearB.keys(), reverse=True)
 
     ## form c retrival
-    formCs = (db_session.query(FormB)
+    formCs = (db_session.query(FormC)
     .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
     .distinct(FormC.user_id)
     .all())
@@ -2572,7 +2572,7 @@ def chair_landing():
             forms_by_yearC[year][month].append(form)
 
     sorted_yearsC = sorted(forms_by_yearC.keys(), reverse=True)
-
+ 
     return render_template("chair-landing-dashboard.html", forms_by_yearA=forms_by_yearA, sorted_yearsA=sorted_yearsA,sorted_yearsB=sorted_yearsB,forms_by_yearB=forms_by_yearB,sorted_yearsC=sorted_yearsC,forms_by_yearC=forms_by_yearC)
 
 

@@ -325,7 +325,7 @@
       </div>
 
       <div class="form-group">
-        <label for="submission_date"><span>{{formc.submission_date}}</span></label>
+        <label for="submission_date"><span>{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span></label>
       </div>
 <hr>
 
@@ -341,7 +341,7 @@
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{{formc.submission_date}}</span>
+        <span  id="submission_date" >{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
       </div>
 
       <div class="form-group">
