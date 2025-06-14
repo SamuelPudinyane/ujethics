@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Supervisor – Student List | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/supervisor.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/supervisor.css') }}">
+</head>
+<body>
+
+<div class="admin-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ Logo" class="sidebar-logo" />
+      <h3>JBS Ethics Portal</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="{{url_for('ethics_reviewer_committee')}}">📋 Dashboard</a>
+      <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
+      <a href="{{url_for('all_users')}}">👥 User Management</a>
+      <a href="{{url_for('logout')}}">🔒 Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <header class="topbar">
+      <h2>Comments And Status Review</h2>
+    </header>
+
+    <section class="admin-content">
+        {% if view_form.supervisor_feedback %}
+      <div id="supervisorDeclaration" >
+    
+      <h3>SUPERVISOR'S SECTION</h3>
+      <p><strong>Supervisor's Review and Declaration</strong></p>
+    
+      <div class="form-group">
+        <label for="student_name">Student Name:</label>
+        <span  id="student_name"  >{{view_form.declaration_name}}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="submission_date">Date of Submission:</label>
+        <span  id="submission_date" >{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="supervisor_name">Supervisor Name:</label>
+        <span  id="supervisor_name"  >{{view_form.supervisor_name}}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="research_title">Title of Research:</label>
+        <span  id="research_title" >{% if view_form.study_title%}{{view_form.study_title}}{% elif view_form.project_title%}{{view_form.project_title}}{% endif %}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="supervisor_date">Date of Review:</label>
+        <span id="supervisor_date">{{view_form.supervisor_date.strftime('%d/%m/%Y')}}</span>
+      </div>
+
+      <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>
+
+      <table class="table table-bordered mt-3">
+        <thead class="thead-light">
+          <tr>
+            <th>Document</th>
+            <th>Supervisor Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Organisational Permission<br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
+            <td><span id="org_permission_comment">{{view_form.org_permission_comment}}</span></td>
+          </tr>
+          <tr>
+            <td>Signed Waiver from Business<br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
+            <td><span id="waiver_comment">{{view_form.waiver_comment}}</span></td>
+          </tr>
+          <tr>
+            <td>Form  – Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
+            <td><span id="form_a_comment">{{view_form.form_a_comment}}</span></td>
+          </tr>
+          <tr>
+            <td>Interview Questions and/or Questionnaire<br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
+            <td><span id="questions_comment">{{view_form.questions_comment}}</span></td>
+          </tr>
+          <tr>
+            <td>Participant Information Sheet and Informed Consent Form<br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
+            <td><span id="consent_comment">{{view_form.consent_comment}}</span></td>
+          </tr>
+          <tr>
+            <td>Refined Concept Proposal<br><small>This should match the approved version with the literature review.</small></td>
+            <td><span id="proposal_comment">{{view_form.proposal_comment}}</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="form-group">
+        <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>
+        <span  id="supervisor_feedback">{{view_form.supervisor_feedback}}</span>
+      </div>
+
+  <!-- Accept Fields (initially hidden) -->
+  <div id="acceptFields" >
+    <div class="form-group">
+      <label for="supervisor_signature">Supervisor Signature:</label>
+      <span type="text"  id="supervisor_signature">{{view_form.supervisor_signature}}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="signature_date">Date:</label>
+      <span id="signature_date" >{{view_form.signature_date.strftime('%d/%m/%Y')}}</span>
+    </div>
+  </div>
+{% endif %}
+    </section>
+    {% if view_form.review_date %}
+<section class="admin-content">
+<div id="supervisorDeclaration" >
+    
+      <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+
+  <div class="section">
+    <label>Student Name:</label>
+    <span>{{view_form.declaration_name}}</span>
+
+    <label>Date of Submission:</label>
+    <span>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date}}{% endif%}</span>
+
+    <label>Date of Re-submission:</label>
+    <span>{% if view_form.declaration_date%}{{view_form.declaration_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+
+    <label>Supervisor:</label>
+    <span>{{view_form.supervisor}}</span>
+
+    <label>Title of Research:</label>
+    <span>{{view_form.study_title}}</span>
+
+    <label>Date of Review:</label>
+    <span type="date" id="review_date">{{view_form.review_date}}</span>
+  </div>
+
+  <div class="section">
+    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Submitted (Yes or No)</th>
+          <th>Reviewer Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Organisational permission</strong><br>
+            • Can be an email or formal letter.<br>
+            • Include permission to access relevant business documents.<br>
+            • If not requested, use the “Request for Permission” template.
+          </td>
+          <td><span id="org_permission_status">{{view_form.org_permission_status}}</span></td>
+          <td><span id="org_permission_comments">{{view_form.org_permission_comments}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Signed waiver from business</strong><br>
+            • Use template provided in “Ethical clearance templates”.
+          </td>
+          <td><span id="waiver_status">{{view_form.waiver_status}}</span></td>
+          <td><span id="waiver_comments">{{view_form.waiver_comments}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Form A – Ethics Application Form</strong><br>
+            • Must be completed and co-signed by supervisor.<br>
+            • Submit updated version if changes were made since proposal.
+          </td>
+          <td><span id="form_status">{{view_form.form_status}}</span></td>
+          <td><span id="form_comments">{{view_form.form_comments}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Interview Questions and/or Questionnaire</strong><br>
+            • As close to final as possible.<br>
+            • If preliminary, indicate clearly.<br>
+            • Sensitive/invasive questions increase risk – avoid where possible.
+          </td>
+          <td><span id="questions_status">{{view_form.questions_status}}</span></td>
+          <td><span id="questions_comments">{{view_form.questions_comments}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Participant Information Sheet & Informed Consent</strong><br>
+            • Use and adapt the provided template for your study.
+          </td>
+          <td><span  id="consent_status">{{view_form.consent_status}}</td>
+          <td><span id="consent_comments">{{view_form.consent_comments}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Refined Concept Proposal</strong><br>
+            • Should match the version submitted with Literature Review.
+          </td>
+          <td><span id="proposal_status">{{view_form.proposal_status}}</td>
+          <td><span id="proposal_comments">{{view_form.proposal_comments}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
+    <span id="additional_comments">{{view_form.additional_comments}}</span>
+  </div>
+
+  </div>
+{% endif %}
+</section>
+    <footer class="footer">
+      <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
+    </footer>
+  </main>
+</div>
+
+</body>
+</html>

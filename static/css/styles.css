@@ -97,6 +97,7 @@ form textarea:focus {
 button {
   width: 100%;
   padding: 12px;
+  margin:5px;
   background-color: #F26522;
   /* JBS Orange */
   color: white;

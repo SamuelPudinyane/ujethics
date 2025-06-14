@@ -35,10 +35,9 @@
     </div>
     <nav class="sidebar-nav">
      
-      <a href="admin-dashboard.html">📋 Dashboard</a>
-      <a href="view-changes.html">🔄 Submission Timeline</a>
-      <a href="reviewer-list.html">👤 Reviewer List</a>
-      <a href="user-list.html">👥 User Management</a>
+      <a href="{{url_for('ethics_reviewer_committee')}}">📋 Dashboard</a>
+      <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
+      <a href="{{url_for('all_users')}}">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -64,6 +63,7 @@
             <th>Date Submitted</th>
             <th>Review Status</th>
             <th>Risk-Level</th>
+            <th>Documents</th>
             <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
@@ -76,8 +76,42 @@
             <td>{{forma.supervisor_name}}</td>
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
-            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span></td>
+            <td>
+            <span class="status-pill approved">
+            {{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span>
+              <br>
+              <a href="{{url_for('ethics_view_feedback',id=forma.form_id)}}">View Feedback</a>
+          </td>
             <td>{{forma.risk_rating}}</td>
+            <td>
+              <ul class="doc-link">
+                {% if supervisor_formA_req %}
+                  {% for formR in supervisor_formA_req %}
+                  {% if formR.proposal_path %}
+                      
+                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                  {% endif %}
+                  {% if formR.impact_assessment_path %}
+                  
+                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
+                  {% endif %}
+                  {% if formR.permission_letter_path %}
+                
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance_path %}
+               
+                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                  {% endif %}
+                  {% if formR.reseach_tools_path %}
+                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
+                  {% endif %}
+                <br>
+                {% endfor %}
+                {% endif %}
+                <br>
+              </ul>
+            </td>
             <td>{{forma.declaration_date}} days</td>
             <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
           </tr>
@@ -101,6 +135,7 @@
             <th>Date Submitted</th>
             <th>Review Status</th>
             <th>Risk-Level</th>
+            <th>Documents</th>
             <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
@@ -113,8 +148,41 @@
             <td>{{formb.supervisor_name}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
-            <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span></td>
+            <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span>
+            <br>
+            <a href="{{url_for('ethics_view_feedback',id=formb.form_id)}}">View Feedback</a>
+            </td>
             <td>{{formb.risk_level}}</td>
+            <td>
+              
+              <ul class="doc-link">
+                {% if supervisor_formA_req %}
+                  {% for formR in supervisor_formA_req %}
+                  {% if formR.proposal_path %}
+                      
+                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                  {% endif %}
+                  {% if formR.impact_assessment_path %}
+                  
+                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
+                  {% endif %}
+                  {% if formR.permission_letter_path %}
+                
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance_path %}
+               
+                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                  {% endif %}
+                  {% if formR.reseach_tools_path %}
+                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
+                  {% endif %}
+                <br>
+                {% endfor %}
+                {% endif %}
+                <br>
+              </ul>
+            </td>
             <td>{{formb.declaration_date}} days</td>
             <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >View</a></td>
           </tr>
@@ -137,6 +205,7 @@
             <th>Date Submitted</th>
             <th>Review Status</th>
             <th>Risk-Level</th>
+            <th>Documents</th>
             <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
@@ -149,8 +218,16 @@
             <td>{{formc.supervisor_name}}</td>
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span></td>
+            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span>
+            <br>
+            <a href="{{url_for('ethics_view_feedback',id=formc.form_id)}}">View Feedback</a>
+            </td>
             <td>{{formc.risk_level}}</td>
+            <td>
+              {% for items in supervisor_formA_req%}
+              <a href="{{ url_for('static', filename=items.files) }}" target="_blank">Proposal</a>
+              {% endfor%}
+            </td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >View</a></td>
           </tr>

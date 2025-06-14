@@ -65,12 +65,13 @@
             <td>
               {% if forma.supervisor_comments and not forma.ethics_commettee_comments%}
               <strong>Supervisors comments</strong>
+
+              <a href="{{url_for('supervisor_view_feedback',id=forma.form_id)}}">View Feedback</a>
               <br>
-              {{forma.supervisor_feedback}}
               {% elif forma.ethics_commettee_comments %}
               <strong>Ethics Admin comments</strong>
+              <a href="{{url_for('supervisor_view_feedback',id=forma.form_id)}}">View Feedback</a>
               <br>
-              {{forma.ethics_commettee_comments}}
               {% endif %}
             </td>
             <td>{% if forma.signature_date%}{{forma.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
@@ -82,10 +83,7 @@
                       
                       <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.impact_assessment_path %}
-                  
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
-                  {% endif %}
+
                   {% if formR.permission_letter_path %}
                 
                       <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
@@ -96,6 +94,18 @@
                   {% endif %}
                   {% if formR.reseach_tools_path %}
                       <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=formR.prior_clearance)}}">Clearance</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=formR.prior_clearance1)}}">Clearance 1</a></li>
+                  {% endif %}
+                  {% if formR.need_jbs_clearance%}
+                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance)}}">JBS Clearance</a></li>
+                  {% endif %}
+                  {% if formR.need_jbs_clearance1%}
+                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance1)}}">JBS clearance 2</a></li>
                   {% endif %}
                 <br>
                 {% endfor %}
@@ -121,8 +131,6 @@
             <td>{{formb.student_number}}</td>
             <td><span class="badge status-pending">
               {% if formb.ethics_commettee_status %}
-              <strong>Ethics Admin comments</strong>
-              <br>
               {{"Accepted by ethics commettee"}}
               {% else %}
         {{
@@ -135,12 +143,12 @@
             <td>
               {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
               <strong>Supervisors comments</strong>
+              <a href="{{url_for('supervisor_view_feedback',id=formb.form_id)}}">View Feedback</a>
               <br>
-              {{formb.supervisor_feedback}}
               {% elif formb.ethics_commettee_comments %}
               <strong>Ethics Admin comments</strong>
+              <a href="{{url_for('supervisor_view_feedback',id=formb.form_id)}}">View Feedback</a>
               <br>
-              {{formb.ethics_commettee_comments}}
               
               {% endif %}
             </td>
@@ -153,21 +161,19 @@
                       
                       <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.impact_assessment_path %}
-                  
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
-                  {% endif %}
                   {% if formR.permission_letter_path %}
+                  
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Impact Form</a></li>
+                  {% endif %}
+                  {% if formR.ethics_evidence_path %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=formR.ethics_evidence_path) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
                   {% if formR.prior_clearance_path %}
                
                       <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.reseach_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
-                  {% endif %}
+                 
                 <br>
                 {% endfor %}
                 {% endif %}
@@ -198,13 +204,14 @@
 </span></td>
 <td>
               {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}
+            
               <strong>Supervisors comments</strong>
+              <a href="{{url_for('supervisor_view_feedback',id=formc.form_id)}}">View Feedback</a>
               <br>
-              {{formc.supervisor_feedback}}
               {% elif formc.ethics_commettee_comments %}
               <strong>Ethics Admin comments</strong>
+              <a href="{{url_for('supervisor_view_feedback',id=formc.form_id)}}">View Feedback</a>
               <br>
-              {{formc.ethics_commettee_comments}}
               {% endif %}
             </td>
             <td>{% if formc.signature_date%}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>

@@ -119,9 +119,6 @@ def login_page():
     return render_template('login.html')
 
 
-
-
-
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
     supervisors = db_session.query(User).filter(User.role == UserRole.SUPERVISOR).all()
@@ -186,6 +183,140 @@ def register():
     return render_template('register.html', messages=[msg], supervisors=supervisors)
 
 
+
+@app.route('/register_reviewer', methods=['GET', 'POST'])
+def register_reviewer():
+    
+    messages=''
+    if request.method == 'POST':
+        full_name = request.form.get('full_name', '').strip()
+        staff_number = request.form.get('staff_number', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '').strip()
+        password2=request.form.get('password2').strip()
+        specialisation = request.form.get('specialisation')
+        role=request.form.get('role')
+        if password == password2:
+
+            # Validate password
+            is_valid, message = validate_password(password)
+            if not is_valid:
+                messages ="Verification failed"
+                return render_template('register_rewiewer.html', messages=[messages])
+
+            # Check if user exists
+            user = db_session.query(User).filter_by(email=email).first()
+            if user:
+                messages = 'Email already registered!'
+                return render_template('register_reviewer.html', messages=[messages])
+            
+            try:
+                # Hash the password properly
+                
+                # Create new user
+                new_user = User(
+                    full_name=full_name,
+                    staff_number=staff_number,
+                    email=email,
+                    password=password,  # Make sure this is the hashed version
+                    specialisation=specialisation,
+                    role=role
+                )
+                
+                db_session.add(new_user)
+                db_session.commit()
+                
+                messages = 'You have successfully registered!'
+                return redirect(url_for('reviewer_list'))
+                
+            except Exception as e:
+                db_session.rollback()
+                print("Registration error:", str(e))
+                messages = 'Registration failed. Please try again.'
+                return render_template('register_reviewer.html', messages=[messages])
+        else:
+            messages="Passwords mismatch"
+            render_template('register_reviewer.html', messages=[messages])
+    messages= 'Please fill out the form completely!'
+    return render_template('register_reviewer.html', messages=[messages])
+
+@app.route('/edit_user/<string:id>', methods=['POST','GET'])
+def edit_user(id):
+    user = db_session.query(User).filter_by(user_id=id).first()
+    msg="update the user information"
+    if user:
+        full_name = request.form.get('full_name', '').strip()
+        staff_number = request.form.get('staff_number', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '').strip()
+        password2 = request.form.get('password2', '').strip()
+        specialisation = request.form.get('specialisation', '').strip()
+        role = request.form.get('role', '').strip()
+
+        if request.method=="post":
+            if password and password2:
+                if password != password2:
+                    msg = 'Passwords do not match'
+                    return render_template('register_reviewer.html', messages=[msg])
+
+                is_valid, message = validate_password(password)
+                if not is_valid:
+                    msg = "validation failed"
+                    return render_template('register_reviewer.html', messages=[msg])
+
+                try:
+                    user.full_name = full_name
+                    user.staff_number = staff_number
+                    user.email = email
+                    user.password = password  # Ensure you hash passwords
+                    user.specialisation = specialisation
+                    user.role = role
+
+                    db_session.commit()
+                    return redirect(url_for('reviewer_list'))
+
+                except Exception as e:
+                    db_session.rollback()
+                    print("Update error:", str(e))
+                    msg = 'Update failed. Please try again.'
+                    return render_template('register_reviewer.html', messages=[msg])
+
+            else:
+                try:
+                    user.full_name = full_name
+                    user.staff_number = staff_number
+                    user.email = email
+                    user.specialisation = specialisation
+                    user.role = role
+
+                    db_session.commit()
+                    return redirect(url_for('reviewer_list'))
+
+                except Exception as e:
+                    db_session.rollback()
+                    print("Update error:", str(e))
+                    msg = 'Update failed. Please try again.'
+                    return render_template('register_reviewer.html', messages=[msg])
+
+    return render_template('edit_user.html',user=user, messages=[msg])
+
+@app.route('/all_users', methods=['GET', 'POST'])
+def all_users():
+    all_users = db_session.query(User).all()
+    return render_template("user-list.html",all_users=all_users)
+
+@app.route('/delete_user/<string:id>', methods=['POST'])
+def delete_user(id):
+    user = db_session.query(User).filter_by(user_id=id).first()
+    
+    if user:
+        db_session.delete(user)
+        db_session.commit()
+        msg="User deleted Successfully"
+        return redirect(url_for('ethics_reviewer_committee'))
+    return render_template('register_reviewer.html',user=user, messages=[msg])
+
+
 @app.route('/api/forgot-password', methods=['POST'])
 def forgot_password():
     data = request.get_json()
@@ -212,6 +343,8 @@ def forgot_password():
         return jsonify({'message': 'Server failed to send email. Contact admin.'}), 500
 
     return jsonify({'message': 'If that email exists, a reset code has been sent.'}), 200
+
+
 
 @app.route('/api/reset-password', methods=['POST'])
 def reset_password():
@@ -428,7 +561,7 @@ def submit_form_c_requirements():
             
             # Save files based on form field names (corrected from request.form to request.files)
             proposal_path = save_file('proposal')
-            print("----------",proposal_path)
+
             # Validate required files
             if not all([proposal_path]):
                 return jsonify({'error': 'Missing required files'}), 400
@@ -951,7 +1084,7 @@ def form_a_upload ():
 # ---------------- Section 4 ------------------
 @app.route('/form_a_sec4', methods=['GET', 'POST'])
 def form_a_sec4():
-    print("form 4")
+   
 
     if request.method == 'POST':
         user_id = session.get('id')
@@ -1537,7 +1670,7 @@ def reject_or_Accept_form_c(id):
         supervisor_date=request.form.get('supervisor_date')
         org_permission_comment=request.form.get('org_permission_comment')
         waiver_comment=request.form.get('waiver_comment')
-        form_a_comment=request.form.get('form_comment')
+        form_a_comment=request.form.get('form_a_comment')
         questions_comment=request.form.get('questions_comment')
         consent_comment=request.form.get('consent_comment')
         proposal_comment=request.form.get('proposal_comment')
@@ -2473,6 +2606,60 @@ def chair_formc_view(id):
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
 
+@app.route('/student_view_feedback/<string:id>', methods=['GET'])
+def student_view_feedback(id):
+    form = None
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=id).first()
+        if form:
+            break  # Stop once the form is found
+
+    if form:
+        return render_template("student-view-feedback.html", view_form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('dashboard'))
+
+
+@app.route('/supervisor_view_feedback/<string:id>', methods=['GET'])
+def supervisor_view_feedback(id):
+    form = None
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=id).first()
+        if form:
+            break  # Stop once the form is found
+
+    if form:
+        return render_template("supervisor-view-feedback.html", view_form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('supervisor_dashboard'))
+
+
+@app.route('/ethics_view_feedback/<string:id>', methods=['GET'])
+def ethics_view_feedback(id):
+    form = None
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=id).first()
+        if form:
+            break  # Stop once the form is found
+
+    if form:
+        return render_template("ethics-view-feedback.html", view_form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('chair_landing'))
+
+
+@app.route('/reviewer_list/', methods=['GET'])
+def reviewer_list():
+
+    form = db_session.query(User).filter(User.role=="REVIEWER").all()
+       
+
+    return render_template("reviewer-list.html", view_form=form)
+   
+
 @app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])
 def chair_form_view(id,form_name):
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
@@ -2694,9 +2881,9 @@ def ethics_reviewer_committee():
     .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
     .distinct(FormC.user_id)
     .all())
-
+    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
-    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
+    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
 
 @app.route('/chair_landing',methods=['POST','GET'])
 def chair_landing():
