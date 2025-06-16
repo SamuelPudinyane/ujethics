@@ -15,6 +15,7 @@ from datetime import date
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
+from sqlalchemy import or_
 # Load environment variables from .env file
 load_dotenv()
 
@@ -103,7 +104,10 @@ def login_page():
                     return redirect(url_for('chair_landing'))
                 elif role == 'REC':
                     session['rec_role']='REC'
-                    return redirect(url_for('ethics_reviewer_committee'))
+                    return redirect(url_for('rec_dashboard'))
+                elif role == 'REVIEWER':
+                    session['reviewer_role']='REVIEWER'
+                    return redirect(url_for('review_dashboard'))
                 elif role == 'DEAN':
                     session['dean_role']='DEAN'
                     return redirect(url_for('dean_dashboard'))
@@ -2936,6 +2940,105 @@ def chair_landing():
     sorted_yearsC = sorted(forms_by_yearC.keys(), reverse=True)
  
     return render_template("chair-landing-dashboard.html", forms_by_yearA=forms_by_yearA, sorted_yearsA=sorted_yearsA,sorted_yearsB=sorted_yearsB,forms_by_yearB=forms_by_yearB,sorted_yearsC=sorted_yearsC,forms_by_yearC=forms_by_yearC)
+
+
+@app.route('/review_dashboard', methods=['GET','POST'])
+def review_dashboard():
+    user_id=session['id']
+    submitted_form_a = (db_session.query(FormA)
+    .filter(or_(
+            FormA.reviewer_name1 == user_id,
+            FormA.reviewer_name2 == user_id
+        ),FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.risk_rating !='Low',FormA.review_signature_date!= None)
+    .distinct(FormA.user_id)
+    .all())
+    
+    submitted_form_b = (db_session.query(FormB)
+    .filter(or_(
+            FormB.reviewer_name1 == user_id,
+            FormB.reviewer_name2 == user_id
+        ),FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.risk_level!='Low',FormB.review_signature_date!= None)
+    .distinct(FormB.user_id)
+    .all())
+    submitted_form_c = (db_session.query(FormC)
+    .filter(or_(
+            FormC.reviewer_name1 == user_id,
+            FormC.reviewer_name2 == user_id
+        ),FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.risk_level!='Low',FormC.review_signature_date!= None)
+    .distinct(FormC.user_id)
+    .all())
+    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    today = date.today()
+    return render_template('review-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
+
+
+
+@app.route('/reviewer_form_a/<string:id>', methods=['GET'])
+def reviewer_form_a(id):
+    form = db_session.query(FormA).filter_by(form_id=id).first()
+
+    if form:
+        return render_template("review_form_a.html", form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('review_dashboard'))
+
+
+@app.route('/reviewer_form_b/<string:id>', methods=['GET'])
+def reviewer_form_b(id):
+   
+    form = db_session.query(FormB).filter_by(form_id=id).first()
+
+    if form:
+        return render_template("review_form_b.html",form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('review_dashboard'))
+
+
+
+@app.route('/reviewer_form_c/<string:id>', methods=['GET'])
+def reviewer_form_c(id):
+    form = db_session.query(FormC).filter_by(form_id=id).first()
+   
+    if form:
+        return render_template("review_form_c.html", form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('review_dashboard'))
+    
+
+
+@app.route('/rec_dashboard', methods=['GET','POST'])
+def rec_dashboard():
+    user_id=session['id']
+    submitted_form_a = (db_session.query(FormA)
+    .filter(or_(
+            FormA.reviewer_name1 == user_id,
+            FormA.reviewer_name2 == user_id
+        ),FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.risk_rating !='Low',FormA.review_signature_date!= None)
+    .distinct(FormA.user_id)
+    .all())
+    
+    submitted_form_b = (db_session.query(FormB)
+    .filter(or_(
+            FormB.reviewer_name1 == user_id,
+            FormB.reviewer_name2 == user_id
+        ),FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.risk_level!='Low',FormB.review_signature_date!= None)
+    .distinct(FormB.user_id)
+    .all())
+    submitted_form_c = (db_session.query(FormC)
+    .filter(or_(
+            FormC.reviewer_name1 == user_id,
+            FormC.reviewer_name2 == user_id
+        ),FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.risk_level!='Low',FormC.review_signature_date!= None)
+    .distinct(FormC.user_id)
+    .all())
+    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    today = date.today()
+    return render_template('review-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
+
+
 
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])

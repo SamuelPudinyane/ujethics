@@ -21,10 +21,10 @@
       <h3>REC Committee</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="rec-dashboard.html" class="active">📋 Dashboard</a>
+      <a href="{{url_for('rec_dashboard')}}" class="active">📋 Dashboard</a>
       <!-- <a href="assigned-reviews.html">✅ Assigned Reviews</a> -->
-      <a href="rec-archive.html">📁 Archive</a>
-      <a href="logout.html">🔒 Logout</a>
+      <!--<a href="{{url_for('rec-archive')}}">📁 Archive</a>-->
+      <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
 
@@ -35,49 +35,182 @@
     </header>
 
     <section class="admin-content">
-      <h3>Applications for Review (Medium & High Risk)</h3>
+      <h3>Assigned Submissions</h3>
+    {% if submitted_forma %}
 
       <table class="status-table">
         <thead>
           <tr>
-            <th>Student Number</th>
-            <th>Name</th>
-            <th>Form Type</th>
+            <th>Student</th>
+            <th>Form</th>
             <th>Risk Level</th>
-            <th>Date Submitted</th>
-            <th>Days Left to Review</th>
-            <th>Download</th>
-            <th>Actions</th>
+            <th>Date Assigned</th>
+            <th>Status</th>
+            <th>Documents</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
+          {% for item in submitted_forma %}
           <tr>
-            <td>216018061</td>
-            <td>Musawenkosi Nyathi</td>
+            <td>{{item.student_number}}</td>
             <td>Form A</td>
-            <td>High</td>
-            <td class="submission-date">2025-05-01</td>
-            <td class="days-left"></td>
-            <td><a href="view-changes.html?form=A&student=216018061">Download</a></td>
+            <td><span class="badge status-high">{{item.risk_rating}}</span></td>
+            <td>{% if item.review_signature_date%}{{item.revivew_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
             <td>
-              <a href="review-form.html?form=A&student=216018061" class="approve-btn">Review</a>
+              <ul class="doc-link">
+                {% if supervisor_formA_req %}
+                  {% for formR in supervisor_formA_req %}
+                  {% if formR.proposal_path %}
+                      
+                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                  {% endif %}
+
+                  {% if formR.permission_letter_path %}
+                
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance_path %}
+               
+                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                  {% endif %}
+                  {% if formR.reseach_tools_path %}
+                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=formR.prior_clearance)}}">Clearance</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=formR.prior_clearance1)}}">Clearance 1</a></li>
+                  {% endif %}
+                  {% if formR.need_jbs_clearance%}
+                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance)}}">JBS Clearance</a></li>
+                  {% endif %}
+                  {% if formR.need_jbs_clearance1%}
+                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance1)}}">JBS clearance 2</a></li>
+                  {% endif %}
+                <br>
+                {% endfor %}
+                {% endif %}
+                <br>
+              </ul>
+            </td>
+            <td>
+              <a href="{{url_for('reviewer_form_a',id='item.form_id')}}" class="view-btn">Review</a>
             </td>
           </tr>
-          <tr>
-            <td>216056789</td>
-            <td>Jane Doe</td>
-            <td>Form B</td>
-            <td>Medium</td>
-            <td class="submission-date">2025-04-29</td>
-            <td class="days-left"></td>
-            <td><a href="view-changes.html?form=B&student=216056789">Download</a></td>
-            <td>
-              <a href="review-form.html?form=B&student=216056789" class="approve-btn">Review</a>
-            </td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
+      {% endif %}
+      <br>
+      {% if submitted_form_b%}
+      <table class="status-table">
+        <thead>
+          
+          <tr>
+            <th>Student</th>
+            <th>Form</th>
+            <th>Risk Level</th>
+            <th>Date Assigned</th>
+            <th>Status</th>
+            <th>Documents</td>
+            <th>Action</th>
+          </tr>
+         
+        </thead>
+        <tbody>
+          {% for item in submitted_formb%}
+          <tr>
+            <td>{{item.student_number}}</td>
+            <td>Form B</td>
+            <td><span class="badge status-high">{{item.risk_level}}</span></td>
+            <td>{% if item.review_signature_date%}{{item.revivew_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td>
+              <ul class="doc-link">
+                {% if supervisor_formA_req %}
+                  {% for formR in supervisor_formA_req %}
+                  {% if formR.proposal_path %}
+                      
+                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                  {% endif %}
+                  {% if formR.permission_letter_path %}
+                  
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Impact Form</a></li>
+                  {% endif %}
+                  {% if formR.ethics_evidence_path %}
+                
+                      <li><a href="{{ url_for('static', filename=formR.ethics_evidence_path) }}" target="_blank">Permission Letter</a></li>
+                  {% endif %}
+                  {% if formR.prior_clearance_path %}
+               
+                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                  {% endif %}
+                 
+                <br>
+                {% endfor %}
+                {% endif %}
+                <br>
+              </ul>
+            </td>
+            <td>
+              <a href="{{url_for('reviewer_form_b',id=item.form_id)}}" class="view-btn">Review</a>
+            </td>
+          </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+      <br>
+      {% if submitted_form_b%}
+      <table class="status-table">
+        <thead>
+          
+          <tr>
+            <th>Student</th>
+            <th>Form</th>
+            <th>Risk Level</th>
+            <th>Date Assigned</th>
+            <th>Status</th>
+            <th>Documents</th>
+            <th>Action</th>
+          </tr>
+         
+        </thead>
+        <tbody>
+          {% for item in submitted_formc%}
+          <tr>
+            <td>{{item.student_number}}</td>
+            <td>Form C</td>
+            <td><span class="badge status-high">{{item.risk_level}}</span></td>
+            <td>{% if item.review_signature_date%}{{item.revivew_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td>
+              <ul class="doc-link">
+                {% if supervisor_formA_req %}
+                  {% for formR in supervisor_formA_req %}
+                  {% if formR.files %}
+                      
+                      <li><a href="{{ url_for('static', filename=formR.files) }}" target="_blank">Proposal</a></li>
+                  {% endif %}
+                  
+                {% endfor %}
+                {% endif %}
+                <br>
+              </ul>
+            </td>
+            <td>
+              <a href="{{url_for('reviewer_form_c',id=item.form_id)}}" class="view-btn">Review</a>
+            </td>
+          </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
     </section>
+
 
     <footer class="footer">
       <p>&copy; 2025 JBS Ethics | REC Committee</p>

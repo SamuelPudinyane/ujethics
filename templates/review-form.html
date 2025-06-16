@@ -17,13 +17,12 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img src="img/image.png" class="sidebar-logo" />
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ Logo" class="sidebar-logo" />
       <h3>REC Committee</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="rec-dashboard.html">📋 Dashboard</a>
-      <a href="assigned-reviews.html">✅ Assigned Reviews</a>
-      <a href="logout.html">🔒 Logout</a>
+      <a href="{{url_for('review_dashboard')}}">📋 Dashboard</a>
+      <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
 

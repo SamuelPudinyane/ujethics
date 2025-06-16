@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form C – Researcher's Details | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/form_a.css" />
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}"> -->
+
+    <style>
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 400px;
+      max-width: 90%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      color: #2E1A46;
+    }
+
+    .modal-content button {
+      margin-top: 1rem;
+      background-color: #2E1A46;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .dropdown-checkboxes {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <img src="/static/img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form C – Researcher's Details</span>
+      <div style="text-align: right;">
+        <a href="{{url_for('logout')}}" class="btn-logout">Logout</a>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <main class="main-content">
+
+   
+      <h2>SECTION 1: Researcher's Details</h2>
+      <label>Applicant Name
+        <br><span>{{form.applicant_name}}</span>
+      </label>
+      <label>Student/Staff Number
+        <br><span>{{form.student_number}}</span>
+      </label>
+      <label>Institution
+        <br><span>{{form.institution}}</span>
+      </label>
+      <label>UJ Department and School
+        <br><span>{{form.department}}</span>
+      </label>
+      <label>Degree Registered For
+        <br><span>{{form.degree}}</span>
+      </label>
+      <label>Title/Working Title of Study
+        <br><span>{{form.project_title}}</span>
+      </label>
+      <label>Mobile Number
+        <br><span>{{form.mobile_number}}</span>
+      </label>
+      <label>Email Address (Applicant)
+        <br><span>{{form.email_address}}</span>
+      </label>
+      <label>Supervisor(s)
+        <br><span>{{form.supervisor_name}}</span>
+      </label>
+      <label>Supervisor Email(s)
+        <br><span>{{form.supervisor_email}}</span>
+      </label>
+
+      
+    
+  </main>
+
+  <!-- Section 2 -->
+
+  <!-- Main Content -->
+    <main class="main-content">
+
+
+
+      <h2>SECTION 2: Risk Assessment</h2>
+
+      <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Participant Group</th>
+            <th>Tick if Applicable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Communities that may be considered as vulnerable</td>
+            <td>{{form.vulnerable}}</td></tr>
+          <tr><td>People under the age of 18 or over 65</td>
+            <td>{{form.age_under_18_or_over_65}}</td></tr>
+          <tr><td>UJ employees or students</td>
+            <td>{{form.uj_employee}}</td></tr>
+          <tr><td>Persons not usually considered vulnerable but would be in this context</td>
+            <td>{{form.non_vulnerable_context}}</td></tr>
+          <tr><td>Non-English-speaking participants</td>
+            <td>{{form.non_english}}</td></tr>
+          <tr><td>A researcher’s own students</td>
+            <td>{{form.own_student}}</td></tr>
+          <tr><td>People living in poverty</td>
+            <td>{{form.poverty}}</td></tr>
+          <tr><td>People with little or no education</td>
+            <td>{{form.non_education}}</td></tr>
+          <tr><td>Other: Please describe.</td>
+            <td>{{form.vulnerable_other_description}}</td></tr>
+        </tbody>
+      </table>
+      
+      <label><strong>Comments (e.g. “No participants”):</strong></label>
+     
+      
+      <hr>
+
+      <h4>2.2 Research Activity Type</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Activity</th>
+      <th>Tick if Applicable</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
+    <td>{{form.consent_violation}}</td></tr>
+<tr><td>Causing discomfiture beyond normal inconvenience</td>
+  <td>{{form.discomfiture}}</td></tr>
+<tr><td>Deception of participants or covert observation</td>
+  <td>{{form.deception}}</td></tr>
+<tr><td>Examining sensitive or contentious issues</td>
+  <td>{{form.sensitive_issues}}</td></tr>
+<tr><td>Seeking prejudicial information about participants</td>
+  <td>{{form.prejuditial_info}}</td></tr>
+<tr><td>Using intrusive techniques</td>
+  <td>{{form.intrusive}}</td></tr>
+<tr><td>Study/participation in illegal activities</td>
+  <td>{{form.illegal}}</td></tr>
+<tr><td>Collecting personal/social info directly from participants</td>
+  <td>{{form.direct_social_info}}</td></tr>
+<tr><td>Identifiable info collected from available records (staff/student records)</td>
+  <td>{{form.identifiable_records}}</td></tr>
+<tr><td>Psychology inventories / scales / tests</td>
+  <td>{{form.psychology_tests}}</td></tr>
+<tr><td>Activities putting researcher/data collector at risk</td>
+  <td>{{form.reseacher_risk}}</td></tr>
+    <tr><td>Other:  Please describe.</td>
+      <td>{{form.activity_other_description}}</td></tr>
+  </tbody>
+</table>
+
+<label><strong>Comments:</strong></label>
+
+      <hr>
+
+      <h4>2.3 Additional Research Considerations</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Tick if Applicable</th>
+          </tr>
+        </thead>
+        <tbody>
+       <tr><td>a) Reimbursement or incentives to any participants.</td>
+        <td>{{form.incentives}}</td></tr>
+        <tr><td>b) Participants will incur financial costs by participating.</td>
+          <td>{{form.participant_costs}}</td></tr>
+        <tr><td>c) Researcher has financial or other involvement in the research.</td>
+          <td>{{form.researcher_interest}}</td></tr>
+        <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
+          <td>{{form.conflict_of_interest}}</td></tr>
+        <tr><td>e) Research is conducted on UJ premises.</td>
+          <td>{{form.uj_premises}}</td></tr>
+        <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
+          <td>{{form.uj_facilities}}</td></tr>
+        <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
+          <td>{{form.uj_funding}}</td></tr>
+        </tbody>
+      </table>
+      
+      <label><strong>Comments:</strong></label>
+     
+      
+      <hr>
+      
+      <h5>Risk Assessment</h5>
+      
+      <label><strong>Rate your project risk level:</strong>
+      <br><span>{{form.risk_level}}</span></label>
+    
+      
+      <br>
+      <label><strong>Justify the Risk Level</strong>
+      <br><span>{{form.risk_justification}}</span></label>
+
+      
+      <label><strong>If Medium or High Risk, describe potential benefits:</strong>
+      <br><span>{{form.risk_benefits}}</span>
+    </label>
+     
+      
+      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong>
+      <br><span>{{form.risk_mitigation}}</span></label>
+  
+
+  </main>
+
+  <!-- section 3 -->
+
+   <!-- Main Content -->
+  <main class="main-content">
+
+
+
+      <h2>SECTION 3: Proposal Summary Sheet</h2>
+
+      <div class="form-group">
+        <label for="project_title">3.1 Title or Provisional Title of the Research Project
+          <br><span>{{form.summary_title}}</span>
+        </label>
+       
+      </div>
+
+      <div class="form-group">
+        <label for="executive_summary">3.2 Executive Summary of the Study
+          <br><span>{{form.executive_summary}}</span>
+        </label>
+      
+      </div>
+
+      <div class="form-group">
+        <label for="research_questions">3.3 Research Questions / Hypotheses
+          <br><span>{{form.research_questions}}</span>
+        </label>
+
+      </div>
+
+      <div class="form-group">
+        <label for="research_purpose">3.4 Research Purpose and Objectives / Anticipated Outcomes
+          <br><span>{{form.research_purpose}}</span>
+        </label>
+        
+      </div>
+
+      <div class="form-group">
+        <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?
+          <br><span>{{form.secondary_data_info}}</span>
+        </label>
+
+      </div>
+
+      <div class="form-group">
+        <label for="exemption_reason">3.6 Why does your study meet exemption requirements?
+          <br><span>{{form.exemption_reason}}</span>
+        </label>
+     
+      </div>
+
+  
+  </main>
+
+  <!-- Section 4 -->
+
+ <!-- Main Content -->
+  <main class="main-content">
+
+      <h2>SECTION 4: Declaration</h2>
+
+      <p class="form-note">
+        I, <strong><u> {{form.declaration_name}} </u></strong>
+        (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
+ 
+        ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
+                                      
+
+      </p>
+
+      <div class="form-group">
+        <label for="full_name"><strong>{{form.full_name}}</strong></label>
+      </div>
+
+      <div class="form-group">
+        <label for="submission_date"><span>{{form.submission_date.strftime('%d/%m/%Y')}}</span></label>
+      </div>
+<hr>
+<h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+
+  <div class="section">
+    <label>Student Name:</label>
+    <span>{{form.declaration_name}}</span>
+
+    <label>Date of Submission:</label>
+    <span>{% if form.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+
+    <label>Date of Re-submission:</label>
+    <span>{% if form.signature_date %}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+
+    <label>Supervisor:</label>
+    <span>{{form.supervisor_name}}</span>
+
+    <label>Title of Research:</label>
+    <span>{{form.project_title}}</span>
+
+    <label>Date of Review:</label>
+    <input type="date" name="review_date">
+  </div>
+ 
+  <footer class="footer">
+    <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
+  </footer>
+
+</div>
+
+<!-- SCRIPT: Confirmation Modal Logic -->
+<script>
+
+
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -96,7 +96,11 @@
                   {% endif %}
                 </em>
                 {% elif formA.rejected_or_accepted %}
-                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formA.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.ethics_commetee_status else  'Accepted by ethics Admin' if formA.ethics_commetee_status and formA.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
+                <span style="color:green; font-size:12px;">
+                  {{'Rejected by supervisor' if not formA.rejected_or_accepted 
+                  else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.review_signature_date 
+                  else  'Accepted by ethics Admin' if formA.review_signature_date and formA.risk_level=='Low' 
+                  else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
                 <br>
                 <strong>Feedabck: </strong>
                 <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
@@ -127,7 +131,11 @@
 
                 {% endif %}</em>
                 {% elif formB.rejected_or_accepted %}
-                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formB.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.ethics_commetee_status else  'Accepted by ethics Admin' if formB.ethics_commetee_status and formB.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
+                <span style="color:green; font-size:12px;">
+                  {{'Rejected by supervisor' if not formB.rejected_or_accepted 
+                  else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.review_signature_date 
+                  else  'Accepted by ethics Admin' if formB.review_signature_date and formB.risk_level=='Low' 
+                  else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
                 <br>
                 <strong>Feedback: </strong>
                 <a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
@@ -150,7 +158,11 @@
             <td>{% if not formC.supervisor_feedback and formC.submission_date %}
                 Awaiting Supervisor
                 {% elif formC.supervisor_feedback%}
-                <span style="color:green; font-size:12px;">{{'Rejected by supervisor' if not formC.rejected_or_accepted else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.ethics_commetee_status else  'Accepted by ethics Admin' if formC.ethics_commetee_status and formC.risk_level=='Low' else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
+                <span style="color:green; font-size:12px;">
+                {{'Rejected by supervisor' if not formC.rejected_or_accepted 
+                else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.review_date 
+                else  'Accepted by ethics Admin' if formC.review_signature_date and formC.risk_level=='Low' 
+                else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
                 <br>
                 <strong>Feedback: </strong>
                 <a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>

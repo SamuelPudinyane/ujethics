@@ -78,7 +78,10 @@
             <td>{{forma.declaration_date}}</td>
             <td>
             <span class="status-pill approved">
-            {{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span>
+            {{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted and not forma.review_date
+            else 'Approved by Ethics committee' if forma.rejected_or_accepted and forma.review_supervisor_signature  
+            else 'Awaiting for reviewers feedback' if forma.review_supervisor_signature and forma.risk_rating != 'Low'
+            else 'Rejected by Ethics committee'}}</span>
               <br>
               <a href="{{url_for('ethics_view_feedback',id=forma.form_id)}}">View Feedback</a>
           </td>
@@ -148,7 +151,10 @@
             <td>{{formb.supervisor_name}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
-            <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span>
+            <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.review_date
+              else 'Approved by Ethics committee' if formb.rejected_or_accepted and formb.review_supervisor_signature 
+              else 'Awaiting for reviewers feedback' if formb.review_supervisor_signature and formb.risk_level != 'Low'
+              else 'Rejected by Ethics committee'}}</span>
             <br>
             <a href="{{url_for('ethics_view_feedback',id=formb.form_id)}}">View Feedback</a>
             </td>
@@ -218,7 +224,10 @@
             <td>{{formc.supervisor_name}}</td>
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span>
+            <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted and not formc.review_date
+              else 'Approved by Ethics committee' if formc.rejected_or_accepted and formc.review_supervisor_signature 
+              else 'Awaiting for reviewers feedback' if formc.review_supervisor_signature and formc.risk_level != 'Low'
+              else 'Rejected by Ethics committee' }}</span>
             <br>
             <a href="{{url_for('ethics_view_feedback',id=formc.form_id)}}">View Feedback</a>
             </td>
