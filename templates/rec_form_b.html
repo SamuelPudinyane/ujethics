@@ -304,9 +304,9 @@
     <input type="hidden" name="status" id="status" value="" />
 
     <div class="submit-row">
-        <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button>
-        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button>
-        <button type="submit" class="btn-logout" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
+        <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
+        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
+        <button type="submit" class="btn btn-danger" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
         <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
     </div>
 </form>

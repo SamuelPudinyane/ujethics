@@ -3038,6 +3038,44 @@ def rec_dashboard():
     return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
 
 
+
+
+@app.route('/rec_form_a/<string:id>', methods=['GET'])
+def rec_form_a(id):
+    form = db_session.query(FormA).filter_by(form_id=id).first()
+
+    if form:
+        return render_template("rec_form_a.html", form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('rec_dashboard'))
+
+
+@app.route('/rec_form_b/<string:id>', methods=['GET'])
+def rec_form_b(id):
+   
+    form = db_session.query(FormB).filter_by(form_id=id).first()
+
+    if form:
+        return render_template("rec_form_b.html",form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('rec_dashboard'))
+
+
+
+@app.route('/rec_form_c/<string:id>', methods=['GET'])
+def rec_form_c(id):
+    form = db_session.query(FormC).filter_by(form_id=id).first()
+   
+    if form:
+        return render_template("rec_form_c.html", form=form)
+    else:
+        # You can pass an error message or just load the dashboard
+        return redirect(url_for('rec_dashboard'))
+    
+
+
 @app.route('/rec_response/<string:id>', methods=['GET', 'POST'])
 def rec_response(id):
     if request.method == 'POST':
