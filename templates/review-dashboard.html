@@ -34,7 +34,7 @@
 
     <section class="admin-content">
       <h3>Assigned Submissions</h3>
-    {% if submitted_forma %}
+    {% if submitted_form_a %}
 
       <table class="status-table">
         <thead>
@@ -49,13 +49,13 @@
           </tr>
         </thead>
         <tbody>
-          {% for item in submitted_forma %}
+          {% for item in submitted_form_a %}
           <tr>
             <td>{{item.student_number}}</td>
             <td>Form A</td>
             <td><span class="badge status-high">{{item.risk_rating}}</span></td>
-            <td>{% if item.review_signature_date%}{{item.revivew_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -119,13 +119,13 @@
          
         </thead>
         <tbody>
-          {% for item in submitted_formb%}
+          {% for item in submitted_form_b%}
           <tr>
             <td>{{item.student_number}}</td>
             <td>Form B</td>
             <td><span class="badge status-high">{{item.risk_level}}</span></td>
-            <td>{% if item.review_signature_date%}{{item.revivew_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -162,7 +162,7 @@
       </table>
       {% endif %}
       <br>
-      {% if submitted_form_b%}
+      {% if submitted_form_c%}
       <table class="status-table">
         <thead>
           
@@ -178,13 +178,14 @@
          
         </thead>
         <tbody>
-          {% for item in submitted_formc%}
+
+          {% for item in submitted_form_c%}
           <tr>
             <td>{{item.student_number}}</td>
             <td>Form C</td>
             <td><span class="badge status-high">{{item.risk_level}}</span></td>
-            <td>{% if item.review_signature_date%}{{item.revivew_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}

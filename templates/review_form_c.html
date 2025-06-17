@@ -64,6 +64,18 @@
       </div>
     </div>
   </header>
+  <form action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
+    <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <!-- Main Content -->
   <main class="main-content">
 
@@ -241,107 +253,204 @@
 
   </main>
 
-  <!-- section 3 -->
+ <!-- Section 3 -->
 
    <!-- Main Content -->
   <main class="main-content">
+    
+      <h2>Ethical Considerations</h2>
 
-
-
-      <h2>SECTION 3: Proposal Summary Sheet</h2>
-
-      <div class="form-group">
-        <label for="project_title">3.1 Title or Provisional Title of the Research Project
-          <br><span>{{form.summary_title}}</span>
-        </label>
-       
-      </div>
-
-      <div class="form-group">
-        <label for="executive_summary">3.2 Executive Summary of the Study
-          <br><span>{{form.executive_summary}}</span>
-        </label>
-      
-      </div>
-
-      <div class="form-group">
-        <label for="research_questions">3.3 Research Questions / Hypotheses
-          <br><span>{{form.research_questions}}</span>
-        </label>
-
-      </div>
-
-      <div class="form-group">
-        <label for="research_purpose">3.4 Research Purpose and Objectives / Anticipated Outcomes
-          <br><span>{{form.research_purpose}}</span>
+      <div class="question-block" >
+        <label>3.1 Was ethical clearance granted for the original data gathering phase?
+            <br><span>{{form.original_clearance}}</span>
         </label>
         
       </div>
 
-      <div class="form-group">
-        <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?
-          <br><span>{{form.secondary_data_info}}</span>
+      <div class="question-block">
+        <label>3.2 Did participants in the original study grant permission for future use of the data?
+            <br><span>{{form.participant_permission}}</span>
         </label>
-
+       
       </div>
 
-      <div class="form-group">
-        <label for="exemption_reason">3.6 Why does your study meet exemption requirements?
-          <br><span>{{form.exemption_reason}}</span>
+      <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:
+        <br><span>{{form.data_safekeeping}}</span>
+      </label>
+ 
+
+      <hr>
+
+      <h2>Risk Assessment</h2>
+
+      <div class="question-block">
+        <label>The study presents:
+            <br><span>{{form.risk_level}}</span>
         </label>
-     
+        
       </div>
 
-  
-  </main>
+      <label>Comments:
+        <br><span>{{form.risk_comments}}</span>
+      </label>
+    
 
-  <!-- Section 4 -->
+      <hr>
 
- <!-- Main Content -->
-  <main class="main-content">
-
-      <h2>SECTION 4: Declaration</h2>
+      <h2>Declaration</h2>
 
       <p class="form-note">
-        I, <strong><u> {{form.declaration_name}} </u></strong>
-        (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
- 
-        ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
-                                      
-
+        I, <strong>{{form.declaration_name}}</strong>
+        (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics. 
       </p>
 
-      <div class="form-group">
-        <label for="full_name"><strong>{{form.full_name}}</strong></label>
-      </div>
+      <label>Full Name
+        <br><strong>{{form.full_name}}</strong>
+      </label>
 
-      <div class="form-group">
-        <label for="submission_date"><span>{{form.submission_date.strftime('%d/%m/%Y')}}</span></label>
-      </div>
-<hr>
-<h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+      <label>Date
+        <br><strong>{% if form.declaration_date%}{{form.declaration_date}}{% endif%}</strong>
+      </label>
+
+      <hr>
+   
+       
+      <div id="supervisorDeclaration" >
+    
+      <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
     <label>Student Name:</label>
-    <span>{{form.declaration_name}}</span>
+    <strong>{{form.declaration_name}}</strong>
 
     <label>Date of Submission:</label>
-    <span>{% if form.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+    <strong>{% if form.submission_date%}{{form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
 
     <label>Date of Re-submission:</label>
-    <span>{% if form.signature_date %}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+    <strong>{% if form.signature_date%}{{form.signature_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
 
     <label>Supervisor:</label>
-    <span>{{form.supervisor_name}}</span>
+    <strong>{{form.supervisor_name}}</strong>
 
     <label>Title of Research:</label>
-    <span>{{form.project_title}}</span>
+    <strong>{% if form.study_title%}{{form.study_title}}{% elif form.project_title%}{{form.project_title}}{% endif%}</strong>
 
     <label>Date of Review:</label>
     <input type="date" name="review_date">
   </div>
- 
-  <footer class="footer">
+
+  <div class="section">
+    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Submitted (Yes or No)</th>
+          <th>Reviewer Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Organisational permission</strong><br>
+            • Can be an email or formal letter.<br>
+            • Include permission to access relevant business documents.<br>
+            • If not requested, use the “Request for Permission” template.
+          </td>
+          <td><input type="text" name="org_permission_status"></td>
+          <td><textarea name="org_permission_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Signed waiver from business</strong><br>
+            • Use template provided in “Ethical clearance templates”.
+          </td>
+          <td><input type="text" name="waiver_status"></td>
+          <td><textarea name="waiver_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Form A – Ethics Application Form</strong><br>
+            • Must be completed and co-signed by supervisor.<br>
+            • Submit updated version if changes were made since proposal.
+          </td>
+          <td><input type="text" name="form_status"></td>
+          <td><textarea name="form_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Interview Questions and/or Questionnaire</strong><br>
+            • As close to final as possible.<br>
+            • If preliminary, indicate clearly.<br>
+            • Sensitive/invasive questions increase risk – avoid where possible.
+          </td>
+          <td><input type="text" name="questions_status"></td>
+          <td><textarea name="questions_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Participant Information Sheet & Informed Consent</strong><br>
+            • Use and adapt the provided template for your study.
+          </td>
+          <td><input type="text" name="consent_status"></td>
+          <td><textarea name="consent_comments"></textarea></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Refined Concept Proposal</strong><br>
+            • Should match the version submitted with Literature Review.
+          </td>
+          <td><input type="text" name="proposal_status"></td>
+          <td><textarea name="proposal_comments"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
+    <textarea name="additional_comments"></textarea>
+  </div>
+
+  <!-- Radio Buttons -->
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
+    <label class="form-check-label" for="ready">
+      ✅ Ready for submission to JBS ETHICS ADMIN
+    </label>
+  </div>
+
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="radio" name="recommendation" id="revisions" value="Revisions required" onchange="toggleFields()">
+    <label class="form-check-label" for="revisions">
+      ✏️ Revisions required before submission
+    </label>
+  </div>
+
+
+
+    <div class="form-group">
+      <label for="supervisor_signature">Supervisor Signature:</label>
+      <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
+    </div>
+
+    <div class="form-group">
+      <label for="signature_date">Date:</label>
+      <input type="date" class="form-control" id="signature_date" name="signature_date">
+    </div>
+
+    <button type="submit" name="accept" value="Accept" class="btn btn-success">Accept</button>
+  </div>
+
+  <!-- Reject Button (initially hidden) -->
+  <div id="rejectBtn" style="display: none;">
+    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Reject</button>
+  </div>
+
+</form>
+  </main>
+
+ <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>
 

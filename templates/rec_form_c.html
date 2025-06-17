@@ -342,6 +342,31 @@
     <input type="date" name="review_date">
   </div>
 
+  <form method="POST" action="{{ url_for('rec_response', id=form.form_id) }}">
+    <!-- Error Messages -->
+    {% if messages %}
+        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label class="form-label">Reviewer Comments (Mandatory)</label>
+    <textarea rows="5" name="additional_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
+
+    <input type="hidden" name="status" id="status" value="" />
+
+    <div class="submit-row">
+        <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button>
+        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button>
+        <button type="submit" class="btn-logout" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
+        <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
+    </div>
+</form>
+
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>

@@ -42,27 +42,27 @@
     
       <div class="form-group">
         <label for="student_name">Student Name:</label>
-        <span  id="student_name"  >{{view_form.declaration_name}}</span>
+        <strong  id="student_name"  >{{view_form.declaration_name}}</strong>
       </div>
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+        <strong  id="submission_date" >{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
       </div>
 
       <div class="form-group">
         <label for="supervisor_name">Supervisor Name:</label>
-        <span  id="supervisor_name"  >{{view_form.supervisor_name}}</span>
+        <strong  id="supervisor_name"  >{{view_form.supervisor_name}}</strong>
       </div>
 
       <div class="form-group">
         <label for="research_title">Title of Research:</label>
-        <span  id="research_title" >{% if view_form.study_title%}{{view_form.study_title}}{% elif view_form.project_title%}{{view_form.project_title}}{% endif %}</span>
+        <strong  id="research_title" >{% if view_form.study_title%}{{view_form.study_title}}{% elif view_form.project_title%}{{view_form.project_title}}{% endif %}</strong>
       </div>
 
       <div class="form-group">
         <label for="supervisor_date">Date of Review:</label>
-        <span id="supervisor_date">{{view_form.supervisor_date.strftime('%d/%m/%Y')}}</span>
+        <strong id="supervisor_date">{{view_form.supervisor_date.strftime('%d/%m/%Y')}}</strong>
       </div>
 
       <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>
@@ -111,12 +111,12 @@
   <div id="acceptFields" >
     <div class="form-group">
       <label for="supervisor_signature">Supervisor Signature:</label>
-      <span type="text"  id="supervisor_signature">{{view_form.supervisor_signature}}</span>
+      <strong type="text"  id="supervisor_signature">{{view_form.supervisor_signature}}</strong>
     </div>
 
     <div class="form-group">
       <label for="signature_date">Date:</label>
-      <span id="signature_date" >{{view_form.signature_date.strftime('%d/%m/%Y')}}</span>
+      <strong id="signature_date" >{{view_form.signature_date.strftime('%d/%m/%Y')}}</strong>
     </div>
   </div>
 {% endif %}
@@ -129,22 +129,22 @@
 
   <div class="section">
     <label>Student Name:</label>
-    <span>{{view_form.declaration_name}}</span>
-
+    <strong>{{view_form.declaration_name}}</strong>
+<br>
     <label>Date of Submission:</label>
-    <span>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date}}{% endif%}</span>
-
+    <strong>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
+<br>
     <label>Date of Re-submission:</label>
-    <span>{% if view_form.declaration_date%}{{view_form.declaration_date.strftime('%d/%m/%Y')}}{% endif%}</span>
-
+    <strong>{% if view_form.signature_date%}{{view_form.signature_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
+<br>
     <label>Supervisor:</label>
-    <span>{{view_form.supervisor}}</span>
-
+    <strong>{{view_form.supervisor_name}}</strong>
+<br>
     <label>Title of Research:</label>
-    <span>{{view_form.study_title}}</span>
-
+    <strong>{% if view_form.study_title%}{{view_form.study_title}} {% elif view_form.project_title%}{{view_form.project_title}}{% endif%}</strong>
+<br>
     <label>Date of Review:</label>
-    <span type="date" id="review_date">{{view_form.review_date}}</span>
+    <strong type="date" id="review_date">{{view_form.review_date}}</strong>
   </div>
 
   <div class="section">
@@ -165,16 +165,16 @@
             • Include permission to access relevant business documents.<br>
             • If not requested, use the “Request for Permission” template.
           </td>
-          <td><span id="org_permission_status">{{view_form.org_permission_status}}</span></td>
-          <td><span id="org_permission_comments">{{view_form.org_permission_comments}}</span></td>
+          <td><span id="org_permission_status">{{view_form.review_org_permission_status}}</span></td>
+          <td><span id="org_permission_comments">{{view_form.review_org_permission_comments}}</span></td>
         </tr>
         <tr>
           <td>
             <strong>Signed waiver from business</strong><br>
             • Use template provided in “Ethical clearance templates”.
           </td>
-          <td><span id="waiver_status">{{view_form.waiver_status}}</span></td>
-          <td><span id="waiver_comments">{{view_form.waiver_comments}}</span></td>
+          <td><span id="waiver_status">{{view_form.review_waiver_status}}</span></td>
+          <td><span id="waiver_comments">{{view_form.review_waiver_comments}}</span></td>
         </tr>
         <tr>
           <td>
@@ -182,8 +182,8 @@
             • Must be completed and co-signed by supervisor.<br>
             • Submit updated version if changes were made since proposal.
           </td>
-          <td><span id="form_status">{{view_form.form_status}}</span></td>
-          <td><span id="form_comments">{{view_form.form_comments}}</span></td>
+          <td><span id="form_status">{{view_form.review_form_status}}</span></td>
+          <td><span id="form_comments">{{view_form.review_form_comments}}</span></td>
         </tr>
         <tr>
           <td>
@@ -192,24 +192,24 @@
             • If preliminary, indicate clearly.<br>
             • Sensitive/invasive questions increase risk – avoid where possible.
           </td>
-          <td><span id="questions_status">{{view_form.questions_status}}</span></td>
-          <td><span id="questions_comments">{{view_form.questions_comments}}</span></td>
+          <td><span id="questions_status">{{view_form.review_questions_status}}</span></td>
+          <td><span id="questions_comments">{{view_form.review_questions_comments}}</span></td>
         </tr>
         <tr>
           <td>
             <strong>Participant Information Sheet & Informed Consent</strong><br>
             • Use and adapt the provided template for your study.
           </td>
-          <td><span  id="consent_status">{{view_form.consent_status}}</td>
-          <td><span id="consent_comments">{{view_form.consent_comments}}</span></td>
+          <td><span  id="consent_status">{{view_form.review_consent_status}}</td>
+          <td><span id="consent_comments">{{view_form.review_consent_comments}}</span></td>
         </tr>
         <tr>
           <td>
             <strong>Refined Concept Proposal</strong><br>
             • Should match the version submitted with Literature Review.
           </td>
-          <td><span id="proposal_status">{{view_form.proposal_status}}</td>
-          <td><span id="proposal_comments">{{view_form.proposal_comments}}</span></td>
+          <td><span id="proposal_status">{{view_form.review_proposal_status}}</td>
+          <td><span id="proposal_comments">{{view_form.review_proposal_comments}}</span></td>
         </tr>
       </tbody>
     </table>
@@ -217,7 +217,7 @@
 
   <div class="section">
     <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
-    <span id="additional_comments">{{view_form.additional_comments}}</span>
+    <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
 
   </div>

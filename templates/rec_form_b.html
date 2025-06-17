@@ -69,18 +69,7 @@
       </div>
     </div>
   </header>
-<form action="{{url_for('chair_form_view',id=formB.form_id,form_name='FORM B')}}" method="post"  enctype="multipart/form-data">
-  <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
-
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
     <!-- Main Content -->
     <main class="main-content">
       <h2>Researcher's Details</h2>
@@ -297,127 +286,35 @@
     <input type="date" name="review_date">
   </div>
 
-  <div class="section">
-    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <strong>Organisational permission</strong><br>
-            • Can be an email or formal letter.<br>
-            • Include permission to access relevant business documents.<br>
-            • If not requested, use the “Request for Permission” template.
-          </td>
-          <td><input type="text" name="org_permission_status"></td>
-          <td><textarea name="org_permission_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Signed waiver from business</strong><br>
-            • Use template provided in “Ethical clearance templates”.
-          </td>
-          <td><input type="text" name="waiver_status"></td>
-          <td><textarea name="waiver_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Form A – Ethics Application Form</strong><br>
-            • Must be completed and co-signed by supervisor.<br>
-            • Submit updated version if changes were made since proposal.
-          </td>
-          <td><input type="text" name="form_status"></td>
-          <td><textarea name="form_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Interview Questions and/or Questionnaire</strong><br>
-            • As close to final as possible.<br>
-            • If preliminary, indicate clearly.<br>
-            • Sensitive/invasive questions increase risk – avoid where possible.
-          </td>
-          <td><input type="text" name="questions_status"></td>
-          <td><textarea name="questions_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Participant Information Sheet & Informed Consent</strong><br>
-            • Use and adapt the provided template for your study.
-          </td>
-          <td><input type="text" name="consent_status"></td>
-          <td><textarea name="consent_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Refined Concept Proposal</strong><br>
-            • Should match the version submitted with Literature Review.
-          </td>
-          <td><input type="text" name="proposal_status"></td>
-          <td><textarea name="proposal_comments"></textarea></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<form method="POST" action="{{ url_for('rec_response', id=form.form_id) }}">
+    <!-- Error Messages -->
+    {% if messages %}
+        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
 
-  <div class="section">
-    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
-    <textarea name="additional_comments"></textarea>
-  </div>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label class="form-label">Reviewer Comments (Mandatory)</label>
+    <textarea rows="5" name="additional_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
 
-  <!-- Radio Buttons -->
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
-    <label class="form-check-label" for="ready">
-      ✅ Ready for submission to JBS ETHICS ADMIN
-    </label>
-  </div>
+    <input type="hidden" name="status" id="status" value="" />
 
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" name="recommendation" id="revisions" value="Revisions required" onchange="toggleFields()">
-    <label class="form-check-label" for="revisions">
-      ✏️ Revisions required before submission
-    </label>
-  </div>
-
-
-
-    <div class="form-group">
-      <label for="supervisor_signature">Supervisor Signature:</label>
-      <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
+    <div class="submit-row">
+        <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button>
+        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button>
+        <button type="submit" class="btn-logout" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
+        <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
     </div>
-
-    <div class="form-group">
-      <label for="signature_date">Date:</label>
-      <input type="date" class="form-control" id="signature_date" name="signature_date">
-    </div>
-
-    <button type="submit" name="accept" value="Accept" class="btn btn-success">Accept</button>
-  </div>
-
-  <!-- Reject Button (initially hidden) -->
-  <div id="rejectBtn" style="display: none;">
-    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Reject</button>
-  </div>
-
 </form>
+
+
   </main>
 
 
-
-<!-- Confirmation Modal -->
-<div id="confirmationModal" class="modal-overlay">
-  <div class="modal-content">
-    <h3>Form B Submitted Successfully!</h3>
-    <p>Your application has been received and forwarded to your supervisor.</p>
-    <button onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
-  </div>
-</div>
 
 
   <footer class="footer">
