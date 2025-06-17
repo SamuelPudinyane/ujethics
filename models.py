@@ -288,7 +288,7 @@ class FormA(Base):
 
     # 5.3 - Participant details
     participants_description = Column(Text)
-    duration_timing = Column(DateTime,server_default=func.now(),nullable=True)
+    duration_timing = Column(String,nullable=True)
     contact_details_method = Column(Text)
     conflict_interest = Column(Boolean,default=False)
     conflict_explanation = Column(Text)
