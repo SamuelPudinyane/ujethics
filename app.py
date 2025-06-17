@@ -3019,30 +3019,19 @@ def rec_dashboard():
     user_id=session['id']
     print(user_id)
     submitted_form_a = (db_session.query(FormA)
-    .filter(or_(
-            FormA.reviewer_name1 == user_id,
-            FormA.reviewer_name2 == user_id
-        ),FormA.rejected_or_accepted == True,FormA.review_signature_date!= None)
+    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None)
     .distinct(FormA.user_id)
     .all())
     
     submitted_form_b = (db_session.query(FormB)
-    .filter(or_(
-            FormB.reviewer_name1 == user_id,
-            FormB.reviewer_name2 == user_id
-        ),FormB.rejected_or_accepted == True,FormB.review_signature_date!= None)
+    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None)
     .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(or_(
-            FormC.reviewer_name1 == user_id,
-            FormC.reviewer_name2 == user_id
-        ),FormC.rejected_or_accepted == True,FormC.review_signature_date!= None)
+    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None)
     .distinct(FormC.form_id)
     .all())
-    a=(db_session.query(FormC)
-    .filter(or_(FormC.reviewer_name1 == user_id,FormC.reviewer_name2 == user_id)).all())
-    print("-----------------------",a)
+    
     print(" form---------------------",user_id,submitted_form_c)
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
