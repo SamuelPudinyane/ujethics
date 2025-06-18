@@ -70,6 +70,7 @@
     <!-- Submission Status Table -->
     <section style="margin-top: 2rem;">
       <h4>Your Submissions</h4>
+      {% if (formA) or (formB) or (formC) %}
       <table class="status-table">
         <thead>
           <tr>
@@ -178,6 +179,9 @@
          
         </tbody>
       </table>
+      {% else %}
+      <Strong>There are currently no submissions made</strong>
+        {% endif %}
     </section>
 
     <!-- Notifications -->

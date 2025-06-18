@@ -116,6 +116,7 @@
     
   </main>
 
+  
   <!-- Section 2 -->
 
   <!-- Main Content -->
@@ -135,23 +136,23 @@
         </thead>
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td>
-            <td>{{form.vulnerable}}</td></tr>
+            <td>{% if formc.vulnerable%}{{formc.vulnerable}}{% endif%}</td></tr>
           <tr><td>People under the age of 18 or over 65</td>
-            <td>{{form.age_under_18_or_over_65}}</td></tr>
+            <td>{% if formc.age_under_18_or_over_65%}{{formc.age_under_18_or_over_65}}{% endif%}</td></tr>
           <tr><td>UJ employees or students</td>
-            <td>{{form.uj_employee}}</td></tr>
+            <td>{% if formc.uj_employees%}{{formc.uj_employees}}{% endif%}</td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td>
-            <td>{{form.non_vulnerable_context}}</td></tr>
+            <td>{% if formc.non_vulnerable_context%}{{formc.non_vulnerable_context}}{% endif%}</td></tr>
           <tr><td>Non-English-speaking participants</td>
-            <td>{{form.non_english}}</td></tr>
+            <td>{% if formc.non_english%}{{formc.non_english}}{% endif%}</td></tr>
           <tr><td>A researcher’s own students</td>
-            <td>{{form.own_student}}</td></tr>
+            <td>{% if formc.own_students%}{{formc.own_students}}{% endif%}</td></tr>
           <tr><td>People living in poverty</td>
-            <td>{{form.poverty}}</td></tr>
+            <td>{% if formc.poverty%}{{formc.poverty}}{% endif%}</td></tr>
           <tr><td>People with little or no education</td>
-            <td>{{form.non_education}}</td></tr>
+            <td>{% if formc.no_education%}{{formc.no_education}}{% endif%}</td></tr>
           <tr><td>Other: Please describe.</td>
-            <td>{{form.vulnerable_other_description}}</td></tr>
+            <td>{{formc.vulnerable_other_description}}</td></tr>
         </tbody>
       </table>
       
@@ -170,29 +171,29 @@
   </thead>
   <tbody>
   <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
-    <td>{{form.consent_violation}}</td></tr>
+    <td>{% if formc.consent_violation%}{{formc.consent_violation}}{% endif%}</td></tr>
 <tr><td>Causing discomfiture beyond normal inconvenience</td>
-  <td>{{form.discomfiture}}</td></tr>
+  <td>{% if formc.discomfiture%}{{formc.discomfiture}}{% endif%}</td></tr>
 <tr><td>Deception of participants or covert observation</td>
-  <td>{{form.deception}}</td></tr>
+  <td>{% if formc.deception%}{{formc.deception}}{% endif%}</td></tr>
 <tr><td>Examining sensitive or contentious issues</td>
-  <td>{{form.sensitive_issues}}</td></tr>
+  <td>{% if formc.sensitive_issues%}{{formc.sensitive_issues}}{% endif%}</td></tr>
 <tr><td>Seeking prejudicial information about participants</td>
-  <td>{{form.prejuditial_info}}</td></tr>
+  <td>{% if formc.prejudicial_info%}{{formc.prejudicial_info}}{% endif%}</td></tr>
 <tr><td>Using intrusive techniques</td>
-  <td>{{form.intrusive}}</td></tr>
+  <td>{% if formc.intrusive%}{{formc.intrusive}}{% endif%}</td></tr>
 <tr><td>Study/participation in illegal activities</td>
-  <td>{{form.illegal}}</td></tr>
+  <td>{% if formc.illegal%}{{formc.illegal}}{% endif%}</td></tr>
 <tr><td>Collecting personal/social info directly from participants</td>
-  <td>{{form.direct_social_info}}</td></tr>
+  <td>{% if formc.direct_social_info%}{{formc.direct_social_info}}{% endif%}</td></tr>
 <tr><td>Identifiable info collected from available records (staff/student records)</td>
-  <td>{{form.identifiable_records}}</td></tr>
+  <td>{% if formc.identifiable_records%}{{formc.identifiable_records}}{% endif%}</td></tr>
 <tr><td>Psychology inventories / scales / tests</td>
-  <td>{{form.psychology_tests}}</td></tr>
+  <td>{% if formc.psychology_tests%}{{formc.psychology_tests}}{% endif%}</td></tr>
 <tr><td>Activities putting researcher/data collector at risk</td>
-  <td>{{form.reseacher_risk}}</td></tr>
+  <td>{% if formc.researcher_risk%}{{formc.researcher_risk}}{% endif%}</td></tr>
     <tr><td>Other:  Please describe.</td>
-      <td>{{form.activity_other_description}}</td></tr>
+      <td>{{formc.activity_other_description}}</td></tr>
   </tbody>
 </table>
 
@@ -210,22 +211,22 @@
         </thead>
         <tbody>
        <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{{form.incentives}}</td></tr>
+        <td>{% if formc.incentives%}{{formc.incentives}}{% endif%}</td></tr>
         <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{{form.participant_costs}}</td></tr>
+          <td>{% if formc.participant_costs%}{{formc.participant_costs}}{% endif%}</td></tr>
         <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{{form.researcher_interest}}</td></tr>
+          <td>{% if formc.researcher_interest%}{{formc.researcher_interest}}{% endif%}</td></tr>
         <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{{form.conflict_of_interest}}</td></tr>
+          <td>{% if formc.conflict_of_interest%}{{formc.conflict_of_interest}}{% endif%}</td></tr>
         <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{{form.uj_premises}}</td></tr>
+          <td>{% if formc.uj_premises%}{{formc.uj_premises}}{% endif%}</td></tr>
         <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{{form.uj_facilities}}</td></tr>
+          <td>{% if formc.uj_facilities%}{{formc.uj_facilities}}{% endif%}</td></tr>
         <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{{form.uj_funding}}</td></tr>
+          <td>{% if formc.uj_funding%}{{formc.uj_funding}}{% endif%}</td></tr>
         </tbody>
       </table>
-      
+          
       <label><strong>Comments:</strong></label>
      
       

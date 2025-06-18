@@ -714,7 +714,17 @@ class FormD(Base):
     user_id = Column(String(255), nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
-
+class Watched(Base):
+    __tablename__ = "watched"
+    watched_id=Column(String(255),primary_key=True, default=generate_uuid)
+    user_id=Column(String(255),nullable=False)
+    watched=Column(Boolean,default=False)
+    def to_dict(self):
+         return {
+            "watched_id": self.watched_id,
+            "user_id": self.user_id,
+            "watched": self.watched
+        }
 
     # try:
 #     users = [

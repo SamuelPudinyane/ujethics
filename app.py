@@ -1,5 +1,5 @@
 from flask import Flask,flash, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements
+from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements,Watched
 from utils.helpers import generate_reset_token, send_email, validate_password
 import json
 from db_queries import getFormAData, getSupervisorsList
@@ -54,7 +54,7 @@ def student_dashboard():
     formB = db_session.query(FormB).filter_by(user_id=user_id).first()
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     formD = db_session.query(FormD).filter_by(user_id=user_id).first()
-   
+  
     return render_template('dashboard.html',formA=formA,formB=formB,formC=formC,formD=formD)
 
 @app.route('/quiz', methods=['GET'])
@@ -65,6 +65,7 @@ def quiz():
 def logout():
     session.clear()
     return redirect(url_for('login_page'))
+
 
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
@@ -89,12 +90,16 @@ def login_page():
                 # NB: role is an enum, hence the .value
                 role = user.role.value or 'student'
                 
-                if role == 'student':
-                    student_info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
-                    
-                    if student_info and student_info.watched_demo and student_info.test_score is not None and student_info.test_score >= 80:
-                        return render_template('dashboard.html', name = session['name'])
+                if role == 'STUDENT':
+                    #student_info = db_session.query(UserInfo).filter_by(user_id=session['id']).first()
+                    user_id = session['id']
+                    #if student_info and student_info.watched_demo and student_info.test_score is not None and student_info.test_score >= 80:
+                    watched_video = db_session.query(Watched).filter_by(user_id=user_id).first()
+                   
+                    if watched_video:
+                        return render_template('ethics_pack.html', name = session['name'])
                     else:
+                        
                         return render_template('video.html')
                 elif role == 'SUPERVISOR':
                     session['supervisor_role']='SUPERVISOR'
@@ -394,6 +399,12 @@ def get_supervisors():
 
 @app.route('/ethics_pack', methods=['GET'])
 def ethics_pack ():
+    user_id = session.get('id') 
+    watched_video = db_session.query(Watched).filter_by(user_id=user_id).first()
+    if watched_video is None:
+        watched_video=Watched(user_id=user_id, watched=True)
+        db_session.add(watched_video)
+        db_session.commit()
     return render_template('ethics_pack.html')
 
 
@@ -2666,11 +2677,13 @@ def reviewer_list():
 
 @app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])
 def chair_form_view(id,form_name):
+
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
         
         if request.method=="POST":
+         
             review_date=request.form.get('review_date')
             review_org_permission_status=request.form.get('org_permission_status')
             review_org_permission_comments=request.form.get('org_permission_comments')
@@ -2689,25 +2702,45 @@ def chair_form_view(id,form_name):
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
+                if not formA.review_date:
                 
-                formA.review_date=review_date
-                formA.review_org_permission_status=review_org_permission_status
-                formA.review_org_permission_comments=review_org_permission_comments
-                formA.review_waiver_status=review_waiver_status
-                formA.review_waiver_comments=review_waiver_comments
-                formA.review_form_status=review_form_status
-                formA.review_form_comments=review_form_comments
-                formA.review_questions_status=review_questions_status
-                formA.review_questions_comments=review_questions_comments
-                formA.review_consent_status=review_consent_status
-                formA.review_consent_comments=review_consent_comments
-                formA.review_proposal_status=review_proposal_status
-                formA.review_proposal_comments=review_proposal_comments
-                formA.review_additional_comments=review_additional_comments
-                formA.review_recommendation=review_recommendation
-                formA.review_supervisor_signature=review_supervisor_signature
-                formA.review_signature_date=review_signature_date
-                formA.rejected_or_accepted=True
+                    formA.review_date=review_date
+                    formA.review_org_permission_status=review_org_permission_status
+                    formA.review_org_permission_comments=review_org_permission_comments
+                    formA.review_waiver_status=review_waiver_status
+                    formA.review_waiver_comments=review_waiver_comments
+                    formA.review_form_status=review_form_status
+                    formA.review_form_comments=review_form_comments
+                    formA.review_questions_status=review_questions_status
+                    formA.review_questions_comments=review_questions_comments
+                    formA.review_consent_status=review_consent_status
+                    formA.review_consent_comments=review_consent_comments
+                    formA.review_proposal_status=review_proposal_status
+                    formA.review_proposal_comments=review_proposal_comments
+                    formA.review_additional_comments=review_additional_comments
+                    formA.review_recommendation=review_recommendation
+                    formA.review_supervisor_signature=review_supervisor_signature
+                    formA.review_signature_date=review_signature_date
+                    formA.rejected_or_accepted=True
+                else:
+                    formA.review_date1=review_date
+                    formA.review_org_permission_status1=review_org_permission_status
+                    formA.review_org_permission_comments1=review_org_permission_comments
+                    formA.review_waiver_status1=review_waiver_status
+                    formA.review_waiver_comments1=review_waiver_comments
+                    formA.review_form_status1=review_form_status
+                    formA.review_form_comments1=review_form_comments
+                    formA.review_questions_status1=review_questions_status
+                    formA.review_questions_comments1=review_questions_comments
+                    formA.review_consent_status1=review_consent_status
+                    formA.review_consent_comments1=review_consent_comments
+                    formA.review_proposal_status1=review_proposal_status
+                    formA.review_proposal_comments1=review_proposal_comments
+                    formA.review_additional_comments1=review_additional_comments
+                    formA.review_recommendation1=review_recommendation
+                    formA.review_supervisor_signature1=review_supervisor_signature
+                    formA.review_signature_date1=review_signature_date
+                    formA.rejected_or_accepted=True
                 
             else:
                 formA.review_date=review_date
@@ -2752,24 +2785,45 @@ def chair_form_view(id,form_name):
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
-                formB.review_date=review_date
-                formB.review_org_permission_status=review_org_permission_status
-                formB.review_org_permission_comments=review_org_permission_comments
-                formB.review_waiver_status=review_waiver_status
-                formB.review_waiver_comments=review_waiver_comments
-                formB.review_form_status=review_form_status
-                formB.review_form_comments=review_form_comments
-                formB.review_questions_status=review_questions_status
-                formB.review_questions_comments=review_questions_comments
-                formB.review_consent_status=review_consent_status
-                formB.review_consent_comments=review_consent_comments
-                formB.review_proposal_status=review_proposal_status
-                formB.review_proposal_comments=review_proposal_comments
-                formB.review_additional_comments=review_additional_comments
-                formB.review_recommendation=review_recommendation
-                formB.review_supervisor_signature=review_supervisor_signature
-                formB.review_signature_date=review_signature_date
-                formB.rejected_or_accepted=True
+                if not formB.review_date:
+                
+                    formB.review_date=review_date
+                    formB.review_org_permission_status=review_org_permission_status
+                    formB.review_org_permission_comments=review_org_permission_comments
+                    formB.review_waiver_status=review_waiver_status
+                    formB.review_waiver_comments=review_waiver_comments
+                    formB.review_form_status=review_form_status
+                    formB.review_form_comments=review_form_comments
+                    formB.review_questions_status=review_questions_status
+                    formB.review_questions_comments=review_questions_comments
+                    formB.review_consent_status=review_consent_status
+                    formB.review_consent_comments=review_consent_comments
+                    formB.review_proposal_status=review_proposal_status
+                    formB.review_proposal_comments=review_proposal_comments
+                    formB.review_additional_comments=review_additional_comments
+                    formB.review_recommendation=review_recommendation
+                    formB.review_supervisor_signature=review_supervisor_signature
+                    formB.review_signature_date=review_signature_date
+                    formB.rejected_or_accepted=True
+                else:
+                    formB.review_date1=review_date
+                    formB.review_org_permission_status1=review_org_permission_status
+                    formB.review_org_permission_comments1=review_org_permission_comments
+                    formB.review_waiver_status1=review_waiver_status
+                    formB.review_waiver_comments1=review_waiver_comments
+                    formB.review_form_status1=review_form_status
+                    formB.review_form_comments1=review_form_comments
+                    formB.review_questions_status1=review_questions_status
+                    formB.review_questions_comments1=review_questions_comments
+                    formB.review_consent_status1=review_consent_status
+                    formB.review_consent_comments1=review_consent_comments
+                    formB.review_proposal_status1=review_proposal_status
+                    formB.review_proposal_comments1=review_proposal_comments
+                    formB.review_additional_comments1=review_additional_comments
+                    formB.review_recommendation1=review_recommendation
+                    formB.review_supervisor_signature1=review_supervisor_signature
+                    formB.review_signature_date1=review_signature_date
+                    formB.rejected_or_accepted=True
             else:
                 formB.review_date=review_date
                 formB.review_org_permission_status=review_org_permission_status
@@ -2813,24 +2867,45 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
                 
-                formC.review_date=review_date
-                formC.review_org_permission_status=review_org_permission_status
-                formC.review_org_permission_comments=review_org_permission_comments
-                formC.review_waiver_status=review_waiver_status
-                formC.review_waiver_comments=review_waiver_comments
-                formC.review_form_status=review_form_status
-                formC.review_form_comments=review_form_comments
-                formC.review_questions_status=review_questions_status
-                formC.review_questions_comments=review_questions_comments
-                formC.review_consent_status=review_consent_status
-                formC.review_consent_comments=review_consent_comments
-                formC.review_proposal_status=review_proposal_status
-                formC.review_proposal_comments=review_proposal_comments
-                formC.review_additional_comments=review_additional_comments
-                formC.review_recommendation=review_recommendation
-                formC.review_supervisor_signature=review_supervisor_signature
-                formC.review_signature_date=review_signature_date
-                formC.rejected_or_accepted=True
+                if not formC.review_date:
+                
+                    formC.review_date=review_date
+                    formC.review_org_permission_status=review_org_permission_status
+                    formC.review_org_permission_comments=review_org_permission_comments
+                    formC.review_waiver_status=review_waiver_status
+                    formC.review_waiver_comments=review_waiver_comments
+                    formC.review_form_status=review_form_status
+                    formC.review_form_comments=review_form_comments
+                    formC.review_questions_status=review_questions_status
+                    formC.review_questions_comments=review_questions_comments
+                    formC.review_consent_status=review_consent_status
+                    formC.review_consent_comments=review_consent_comments
+                    formC.review_proposal_status=review_proposal_status
+                    formC.review_proposal_comments=review_proposal_comments
+                    formC.review_additional_comments=review_additional_comments
+                    formC.review_recommendation=review_recommendation
+                    formC.review_supervisor_signature=review_supervisor_signature
+                    formC.review_signature_date=review_signature_date
+                    formC.rejected_or_accepted=True
+                else:
+                    formC.review_date1=review_date
+                    formC.review_org_permission_status1=review_org_permission_status
+                    formC.review_org_permission_comments1=review_org_permission_comments
+                    formC.review_waiver_status1=review_waiver_status
+                    formC.review_waiver_comments1=review_waiver_comments
+                    formC.review_form_status1=review_form_status
+                    formC.review_form_comments1=review_form_comments
+                    formC.review_questions_status1=review_questions_status
+                    formC.review_questions_comments1=review_questions_comments
+                    formC.review_consent_status1=review_consent_status
+                    formC.review_consent_comments1=review_consent_comments
+                    formC.review_proposal_status1=review_proposal_status
+                    formC.review_proposal_comments1=review_proposal_comments
+                    formC.review_additional_comments1=review_additional_comments
+                    formC.review_recommendation1=review_recommendation
+                    formC.review_supervisor_signature1=review_supervisor_signature
+                    formC.review_signature_date1=review_signature_date
+                    formC.rejected_or_accepted=True
             else:
                 formC.review_date=review_date
                 formC.review_org_permission_status=review_org_permission_status
@@ -3034,7 +3109,6 @@ def rec_dashboard():
     .distinct(FormC.form_id)
     .all())
     
-    print(" form---------------------",user_id,submitted_form_c)
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
