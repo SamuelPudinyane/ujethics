@@ -82,7 +82,7 @@
       <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="{{url_for('ethics_reviewer_committee')}}">📋 Dashboard</a>
+      <a href="{{url_for('chair_landing')}}">📋 Dashboard</a>
       <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
       <a href="{{url_for('all_users')}}">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
@@ -103,7 +103,7 @@
       <h3>{{ year }}</h3>
       <h2>FORM A</h2>
       {% for month, forms in forms_by_yearA[year]|dictsort %}
-      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee')}}" >📁</a>
+      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee_form_a')}}" >📁</a>
       
       {% endfor %}
       </div>
@@ -117,7 +117,7 @@
       <h3>{{ year }}</h3>
       <h2>FORM B</h2>
       {% for month, forms in forms_by_yearB[year]|dictsort %}
-      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee')}}" >📁</a>
+      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee_form_b')}}" >📁</a>
       
       {% endfor %}
       </div>
@@ -131,7 +131,7 @@
       <h3>{{ year }}</h3>
       <h2>FORM C</h2>
       {% for month, forms in forms_by_yearC[year]|dictsort %}
-      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee')}}" >📁</a>
+      <a class="folder-icon" href="{{url_for('ethics_reviewer_committee_form_c')}}" >📁</a>
       
       {% endfor %}
       </div>

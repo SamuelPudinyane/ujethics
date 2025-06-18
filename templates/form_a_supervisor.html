@@ -649,8 +649,10 @@
         </label>
     
           <label>Please upload the permission for use of private data:</label>
-          <br><a href="{{url_for('static',filename=formA.private_permission_file)}}" target="_blank">View Document</a>
-        
+          <br>
+          {% if formA.private_permission_file%}
+          <a href="{{url_for('static',filename=formA.private_permission_file)}}" target="_blank">View Document</a>
+          {% endif %}
       <!-- Public Data Section -->
         <label>What type of public data is going to be used?</label>
               <br><span>{{formA.public_data_description}}</span>
@@ -843,7 +845,7 @@
 
     <div class="form-group">
       <label>Date</label>
-      <span>{% if formA.declaration_date%}{{formA.declaration_date.strftime('%d/%m/%Y')}}{% endif %}</span>
+      <span>{% if formA.declaration_date%}{{formA.declaration_date}}{% endif %}</span>
     </div>
 
     <hr>

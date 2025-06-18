@@ -63,7 +63,7 @@
 
             </span></td>
             <td>
-              {% if forma.supervisor_comments and not forma.ethics_commettee_comments%}
+              {% if forma.supervisor_feedback and not forma.ethics_commettee_comments%}
               <strong>Supervisors comments</strong>
 
               <a href="{{url_for('supervisor_view_feedback',id=forma.form_id)}}">View Feedback</a>
@@ -84,7 +84,7 @@
                       <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
 
-                  {% if formR.permission_letter_path %}
+                  {% if formR.permission_letter %}
                 
                       <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
@@ -92,7 +92,7 @@
                
                       <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.reseach_tools_path %}
+                  {% if formR.research_tools_path %}
                       <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
                   {% if formR.impact_assessment_path %}
@@ -101,7 +101,7 @@
                   {% if formR.prior_clearance %}
                   <li><a href="{{url_for('static',filename=formR.prior_clearance)}}">Clearance</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance %}
+                  {% if formR.prior_clearance1 %}
                   <li><a href="{{url_for('static',filename=formR.prior_clearance1)}}">Clearance 1</a></li>
                   {% endif %}
                   {% if formR.need_jbs_clearance%}
@@ -164,13 +164,13 @@
                       
                       <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.permission_letter_path %}
+                  {% if formR.permission_letter %}
                   
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Impact Form</a></li>
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
-                  {% if formR.ethics_evidence_path %}
+                  {% if formR.ethics_evidence %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.ethics_evidence_path) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=formR.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
                   {% if formR.prior_clearance_path %}
                

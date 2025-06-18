@@ -114,7 +114,7 @@
     </div>
   </header>
  <!-- Form -->
-    <form id="formAsection1" action="{{url_for('chair_form_view',id=formA.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
+    <form id="formAsection1" action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -701,8 +701,10 @@
         </label>
     
           <label>Please upload the permission for use of private data:</label>
-          <br><a href="{{url_for('static',filename=form.private_permission_file)}}" target="_blank">View Document</a>
-        
+          <br>
+          {% if form.private_permission_file %}
+          <a href="{{url_for('static',filename=form.private_permission_file)}}" target="_blank">View Document</a>
+        {% endif %}
       <!-- Public Data Section -->
         <label>What type of public data is going to be used?</label>
               <br><span>{{form.public_data_description}}</span>
@@ -893,7 +895,7 @@
 
     <div class="form-group">
       <label>Date</label>
-      <span>{% if form.declaration_date%}{{form.declaration_date.strftime('%d/%m/%Y')}}{% endif %}</span>
+      <span>{% if form.declaration_date%}{{form.declaration_date}}{% endif %}</span>
     </div>
 
     <hr>
@@ -909,7 +911,7 @@
     <span>{% if form.submitted_at%}{{form.submitted_at.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Date of Re-submission:</label>
-    <span>{% if form.declaration_date%}{{form.declaration_date.strftime('%d/%m/%Y')}}{% endif %}</span>
+    <span>{% if form.declaration_date%}{{form.declaration_date}}{% endif %}</span>
 
     <label>Supervisor:</label>
     <span>{{form.supervisor}}</span>

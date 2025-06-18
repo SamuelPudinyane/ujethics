@@ -396,6 +396,7 @@ class FormA(Base):
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
+    
     review_date=Column(String(255),nullable=True)
     review_org_permission_status=Column(String(255),nullable=True)
     review_org_permission_comments=Column(String(255),nullable=True)
@@ -413,6 +414,26 @@ class FormA(Base):
     review_recommendation=Column(String(255),nullable=True)
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
+
+
+    review_date1=Column(String(255),nullable=True)
+    review_org_permission_status1=Column(String(255),nullable=True)
+    review_org_permission_comments1=Column(String(255),nullable=True)
+    review_waiver_status1=Column(String(255),nullable=True)
+    review_waiver_comments1=Column(String(255),nullable=True)
+    review_form_status1=Column(String(255),nullable=True)
+    review_form_comments1=Column(String(255),nullable=True)
+    review_questions_status1=Column(String(255),nullable=True)
+    review_questions_comments1=Column(String(255),nullable=True)
+    review_consent_status1=Column(String(255),nullable=True)
+    review_consent_comments1=Column(String(255),nullable=True)
+    review_proposal_status1=Column(String(255),nullable=True)
+    review_proposal_comments1=Column(String(255),nullable=True)
+    review_additional_comments1=Column(String(255),nullable=True)
+    review_recommendation1=Column(String(255),nullable=True)
+    review_supervisor_signature1=Column(String(255),nullable=True)
+    review_signature_date1=Column(DateTime,nullable=True)
+
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
@@ -519,6 +540,27 @@ class FormB(Base):
     review_recommendation=Column(String(255),nullable=True)
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
+
+
+    
+    review_date1=Column(String(255),nullable=True)
+    review_org_permission_status1=Column(String(255),nullable=True)
+    review_org_permission_comments1=Column(String(255),nullable=True)
+    review_waiver_status1=Column(String(255),nullable=True)
+    review_waiver_comments1=Column(String(255),nullable=True)
+    review_form_status1=Column(String(255),nullable=True)
+    review_form_comments1=Column(String(255),nullable=True)
+    review_questions_status1=Column(String(255),nullable=True)
+    review_questions_comments1=Column(String(255),nullable=True)
+    review_consent_status1=Column(String(255),nullable=True)
+    review_consent_comments1=Column(String(255),nullable=True)
+    review_proposal_status1=Column(String(255),nullable=True)
+    review_proposal_comments1=Column(String(255),nullable=True)
+    review_additional_comments1=Column(String(255),nullable=True)
+    review_recommendation1=Column(String(255),nullable=True)
+    review_supervisor_signature1=Column(String(255),nullable=True)
+    review_signature_date1=Column(DateTime,nullable=True)
+
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
@@ -637,6 +679,27 @@ class FormC(Base):
     review_recommendation=Column(String(255),nullable=True)
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
+
+
+
+    review_date1=Column(String(255),nullable=True)
+    review_org_permission_status1=Column(String(255),nullable=True)
+    review_org_permission_comments1=Column(String(255),nullable=True)
+    review_waiver_status1=Column(String(255),nullable=True)
+    review_waiver_comments1=Column(String(255),nullable=True)
+    review_form_status1=Column(String(255),nullable=True)
+    review_form_comments1=Column(String(255),nullable=True)
+    review_questions_status1=Column(String(255),nullable=True)
+    review_questions_comments1=Column(String(255),nullable=True)
+    review_consent_status1=Column(String(255),nullable=True)
+    review_consent_comments1=Column(String(255),nullable=True)
+    review_proposal_status1=Column(String(255),nullable=True)
+    review_proposal_comments1=Column(String(255),nullable=True)
+    review_additional_comments1=Column(String(255),nullable=True)
+    review_recommendation1=Column(String(255),nullable=True)
+    review_supervisor_signature1=Column(String(255),nullable=True)
+    review_signature_date1=Column(DateTime,nullable=True)
+
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)

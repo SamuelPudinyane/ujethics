@@ -35,7 +35,7 @@
     </div>
     <nav class="sidebar-nav">
      
-      <a href="{{url_for('ethics_reviewer_committee')}}">📋 Dashboard</a>
+      <a href="{{url_for('chair_landing')}}">📋 Dashboard</a>
       <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
       <a href="{{url_for('all_users')}}">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
@@ -64,7 +64,6 @@
             <th>Review Status</th>
             <th>Risk-Level</th>
             <th>Documents</th>
-            <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -72,8 +71,8 @@
           {% for forma in submitted_form_a %}
           <tr>
             <td>{{forma.student_number}}</td>
-            <td>{{forma.full_name}}</td>
-            <td>{{forma.supervisor_name}}</td>
+            <td>{{forma.applicant_name}}</td>
+            <td>{{forma.supervisor}}</td>
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
             <td>
@@ -98,16 +97,16 @@
                   
                       <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
-                  {% if formR.permission_letter_path %}
+                  {% if formR.permission_letter %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
                   {% if formR.prior_clearance_path %}
                
                       <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.reseach_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
+                  {% if formR.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
                 <br>
                 {% endfor %}
@@ -115,7 +114,7 @@
                 <br>
               </ul>
             </td>
-            <td>{{forma.declaration_date}} days</td>
+            
             <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}
@@ -139,7 +138,6 @@
             <th>Review Status</th>
             <th>Risk-Level</th>
             <th>Documents</th>
-            <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -147,8 +145,8 @@
           {% for formb in submitted_form_b %}
           <tr>
             <td>{{formb.student_number}}</td>
-            <td>{{formb.full_name}}</td>
-            <td>{{formb.supervisor_name}}</td>
+            <td>{{formb.applicant_name}}</td>
+            <td>{{formb.supervisor}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
             <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.review_date
@@ -189,7 +187,7 @@
                 <br>
               </ul>
             </td>
-            <td>{{formb.declaration_date}} days</td>
+            
             <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}
@@ -212,7 +210,6 @@
             <th>Review Status</th>
             <th>Risk-Level</th>
             <th>Documents</th>
-            <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -220,7 +217,7 @@
           {% for formc in submitted_form_c %}
           <tr>
             <td>{{formc.student_number}}</td>
-            <td>{{formc.full_name}}</td>
+            <td>{{formc.applicant_name}}</td>
             <td>{{formc.supervisor_name}}</td>
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
@@ -237,7 +234,6 @@
               <a href="{{ url_for('static', filename=items.files) }}" target="_blank">Proposal</a>
               {% endfor%}
             </td>
-            <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >View</a></td>
           </tr>
           {% endfor %}

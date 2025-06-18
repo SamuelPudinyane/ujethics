@@ -34,7 +34,7 @@
       <h3>Dean & Chairman Panel</h3>
     </div>
    <nav class="sidebar-nav">
-      <a href="{{url_for('ethics_reviewer_committee')}}">📋 Dashboard</a>
+      <a href="{{url_for('chair_landing')}}">📋 Dashboard</a>
       <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
       <a href="{{url_for('all_users')}}">👥 User Management</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
@@ -70,8 +70,8 @@
           {% for form in submitted_form %}
           <tr>
             <td>{{form.student_number}}</td>
-            <td>{{form.full_name}}</td>
-            <td>{{form.supervisor_name}}</td>
+            <td>{{form.applicant_name}}</td>
+            <td>{% if form.supervisor%}{{form.supervisor}}{% elif form.supervisor_name%}{{form.supervisor_name}}{% endif%}</td>
             <td>{{form_name}}</td>
             <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date%}{{form.submission_date}}{% endif%}</td>
             <td><span class="status-pill approved">{{ 
@@ -81,7 +81,7 @@
   else 'Rejected by Ethics Committee' if not form.review_supervisor_signature and form.review_date else 'This is the previous version'
 }}
 </span></td>
-            <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.rist_rating %}{{ form.rist_rating}} {% endif%}</td>
+            <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}} {% endif%}</td>
             <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date %}{{form.submission_date}}{% endif%}</td>
             <td><a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" >View</a></td>
           </tr>
