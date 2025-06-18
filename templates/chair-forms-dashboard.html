@@ -62,7 +62,6 @@
             <th>Date Submitted</th>
             <th>Review Status</th>
             <td>Risk-Level</td>
-            <th>Days Since Submission</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -82,7 +81,6 @@
 }}
 </span></td>
             <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}} {% endif%}</td>
-            <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date %}{{form.submission_date}}{% endif%}</td>
             <td><a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" >View</a></td>
           </tr>
           

@@ -2679,6 +2679,7 @@ def reviewer_list():
 def chair_form_view(id,form_name):
 
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
+
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
         
@@ -2702,8 +2703,8 @@ def chair_form_view(id,form_name):
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
-                if not formA.review_date:
-                
+                if not formA.review_date or not formA.review_date1:
+                    
                     formA.review_date=review_date
                     formA.review_org_permission_status=review_org_permission_status
                     formA.review_org_permission_comments=review_org_permission_comments
@@ -2721,7 +2722,7 @@ def chair_form_view(id,form_name):
                     formA.review_recommendation=review_recommendation
                     formA.review_supervisor_signature=review_supervisor_signature
                     formA.review_signature_date=review_signature_date
-                    formA.rejected_or_accepted=True
+                    formA.review_status=True
                 else:
                     formA.review_date1=review_date
                     formA.review_org_permission_status1=review_org_permission_status
@@ -2740,7 +2741,7 @@ def chair_form_view(id,form_name):
                     formA.review_recommendation1=review_recommendation
                     formA.review_supervisor_signature1=review_supervisor_signature
                     formA.review_signature_date1=review_signature_date
-                    formA.rejected_or_accepted=True
+                    formA.review_status1=True
                 
             else:
                 formA.review_date=review_date
@@ -2758,7 +2759,7 @@ def chair_form_view(id,form_name):
                 formA.review_proposal_comments=review_proposal_comments
                 formA.review_additional_comments=review_additional_comments
                 formA.review_recommendation=review_recommendation
-                formA.rejected_or_accepted=False
+                formA.review_status=False
                 
             db_session.add(formA)
             db_session.commit()
@@ -2785,7 +2786,7 @@ def chair_form_view(id,form_name):
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
-                if not formB.review_date:
+                if not formB.review_date or not formB.review_date1:
                 
                     formB.review_date=review_date
                     formB.review_org_permission_status=review_org_permission_status
@@ -2804,7 +2805,7 @@ def chair_form_view(id,form_name):
                     formB.review_recommendation=review_recommendation
                     formB.review_supervisor_signature=review_supervisor_signature
                     formB.review_signature_date=review_signature_date
-                    formB.rejected_or_accepted=True
+                    formB.review_status=True
                 else:
                     formB.review_date1=review_date
                     formB.review_org_permission_status1=review_org_permission_status
@@ -2823,7 +2824,7 @@ def chair_form_view(id,form_name):
                     formB.review_recommendation1=review_recommendation
                     formB.review_supervisor_signature1=review_supervisor_signature
                     formB.review_signature_date1=review_signature_date
-                    formB.rejected_or_accepted=True
+                    formB.review_status1=True
             else:
                 formB.review_date=review_date
                 formB.review_org_permission_status=review_org_permission_status
@@ -2840,15 +2841,18 @@ def chair_form_view(id,form_name):
                 formB.review_proposal_comments=review_proposal_comments
                 formB.review_additional_comments=review_additional_comments
                 formB.review_recommendation=review_recommendation
-                formB.rejected_or_accepted=False
+                formB.review_status1=False
             db_session.add(formB)
             db_session.commit()
             return redirect(url_for('chair_landing'))
         return render_template("form_b_ethics.html",formB=formB,formReviewers=formReviewers)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
+     
         if request.method=="POST":
+            
             review_date=request.form.get('review_date')
+          
             review_org_permission_status=request.form.get('org_permission_status')
             review_org_permission_comments=request.form.get('org_permission_comments')
             review_waiver_status=request.form.get('waiver_status')
@@ -2867,7 +2871,7 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
                 
-                if not formC.review_date:
+                if not formC.review_date or not formC.review_date1:
                 
                     formC.review_date=review_date
                     formC.review_org_permission_status=review_org_permission_status
@@ -2886,7 +2890,7 @@ def chair_form_view(id,form_name):
                     formC.review_recommendation=review_recommendation
                     formC.review_supervisor_signature=review_supervisor_signature
                     formC.review_signature_date=review_signature_date
-                    formC.rejected_or_accepted=True
+                    formC.review_status=True
                 else:
                     formC.review_date1=review_date
                     formC.review_org_permission_status1=review_org_permission_status
@@ -2905,7 +2909,7 @@ def chair_form_view(id,form_name):
                     formC.review_recommendation1=review_recommendation
                     formC.review_supervisor_signature1=review_supervisor_signature
                     formC.review_signature_date1=review_signature_date
-                    formC.rejected_or_accepted=True
+                    formC.review_status1=True
             else:
                 formC.review_date=review_date
                 formC.review_org_permission_status=review_org_permission_status
@@ -2922,7 +2926,7 @@ def chair_form_view(id,form_name):
                 formC.review_proposal_comments=review_proposal_comments
                 formC.review_additional_comments=review_additional_comments
                 formC.review_recommendation=review_recommendation
-                formC.rejected_or_accepted=False
+                formC.review_status1=False
             db_session.add(formC)
             db_session.commit()
             return redirect(url_for('chair_landing'))
@@ -3031,7 +3035,7 @@ def review_dashboard():
     .filter(or_(
             FormA.reviewer_name1 == user_id,
             FormA.reviewer_name2 == user_id
-        ),FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.review_signature_date!= None)
+        ),FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.supervisor_signature!= None)
     .distinct(FormA.user_id)
     .all())
     
@@ -3039,16 +3043,21 @@ def review_dashboard():
     .filter(or_(
             FormB.reviewer_name1 == user_id,
             FormB.reviewer_name2 == user_id
-        ),FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.review_signature_date!= None)
+        ),FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.supervisor_signature!= None)
     .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
     .filter(or_(
             FormC.reviewer_name1 == user_id,
             FormC.reviewer_name2 == user_id
-        ),FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.review_signature_date!= None)
+        ),FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.supervisor_signature!= None)
     .distinct(FormC.user_id)
     .all())
+    x=(db_session.query(FormC)
+    .filter(or_(
+            FormC.reviewer_name1 == user_id,
+            FormC.reviewer_name2 == user_id
+        )).all())
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('review-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
@@ -3096,19 +3105,19 @@ def rec_dashboard():
     user_id=session['id']
     print(user_id)
     submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None)
+    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.review_status==True,FormA.review_status1==True)
     .distinct(FormA.user_id)
     .all())
     
     submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None)
+    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.review_status==True,FormB.review_status1==True)
     .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None)
+    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormC.review_status==True,FormC.review_status1==True)
     .distinct(FormC.form_id)
     .all())
-    
+    print("--------------------------",submitted_form_c)
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
@@ -3180,50 +3189,104 @@ def ethics_reviewer_committee_forms(id,form_name):
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
         if request.method=="POST":
-            formA.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
-            formA.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
-            formA.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            reviewers=request.form.getlist('reviewer_names[]')
+            formA.reviewer_name1=reviewers[0]
+            formA.reviewer_name2=reviewers[1] if reviewers[1] else None
+            formA.supervisor_date=request.form.get('review_date')
+            formA.supervisor_org_permission_status=request.form.get('review_org_permission_status')
+            formA.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
+            formA.supervisor_waiver_status=request.form.get('review_waiver_status')
+            formA.supervisor_waiver_comments=request.form.get('review_waiver_comments')
+            formA.supervisor_form_status=request.form.get('review_form_status')
+            formA.supervisor_form_comments=request.form.get('review_form_comments')
+            formA.supervisor_questions_status=request.form.get('review_questions_status')
+            formA.supervisor_questions_comments=request.form.get('review_questions_comments')
+            formA.supervisor_consent_status=request.form.get('review_consent_status')
+            formA.supervisor_consent_comments=request.form.get('review_consent_comments')
+            formA.supervisor_proposal_status=request.form.get('review_proposal_status')
+            formA.supervisor_proposal_comments=request.form.get('review_proposal_comments')
+            formA.supervisor_additional_comments=request.form.get('review_additional_comments')
+            formA.supervisor_recommendation=request.form.get('review_recommendation')
+            formA.supervisor_supervisor_signature=request.form.get('review_supervisor_signature')
+            formA.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept')=='Accept':
-                formA.ethics_commetee_status=True
+                
                 formA.rejected_or_accepted=True
             else:
-                formA.ethics_commetee_status=False
+              
                 formA.rejected_or_accepted=False
             db_session.add(formA)
             db_session.commit()
+            return redirect(url_for('chair_landing'))
         return render_template("form_a_ethics.html",formA=formA)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
-            formB.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
-            formB.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
-            formB.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            formB.reviewer_name1=reviewers[0]
+            formB.reviewer_name2=reviewers[1] if reviewers[1] else None
+            formB.supervisor_date=request.form.get('review_date')
+            formB.supervisor_org_permission_status=request.form.get('review_org_permission_status')
+            formB.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
+            formB.supervisor_waiver_status=request.form.get('review_waiver_status')
+            formB.supervisor_waiver_comments=request.form.get('review_waiver_comments')
+            formB.supervisor_form_status=request.form.get('review_form_status')
+            formB.supervisor_form_comments=request.form.get('review_form_comments')
+            formB.supervisor_questions_status=request.form.get('review_questions_status')
+            formB.supervisor_questions_comments=request.form.get('review_questions_comments')
+            formB.supervisor_consent_status=request.form.get('review_consent_status')
+            formB.supervisor_consent_comments=request.form.get('review_consent_comments')
+            formB.supervisor_proposal_status=request.form.get('review_proposal_status')
+            formB.supervisor_proposal_comments=request.form.get('review_proposal_comments')
+            formB.supervisor_additional_comments=request.form.get('review_additional_comments')
+            formB.supervisor_recommendation=request.form.get('review_recommendation')
+            formB.supervisor_supervisor_signature=request.form.get('review_supervisor_signature')
+            formB.supervisor_signature_date=request.form.get('review_signature_date')
             
             if request.form.get('accept')=='Accept':
-                formB.ethics_commetee_status=True
+               
                 formB.rejected_or_accepted=True
                 
             else:
-                formB.ethics_commetee_status=False
+                
                 formB.rejected_or_accepted=False
                
             db_session.add(formB)
             db_session.commit()
+            return redirect(url_for('chair_landing'))
         return render_template("form_b_ethics.html",formB=formB)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
         if request.method=="POST":
-            formC.ethics_commettee_comments=request.form.get('ethics_commettee_comments')
-            formC.ethics_commettee_signature=request.form.get('ethics_commettee_signature')
-            formC.ethics_commettee_date=request.form.get('ethics_commettee_date')
+            reviewers=request.form.getlist('reviewer_names[]')
+          
+            formC.reviewer_name1=reviewers[0]
+            formC.reviewer_name2=reviewers[1] if reviewers[1] else None
+            formC.supervisor_date=request.form.get('review_date')
+            formC.supervisor_org_permission_status=request.form.get('review_org_permission_status')
+            formC.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
+            formC.supervisor_waiver_status=request.form.get('review_waiver_status')
+            formC.supervisor_waiver_comments=request.form.get('review_waiver_comments')
+            formC.supervisor_form_status=request.form.get('review_form_status')
+            formC.supervisor_form_comments=request.form.get('review_form_comments')
+            formC.supervisor_questions_status=request.form.get('review_questions_status')
+            formC.supervisor_questions_comments=request.form.get('review_questions_comments')
+            formC.supervisor_consent_status=request.form.get('review_consent_status')
+            formC.supervisor_consent_comments=request.form.get('review_consent_comments')
+            formC.supervisor_proposal_status=request.form.get('review_proposal_status')
+            formC.supervisor_proposal_comments=request.form.get('review_proposal_comments')
+            formC.supervisor_additional_comments=request.form.get('review_additional_comments')
+            formC.supervisor_recommendation=request.form.get('review_recommendation')
+            formC.supervisor_supervisor_signature=request.form.get('review_supervisor_signature')
+            formC.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept')=='Accept':
-                formC.ethics_commetee_status=True
+
                 formC.rejected_or_accepted=True
             else:
-                formC.ethics_commetee_status=False
+                
                 formC.rejected_or_accepted=False
             db_session.add(formC)
             db_session.commit()
+            return redirect(url_for('chair_landing'))
         return render_template("ethics_reviewer_committee_forms.html",formC=formC)
 
 

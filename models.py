@@ -379,7 +379,7 @@ class FormA(Base):
     declaration_name = Column(String(255), nullable=True)
     applicant_signature = Column(String(255), nullable=True)
     declaration_date = Column(String, nullable=True)
-
+    #this needs to be deleted
     supervisor_comments = Column(Text,nullable=True)###
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
@@ -393,6 +393,25 @@ class FormA(Base):
     recommendation= Column(String(255),nullable=True)
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
+    #this is working on supervisor site
+    supervisor_date=Column(String(255),nullable=True)
+    supervisor_org_permission_status=Column(String(255),nullable=True)
+    supervisor_org_permission_comments=Column(String(255),nullable=True)
+    supervisor_waiver_status=Column(String(255),nullable=True)
+    supervisor_waiver_comments=Column(String(255),nullable=True)
+    supervisor_form_status=Column(String(255),nullable=True)
+    supervisor_form_comments=Column(String(255),nullable=True)
+    supervisor_questions_status=Column(String(255),nullable=True)
+    supervisor_questions_comments=Column(String(255),nullable=True)
+    supervisor_consent_status=Column(String(255),nullable=True)
+    supervisor_consent_comments=Column(String(255),nullable=True)
+    supervisor_proposal_status=Column(String(255),nullable=True)
+    supervisor_proposal_comments=Column(String(255),nullable=True)
+    supervisor_additional_comments=Column(String(255),nullable=True)
+    supervisor_recommendation=Column(String(255),nullable=True)
+    supervisor_supervisor_signature=Column(String(255),nullable=True)
+    supervisor_signature_date=Column(DateTime,nullable=True)
+
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -414,7 +433,7 @@ class FormA(Base):
     review_recommendation=Column(String(255),nullable=True)
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
-
+    review_status=Column(Boolean,default=False)
 
     review_date1=Column(String(255),nullable=True)
     review_org_permission_status1=Column(String(255),nullable=True)
@@ -433,7 +452,7 @@ class FormA(Base):
     review_recommendation1=Column(String(255),nullable=True)
     review_supervisor_signature1=Column(String(255),nullable=True)
     review_signature_date1=Column(DateTime,nullable=True)
-
+    review_status1=Column(Boolean,default=False)
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
@@ -521,8 +540,28 @@ class FormB(Base):
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
 
+    #this is working on supervisor site
+    supervisor_date=Column(String(255),nullable=True)
+    supervisor_org_permission_status=Column(String(255),nullable=True)
+    supervisor_org_permission_comments=Column(String(255),nullable=True)
+    supervisor_waiver_status=Column(String(255),nullable=True)
+    supervisor_waiver_comments=Column(String(255),nullable=True)
+    supervisor_form_status=Column(String(255),nullable=True)
+    supervisor_form_comments=Column(String(255),nullable=True)
+    supervisor_questions_status=Column(String(255),nullable=True)
+    supervisor_questions_comments=Column(String(255),nullable=True)
+    supervisor_consent_status=Column(String(255),nullable=True)
+    supervisor_consent_comments=Column(String(255),nullable=True)
+    supervisor_proposal_status=Column(String(255),nullable=True)
+    supervisor_proposal_comments=Column(String(255),nullable=True)
+    supervisor_additional_comments=Column(String(255),nullable=True)
+    supervisor_recommendation=Column(String(255),nullable=True)
+    supervisor_supervisor_signature=Column(String(255),nullable=True)
+    supervisor_signature_date=Column(DateTime,nullable=True)
+
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
+
     review_date=Column(String(255),nullable=True)
     review_org_permission_status=Column(String(255),nullable=True)
     review_org_permission_comments=Column(String(255),nullable=True)
@@ -540,7 +579,7 @@ class FormB(Base):
     review_recommendation=Column(String(255),nullable=True)
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
-
+    review_status=Column(Boolean,default=False)
 
     
     review_date1=Column(String(255),nullable=True)
@@ -560,7 +599,7 @@ class FormB(Base):
     review_recommendation1=Column(String(255),nullable=True)
     review_supervisor_signature1=Column(String(255),nullable=True)
     review_signature_date1=Column(DateTime,nullable=True)
-
+    review_status1=Column(Boolean,default=False)
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
@@ -659,9 +698,28 @@ class FormC(Base):
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
     
+    #this is working on supervisor site
+    supervisor_date=Column(String(255),nullable=True)
+    supervisor_org_permission_status=Column(String(255),nullable=True)
+    supervisor_org_permission_comments=Column(String(255),nullable=True)
+    supervisor_waiver_status=Column(String(255),nullable=True)
+    supervisor_waiver_comments=Column(String(255),nullable=True)
+    supervisor_form_status=Column(String(255),nullable=True)
+    supervisor_form_comments=Column(String(255),nullable=True)
+    supervisor_questions_status=Column(String(255),nullable=True)
+    supervisor_questions_comments=Column(String(255),nullable=True)
+    supervisor_consent_status=Column(String(255),nullable=True)
+    supervisor_consent_comments=Column(String(255),nullable=True)
+    supervisor_proposal_status=Column(String(255),nullable=True)
+    supervisor_proposal_comments=Column(String(255),nullable=True)
+    supervisor_additional_comments=Column(String(255),nullable=True)
+    supervisor_recommendation=Column(String(255),nullable=True)
+    supervisor_supervisor_signature=Column(String(255),nullable=True)
+    supervisor_signature_date=Column(DateTime,nullable=True)
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
+
     review_date=Column(String(255),nullable=True)
     review_org_permission_status=Column(String(255),nullable=True)
     review_org_permission_comments=Column(String(255),nullable=True)
@@ -679,7 +737,7 @@ class FormC(Base):
     review_recommendation=Column(String(255),nullable=True)
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
-
+    review_status=Column(Boolean,default=False)
 
 
     review_date1=Column(String(255),nullable=True)
@@ -699,7 +757,7 @@ class FormC(Base):
     review_recommendation1=Column(String(255),nullable=True)
     review_supervisor_signature1=Column(String(255),nullable=True)
     review_signature_date1=Column(DateTime,nullable=True)
-
+    review_status1=Column(Boolean,default=False)
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)

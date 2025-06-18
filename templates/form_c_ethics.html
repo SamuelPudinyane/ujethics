@@ -65,7 +65,7 @@
     </div>
   </header>
 
-  <form action="{{url_for('chair_form_view',id=formc.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
+  <form action="{{url_for('ethics_reviewer_committee_forms',id=formc.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
   <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -243,19 +243,20 @@
         </thead>
         <tbody>
        <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{{formc.incentives}}</td></tr>
+        <td>{% if formc.incentives%}{{formc.incentives}}{% endif%}</td></tr>
         <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{{formc.participant_costs}}</td></tr>
+          <td>{% if formc.participant_costs%}{{formc.participant_costs}}{% endif%}</td></tr>
         <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{{formc.researcher_interest}}</td></tr>
+          <td>{% if formc.researcher_interest%}{{formc.researcher_interest}}{% endif%}</td></tr>
         <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{{formc.conflict_of_interest}}</td></tr>
+          <td>{% if formc.conflict_of_interest%}{{formc.conflict_of_interest}}{% endif%}</td></tr>
         <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{{formc.uj_premises}}</td></tr>
+          <td>{% if formc.uj_premises%}{{formc.uj_premises}}{% endif%}</td></tr>
         <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{{formc.uj_facilities}}</td></tr>
+          <td>{% if formc.uj_facilities%}{{formc.uj_facilities}}{% endif%}</td></tr>
         <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{{formc.uj_funding}}</td></tr>
+          <td>{% if formc.uj_funding%}{{formc.uj_funding}}{% endif%}</td></tr>
+        
         </tbody>
       </table>
       
