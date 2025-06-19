@@ -125,21 +125,21 @@
         </thead>
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td>
-            <td>{% if form.vulnerable%}{{form.vulnerable}}{% endif%}</td></tr>
+            <td>{{'YES' if form.vulnerable esle 'NO'}}</td></tr>
           <tr><td>People under the age of 18 or over 65</td>
-            <td>{% if form.age_under_18_or_over_65%}{{form.age_under_18_or_over_65}}{% endif%}</td></tr>
+            <td>{{'YES' if form.age_under_18_or_over_65 else 'NO'}}</td></tr>
           <tr><td>UJ employees or students</td>
-            <td>{% if form.uj_employees%}{{form.uj_employees}}{% endif%}</td></tr>
+            <td>{{'YES' if form.uj_employees else 'NO'}}</td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td>
-            <td>{% if form.non_vulnerable_context%}{{form.non_vulnerable_context}}{% endif%}</td></tr>
+            <td>{{'YES' if form.non_vulnerable_context else 'NO'}}</td></tr>
           <tr><td>Non-English-speaking participants</td>
-            <td>{% if form.non_english%}{{form.non_english}}{% endif%}</td></tr>
+            <td>{{'YES' if form.non_english else 'NO'}}</td></tr>
           <tr><td>A researcher’s own students</td>
-            <td>{% if form.own_students%}{{form.own_students}}{% endif%}</td></tr>
+            <td>{{'YES' if form.own_students else 'NO'}}</td></tr>
           <tr><td>People living in poverty</td>
-            <td>{% if form.poverty%}{{form.poverty}}{% endif%}</td></tr>
+            <td>{{'YES' if form.poverty else 'NO'}}</td></tr>
           <tr><td>People with little or no education</td>
-            <td>{% if form.no_education%}{{form.no_education}}{% endif%}</td></tr>
+            <td>{{'YES' if form.no_education else 'NO'}}</td></tr>
           <tr><td>Other: Please describe.</td>
             <td>{{form.vulnerable_other_description}}</td></tr>
         </tbody>
@@ -160,27 +160,27 @@
   </thead>
   <tbody>
   <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
-    <td>{% if form.consent_violation%}{{form.consent_violation}}{% endif%}</td></tr>
+    <td>{{'YES' if form.consent_violation else 'NO'}}</td></tr>
 <tr><td>Causing discomfiture beyond normal inconvenience</td>
-  <td>{% if form.discomfiture%}{{form.discomfiture}}{% endif%}</td></tr>
+  <td>{{'YES' if form.discomfiture else 'NO'}}</td></tr>
 <tr><td>Deception of participants or covert observation</td>
-  <td>{% if form.deception%}{{form.deception}}{% endif%}</td></tr>
+  <td>{{'YES' if form.deception else 'NO'}}</td></tr>
 <tr><td>Examining sensitive or contentious issues</td>
-  <td>{% if form.sensitive_issues%}{{form.sensitive_issues}}{% endif%}</td></tr>
+  <td>{{'YES' if form.sensitive_issues else 'NO'}}</td></tr>
 <tr><td>Seeking prejudicial information about participants</td>
-  <td>{% if form.prejudicial_info%}{{form.prejudicial_info}}{% endif%}</td></tr>
+  <td>{{'YES' if form.prejudicial_info else 'NO'}}</td></tr>
 <tr><td>Using intrusive techniques</td>
-  <td>{% if form.intrusive%}{{form.intrusive}}{% endif%}</td></tr>
+  <td>{{'YES' if form.intrusive else 'NO'}}</td></tr>
 <tr><td>Study/participation in illegal activities</td>
-  <td>{% if form.illegal%}{{form.illegal}}{% endif%}</td></tr>
+  <td>{{'YES' if form.illegal else 'NO'}}</td></tr>
 <tr><td>Collecting personal/social info directly from participants</td>
-  <td>{% if form.direct_social_info%}{{form.direct_social_info}}{% endif%}</td></tr>
+  <td>{{'YES' if form.direct_social_info else 'NO'}}</td></tr>
 <tr><td>Identifiable info collected from available records (staff/student records)</td>
-  <td>{% if form.identifiable_records%}{{form.identifiable_records}}{% endif%}</td></tr>
+  <td>{{'YES' if form.identifiable_records else 'NO'}}</td></tr>
 <tr><td>Psychology inventories / scales / tests</td>
-  <td>{% if form.psychology_tests%}{{form.psychology_tests}}{% endif%}</td></tr>
+  <td>{{'YES' if form.psychology_tests else 'NO'}}</td></tr>
 <tr><td>Activities putting researcher/data collector at risk</td>
-  <td>{% if form.researcher_risk%}{{form.researcher_risk}}{% endif%}</td></tr>
+  <td>{{'YES' if form.researcher_risk else 'NO'}}</td></tr>
     <tr><td>Other:  Please describe.</td>
       <td>{{form.activity_other_description}}</td></tr>
   </tbody>
@@ -200,19 +200,19 @@
         </thead>
         <tbody>
        <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{% if form.incentives%}{{form.incentives}}{% endif%}</td></tr>
+        <td>{{'YES' if form.incentives else 'NO'}}</td></tr>
         <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{% if form.participant_costs%}{{form.participant_costs}}{% endif%}</td></tr>
+          <td>{{'YES' if form.participant_costs else 'NO'}}</td></tr>
         <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{% if form.researcher_interest%}{{form.researcher_interest}}{% endif%}</td></tr>
+          <td>{{'YES' if form.researcher_interest else 'NO'}}</td></tr>
         <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{% if form.conflict_of_interest%}{{form.conflict_of_interest}}{% endif%}</td></tr>
+          <td>{{'YES' if form.conflict_of_interest else 'NO'}}</td></tr>
         <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{% if form.uj_premises%}{{form.uj_premises}}{% endif%}</td></tr>
+          <td>{{'YES' if form.uj_premises else 'NO'}}</td></tr>
         <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{% if form.uj_facilities%}{{form.uj_facilities}}{% endif%}</td></tr>
+          <td>{{'YES' if form.uj_facilities else 'NO'}}</td></tr>
         <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{% if form.uj_funding%}{{form.uj_funding}}{% endif%}</td></tr>
+          <td>{{'YES' if form.uj_funding else 'NO'}}</td></tr>
         </tbody>
       </table>
             

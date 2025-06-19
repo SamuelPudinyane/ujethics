@@ -394,7 +394,7 @@ class FormA(Base):
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
     #this is working on supervisor site
-    supervisor_date=Column(String(255),nullable=True)
+    supervisor_date=Column(DateTime(255),nullable=True)
     supervisor_org_permission_status=Column(String(255),nullable=True)
     supervisor_org_permission_comments=Column(String(255),nullable=True)
     supervisor_waiver_status=Column(String(255),nullable=True)
@@ -456,6 +456,7 @@ class FormA(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
+    rec_date=Column(DateTime,nullable=True)
     def __repr__(self):
         return f'<FormA {self.applicant_name} ({self.student_number})>'
     
@@ -523,7 +524,7 @@ class FormB(Base):
     # Declaration
     declaration_name = Column(String(150), nullable=True)
     full_name = Column(String(150), nullable=True)
-    declaration_date = Column(String, nullable=True)
+    declaration_date = Column(DateTime, nullable=True)
 
     submitted_at = Column(DateTime, server_default=func.now())
 
@@ -541,7 +542,7 @@ class FormB(Base):
     signature_date= Column(DateTime,nullable=True)
 
     #this is working on supervisor site
-    supervisor_date=Column(String(255),nullable=True)
+    supervisor_date=Column(DateTime,nullable=True)
     supervisor_org_permission_status=Column(String(255),nullable=True)
     supervisor_org_permission_comments=Column(String(255),nullable=True)
     supervisor_waiver_status=Column(String(255),nullable=True)
@@ -603,6 +604,7 @@ class FormB(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
+    rec_date=Column(DateTime,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
     
@@ -699,7 +701,7 @@ class FormC(Base):
     signature_date= Column(DateTime,nullable=True)
     
     #this is working on supervisor site
-    supervisor_date=Column(String(255),nullable=True)
+    supervisor_date=Column(DateTime,nullable=True)
     supervisor_org_permission_status=Column(String(255),nullable=True)
     supervisor_org_permission_comments=Column(String(255),nullable=True)
     supervisor_waiver_status=Column(String(255),nullable=True)
@@ -761,6 +763,7 @@ class FormC(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
+    rec_date=Column(DateTime,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 

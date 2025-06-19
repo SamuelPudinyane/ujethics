@@ -243,19 +243,19 @@
         </thead>
         <tbody>
        <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{% if formc.incentives%}{{formc.incentives}}{% endif%}</td></tr>
+        <td>{{'YES' if formc.incentives else 'NO'}}</td></tr>
         <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{% if formc.participant_costs%}{{formc.participant_costs}}{% endif%}</td></tr>
+          <td>{{'YES' if formc.participant_costs else 'NO'}}</td></tr>
         <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{% if formc.researcher_interest%}{{formc.researcher_interest}}{% endif%}</td></tr>
+          <td>{{'YES' if formc.researcher_interest else 'NO'}}</td></tr>
         <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{% if formc.conflict_of_interest%}{{formc.conflict_of_interest}}{% endif%}</td></tr>
+          <td>{{'YES' if formc.conflict_of_interest else 'NO'}}</td></tr>
         <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{% if formc.uj_premises%}{{formc.uj_premises}}{% endif%}</td></tr>
+          <td>{{'YES' if formc.uj_premises else 'NO'}}</td></tr>
         <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{% if formc.uj_facilities%}{{formc.uj_facilities}}{% endif%}</td></tr>
+          <td>{{'YES' if formc.uj_facilities else 'NO'}}</td></tr>
         <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{% if formc.uj_funding%}{{formc.uj_funding}}{% endif%}</td></tr>
+          <td>{{'YES' if formc.uj_funding else 'NO'}}</td></tr>
         
         </tbody>
       </table>
@@ -491,7 +491,7 @@
 
 
     <div class="form-group">
-      <label for="supervisor_signature">Supervisor Signature:</label>
+      <label for="supervisor_signature">Ethics Admin Signature:</label>
       <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
     </div>
 

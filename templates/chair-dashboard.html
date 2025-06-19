@@ -80,7 +80,7 @@
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if forma.rejected_or_accepted}}</span></td>
             <td>{{forma.risk_rating}}</td>
             <td>{{forma.declaration_date.strftime('%d/%m/%Y')}}</td>
-            <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >View</a></td>
+            <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >Review</a></td>
           </tr>
           {% endfor %}
           
@@ -116,7 +116,7 @@
             <td><span class="status-pill approved">{{'Aproved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span></td>
             <td>{{formb.risk_level}}</td>
             <td>{{formb.declaration_date}}</td>
-            <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >View</a></td>
+            <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >Review</a></td>
           </tr>
           {% endfor %}
           
@@ -152,7 +152,7 @@
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if formc.rejected_or_accepted}}</span></td>
             <td>{{formc.risk_level}}</td>
             <td>{{(today - formc.declaration_date.date()).days}}</td>
-            <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >View</a></td>
+            <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >Review</a></td>
           </tr>
           {% endfor %}
         </tbody>

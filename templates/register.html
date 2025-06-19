@@ -21,40 +21,50 @@
   </header>
 
   <!-- Page-specific content -->
-  <main class="main-content">
+ <main class="main-content">
+  <div class="container d-flex flex-column align-items-center">
+
+    <!-- Image on top, full width but not oversized -->
+    <img src="{{ url_for('static', filename='img/jbs.jpg') }}" alt="JBS Image" class="img-fluid mb-4" style="max-height: 300px; border-radius: 8px; max-width: 500px;">
+
+    <!-- Form section -->
     <h2 class="centered-text">Register</h2>
     <p id="message" style="color: red;"></p>
-    <form action="{{ url_for('register') }}" id="registerForm" method="post">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+
+    <form action="{{ url_for('register') }}" id="registerForm" method="post" class="w-100" style="max-width: 500px;">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
       {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
-  <input id="full-name" name="full_name" type="text" placeholder="Enter Full Name" required>
-  <input id="student-number" name="student_number" type="text" placeholder="Enter Student Number" required>
-  <input id="email" name="email" type="email" placeholder="Enter UJ Email" required>
-  <input id="password" name="password" type="password" placeholder="Create password" required>
+      <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+          {% for message in messages %}
+              {{ message }}
+          {% endfor %}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
 
-  <h4 class="centered-text">Supervisor Details</h4>
-  <label for="supervisors">Choose supervisor from list:</label>
-  <select id="supervisors" name="supervisors" required>
-    <option value="" disabled selected>-- Click to select --</option>
-    {% for supervisor in supervisors %}
-    <option value="{{supervisor.user_id}}" data-email="{{ supervisor.email }}">{{supervisor.full_name}}</option>
-    {% endfor %}
-  </select>
+      <input id="full-name" name="full_name" type="text" placeholder="Enter Full Name" required>
+      <input id="student-number" name="student_number" type="text" placeholder="Enter Student Number" required>
+      <input id="email" name="email" type="email" placeholder="Enter UJ Email" required>
+      <input id="password" name="password" type="password" placeholder="Create password" required>
 
-  <input id="sup-email" type="email" name="sub_email" placeholder="Supervisor Email" required disabled>
+      <h4 class="centered-text mt-4">Supervisor Details</h4>
+      <label for="supervisors">Choose supervisor from list:</label>
+      <select id="supervisors" name="supervisors" required>
+        <option value="" disabled selected>-- Click to select --</option>
+        {% for supervisor in supervisors %}
+          <option value="{{supervisor.user_id}}" data-email="{{ supervisor.email }}">{{supervisor.full_name}}</option>
+        {% endfor %}
+      </select>
 
-  <button type="submit">Register</button>
-</form>
+      <input id="sup-email" type="email" name="sub_email" placeholder="Supervisor Email" required disabled>
 
-    <p class="switch-link">Already have an account? <a href="{{url_for('login_page')}}">Login</a></p>
-  </main>
+      <button type="submit" class="btn btn-primary w-100 mt-3">Register</button>
+    </form>
+
+    <p class="switch-link mt-3">Already have an account? <a href="{{ url_for('login_page') }}">Login</a></p>
+  </div>
+</main>
 
   <!-- Footer -->
   <footer class="footer">
@@ -113,7 +123,15 @@
     const tooltip = document.getElementById('passHint');
     input.addEventListener('focus', () => tooltip.classList.add('visible'));
     input.addEventListener('blur', () => tooltip.classList.remove('visible'));
-
+// Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
   </script>
 
 </body>

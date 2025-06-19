@@ -77,7 +77,7 @@
             <td><span class="status-pill approved">{{"Aproved and awaits Ethics Commettee" if form.rejected_or_accepted and not form.ethics_commetee_status else 'Approved by Ethics Commettee' if form.ethics_commetee_status else 'previous form version'}}</span></td>
             <td>{{form.risk_level}}</td>
             <td>{% if form.declaration_date%}{{form.declaration_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><a href="{{url_for('ethics_reviewer_committee_forms',id=form.form_id,form_name=form_name)}}" >View</a></td>
+            <td><a href="{{url_for('ethics_reviewer_committee_forms',id=form.form_id,form_name=form_name)}}" >Review</a></td>
           </tr>
           
           {% endfor %}

@@ -802,7 +802,7 @@ def submit_form_a_sec1 ():
     formA_record = FormA(**field_data)
     db_session.add(formA_record)
     db_session.commit()
-    session['formA_id'] = formA_record.id
+   
     return render_template('form-a-section2.html')
 
 # ---------------- Section 2 ------------------
@@ -843,7 +843,6 @@ def form_a_sec2 ():
         else:
             form.documents=False
         
-
         # section 2.1
         if data.get('vulnerable_communities')=='Yes':
             form.vulnerable_communities=True

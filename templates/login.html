@@ -23,27 +23,36 @@
 
   <!-- Login Form -->
   <main class="main-content">
-    <h2 class="centered-text">Login</h2>
-     <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
-    <form action="{{ url_for('login_page')}} " method="post" id="loginForm">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <p id="message" style="color: red;"></p>
-      <input type="email" name="email" id="email" placeholder="UJ Email" required>
-      <input type="password" name="password" id="password" placeholder="Password" required>
-      <a href="video.html" class="btn-link">
+  <div class="container d-flex align-items-center justify-content-center flex-wrap">
+    <!-- Image Block -->
+    <div class="image-container me-4">
+      <img src="{{ url_for('static', filename='img/jbs.jpg') }}" alt="JBS Logo" class="img-fluid" style="max-width: 500px;">
+    </div>
+
+    <!-- Form Block -->
+    <div class="form-container">
+      <h2 class="centered-text">Login</h2>
+
+      {% if messages %}
+        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+
+      <form action="{{ url_for('login_page') }}" method="post" id="loginForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="email" name="email" placeholder="UJ Email" required>
+        <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
-      </a>
-    </form>
-    <p class="switch-link">Don’t have an account? <a href="{{url_for('register')}}">Register here</a></p>
-  </main>
+      </form>
+      <p class="switch-link">Don’t have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+    </div>
+  </div>
+</main>
+
   <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
@@ -61,6 +70,5 @@
     }, 3000); // 3000ms = 3 seconds
   </script>
 </body>
-
 
 </html>

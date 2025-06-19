@@ -142,14 +142,16 @@
       
       <br>
       <label><strong>Justify the Risk Level</strong></label>
-      <textarea name="risk_justification" class="form-control" rows="3"></textarea>
+      <textarea name="risk_justification" class="form-control" rows="3" placeholder="Explain why you selected this risk level" required></textarea>
       
-      <label><strong>If Medium or High Risk, describe potential benefits:</strong></label>
-      <textarea name="risk_benefits" class="form-control" rows="3"></textarea>
-      
-      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong></label>
-      <textarea name="risk_mitigation" class="form-control" rows="3"></textarea>
-      
+      <div id="mediumHighFields" style="display: none;">
+        <label><strong>If Medium or High Risk, describe potential benefits:</strong></label>
+        <textarea name="risk_benefits" class="form-control" rows="3" placeholder="Describe the potential benefits of the research"></textarea>
+
+        <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong></label>
+        <textarea name="risk_mitigation" class="form-control" rows="3" placeholder="Describe how you will mitigate the risks identified"></textarea>
+      </div>
+
 
       <!-- Navigation -->
       <div class="form-navigation">
@@ -174,6 +176,21 @@
         alert.style.display = 'none'; // or use .remove() if you prefer
       }
     }, 3000); // 3000ms = 3 seconds
+
+      // Hide/show medium/high risk textareas based on selection
+  document.querySelector('select[name="risk_level"]').addEventListener('change', function () {
+    const selectedRisk = this.value;
+    const mediumHighFields = document.getElementById('mediumHighFields');
+
+    if (selectedRisk === 'Medium' || selectedRisk === 'High') {
+      mediumHighFields.style.display = 'block';
+    } else {
+      mediumHighFields.style.display = 'none';
+
+      // Clear values when hidden to prevent accidental submission
+      mediumHighFields.querySelectorAll('textarea').forEach(el => el.value = '');
+    }
+  });
 </script>
 </body>
 </html>

@@ -106,6 +106,21 @@ button:hover {
   color: var(--white);
 }
 
+.main-content .container {
+  margin-top: -0.5rem;
+}
+
+.image-container img {
+  border-radius: 8px;
+  max-height: 400px;
+  margin-left: 24px;
+}
+
+/* img.img-fluid {
+  border-radius: 8px;
+  max-width: 100%;
+} */
+
 #message {
   margin: 1rem 0;
   font-weight: bold;
@@ -129,6 +144,7 @@ button:hover {
 
 .centered-text {
   text-align: center;
+  margin-top: 1rem;
 }
 
 .input-tooltip {
@@ -150,5 +166,5 @@ button:hover {
 }
 
 .input-tooltip.visible {
-  display: block;
+  display: block;
 }

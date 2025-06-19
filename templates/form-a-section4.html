@@ -199,7 +199,7 @@
     <div id="intervention_details_box" style="display:none;">
             <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea>
           </div>
-    <label>5.4.5 Sensitive data or vulnerable populations?</label>
+    <label>5.4.5 Will sensitive data be used or vulnerable populations be questioned?</label>
     <textarea name="sensitive_data" rows="2"></textarea>
 
     <label>5.4.6 Will a translator be required?</label><br>
@@ -296,7 +296,7 @@
 
     function handleSecondaryData() {
       const val = document.getElementById("secondaryData").value;
-      document.getElementById("secondaryDetails").style.display = val === "yes" ? "block" : "none";
+      document.getElementById("secondaryDetails").style.display = val === "Yes" ? "block" : "none";
     }
 
     function handleDataType() {

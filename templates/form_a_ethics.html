@@ -187,27 +187,27 @@
       <tbody>
         <tr>
           <td>Survey/questionnaire</td>
-          <td><span>{% if formA.survey%}{{formA.survey}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.survey else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Focus groups</td>
-          <td><span>{% if formA.focus_group%}{{formA.focus_group}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.focus_group else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Observations</td>
-          <td><span>{% if formA.observations%}{{formA.observations}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.observations else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Interviews</td>
-          <td><span>{% if formA.interviews%}{{formA.interviews}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.interviews else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Documents</td>
-          <td><span>{% if formA.documents%}{{formA.documents}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.documents else 'NO'}}</span></td>
 
         </tr>
         <tr>
@@ -232,43 +232,43 @@
              <tbody>
         <tr>
           <td>Communities that may be considered as vulnerable</td>
-          <td><span>{% if formA.vulnerable_communities%}{{formA.vulnerable_communities}}{% endif %}</span></td>
+          <td><span>{{'YES' if formA.vulnerable_communities else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>People under the age of 18 or over 65</td>
-          <td><span>{% if formA.age_group%}{{formA.age_group}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.age_group else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>UJ employees or students</td>
-          <td><span>{% if formA.uj_employees%}{{formA.uj_employees}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.uj_employees else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this
             research project</td>
-          <td><span>{% if formA.vulnerable%}{{formA.vulnerable}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.vulnerable else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Non-English-speaking participants</td>
-          <td><span>{% if formA.non_english%}{{formA.non_english}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.non_english else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>A researcher’s own students</td>
-          <td><span>{% if formA.own_students%}{{formA.own_students}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.own_students else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>People living in poverty</td>
-          <td><span>{% if formA.poverty%}{{formA.poverty}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.poverty else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>People with little or no education </td>
-          <td><span>{% if formA.no_education%}{{formA.no_education}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.no_education else 'NO'}}</span></td>
 
         </tr>
         <tr>
@@ -295,58 +295,58 @@
         <tr>
           <td>Collection, use or disclosure of informAtion WITHOUT the consent of the individual whose informAtion it
             is, with the exception of aggregated data or data from official databases such as StatsSA, SARS, etc.</td>
-          <td><span>{% if formA.disclosure%}{{formA.disclosure}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.disclosure else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Causing discomfiture to participants beyond normal levels of inconvenience</td>
-          <td><span>{% if formA.discomfiture%}{{formA.discomfiture}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.discomfiture else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Deception of participants, concealment or covert observation</td>
-          <td><span>{% if formA.deception%}{{formA.deception}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.deception else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Examining potentially sensitive or contentious issues</td>
-          <td><span>{% if formA.sensitive%}{{formA.sensitive}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.sensitive else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Seeking disclosure of informAtion which may be prejudicial to participants</td>
-          <td><span>{% if formA.prejudice%}{{formA.prejudice}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.prejudice else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Using intrusive techniques</td>
-          <td><span>{% if formA.intrusive_technique%}{{formA.intrusive_technique}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.intrusive_technique else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Study of or participation in illegal activities</td>
-          <td><span>{% if formA.illegal_activities%}{{formA.illegal_activities}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.illegal_activities else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Personal and social informAtion collected directly from participants</td>
-          <td><span>{% if formA.personal%}{{formA.personal}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.personal else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Identifiable informAtion to be collected about people from available records (e.g., staff records, student
             records, etc.)</td>
-          <td><span>{% if formA.available_records%}{{formA.available_records}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.available_records else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Psychology inventories / scales / tests</td>
-          <td><span>{% if formA.inventories%}{{formA.inventories}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.inventories else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>Activities which may place the researcher(s) / data collector at risk</td>
-          <td><span>{% if formA.risk_activities%}{{formA.risk_activities}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.risk_activities else 'NO'}}</span></td>
 
         </tr>
         <tr>
@@ -370,40 +370,40 @@
       <tbody>
         <tr>
           <td>a) Reimbursement or incentives to any participants. </td>
-          <td><span>{% if formA.incentives%}{{formA.incentives}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.incentives else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>b) The participants will incur financial costs by participating in the study.</td>
-          <td><span>{% if formA.financial_costs%}{{formA.financial_costs}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.financial_costs else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>c) At least one of the researchers has a financial or other involvement in the research (apart from their
             research role) or may receive a reward.</td>
-          <td><span>{% if formA.reward%}{{formA.reward}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.reward else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>d) Any other potential conflict of interest for any of the researchers (real or perceived financial or
             personal considerations that may compromise a researcher’s professional judgement in carrying out or
             reporting research, such as conducting research with colleagues, peers or students).</td>
-          <td><span>{% if formA.conflict%}{{formA.conflict}}{% endif%}</span></td>
+          <td><span>{{'YES' if  formA.conflict else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>e) Research is done on the premises of UJ or any of its units.</td>
-          <td><span>{% if formA.uj_premises%}{{formA.uj_premises}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.uj_premises else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>f) Research will make use of some of UJs facilities (venues, software, hardware, etc.)</td>
-          <td><span>{% if formA.uj_facilities%}{{formA.uj_facilities}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.uj_facilities else 'NO'}}</span></td>
 
         </tr>
         <tr>
           <td>g) Research will be funded by UJ or funding for it was acquired through UJ.</td>
-          <td><span>{% if formA.uj_funding%}{{formA.uj_funding}}{% endif%}</span></td>
+          <td><span>{{'YES' if formA.uj_funding else 'NO'}}</span></td>
 
         </tr>
         <tr>
@@ -552,9 +552,9 @@
       </thead>
       <tbody>
         <tr>
-          <td class="text-center">{% if formA.quantitative%}{{formA.quantitative}}{% endif%}</td>
-          <td class="text-center">{% if formA.qualitative%}{{formA.qualitative}}{% endif%}</td>
-          <td class="text-center">{% if formA.mixed_methods%}{{formA.mixed_methods}}{% endif%}</td>
+          <td class="text-center">{{'YES' if  formA.quantitative else 'NO'}}</td>
+          <td class="text-center">{{'YES' if formA.qualitative else 'NO'}}</td>
+          <td class="text-center">{{'YES' if formA.mixed_methods else 'NO'}}</td>
         </tr>
       </tbody>
     </table>
@@ -603,7 +603,7 @@
     </label>
   <br>
     <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?
-      <br><span>{% if formA.conflict_interest%}{{formA.conflict_interest}}{% endif%}</span>
+      <br><span>{{'YES' if formA.conflict_interest else 'NO'}}</span>
     </label>
     <br><span>{{formA.conflict_explanation}}</span>
     <br>
@@ -669,7 +669,7 @@
     <br>
 
     <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?
-      <br><span>{% if formA.intervention%}{{formA.intervention}}{% endif%}</span>
+      <br><span>{{'YES' if formA.intervention else 'NO'}}</span>
     </label><br>
     
 
@@ -679,7 +679,7 @@
     <br>
 
     <label>5.4.6 Will a translator be required?
-      <br><span>{% if formA.translator%}{{formA.translator}}{% endif%}</span>
+      <br><span>{{'YES' if formA.translator else 'NO'}}</span>
     </label>
     <br>
     <br><span>{{formA.translator_procedure}}</span>
@@ -804,25 +804,25 @@
     </tr>
   </thead>
   <tbody>
-   <tr><td>a) Identity and position of the researcher(s)?</td><td><br><span>{% if formA.q6_9a%}{{formA.q6_9a}}{% endif%}</span></td></tr>
-<tr><td>b) Purpose of the informAtion collection?</td><td><br><span>{% if formA.q6_9b%}{{formA.q6_9b}}{% endif%}</span></td></tr>
-<tr><td>c) Reason for selection and procedures for selecting participants?</td><td><br><span>{% if formA.q6_9c%}{{formA.q6_9c}}{% endif%}</span></td></tr>
-<tr><td>d) Participant’s role in the study?</td><td><br><span>{% if formA.q6_9d%}{{formA.q6_9d}}{% endif%}</span></td></tr>
-<tr><td>e) Expected duration of participation?</td><td><br><span>{% if formA.q6_9e%}{{formA.q6_9e}}{% endif%}</span></td></tr>
-<tr><td>f) Statement of voluntary participation and no penalty?</td><td><br><span>{% if formA.q6_9f%}{{formA.q6_9f}}{% endif%}</span></td></tr>
-<tr><td>g) Benefits to the participant and others?</td><td><br><span>{% if formA.q6_9g%}{{formA.q6_9g}}{% endif%}</span></td></tr>
-<tr><td>h) Risks and steps for harm/injury?</td><td><br><span>{% if formA.q6_9h%}{{formA.q6_9h}}{% endif%}</span></td></tr>
-<tr><td>i) Statement of right to withdraw?</td><td><br><span>{% if formA.q6_9i%}{{formA.q6_9i}}{% endif%}</span></td></tr>
-<tr><td>j) Compensation/gifts/services?</td><td><br><span>{% if formA.q6_9j%}{{formA.q6_9j}}{% endif%}</span></td></tr>
-<tr><td>k) Reimbursement for costs?</td><td><br><span>{% if formA.q6_9k%}{{formA.q6_9k}}{% endif%}</span></td></tr>
-<tr><td>l) Indemnity if applicable?</td><td><br><span>{% if formA.q6_9l%}{{formA.q6_9l}}{% endif%}</span></td></tr>
-<tr><td>m) Period for which records will be kept?</td><td><br><span>{% if formA.q6_9m%}{{formA.q6_9m}}{% endif%}</span></td></tr>
-<tr><td>n) Steps for confidentiality and secure storage?</td><td><br><span>{% if formA.q6_9n%}{{formA.q6_9n}}{% endif%}</span></td></tr>
-<tr><td>o) Disclosure of informAtion to third parties?</td><td><br><span>{% if formA.q6_9o%}{{formA.q6_9o}}{% endif%}</span></td></tr>
-<tr><td>p) Privacy protection in publications?</td><td><br><span>{% if formA.q6_9p%}{{formA.q6_9p}}{% endif%}</span></td></tr>
-<tr><td>q) Feedback to participants?</td><td><br><span>{% if formA.q6_9q%}{{formA.q6_9q}}{% endif%}</span></td></tr>
-<tr><td>r) Exclusions to confidentiality disclosed?</td><td><br><span>{% if formA.q6_9r%}{{formA.q6_9r}}{% endif%}</span></td></tr>
-<tr><td>s) Consent for audio/video recording?</td><td><br><span>{% if formA.q6_9s%} {{formA.q6_9s}}{% endif%}</span></td></tr>
+   <tr><td>a) Identity and position of the researcher(s)?</td><td><br><span>{{'YES' if formA.q6_9a else 'NO'}}</span></td></tr>
+<tr><td>b) Purpose of the informAtion collection?</td><td><br><span>{{'YES' if formA.q6_9b else 'NO'}}</span></td></tr>
+<tr><td>c) Reason for selection and procedures for selecting participants?</td><td><br><span>{{'YES' if formA.q6_9c else 'NO'}}</span></td></tr>
+<tr><td>d) Participant’s role in the study?</td><td><br><span>{{'YES' if formA.q6_9d else 'NO'}}</span></td></tr>
+<tr><td>e) Expected duration of participation?</td><td><br><span>{{'YES' if formA.q6_9e else 'NO'}}</span></td></tr>
+<tr><td>f) Statement of voluntary participation and no penalty?</td><td><br><span>{{'YES' if formA.q6_9f else 'NO'}}</span></td></tr>
+<tr><td>g) Benefits to the participant and others?</td><td><br><span>{{'YES' if formA.q6_9g else 'NO'}}</span></td></tr>
+<tr><td>h) Risks and steps for harm/injury?</td><td><br><span>{{'YES' if formA.q6_9h else 'NO'}}</span></td></tr>
+<tr><td>i) Statement of right to withdraw?</td><td><br><span>{{'YES' if formA.q6_9i else 'NO'}}</span></td></tr>
+<tr><td>j) Compensation/gifts/services?</td><td><br><span>{{'YES' if formA.q6_9j else 'NO'}}</span></td></tr>
+<tr><td>k) Reimbursement for costs?</td><td><br><span>{{'YES' if formA.q6_9k else 'NO'}}</span></td></tr>
+<tr><td>l) Indemnity if applicable?</td><td><br><span>{{'YES' if formA.q6_9l else 'NO'}}</span></td></tr>
+<tr><td>m) Period for which records will be kept?</td><td><br><span>{{'YES' if formA.q6_9m else 'NO'}}</span></td></tr>
+<tr><td>n) Steps for confidentiality and secure storage?</td><td><br><span>{{'YES' if formA.q6_9n else 'NO'}}</span></td></tr>
+<tr><td>o) Disclosure of informAtion to third parties?</td><td><br><span>{{'YES' if formA.q6_9o else 'NO'}}</span></td></tr>
+<tr><td>p) Privacy protection in publications?</td><td><br><span>{{'YES' if formA.q6_9p else 'NO'}}</span></td></tr>
+<tr><td>q) Feedback to participants?</td><td><br><span>{{'YES' if formA.q6_9q else 'NO'}}</span></td></tr>
+<tr><td>r) Exclusions to confidentiality disclosed?</td><td><br><span>{{'YES' if formA.q6_9r else 'NO'}}</span></td></tr>
+<tr><td>s) Consent for audio/video recording?</td><td><br><span>{{'YES' if formA.q6_9s else 'NO'}}</span></td></tr>
 
   </tbody>
 </table>
@@ -1028,11 +1028,8 @@
       {% endfor %}
     </ul>
   </div>
-
-
-
     <div class="form-group">
-      <label for="supervisor_signature">Supervisor Signature:</label>
+      <label for="supervisor_signature">Ethics Admin Signature:</label>
       <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
     </div>
 
