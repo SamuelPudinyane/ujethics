@@ -60,7 +60,8 @@
   else 'Accepted' if forma.rejected_or_accepted and forma.supervisor_feedback and not forma.rec_status
   else forma.rec_status if forma.rec_status else 'Waiting Review'
 }}
-
+<br>
+{% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=forma.user_id)}}">Issue Certificate</a>{% endif %}
             </span></td>
             <td>
               {% if forma.supervisor_feedback and not forma.ethics_commettee_comments%}
@@ -142,6 +143,8 @@
   else formb.rec_status if formb.rec_status else 'Waiting Review'
         }}
         {% endif %}
+        <br>
+{% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=formb.user_id)}}">Issue Certificate</a>{% endif %}
             </span></td>
             <td>
               {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
@@ -204,6 +207,8 @@
   else 'Accepted' if formc.rejected_or_accepted and formc.supervisor_feedback and not formc.rec_status
   else formc.rec_status if formc.rec_status else 'Waiting Review'
 }}
+<br>
+{% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=formc.user_id)}}">Issue Certificate</a>{% endif %}
 </span></td>
 <td>
               {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}

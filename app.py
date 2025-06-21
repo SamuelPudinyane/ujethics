@@ -16,6 +16,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from sqlalchemy import or_
+from sqlalchemy import func
 # Load environment variables from .env file
 load_dotenv()
 
@@ -3185,6 +3186,36 @@ def rec_response(id):
     return "Invalid access", 405
 
 
+
+def generate_clearance_code(committee_acronym, decision_date=None):
+    if decision_date is None:
+        decision_date = datetime.today()
+
+    # Format the date as YYYYMMDD
+    date_str = decision_date.strftime('%Y%m%d')
+
+    total_count = 0  # Initialize total decision count
+
+    for model in [FormA, FormB, FormC]:
+        count = (
+            db_session.query(func.count())
+            .select_from(model)
+            .filter(func.date(model.rec_date) == decision_date.date())
+            .scalar()
+        )
+        total_count += count
+
+    # Increment for the new decision
+    decision_number = total_count + 1
+
+    # Format the final clearance code
+    clearance_code = f"{committee_acronym}{date_str}{decision_number:02d}"
+    return clearance_code
+
+@app.route('/certificate/<string:id>', methods=['GET','POST'])
+def certificate(id): 
+        
+    return render_template('certificate.html')
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
