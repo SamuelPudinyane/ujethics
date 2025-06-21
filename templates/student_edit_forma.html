@@ -569,7 +569,7 @@
           <td><input type="text" value="{{formA.population}}" name="population[]" class="form-control" /></td>
           <td><input type="text" value="{{formA.sampling_method}}" name="sampling_method[]" class="form-control" /></td>
           <td><input type="number" value="{{formA.sampling_size}}" name="sample_size[]" class="form-control" /></td>
-          <td><textarea name="inclusion_criteria[]" value="{{formA.inclusive_criteria}}" rows="2" class="form-control"></textarea></td>
+          <td><textarea name="inclusion_criteria[]" rows="2" class="form-control">{{formA.inclusive_criteria}}</textarea></td>
           <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
           
         </tr>
@@ -580,13 +580,13 @@
     <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.
       
     </label>
-    <textarea value="{{formA.duration_time}}" name="duration_timing" rows="2"></textarea>
+    <textarea  name="duration_timing" rows="2">{{formA.duration_time}}</textarea>
     <br>
 
     <label>5.3.3 Explain how you will obtain the contact details of participantslabel
       
     </label>
-    <textarea value="{{formA.contact_details_method}}" name="contact_details_method" rows="2"></textarea>
+    <textarea  name="contact_details_method" rows="2">{{formA.contact_details_method}}</textarea>
   <br>
     <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?
       
@@ -594,18 +594,18 @@
     <input type="radio" name="conflict_interest" {% if not formA.conflict_interest %}checked{% endif%} value="No"> No
     <input type="radio" name="conflict_interest" {% if formA.conflict_interest %}checked{% endif%} value="Yes"> Yes
     <div id="conflict_explanation_box" style="display: none;">
-            <textarea name="conflict_explanation" value="{{formA.conflict_explanation}}" rows="2"
-              placeholder="If yes, give details and explain how it will be mitigated"></textarea>
+            <textarea name="conflict_explanation"  rows="2"
+              placeholder="If yes, give details and explain how it will be mitigated">{{formA.conflict_explanation}}</textarea>
           </div>
     <br>
 
     <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methds will be used</label><br>
     <div id="data-methods">
-            <label><input type="checkbox" {% if formA.questionnaire%}checked{% endif%} value="questionnaire" class="method-check"> Questionnaire</label><br>
+            <label><input type="checkbox" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> Questionnaire</label><br>
             <label><input type="checkbox" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> Interview</label><br>
-            <label><input type="checkbox" {% if formA.focus %}checked{% endif %} value="focus" class="method-check"> Focus Group</label><br>
-            <label><input type="checkbox" {% if formA.observation %}checked{% endif %} value="observation" class="method-check"> Observation</label><br>
+            <label><input type="checkbox" {% if formA.focus_groups %}checked{% endif %} value="focus" class="method-check"> Focus Group</label><br>
+            <label><input type="checkbox" {% if formA.observations %}checked{% endif %} value="observation" class="method-check"> Observation</label><br>
             <label><input type="checkbox" {% if formA.documents %}checked{% endif %} value="documents" class="method-check"> Documents</label><br>
             <label><input type="checkbox" {% if formA.other %}checked{% endif %} value="other" class="method-check"> Other</label><br>
     </div>
@@ -617,7 +617,7 @@
             <label>If existing, permission obtained?</label><br>
             <input type="checkbox" {% if formA.permission%}checked{% endif %} name="permission_obtained"> Yes
             <input type="checkbox" {% if formA.open_source%}checked{% endif %} name="open_source"> Open Source<br>
-            <textarea name="instrument_attachment_reason" value="{{formA.instrument_attrachment_reason}}" rows="2" placeholder="Attach or justify"></textarea>
+            <textarea name="instrument_attachment_reason"  rows="2" placeholder="Attach or justify">{{formA.instrument_attrachment_reason}}</textarea>
           </div>
     <!-- Interview -->
           <div id="interview_fields" style="display:none; margin-top: 1rem;">
@@ -641,49 +641,49 @@
 <!-- Observation -->
           <div id="observation_fields" style="display:none; margin-top: 1rem;">
             <label>Please describe your observation protocol:</label>
-            <textarea name="observation_details" value="{{formA.observation_details}}" rows="3"
-              placeholder="Explain how observations will be conducted."></textarea>
+            <textarea name="observation_details"  rows="3"
+              placeholder="Explain how observations will be conducted.">{{formA.observation_details}}</textarea>
           </div>
           <!-- Documents -->
           <div id="documents_fields" style="display:none; margin-top: 1rem;">
             <label>What type of documents will be analyzed?</label>
-            <textarea name="documents_details" value="{{formA.documents_details}}" rows="3"
-              placeholder="E.g. reports, archives, publications..."></textarea>
+            <textarea name="documents_details" rows="3"
+              placeholder="E.g. reports, archives, publications...">{{formA.documents_details}}</textarea>
           </div>
            <!-- Other -->
           <div id="other_fields" style="display:none; margin-top: 1rem;">
             <label>Please describe other data collection method(s):</label>
-            <textarea name="other_details" value="{{formA.other_details}}" rows="3" placeholder="Describe..."></textarea>
+            <textarea name="other_details"  rows="3" placeholder="Describe...">{{formA.other_details}}</textarea>
           </div>
 
           <!-- General Data Collection Procedure -->
           <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
-          <textarea name="data_collection_procedure" value="{{formA.data_collection_procedure}}" rows="3"
-            placeholder="Describe the data collection procedure in detail"></textarea>
+          <textarea name="data_collection_procedure"  rows="3"
+            placeholder="Describe the data collection procedure in detail">{{formA.data_collection_procedure}}</textarea>
 
     <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?
     </label>
-    <textarea value="{{formA.data_collectors}}" name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
+    <textarea name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party">{{formA.data_collectors}}</textarea>
 
     <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?
       
     </label>
      <input type="radio" name="intervention" {% if not formA.intervention %}checked{% endif%} value="No"> No
     <input type="radio" name="intervention" {% if formA.intervention %}checked{% endif %} value="Yes"> Yes<br>
-    <textarea name="intervention_details" value="{{formA.intervention_details}}" rows="2" placeholder="If yes, explain the intervention"></textarea>
+    <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention">{{formA.intervention_details}}</textarea>
     
 
     <label>5.4.5 Sensitive data or vulnerable populations?
       
     </label>
-    <textarea value="{{formA.sensitive_data}}" name="sensitive_data" rows="2"></textarea>
+    <textarea name="sensitive_data" rows="2">{{formA.sensitive_data}}</textarea>
 
 
     <label>5.4.6 Will a translator be required?
     </label>
     <input type="radio" name="translator" {% if not formA.translator %}checked{% endif%} value="No"> No
     <input type="radio" name="translator" {% if formA.translator%}checked{% endif%} value="Yes"> Yes
-    <textarea name="translator_procedure" value="{{formA.translator_procedure}}" rows="2" placeholder="Explain how translator will be used"></textarea>
+    <textarea name="translator_procedure"  rows="2" placeholder="Explain how translator will be used">{{formA.translator_procedure}}</textarea>
 
     
 
@@ -726,7 +726,7 @@
       <!-- Public Data Section -->
       <div id="publicDataSection" style="display: none; margin-top: 1rem;">
         <label>What type of public data is going to be used?</label>
-        <textarea value="{{formA.public_data_description}}" name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports"></textarea>
+        <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports">{{formA.public_data_description}}</textarea>
       </div>
     </div>
 
@@ -743,7 +743,7 @@
   
     <div class="question-block">
       <label for="informed-consent">6.1 Will informed consent be obtained? Explain the process:</label>
-      <textarea id="informed-consent" value="{{formA.informed_consent}}" name="informed_consent" rows="4" required></textarea>
+      <textarea id="informed-consent"  name="informed_consent" rows="4" required>{{formA.informed_consent}}</textarea>
     </div>
   
     <div class="question-block">
@@ -756,27 +756,27 @@
   
     <div class="question-block">
       <label for="study-benefits">6.3 What are the benefits of the study?</label>
-      <textarea id="study-benefits" value="{{formA.study_benefits}}" name="study_benefits" rows="3"></textarea>
+      <textarea id="study-benefits"  name="study_benefits" rows="3">{{formA.study_benefits}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="participant-risks">6.4 Description of the risks participants may suffer and the level of risk:</label>
-      <textarea id="participant-risks" value="{{formA.participant_risks}}" name="participant_risks" rows="3"></textarea>
+      <textarea id="participant-risks"  name="participant_risks" rows="3">{{formA.participant_risks}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="adverse-steps">6.5 Description of steps to be taken in case of adverse events:</label>
-      <textarea id="adverse-steps" value="{{formA.adverse_steps}}" name="adverse_steps" rows="3"></textarea>
+      <textarea id="adverse-steps"  name="adverse_steps" rows="3">{{formA.adverse_steps}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="community-participation">6.6 Description of anticipated community participation in the study:</label>
-      <textarea id="community-participation" value="{{formA.community_participation}}" name="community_participation" rows="3"></textarea>
+      <textarea id="community-participation" name="community_participation" rows="3">{{formA.community_participation}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="community-effects">6.7 Description of possible adverse effects on the community:</label>
-      <textarea id="community-effects" value="{{formA.community_effects}}" name="community_effects" rows="3"></textarea>
+      <textarea id="community-effects"  name="community_effects" rows="3">{{formA.community_effects}}</textarea>
     </div>
   
     <div class="question-block">
@@ -824,32 +824,32 @@
   
     <div class="question-block">
       <label for="results-feedback">6.10 How will participants be informed of findings?</label>
-      <textarea id="results-feedback" value="{{formA.results_feedback}}" name="results_feedback" rows="3"></textarea>
+      <textarea id="results-feedback"  name="results_feedback" rows="3">{{formA.results_feedback}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="products-access">6.11 Description of participants’ access to products developed from the study:</label>
-      <textarea id="products-access" value="{{formA.products_access}}" name="products_access" rows="3"></textarea>
+      <textarea id="products-access"  name="products_access" rows="3">{{formA.products_access}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="publication-plans">6.12 Indicate how you envisage publishing this research:</label>
-      <textarea id="publication-plans" value="{{formA.publication_plans}}" name="publication_plans" rows="3"></textarea>
+      <textarea id="publication-plans" name="publication_plans" rows="3">{{formA.publication_plans}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="participant-comp">6.13 Describe compensation to participants (if applicable):</label>
-      <textarea id="participant-comp" value="{{formA.participants_comp}}" name="participant_comp" rows="3"></textarea>
+      <textarea id="participant-comp" name="participant_comp" rows="3">{{formA.participants_comp}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="participant-costs">6.14 Describe any financial costs to participants (if applicable):</label>
-      <textarea id="participant-costs" value="{{formA.participants_costs}}" name="participant_costs" rows="3"></textarea>
+      <textarea id="participant-costs" name="participant_costs" rows="3">{{formA.participants_costs}}</textarea>
     </div>
   
     <div class="question-block">
       <label for="ethics-reporting">6.15 Description of reporting to ethics research committee:</label>
-      <textarea id="ethics-reporting" value="{{formA.ethics_reporting}}" name="ethics_reporting" rows="3"></textarea>
+      <textarea id="ethics-reporting"  name="ethics_reporting" rows="3">{{formA.ethics_reporting}}</textarea>
     </div>
 
   

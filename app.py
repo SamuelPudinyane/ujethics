@@ -1060,10 +1060,10 @@ def form_a_sec3 ():
 
         # Section 4: Organisational Permissions and Affiliations
         form.grant_permission=data.get('grant_permission')
-        form.org_name = data.getlist('org_name')
-        form.org_contact = data.getlist('org_contact')
-        form.org_role = data.getlist('org_role')
-        form.org_permission = data.get('org_permission1')
+        form.org_name = ','.join(data.getlist('org_name[]'))
+        form.org_contact = ','.join(data.getlist('org_contact[]'))
+        form.org_role = ','.join(data.getlist('org_role[]'))
+        form.org_permission = data.get('org_permission')
         
         form.researcher_affiliation = data.get('researcher_affiliation')
         form.affiliation_details = data.get('affiliation_details')
@@ -1072,10 +1072,10 @@ def form_a_sec3 ():
         form.collective_details = data.get('collective_details')
         # Funding Information
         form.is_funded = data.get('is_funded')
-        form.fund_org = data.getlist('fund_org')
-        form.fund_contact = data.getlist('fund_contact')
-        form.fund_role = data.getlist('fund_role')
-        form.fund_amount = data.getlist('fund_amount')
+        form.fund_org = ','.join(data.getlist('fund_org[]'))
+        form.fund_contact = ','.join(data.getlist('fund_contact[]'))
+        form.fund_role = ','.join(data.getlist('fund_role[]'))
+        form.fund_amount = ','.join(data.getlist('fund_amount[]'))
 
         # Indemnity & Other Committee Info
         form.indemnity_arrangements = data.get('indemnity_arrangements')
@@ -1086,7 +1086,7 @@ def form_a_sec3 ():
         db_session.add(form)
         db_session.commit()
         message= 'Form submitted successfully'
-        print("im here")
+       
         return render_template("form-a-section4.html",messsages=[message])
     return render_template('form-a-section3.html')
 
@@ -2702,7 +2702,7 @@ def chair_form_view(id,form_name):
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
-                if not formA.review_date or not formA.review_date1:
+                if not formA.review_date and not formA.review_date1:
                     
                     formA.review_date=review_date
                     formA.review_org_permission_status=review_org_permission_status
@@ -2762,7 +2762,7 @@ def chair_form_view(id,form_name):
                 
             db_session.add(formA)
             db_session.commit()
-            return redirect(url_for('chair_landing'))
+            return redirect(url_for('review_dashboard'))
         return render_template("form_a_ethics.html",formA=formA,formReviewers=formReviewers)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
@@ -2785,7 +2785,7 @@ def chair_form_view(id,form_name):
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
-                if not formB.review_date or not formB.review_date1:
+                if not formB.review_date and not formB.review_date1:
                 
                     formB.review_date=review_date
                     formB.review_org_permission_status=review_org_permission_status
@@ -2843,7 +2843,7 @@ def chair_form_view(id,form_name):
                 formB.review_status1=False
             db_session.add(formB)
             db_session.commit()
-            return redirect(url_for('chair_landing'))
+            return redirect(url_for('review_dashboard'))
         return render_template("form_b_ethics.html",formB=formB,formReviewers=formReviewers)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
@@ -2870,7 +2870,7 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             if request.form.get('recommendation')=='Ready for submission':
                 
-                if not formC.review_date or not formC.review_date1:
+                if not formC.review_date and not formC.review_date1:
                 
                     formC.review_date=review_date
                     formC.review_org_permission_status=review_org_permission_status
@@ -2928,7 +2928,7 @@ def chair_form_view(id,form_name):
                 formC.review_status1=False
             db_session.add(formC)
             db_session.commit()
-            return redirect(url_for('chair_landing'))
+            return redirect(url_for('review_dashboard'))
         return render_template("form_c_ethics.html",formc=formC,formReviewers=formReviewers)
 
 
@@ -3102,21 +3102,20 @@ def reviewer_form_c(id):
 @app.route('/rec_dashboard', methods=['GET','POST'])
 def rec_dashboard():
     user_id=session['id']
-    print(user_id)
+    
     submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.review_status==True,FormA.review_status1==True)
+    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.risk_rating != 'LOW',FormA.review_status==True,FormA.review_status1==True)
     .distinct(FormA.user_id)
     .all())
     
     submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.review_status==True,FormB.review_status1==True)
+    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'LOW',FormB.review_status==True,FormB.review_status1==True)
     .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormC.review_status==True,FormC.review_status1==True)
+    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormB.risk_level != 'LOW',FormC.review_status==True,FormC.review_status1==True)
     .distinct(FormC.form_id)
     .all())
-    print("--------------------------",submitted_form_c)
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
@@ -3126,7 +3125,8 @@ def rec_dashboard():
 
 @app.route('/rec_form_a/<string:id>', methods=['GET'])
 def rec_form_a(id):
-    form = db_session.query(FormA).filter_by(form_id=id).first()
+    
+    form = db_session.query(FormA).filter(FormA.form_id==id).first()
 
     if form:
         return render_template("rec_form_a.html", form=form)
@@ -3138,7 +3138,7 @@ def rec_form_a(id):
 @app.route('/rec_form_b/<string:id>', methods=['GET'])
 def rec_form_b(id):
    
-    form = db_session.query(FormB).filter_by(form_id=id).first()
+    form = db_session.query(FormB).filter(FormB.form_id==id).first()
 
     if form:
         return render_template("rec_form_b.html",form=form)
@@ -3150,7 +3150,7 @@ def rec_form_b(id):
 
 @app.route('/rec_form_c/<string:id>', methods=['GET'])
 def rec_form_c(id):
-    form = db_session.query(FormC).filter_by(form_id=id).first()
+    form = db_session.query(FormC).filter(FormC.form_id==id).first()
    
     if form:
         return render_template("rec_form_c.html", form=form)
@@ -3164,22 +3164,26 @@ def rec_form_c(id):
 def rec_response(id):
     if request.method == 'POST':
         status = request.form.get('status')
-        comments = request.form.get('additional_comments')
+        comments = request.form.get('rec_comments')  # ✅ corrected from 'additional_comments'
 
+        # Loop through models to find the correct form by ID
         for model in [FormA, FormB, FormC]:
             form = db_session.query(model).filter_by(form_id=id).first()
             if form:
+            
                 form.rec_comments = comments
                 form.rec_status = status
+                form.rec_date=datetime.now()
                 db_session.commit()
                 flash("Form updated successfully", "success")
                 break
         else:
             flash("Form not found", "danger")
 
-        return redirect(url_for('rec_dashboard'))  # Replace this with your redirect
+        return redirect(url_for('rec_dashboard'))
 
     return "Invalid access", 405
+
 
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
@@ -3189,6 +3193,7 @@ def ethics_reviewer_committee_forms(id,form_name):
         formA = db_session.query(FormA).filter_by(form_id=id).first()
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
+           
             formA.reviewer_name1=reviewers[0]
             formA.reviewer_name2=reviewers[1] if reviewers[1] else None
             formA.supervisor_date=request.form.get('review_date')

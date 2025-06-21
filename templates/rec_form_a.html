@@ -119,7 +119,7 @@
    
       <div class="form-section">
         <label for="applicant-name">Applicant Name
-          <br><span>{{form.application_name}}</span>
+          <br><span>{{form.applicant_name}}</span>
         </label>
         <label for="student-number">Student / Staff Number
           <br><span>{{form.student_number}}</span>
@@ -260,7 +260,7 @@
         </tr>
         <tr>
           <td>Other: Provide a description</td>
-          <td><span>{{formA.assessment_other_specify}}</span>
+          <td><span>{{form.assessment_other_specify}}</span>
           </td>
 
         </tr>
@@ -919,8 +919,8 @@
     {% endif %}
 
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label class="form-label">Reviewer Comments (Mandatory)</label>
-    <textarea rows="5" name="additional_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
+    <label class="form-label">REC Comments (Mandatory)</label>
+    <textarea rows="5" name="rec_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
 
     <input type="hidden" name="status" id="status" value="" />
 

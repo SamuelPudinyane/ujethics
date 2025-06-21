@@ -69,7 +69,7 @@
       </div>
     </div>
   </header>
-<form action="{{url_for('chair_form_view',id=formB.form_id,form_name='FORM B')}}" method="post"  enctype="multipart/form-data">
+<form action="{{url_for('ethics_reviewer_committee_forms',id=formB.form_id,form_name='FORM B')}}" method="post"  enctype="multipart/form-data">
   <!-- Error Messages -->
             {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -297,76 +297,10 @@
     <input type="date" name="review_date">
   </div>
 
-  <div class="section">
-    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <strong>Organisational permission</strong><br>
-            • Can be an email or formal letter.<br>
-            • Include permission to access relevant business documents.<br>
-            • If not requested, use the “Request for Permission” template.
-          </td>
-          <td><input type="text" name="org_permission_status"></td>
-          <td><textarea name="org_permission_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Signed waiver from business</strong><br>
-            • Use template provided in “Ethical clearance templates”.
-          </td>
-          <td><input type="text" name="waiver_status"></td>
-          <td><textarea name="waiver_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Form A – Ethics Application Form</strong><br>
-            • Must be completed and co-signed by supervisor.<br>
-            • Submit updated version if changes were made since proposal.
-          </td>
-          <td><input type="text" name="form_status"></td>
-          <td><textarea name="form_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Interview Questions and/or Questionnaire</strong><br>
-            • As close to final as possible.<br>
-            • If preliminary, indicate clearly.<br>
-            • Sensitive/invasive questions increase risk – avoid where possible.
-          </td>
-          <td><input type="text" name="questions_status"></td>
-          <td><textarea name="questions_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Participant Information Sheet & Informed Consent</strong><br>
-            • Use and adapt the provided template for your study.
-          </td>
-          <td><input type="text" name="consent_status"></td>
-          <td><textarea name="consent_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Refined Concept Proposal</strong><br>
-            • Should match the version submitted with Literature Review.
-          </td>
-          <td><input type="text" name="proposal_status"></td>
-          <td><textarea name="proposal_comments"></textarea></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  
 
   <div class="section">
-    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
+    <h3>Additional Comments (Recommendation towards approval)</h3>
     <textarea name="additional_comments"></textarea>
   </div>
 

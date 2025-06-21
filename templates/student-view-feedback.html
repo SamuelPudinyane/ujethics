@@ -133,7 +133,7 @@
     <strong>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
 <br>
     <label>Date of Re-submission:</label>
-    <strong>{% if view_form.declaration_date%}{{view_form.declaration_date.strftime('%d/%m/%Y')}}
+    <strong>{% if view_form.declaration_date%}{{view_form.declaration_date}}
         {% elif view_form.signature_date %}{{view_form.signature_date.strftime('%d/%m/%Y')}}
         {% endif%}</strong>
 <br>

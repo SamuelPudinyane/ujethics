@@ -57,8 +57,8 @@
             <td><span class="badge status-pending">
               {{
   'Rejected' if forma.rejected_or_accepted is not none and not forma.rejected_or_accepted and forma.supervisor_feedback
-  else 'Accepted' if forma.rejected_or_accepted and forma.supervisor_feedback
-  else 'Waiting Review'
+  else 'Accepted' if forma.rejected_or_accepted and forma.supervisor_feedback and not forma.rec_status
+  else forma.rec_status if forma.rec_status else 'Waiting Review'
 }}
 
             </span></td>
@@ -138,8 +138,8 @@
               {% else %}
         {{
   'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_feedback
-  else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_feedback
-  else 'Waiting Review'
+  else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_feedback and not formb.rec_status
+  else formb.rec_status if formb.rec_status else 'Waiting Review'
         }}
         {% endif %}
             </span></td>
@@ -201,8 +201,8 @@
             <td>{{formc.student_number}}</td>
             <td><span class="badge status-pending">{{
   'Rejected' if formc.rejected_or_accepted is not none and not formc.rejected_or_accepted and formc.supervisor_feedback
-  else 'Accepted' if formc.rejected_or_accepted and formc.supervisor_feedback
-  else 'Waiting Review'
+  else 'Accepted' if formc.rejected_or_accepted and formc.supervisor_feedback and not formc.rec_status
+  else formc.rec_status if formc.rec_status else 'Waiting Review'
 }}
 </span></td>
 <td>

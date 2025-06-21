@@ -378,7 +378,7 @@ class FormA(Base):
 
     declaration_name = Column(String(255), nullable=True)
     applicant_signature = Column(String(255), nullable=True)
-    declaration_date = Column(String, nullable=True)
+    declaration_date = Column(DateTime, nullable=True)
     #this needs to be deleted
     supervisor_comments = Column(Text,nullable=True)###
     rejected_or_accepted=Column(Boolean,default=False)
@@ -456,7 +456,7 @@ class FormA(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
-    rec_date=Column(DateTime,nullable=True)
+    rec_date=Column(DateTime,server_default=func.now(),nullable=True)
     def __repr__(self):
         return f'<FormA {self.applicant_name} ({self.student_number})>'
     
@@ -604,7 +604,7 @@ class FormB(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
-    rec_date=Column(DateTime,nullable=True)
+    rec_date=Column(DateTime,server_default=func.now(),nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
     
@@ -763,7 +763,7 @@ class FormC(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
-    rec_date=Column(DateTime,nullable=True)
+    rec_date=Column(DateTime,server_default=func.now(),nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
