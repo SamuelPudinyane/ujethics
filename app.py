@@ -1280,7 +1280,7 @@ def form_a_sec6 ():
         # Convert string to date
         date_str = request.form.get('declaration_date')
         try:
-            form.declaration_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            form.declaration_date = datetime.strptime(date_str, '%Y-%m-%d')
         except (ValueError, TypeError):
             return "Invalid date format. Please use YYYY-MM-DD.", 400
 
