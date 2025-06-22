@@ -40,6 +40,14 @@ users = [
         student_number="",
         supervisor_id="",
         role="REVIEWER"
+    ),
+    User(
+        full_name="Dr. Michael Phillips",
+        email="michael.phillips@uj.ac.za",
+        password="supervisor6",
+        student_number="",
+        supervisor_id="",
+        role="REVIEWER"
     )
 ]
 
