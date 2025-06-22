@@ -214,8 +214,7 @@ def register_reviewer():
             # Validate password
             is_valid, message = validate_password(password)
             if not is_valid:
-                messages ="Verification failed"
-                return render_template('register_reviewer.html', messages=[messages])
+                return render_template('register_reviewer.html', messages=[message])
 
             # Check if user exists
             user = db_session.query(User).filter_by(email=email).first()
