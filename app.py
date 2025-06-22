@@ -1,9 +1,11 @@
-from flask import Flask,flash, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask,flash,make_response, render_template, request, redirect, url_for, session, jsonify
 from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements,Watched
 from utils.helpers import generate_reset_token, send_email, validate_password
 import json
 from db_queries import getFormAData, getSupervisorsList
 import os
+import io
+import pdfkit
 from werkzeug.utils import secure_filename
 import secrets
 from dotenv import load_dotenv
@@ -12,11 +14,12 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from datetime import date
-from sqlalchemy import desc
+from sqlalchemy import desc,cast ,Date
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from sqlalchemy import or_
 from sqlalchemy import func
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -212,7 +215,7 @@ def register_reviewer():
             is_valid, message = validate_password(password)
             if not is_valid:
                 messages ="Verification failed"
-                return render_template('register_rewiewer.html', messages=[messages])
+                return render_template('register_reviewer.html', messages=[messages])
 
             # Check if user exists
             user = db_session.query(User).filter_by(email=email).first()
@@ -3200,7 +3203,7 @@ def generate_clearance_code(committee_acronym, decision_date=None):
         count = (
             db_session.query(func.count())
             .select_from(model)
-            .filter(func.date(model.rec_date) == decision_date.date())
+            .filter(cast(model.rec_date, Date) == decision_date.date())
             .scalar()
         )
         total_count += count
@@ -3212,10 +3215,71 @@ def generate_clearance_code(committee_acronym, decision_date=None):
     clearance_code = f"{committee_acronym}{date_str}{decision_number:02d}"
     return clearance_code
 
-@app.route('/certificate/<string:id>', methods=['GET','POST'])
+@app.route('/certificate/<string:id>', methods=['GET', 'POST'])
 def certificate(id): 
-        
-    return render_template('certificate.html')
+    code = 'JBSREC'
+    certification_code = generate_clearance_code(code)
+
+    for model in [FormA, FormB, FormC]:
+        certificate_details = db_session.query(model).filter_by(form_id=id).first()
+        if certificate_details:
+            certificate_details.certificate_code = certification_code
+            certificate_details.certificate_issued=datetime.now()
+            db_session.add(certificate_details)
+            db_session.commit()
+            break  # exit the loop once a match is found
+    print("code --- ",certification_code)
+    return render_template('certificate.html', certificate_details=certificate_details, certification_code=certification_code)
+
+
+
+@app.route('/certificate/<string:id>/download', methods=['GET'])
+def download_certificate(id):
+    for model in [FormA, FormB, FormC]:
+        certificate_details = db_session.query(model).filter_by(user_id=id).first()
+        if certificate_details:
+            break
+        else:
+            return "No certificate data found.", 404
+
+    # Render HTML from your existing template
+    rendered = render_template('certificate.html', certificate_details=certificate_details, certification_code=certificate_details.certificate_code)
+
+    pdf = pdfkit.from_string(rendered, False)
+    
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
+    return response
+
+
+from flask import request, redirect, url_for
+from datetime import datetime
+
+@app.route('/certificate/<string:id>', methods=['POST'])
+def save_certificate_info(id):
+    for model in [FormA, FormB, FormC]:
+        certificate_details = db_session.query(model).filter_by(form_id=id).first()
+        if certificate_details:
+            break
+    else:
+        return "Certificate not found", 404
+
+    # Extract form inputs
+    try:
+        certificate_details.certificate_valid_years = int(request.form.get('valid_years'))
+        certificate_details.certificate_end_date = datetime.strptime(request.form.get('end_date'), '%Y-%m-%d').date()
+        certificate_details.certificate_issuer = request.form.get('certificate_issuer')
+        certificate_details.certificate_email = request.form.get('email')
+        certificate_details.certificate_issued=request.form.get('certificate_issued')
+        db_session.commit()
+    except Exception as e:
+        print("Error saving certificate details:", e)
+        return "Invalid input", 400
+
+    # Redirect to PDF download
+    return redirect(url_for('download_certificate', id=id))
+
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
