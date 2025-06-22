@@ -77,19 +77,7 @@
     </style>
 </head>
 <body>
-<form action="{{ url_for('certificate', id=certificate_details.form_id) }}" method="POST" style="margin-top: 30px;">
-<!-- Error Messages -->
-    {% if messages %}
-        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endif %}
-
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <div class="container">
+<div class="container">
     <div class="certificate-content">
         <!-- Header Section -->
         <div class="header">
@@ -150,11 +138,8 @@
     
 </div>
 
-<button type="submit" 
-        style="padding: 10px 20px; background: #004785; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer;">
-        Save 
-    </button>
+
     <a href="{{url_for('generate_pdf',id=certificate_details.form_id)}}" class="btn btn-primary">Generate PDF</a>
-</form>
+
 </body>
 </html>
