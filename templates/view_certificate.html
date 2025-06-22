@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Ethical Clearance Certificate</title>
     <style>
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-section, #print-section * {
+    visibility: visible;
+  }
+  #print-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
         body, html {
             height: 100%;
             margin: 0;
@@ -77,7 +90,7 @@
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="print-section">
     <div class="certificate-content">
         <!-- Header Section -->
         <div class="header">
@@ -96,8 +109,8 @@
         <p>
             This letter serves to confirm that the proposed research project indicated in the table below,
             has been reviewed by the Johannesburg Business School Research Ethics Committee (JBSREC)
-            at the University of Johannesburg. Ethical clearance is granted for <input type="number" name="valid_years"  required placeholder="number of year"> years,
-            from <strong>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</strong> to <input type="date" name="end_date" placeholder="specify the end date" required >.
+            at the University of Johannesburg. Ethical clearance is granted for {{certificate_details.certificate_valid_years}} years,
+            from <strong>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% endif%}</strong> to <strong>{{certificate_details.certificate_end_date.strftime('%Y-%m-%d')}}</strong>.
         </p>
 
         <table>
@@ -106,7 +119,7 @@
             <tr><td class="highlight">Staff/Student number</td><td>{{certificate_details.student_number}}</td></tr>
             <tr><td class="highlight">Title of Research</td><td>{% if certificate_details.study_title%}{{certificate_details.study_title}}{% elif certificate_details.project_title %} {{certificate_details.project_title}}{% endif%}</td></tr>
             <tr><td class="highlight">Academic article/MCom</td><td>MCom</td></tr>
-            <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</td></tr>
+            <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% endif%}</td></tr>
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
             <tr><td class="highlight">Rating of application</td><td>{{certificate_details.rec_status}}</td></tr>
@@ -128,10 +141,10 @@
         </div>
 
         <div class="signature">
-            <p><strong>Date:</strong> {% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</p>
-            <p><strong>Name <input type="text" name="certificate_issuer" required></strong><br>
+            <p>Date:<strong> {% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% endif%}</strong></p>
+            <p>Name<strong> {{certificate_details.certificate_issuer}}</strong><br>
                Chairperson: JBSREC<br>
-               Email: <input type="text" name="email" required></p>
+               Email: <strong>{{certificate_details.certificate_email}}</strong></p>
         </div>
     </div>
 
@@ -139,7 +152,12 @@
 </div>
 
 
-    <a href="{{url_for('generate_pdf',id=certificate_details.form_id)}}" class="btn btn-primary">Generate PDF</a>
-
+    <button onclick="window.print()" class="btn btn-primary mt-5">Issue certificate in PDF fomart</button>
+    
+<script>
+  window.onload = function() {
+    window.print();
+  };
+</script>
 </body>
 </html>

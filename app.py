@@ -1,4 +1,4 @@
-from flask import Flask,current_app, flash,make_response, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask,flash,make_response, render_template, request, redirect, url_for, session, jsonify
 from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements,Watched
 from utils.helpers import generate_reset_token, send_email, validate_password
 import json
@@ -3252,57 +3252,19 @@ def certificate(id):
         certification_code=certificate_details.certificate_code
     )
 
-    
 
-
-def html_to_pdf_from_string(html_string, pdf_path):
-    options = {
-        'page-size': 'Letter',
-        'margin-top': '0.35in',
-        'margin-left': '0.75in',
-        'margin-right': '0.75in',
-        'margin-bottom': '0.75in',
-        'encoding': "UTF-8",
-        'no-outline': None,
-        'enable-local-file-access': None
-    }
-
-    # Ensure directory exists
-    os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
-
-    pdfkit.from_string(html_string, pdf_path, options=options)
-
-@app.route('/generate_pdf/<string:id>', methods=['GET', 'POST'])
+@app.route('/generate_pdf/<string:id>',methods=['GET','POST'])
 def generate_pdf(id):
+    
     certificate_details = None
     for model in [FormA, FormB, FormC]:
         certificate_details = db_session.query(model).filter_by(form_id=id).first()
         if certificate_details:
             break
-
-    if not certificate_details:
-        return "Certificate not found.", 404
-
-    # Render HTML string from template and data
-    rendered_html = render_template('view_certificate.html', certificate_details=certificate_details)
-
-    # Define PDF output path
-    pdf_folder = os.path.join(current_app.root_path, 'static', 'certificates')
-    os.makedirs(pdf_folder, exist_ok=True)
-    pdf_filename = f'{id}.pdf'
-    pdf_path = os.path.join(pdf_folder, pdf_filename)
-
-    # Generate PDF file from HTML string and save it
-    html_to_pdf_from_string(rendered_html, pdf_path)
-
-    # Save relative path in DB, e.g. 'static/certificates/<id>.pdf'
-    certificate_details.pdf_file_path = os.path.join('static', 'certificates', pdf_filename)
-    db_session.commit()
-
-    # Return confirmation or redirect to PDF url
-    pdf_url = url_for('static', filename=f'certificates/{pdf_filename}')
-    return f"PDF generated successfully. <a href='{pdf_url}'>Download PDF</a>"
-
+    return render_template(
+        'view_certificate.html',
+        certificate_details=certificate_details
+    )
 
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
