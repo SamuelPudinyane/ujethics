@@ -318,16 +318,16 @@ def all_users():
     all_users = db_session.query(User).all()
     return render_template("user-list.html",all_users=all_users)
 
-@app.route('/delete_user/<string:id>', methods=['POST'])
+@app.route('/delete_user/<string:id>', methods=['GET','POST'])
 def delete_user(id):
     user = db_session.query(User).filter_by(user_id=id).first()
-    
+    msg=''
     if user:
         db_session.delete(user)
         db_session.commit()
         msg="User deleted Successfully"
-        return redirect(url_for('ethics_reviewer_committee'))
-    return render_template('register_reviewer.html',user=user, messages=[msg])
+        return redirect(url_for('chair_landing',messages=[msg]))
+    return render_template('register_reviewer.html',user=user)
 
 
 @app.route('/api/forgot-password', methods=['POST'])
