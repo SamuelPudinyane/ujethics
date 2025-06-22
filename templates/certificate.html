@@ -77,8 +77,19 @@
     </style>
 </head>
 <body>
+<form action="{{ url_for('save_certificate_info', id=certificate_details.form_id) }}" method="POST" style="margin-top: 30px;">
+<!-- Error Messages -->
+    {% if messages %}
+        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
 
-<div class="container">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="container">
     <div class="certificate-content">
         <!-- Header Section -->
         <div class="header">
@@ -90,27 +101,27 @@
         </div>
 
         <!-- Body -->
-        <p>Dear <strong>Zanele Zulu</strong>,</p>
+        <p>Dear <strong>{{certificate_details.applicant_name}}</strong>,</p>
 
         <h3>ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT</h3>
 
         <p>
             This letter serves to confirm that the proposed research project indicated in the table below,
             has been reviewed by the Johannesburg Business School Research Ethics Committee (JBSREC)
-            at the University of Johannesburg. Ethical clearance is granted for <strong>5 years</strong>,
-            from <strong>20th March 2025</strong> to <strong>20th January 2030</strong>.
+            at the University of Johannesburg. Ethical clearance is granted for <input type="number" name="valid_years"  required placeholder="number of year"> years,
+            from <strong>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</strong> to <input type="date" name="end_date" placeholder="specify the end date" required >.
         </p>
 
         <table>
-            <tr><td class="highlight">Applicant</td><td>Zanele Audrey Zulu</td></tr>
-            <tr><td class="highlight">Supervisor</td><td>Prof Lethiwe Nzama - Sithole</td></tr>
-            <tr><td class="highlight">Staff/Student number</td><td>222244657</td></tr>
-            <tr><td class="highlight">Title of Research</td><td>Understanding the effectiveness of Human Resource Development initiatives at National Health Laboratory Service and their impact on staff performance and engagement</td></tr>
+            <tr><td class="highlight">Applicant</td><td>{{certificate_details.applicant_name}}</td></tr>
+            <tr><td class="highlight">Supervisor</td><td>{% if certificate_details.supervisor%}{{certificate_details.supervisor}}{% elif certificate_details.supervisor_name%}{{certificate_details.supervisor_name}}{% endif%}</td></tr>
+            <tr><td class="highlight">Staff/Student number</td><td>{{certificate_details.student_number}}</td></tr>
+            <tr><td class="highlight">Title of Research</td><td>{% if certificate_details.study_title%}{{certificate_details.study_title}}{% elif certificate_details.project_title %} {{certificate_details.project_title}}{% endif%}</td></tr>
             <tr><td class="highlight">Academic article/MCom</td><td>MCom</td></tr>
-            <tr><td class="highlight">Decision date</td><td>13 June 2025</td></tr>
+            <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</td></tr>
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
-            <tr><td class="highlight">Ethical clearance code</td><td>JBSREC2025061201</td></tr>
-            <tr><td class="highlight">Rating of application</td><td>CODE 02 - Approved with suggestions without re-submission</td></tr>
+            <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
+            <tr><td class="highlight">Rating of application</td><td>{{certificate_details.rec_status}}</td></tr>
         </table>
 
         <div class="conditions">
@@ -129,13 +140,20 @@
         </div>
 
         <div class="signature">
-            <p><strong>Date:</strong> <input type="date" name="certificate_date"></p>
-            <p><strong>Name <input type="text" name="certificate_issuer"></strong><br>
+            <p><strong>Date:</strong> {% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</p>
+            <p><strong>Name <input type="text" name="certificate_issuer" required></strong><br>
                Chairperson: JBSREC<br>
-               Email: <input type="text" name="email"></p>
+               Email: <input type="text" name="email" required></p>
         </div>
     </div>
+
+    
 </div>
 
+<button type="submit" 
+        style="padding: 10px 20px; background: #004785; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer;">
+        Save and Download PDF
+    </button>
+</form>
 </body>
 </html>
