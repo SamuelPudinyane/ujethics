@@ -465,6 +465,8 @@ class FormA(Base):
     certificate_end_date=Column(DateTime,server_default=func.now())
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
+
+    pdf_file_path=Column(String,nullable=True)
     def __repr__(self):
         return f'<FormA {self.applicant_name} ({self.student_number})>'
     
@@ -621,6 +623,8 @@ class FormB(Base):
     certificate_end_date=Column(DateTime,server_default=func.now())
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
+
+    pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
     
@@ -788,6 +792,8 @@ class FormC(Base):
     certificate_end_date=Column(DateTime,server_default=func.now())
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
+
+    pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 

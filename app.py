@@ -1,4 +1,4 @@
-from flask import Flask,flash,make_response, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask,current_app, flash,make_response, render_template, request, redirect, url_for, session, jsonify
 from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements,Watched
 from utils.helpers import generate_reset_token, send_email, validate_password
 import json
@@ -3215,70 +3215,94 @@ def generate_clearance_code(committee_acronym, decision_date=None):
     clearance_code = f"{committee_acronym}{date_str}{decision_number:02d}"
     return clearance_code
 
+
 @app.route('/certificate/<string:id>', methods=['GET', 'POST'])
-def certificate(id): 
+def certificate(id):
     code = 'JBSREC'
     certification_code = generate_clearance_code(code)
 
+    certificate_details = None
     for model in [FormA, FormB, FormC]:
         certificate_details = db_session.query(model).filter_by(form_id=id).first()
         if certificate_details:
             certificate_details.certificate_code = certification_code
-            certificate_details.certificate_issued=datetime.now()
+            certificate_details.certificate_issued = datetime.now()
+
+            if request.method == 'POST':
+                certificate_details.certificate_valid_years = int(request.form.get('valid_years'))
+                certificate_details.certificate_end_date = request.form.get('end_date')
+                certificate_details.certificate_issuer = request.form.get('certificate_issuer')
+                certificate_details.certificate_email = request.form.get('email')
+                # Overwrite with provided issued date if present
+                issued_date = request.form.get('certificate_issued')
+                if issued_date:
+                    certificate_details.certificate_issued = request.form.get('issued_date')
+            
             db_session.add(certificate_details)
             db_session.commit()
-            break  # exit the loop once a match is found
-    print("code --- ",certification_code)
-    return render_template('certificate.html', certificate_details=certificate_details, certification_code=certification_code)
-
-
-
-@app.route('/certificate/<string:id>/download', methods=['GET'])
-def download_certificate(id):
-    for model in [FormA, FormB, FormC]:
-        certificate_details = db_session.query(model).filter_by(user_id=id).first()
-        if certificate_details:
+            
             break
-        else:
-            return "No certificate data found.", 404
 
-    # Render HTML from your existing template
-    rendered = render_template('certificate.html', certificate_details=certificate_details, certification_code=certificate_details.certificate_code)
+    if not certificate_details:
+        return "No certificate data found.", 404
 
-    pdf = pdfkit.from_string(rendered, False)
+    return render_template(
+        'certificate.html',
+        certificate_details=certificate_details,
+        certification_code=certificate_details.certificate_code
+    )
+
     
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
-    return response
 
 
-from flask import request, redirect, url_for
-from datetime import datetime
+def html_to_pdf_from_string(html_string, pdf_path):
+    options = {
+        'page-size': 'Letter',
+        'margin-top': '0.35in',
+        'margin-left': '0.75in',
+        'margin-right': '0.75in',
+        'margin-bottom': '0.75in',
+        'encoding': "UTF-8",
+        'no-outline': None,
+        'enable-local-file-access': None
+    }
 
-@app.route('/certificate/<string:id>', methods=['POST'])
-def save_certificate_info(id):
+    # Ensure directory exists
+    os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
+
+    pdfkit.from_string(html_string, pdf_path, options=options)
+
+@app.route('/generate_pdf/<string:id>', methods=['GET', 'POST'])
+def generate_pdf(id):
+    certificate_details = None
     for model in [FormA, FormB, FormC]:
         certificate_details = db_session.query(model).filter_by(form_id=id).first()
         if certificate_details:
             break
-    else:
-        return "Certificate not found", 404
 
-    # Extract form inputs
-    try:
-        certificate_details.certificate_valid_years = int(request.form.get('valid_years'))
-        certificate_details.certificate_end_date = datetime.strptime(request.form.get('end_date'), '%Y-%m-%d').date()
-        certificate_details.certificate_issuer = request.form.get('certificate_issuer')
-        certificate_details.certificate_email = request.form.get('email')
-        certificate_details.certificate_issued=request.form.get('certificate_issued')
-        db_session.commit()
-    except Exception as e:
-        print("Error saving certificate details:", e)
-        return "Invalid input", 400
+    if not certificate_details:
+        return "Certificate not found.", 404
 
-    # Redirect to PDF download
-    return redirect(url_for('download_certificate', id=id))
+    # Render HTML string from template and data
+    rendered_html = render_template('view_certificate.html', certificate_details=certificate_details)
+
+    # Define PDF output path
+    pdf_folder = os.path.join(current_app.root_path, 'static', 'certificates')
+    os.makedirs(pdf_folder, exist_ok=True)
+    pdf_filename = f'{id}.pdf'
+    pdf_path = os.path.join(pdf_folder, pdf_filename)
+
+    # Generate PDF file from HTML string and save it
+    html_to_pdf_from_string(rendered_html, pdf_path)
+
+    # Save relative path in DB, e.g. 'static/certificates/<id>.pdf'
+    certificate_details.pdf_file_path = os.path.join('static', 'certificates', pdf_filename)
+    db_session.commit()
+
+    # Return confirmation or redirect to PDF url
+    pdf_url = url_for('static', filename=f'certificates/{pdf_filename}')
+    return f"PDF generated successfully. <a href='{pdf_url}'>Download PDF</a>"
+
 
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
