@@ -1,8 +1,8 @@
-"""Fix watched table
+"""Initial migration
 
-Revision ID: 5cf7b8bd9b66
-Revises: e98edf0bfbe8
-Create Date: 2025-06-22 13:27:17.243083
+Revision ID: 717e39fd2713
+Revises: 
+Create Date: 2025-06-22 14:57:28.059196
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '5cf7b8bd9b66'
-down_revision: Union[str, None] = 'e98edf0bfbe8'
+revision: str = '717e39fd2713'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
