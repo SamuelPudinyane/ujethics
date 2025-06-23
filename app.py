@@ -3306,6 +3306,7 @@ def ethics_reviewer_committee_forms(id,form_name):
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
+            reviewers=request.form.getlist('reviewer_names[]')
             formB.reviewer_name1=reviewers[0]
             formB.reviewer_name2=reviewers[1] if reviewers[1] else None
             formB.supervisor_date=request.form.get('review_date')
