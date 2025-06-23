@@ -100,8 +100,8 @@
                 </span>
                 <br>
                 {% if formA.review_status %}<a href="{{url_for('view_certificate',id=formA.form_id)}}"> View Certificate</a>{% endif %}
-                <br><strong>Feedabck: </strong>
-                <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
+                <br>
+                <strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
                 <br>
                 <em>{% if formA.supervisor_date %}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
@@ -128,8 +128,8 @@
                  </span>
                 <br>
                 {% if formB.review_status %}<a href="{{url_for('view_certificate',id=formB.form_id)}}"> View Certificate</a>{% endif %}
-                <strong>Feedback: </strong>
-                <br><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
+                <br>
+                <strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
                 <br>
                 <em>{% if formB.supervisor_date %}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
@@ -153,8 +153,7 @@
                 </span>
                 <br>
                 {% if formC.review_status %}<a href="{{url_for('view_certificate',id=formC.form_id)}}"> View Certificate</a>{% endif %}
-                <strong>Feedback: </strong>
-                <br><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
+                <br><strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
                 <br>
                 <em>{% if formC.supervisor_date%}{{formC.supervisor_date.strftime('%d/%m/%Y')}}{% endif%}</em>
                 </td>

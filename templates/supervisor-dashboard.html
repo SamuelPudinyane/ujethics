@@ -111,10 +111,10 @@
                   {% endif %}
                
                 <br>
-              </ul>
+              </ul>
             </td>
             <td>
-              <a href="{{url_for('form_a_supervisor',id=forma.form_id)}}" class="view-btn">📝 View/Edit</a><br>
+              <a href="{{url_for('form_a_supervisor',id=forma.form_id)}}" class="view-btn">Review</a><br>
              
             </td>
           </tr>
@@ -133,11 +133,9 @@
               {% if formb.ethics_commettee_status %}
               {{"Accepted by ethics commettee"}}
               {% else %}
-        {{
-  'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_feedback
+        {{'Rejected' if formb.rejected_or_accepted is not none and not formb.rejected_or_accepted and formb.supervisor_feedback
   else 'Accepted' if formb.rejected_or_accepted and formb.supervisor_feedback and not formb.rec_status
-  else formb.rec_status if formb.rec_status else 'Waiting Review'
-        }}
+  else formb.rec_status if formb.rec_status else 'Waiting Review'}}
         {% endif %}
         <br>
 {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>{% endif %}
@@ -176,10 +174,10 @@
                  
                 
                 <br>
-              </ul>
+              </ul>
             </td>
             <td>
-              <a href="{{url_for('form_b_supervisor',id=formb.form_id)}}" class="view-btn">📝 View/Edit</a><br>
+              <a href="{{url_for('form_b_supervisor',id=formb.form_id)}}" class="view-btn">Review</a><br>
              
             </td>
           </tr>
@@ -216,20 +214,19 @@
             </td>
             <td>{% if formc.signature_date%}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
-              <ul class="doc-link">
+        <ul class="doc-link">
               
                   {% if formc.files %}
                       
                       <li><a href="{{ url_for('static', filename=formc.files) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  
-               
+                
                 <br>
-              </ul>
+              </ul>
             </td>
             
             <td>
-              <a href="{{url_for('form_c_supervisor',id=formc.form_id)}}" class="view-btn">📝 View/Edit</a><br>
+              <a href="{{url_for('form_c_supervisor',id=formc.form_id)}}" class="view-btn">Review</a><br>
              
             </td>
           </tr>

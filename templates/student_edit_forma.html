@@ -359,7 +359,7 @@
                       <textarea name="apply_comments" value="{{formA.apply_comments}}" rows="3" placeholder="Comments (if any)..."></textarea>
                           <div class="mb-3">
                         <label><strong>Rate your project (Negligible, Low, Medium, High Risk):</strong>
-                          <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ️</span>
+                          <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ</span>
                         </label>
                         <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
                           <option value="">-- Select Risk Level --</option>
@@ -371,14 +371,13 @@
                           <input type="text" name="risk_justification" required>
                         <div id="risk-fields">
                           
-
                           <label for="benefits_description">For medium and high risk, describe the potential benefits of the study:</label>
                           <input type="text" name="benefits_description" >
 
                           <label for="risk_mitigation">For medium and high risk, describe how potential risks will be mitigated against:</label>
                           <input type="text" name="risk_mitigation" >
                         </div>
-                      </div>
+                      </div>
 
 
               </main>
@@ -1010,8 +1009,8 @@ if (riskLevel) {
       riskFields.querySelectorAll("input").forEach(input => input.value = "");
     } else {
       riskFields.style.display = "block";
-    }
-  }
+    }
+  }
 }
   
   </script>
