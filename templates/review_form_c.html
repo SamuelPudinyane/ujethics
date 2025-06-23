@@ -136,7 +136,7 @@
         </thead>
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td>
-            <td>{{'YES' if form.vulnerable esle 'NO'}}</td></tr>
+            <td>{{'YES' if form.vulnerable else 'NO'}}</td></tr>
           <tr><td>People under the age of 18 or over 65</td>
             <td>{{'YES' if form.age_under_18_or_over_65 else 'NO'}}</td></tr>
           <tr><td>UJ employees or students</td>

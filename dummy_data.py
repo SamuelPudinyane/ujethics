@@ -46,3 +46,6 @@ users = [
 # Add all to the session and commit
 db_session.add_all(users)
 db_session.commit()
+
+
+

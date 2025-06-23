@@ -1114,9 +1114,9 @@ def form_a_sec4():
             return "No existing Form A record found for this user.", 404
 
         # 5.1 Research Paradigm
-        form.quantitative = 'yes' in request.form.getlist('quantitative[]')
-        form.qualitative = 'yes' in request.form.getlist('qualitative[]')
-        form.mixed_methods = 'yes' in request.form.getlist('mixed_methods[]')
+        form.quantitative = 'Yes' in request.form.getlist('quantitative[]')
+        form.qualitative = 'Yes' in request.form.getlist('qualitative[]')
+        form.mixed_methods = 'Yes' in request.form.getlist('mixed_methods[]')
         form.paradigm_explanation = request.form.get('paradigm_explanation')
 
         # 5.2 Research Design
@@ -1130,7 +1130,7 @@ def form_a_sec4():
         form.inclusion_criteria =','.join(request.form.getlist('inclusion_criteria[]'))
         form.duration_timing = request.form.get('duration_timing')
         form.contact_details_method = request.form.get('contact_details_method')
-        form.conflict_interest = request.form.get('conflict_interest')=='yes'
+        form.conflict_interest = request.form.get('conflict_interest')=='Yes'
         form.conflict_explanation = request.form.get('conflict_explanation')
 
         # 5.4 Instruments
@@ -1871,8 +1871,9 @@ def student_edit_forma():
     supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
     form = db_session.query(FormA).filter_by(user_id=user_id).order_by(FormA.submitted_at.desc()).first()
     form_requirements = db_session.query(FormARequirements).filter(FormARequirements.user_id == user_id).first()
-
-    if request.method=="POST":
+ 
+    if request.method == 'POST':
+      
         if request.form.get('survey')=='Yes':
             survey=True
         else:
@@ -3107,16 +3108,16 @@ def rec_dashboard():
     user_id=session['id']
     
     submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.risk_rating != 'LOW',FormA.review_status==True,FormA.review_status1==True)
+    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.risk_rating != 'low',FormA.review_status==True,FormA.review_status1==True)
     .distinct(FormA.user_id)
     .all())
     
     submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'LOW',FormB.review_status==True,FormB.review_status1==True)
+    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'low',FormB.review_status==True,FormB.review_status1==True)
     .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormB.risk_level != 'LOW',FormC.review_status==True,FormC.review_status1==True)
+    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormB.risk_level != 'low',FormC.review_status==True,FormC.review_status1==True)
     .distinct(FormC.form_id)
     .all())
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
@@ -3273,7 +3274,7 @@ def ethics_reviewer_committee_forms(id,form_name):
         formA = db_session.query(FormA).filter_by(form_id=id).first()
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
-           
+            
             formA.reviewer_name1=reviewers[0]
             formA.reviewer_name2=reviewers[1] if reviewers[1] else None
             formA.supervisor_date=request.form.get('review_date')
@@ -3306,6 +3307,7 @@ def ethics_reviewer_committee_forms(id,form_name):
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
+            reviewers=request.form.getlist('reviewer_names[]')
             formB.reviewer_name1=reviewers[0]
             formB.reviewer_name2=reviewers[1] if reviewers[1] else None
             formB.supervisor_date=request.form.get('review_date')
