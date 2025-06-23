@@ -170,16 +170,16 @@
                   
                       <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
-                  {% if formR.permission_letter_path %}
+                  {% if formR.permission_letter%}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter_path) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
                   {% if formR.prior_clearance_path %}
                
                       <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.reseach_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.reseach_tools_path) }}" target="_blank">Survey</a></li>
+                  {% if formR.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
                 <br>
                 {% endfor %}

@@ -86,31 +86,27 @@
             <td>Form A</td>
             <td>{% if formA.submitted_at %}
               {{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
-            <td>{% if not formA.supervisor_feedback and formA.submitted_at %}
-                Awaiting Supervisor
-                {% elif not formA.rejected_or_accepted and formA.supervisor_comments %}
-                Rejected
-                <br>
+            <td>
                 {{formA.supervisor_feedback}}
                 <br>
                 <em>{% if formA.supervisor_date%}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
                 </em>
-                {% elif formA.rejected_or_accepted %}
+               
                 <span style="color:green; font-size:12px;">
-                  {{'Rejected by supervisor' if not formA.rejected_or_accepted and not formA.supervisor_signature
-                  else 'Accepted and awaiting Ethics to Review' if formA.rejected_or_accepted and not formA.review_signature_date }}</span>
+                  {% if formA.submitted_date and formA.applicant_signature %}
+                  FORM SUBMITTED FOR REVIEW TO SUPERVISOR{% elif not formA.rejected_or_accepted and formA.supervisor_date%}
+                  FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT{% endif %}
+                </span>
                 <br>
                 {% if formA.review_status %}<a href="{{url_for('generate_pdf',id=formA.form_id)}}"> View Certificate</a>{% endif %}
-                <strong>Feedabck: </strong>
+                <br><strong>Feedabck: </strong>
                 <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
                 <br>
                 <em>{% if formA.supervisor_date %}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
                 </em>
-                {% else %}
-                Not Started
-                {% endif %}</td>
+                </td>
             <td><a href="{{url_for('student_edit_forma')}}">Review</a></td>
           </tr>
           {% endif %}
@@ -119,67 +115,60 @@
             <td>Form B</td>
             <td>{% if formB.submitted_at %}
               {{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
-            <td>{% if not formB.supervisor_feedback and formB.submitted_at %}
-                Awaiting Supervisor
-                {% elif not formB.rejected_or_accepted and formB.supervisor_feedback %}
-                Rejected
-                <br>
-                {{formB.supervisor_feedback}}
-                <br>
+            <td>
                <em>
                   {% if formB.supervisor_date%}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
 
                 {% endif %}</em>
-                {% elif formB.rejected_or_accepted %}
+                
                 <span style="color:green; font-size:12px;">
-                  {{'Rejected by supervisor' if not formB.rejected_or_accepted and not formB.supervisor_signature
-                  else 'Accepted and awaiting Ethics to Review' if formB.rejected_or_accepted and not formB.review_signature_date 
-                  }}</span>
+                  {% if formB.submitted_at and formB.declaration_name %}
+                  FORM SUBMITTED FOR REVIEW TO SUPERVISOR{% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
+                  FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT{% endif %}
+                 </span>
                 <br>
                 {% if formB.review_status %}<a href="{{url_for('generate_pdf',id=formB.form_id)}}"> View Certificate</a>{% endif %}
                 <strong>Feedback: </strong>
-                <a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
+                <br><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
                 <br>
                 <em>{% if formB.supervisor_date %}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
                 </em>
-                {% else %}
-                Not Started
-                {% endif %}
+                
             </td>
             <td><a href="{{url_for('student_edit_formb')}}">Review</a></td>
           </tr>
-          {% endif %}
+         {% endif %}
           {% if formC %}
           <tr>
             
             <td>Form C</td>
             <td>{% if formC.submission_date %}{{formC.submission_date.strftime('%d/%m/%Y')}} {% endif %}</td>
-            <td>{% if not formC.supervisor_feedback and formC.submission_date %}
-                Awaiting Supervisor
-                {% elif formC.supervisor_feedback%}
+            <td>
                 <span style="color:green; font-size:12px;">
-                {{'Rejected by supervisor' if not formC.rejected_or_accepted and not formC.supervisor_signature
-                else 'Accepted and awaiting Ethics to Review' if formC.rejected_or_accepted and not formC.review_date }}</span>
+                  {% if formC.submission_date and formC.applicant_signature %}
+                  FORM SUBMITTED FOR REVIEW TO SUPERVISOR{% elif not formC.rejected_or_accepted and formC.supervisor_date%}
+                  FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT{% endif %}
+
+                </span>
                 <br>
                 {% if formC.review_status %}<a href="{{url_for('generate_pdf',id=formC.form_id)}}"> View Certificate</a>{% endif %}
                 <strong>Feedback: </strong>
-                <a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
+                <br><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
                 <br>
-                <em>{{formC.supervisor_date.strftime('%d/%m/%Y')}}</em>
-                {% else %}
-                Not Started
-                {% endif %}</td>
+                <em>{% if formC.supervisor_date%}{{formC.supervisor_date.strftime('%d/%m/%Y')}}{% endif%}</em>
+                </td>
             <td><a href="{{url_for('student_edit_formc')}}">Review</a></td>
 
           </tr>
-          {% endif %}
+        
          
+           {% endif %}
         </tbody>
       </table>
       {% else %}
-      <Strong>There are currently no submissions made</strong>
-        {% endif %}
+    <Strong>There are currently no submissions made</strong>
+       {% endif %}
     </section>
 
     <!-- Notifications -->
