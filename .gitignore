@@ -1,7 +1,7 @@
 backend/__pycache__
 backend/venv
 backend/.env
-myvenv
+myvenv/
 .env
 .env/
 generate_key.py
