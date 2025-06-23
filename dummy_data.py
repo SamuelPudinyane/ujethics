@@ -49,3 +49,15 @@ db_session.commit()
 
 
 
+"""
+Awaiting for review
+if forma.rejected_or_accepted and not forma.review_date 
+
+forma.rec_status
+if forma.rec_status and forma.risk_rating != 'low'
+
+
+Certificate Issued
+if forma.certificate_issued
+
+"""

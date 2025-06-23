@@ -61,7 +61,7 @@
   else forma.rec_status if forma.rec_status else 'Waiting Review'
 }}
 <br>
-{% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=forma.form_id)}}">view Certificate</a>{% endif %}
+{% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('view_certificate',id=forma.form_id)}}">view Certificate</a>{% endif %}
             </span></td>
             <td>
               {% if forma.supervisor_feedback and not forma.ethics_commettee_comments%}
@@ -78,42 +78,38 @@
             <td>{% if forma.signature_date%}{{forma.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
+                  {% if forma.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=forma.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
 
-                  {% if formR.permission_letter %}
+                  {% if forma.permission_letter %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=forma.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance_path %}
+                  {% if forma.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=forma.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
+                  {% if forma.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=forma.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
-                  {% if formR.impact_assessment_path %}
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">impact assessment path</a></li>
+                  {% if forma.impact_assessment_path %}
+                      <li><a href="{{ url_for('static', filename=forma.impact_assessment_path) }}" target="_blank">impact assessment path</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance %}
-                  <li><a href="{{url_for('static',filename=formR.prior_clearance)}}">Clearance</a></li>
+                  {% if forma.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=forma.prior_clearance)}}">Clearance</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance1 %}
-                  <li><a href="{{url_for('static',filename=formR.prior_clearance1)}}">Clearance 1</a></li>
+                  {% if forma.prior_clearance1 %}
+                  <li><a href="{{url_for('static',filename=forma.prior_clearance1)}}">Clearance 1</a></li>
                   {% endif %}
-                  {% if formR.need_jbs_clearance%}
-                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance)}}">JBS Clearance</a></li>
+                  {% if forma.need_jbs_clearance%}
+                  <li><a href="{{url_for('static',filename=forma.need_jbs_clearance)}}">JBS Clearance</a></li>
                   {% endif %}
-                  {% if formR.need_jbs_clearance1%}
-                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance1)}}">JBS clearance 2</a></li>
+                  {% if forma.need_jbs_clearance1%}
+                  <li><a href="{{url_for('static',filename=forma.need_jbs_clearance1)}}">JBS clearance 2</a></li>
                   {% endif %}
-                <br>
-                {% endfor %}
-                {% endif %}
+               
                 <br>
               </ul>
             </td>
@@ -123,7 +119,7 @@
             </td>
           </tr>
           {% endfor %}
-          {% endif %}
+          {% endif%}
           
           {% if supervisor_formB %}
           {% for formb in supervisor_formB %}
@@ -144,7 +140,7 @@
         }}
         {% endif %}
         <br>
-{% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=formb.form_id)}}">View Certificate</a>{% endif %}
+{% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>{% endif %}
             </span></td>
             <td>
               {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
@@ -161,28 +157,24 @@
             <td>{% if formb.signature_date %}{{formb.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
+                  {% if formb.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=formb.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.permission_letter %}
+                  {% if formb.permission_letter %}
                   
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Impact Form</a></li>
+                      <li><a href="{{ url_for('static', filename=formb.permission_letter) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
-                  {% if formR.ethics_evidence %}
+                  {% if formb.ethics_evidence %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=formb.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance_path %}
+                  {% if formb.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=formb.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                  
-                <br>
-                {% endfor %}
-                {% endif %}
+                
                 <br>
               </ul>
             </td>
@@ -208,7 +200,7 @@
   else formc.rec_status if formc.rec_status else 'Waiting Review'
 }}
 <br>
-{% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=formc.form_id)}}">View Certificate</a>{% endif %}
+{% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>{% endif %}
 </span></td>
 <td>
               {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}
@@ -225,15 +217,13 @@
             <td>{% if formc.signature_date%}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.files %}
+              
+                  {% if formc.files %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.files) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=formc.files) }}" target="_blank">Proposal</a></li>
                   {% endif %}
                   
-                {% endfor %}
-                {% endif %}
+               
                 <br>
               </ul>
             </td>

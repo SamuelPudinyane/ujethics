@@ -73,12 +73,20 @@
             <td>{% if form.supervisor%}{{form.supervisor}}{% elif form.supervisor_name%}{{form.supervisor_name}}{% endif%}</td>
             <td>{{form_name}}</td>
             <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date%}{{form.submission_date}}{% endif%}</td>
-            <td><span class="status-pill approved">{{ 
-  'Approved and awaits Ethics Committee' if form.rejected_or_accepted and not form.review_supervisor_signature 
-  else 'Approved by Ethics Committee' if form.rejected_or_accepted and form.review_supervisor_signature 
-  else 'Awaiting for reviewers feedback' if form.review_supervisor_signature and form.risk_rating 
-  else 'Rejected by Ethics Committee' if not form.review_supervisor_signature and form.review_date else 'This is the previous version'
-}}
+            <td><span class="status-pill approved">
+{% if form.rejected_or_accepted and not form.review_supervisor_signature %}
+Approved and awaits Ethics Committee
+{% elif form.rejected_or_accepted and form.review_supervisor_signature and not form.certificate_issued%}
+Approved by Ethics Committee
+{% elif form.review_supervisor_signature and form.risk_level or form.risk_rating  %}
+Awaiting for reviewers feedback
+{% elif not form.review_supervisor_signature and form.review_date %}
+Rejected by Ethics Committee
+{% elif form.certificate_issued%}
+Certificate Issued
+{% else %}
+This is the previous version
+{% endif %}
 </span></td>
             <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}} {% endif%}</td>
             <td><a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" >Review</a></td>
