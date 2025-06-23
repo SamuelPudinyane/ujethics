@@ -3414,7 +3414,7 @@ def supervisor_dashboard():
     
     
 
-    return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+    return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
 @app.route('/dean_dashboard', methods=['GET','POST'])
 def dean_dashboard():
