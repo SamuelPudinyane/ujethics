@@ -99,10 +99,9 @@
                 {% elif formA.rejected_or_accepted %}
                 <span style="color:green; font-size:12px;">
                   {{'Rejected by supervisor' if not formA.rejected_or_accepted and not formA.supervisor_signature
-                  else 'Accepted and awaiting Ethics committee' if formA.rejected_or_accepted and not formA.review_signature_date 
-                  else  'Accepted by ethics Admin' if formA.review_signature_date and formA.risk_level=='Low' 
-                  else 'Accepted and certificate will be rewarded' if formA.review_status else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
+                  else 'Accepted and awaiting Ethics to Review' if formA.rejected_or_accepted and not formA.review_signature_date }}</span>
                 <br>
+                {% if formA.review_status %}<a href="{{url_for('generate_pdf',id=formA.form_id)}}"> View Certificate</a>{% endif %}
                 <strong>Feedabck: </strong>
                 <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
                 <br>
@@ -134,10 +133,10 @@
                 {% elif formB.rejected_or_accepted %}
                 <span style="color:green; font-size:12px;">
                   {{'Rejected by supervisor' if not formB.rejected_or_accepted and not formB.supervisor_signature
-                  else 'Accepted and awaiting Ethics committee' if formB.rejected_or_accepted and not formB.review_signature_date 
-                  else  'Accepted by ethics Admin' if formB.review_signature_date and formB.risk_level=='Low' 
-                  'Accepted and certificate will be rewarded' if formB.review_status else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
+                  else 'Accepted and awaiting Ethics to Review' if formB.rejected_or_accepted and not formB.review_signature_date 
+                  }}</span>
                 <br>
+                {% if formB.review_status %}<a href="{{url_for('generate_pdf',id=formB.form_id)}}"> View Certificate</a>{% endif %}
                 <strong>Feedback: </strong>
                 <a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
                 <br>
@@ -161,10 +160,9 @@
                 {% elif formC.supervisor_feedback%}
                 <span style="color:green; font-size:12px;">
                 {{'Rejected by supervisor' if not formC.rejected_or_accepted and not formC.supervisor_signature
-                else 'Accepted and awaiting Ethics committee' if formC.rejected_or_accepted and not formC.review_date 
-                else  'Accepted by ethics Admin' if formC.review_signature_date and formC.risk_level=='Low' 
-                else 'Accepted and certificate will be rewarded' if formC.review_status else 'Form was accepted by ethics and awaiting for Rec commitee for final review'}}</span>
+                else 'Accepted and awaiting Ethics to Review' if formC.rejected_or_accepted and not formC.review_date }}</span>
                 <br>
+                {% if formC.review_status %}<a href="{{url_for('generate_pdf',id=formC.form_id)}}"> View Certificate</a>{% endif %}
                 <strong>Feedback: </strong>
                 <a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
                 <br>

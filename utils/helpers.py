@@ -42,7 +42,7 @@ def send_email(to_address, subject, body):
 
 
 def validate_password(password):
-    if len(password) < 8:
+    if len(password) < 6:
         return False, "Password must be at least 8 characters long"
     
     if not re.search(r"[A-Z]", password):
@@ -57,4 +57,4 @@ def validate_password(password):
     if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         return False, "Password must contain at least one special character"
     
-    return True, "Password is valid"
+    return True, "Password is valid,must be at least length of 6 charecters,special charecter, and a number"

@@ -112,7 +112,15 @@
     const tooltip = document.getElementById('passHint');
     input.addEventListener('focus', () => tooltip.classList.add('visible'));
     input.addEventListener('blur', () => tooltip.classList.remove('visible'));
-
+ // Hide alert after 3 seconds
+    setTimeout(function() {
+      const alert = document.getElementById('alertMessage');
+      if (alert) {
+        alert.classList.remove('show'); // Bootstrap fade out
+        alert.classList.add('fade'); // add fade class
+        alert.style.display = 'none'; // or use .remove() if you prefer
+      }
+    }, 3000); // 3000ms = 3 seconds
   </script>
 
 </body>
