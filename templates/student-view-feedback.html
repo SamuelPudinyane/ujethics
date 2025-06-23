@@ -114,7 +114,7 @@
 
     <div class="form-group">
       <label for="signature_date">Date:</label>
-      <span id="signature_date" >{{view_form.signature_date.strftime('%d/%m/%Y')}}</span>
+      <span id="signature_date" >{% if view_form.signature_date %}{{view_form.signature_date.strftime('%d-%m-%Y')}}{% endif %}</span>
     </div>
   </div>
 {% endif %}

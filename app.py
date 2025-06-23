@@ -3253,8 +3253,8 @@ def certificate(id):
     )
 
 
-@app.route('/generate_pdf/<string:id>',methods=['GET','POST'])
-def generate_pdf(id):
+@app.route('/view_certificate/<string:id>',methods=['GET','POST'])
+def view_certificate(id):
     
     certificate_details = None
     for model in [FormA, FormB, FormC]:
@@ -3404,18 +3404,16 @@ def supervisor_dashboard():
     formB = db_session.query(FormB).all()
     formC = db_session.query(FormC).all()
  
-    supervisor_formA = db_session.query(FormA).join(User, FormA.user_id == User.user_id).filter(User.supervisor_id == supervisor_id).all()
-    supervisor_formB = db_session.query(FormB).join(User, FormB.user_id == User.user_id).filter(User.supervisor_id == supervisor_id).all()
-    supervisor_formC = db_session.query(FormC).join(User, FormC.user_id == User.user_id).filter(User.supervisor_id == supervisor_id).all()
-   
-    # supervisor_formA=db_session.query(FormA).filter(FormA.user_id == users.user_id).all()
-    # supervisor_formB=db_session.query(FormB).filter(FormB.user_id == users.user_id).all()
-    # supervisor_formC=db_session.query(FormC).filter(FormC.user_id == users.user_id).all()
-    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
-    
+    supervisor_formA = db_session.query(FormA).join(User, FormA.user_id == User.user_id).join(FormARequirements, FormARequirements.user_id == FormA.user_id).filter(User.supervisor_id == supervisor_id).all()
 
-    return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,supervisor_formA_req=supervisor_formA_req,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+    supervisor_formB = db_session.query(FormB).join(User, FormB.user_id == User.user_id).join(FormARequirements, FormARequirements.user_id == FormB.user_id).filter(User.supervisor_id == supervisor_id).all()
 
+    supervisor_formC = db_session.query(FormC).join(User, FormC.user_id == User.user_id).join(FormARequirements, FormARequirements.user_id == FormC.user_id).filter(User.supervisor_id == supervisor_id).all()
+    for form in supervisor_formC:
+        print(form.FormC)
+    #supervisor_formA_req=db_session.query(model).filter(FormARequirements.user_id == FormA.user_id).all()
+
+    return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 @app.route('/dean_dashboard', methods=['GET','POST'])
 def dean_dashboard():
     role="STUDENT"
