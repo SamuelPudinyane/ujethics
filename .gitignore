@@ -4,4 +4,5 @@ backend/.env
 myvenv/
 .env
 .env/
-generate_key.py
+.venv
+myvenv

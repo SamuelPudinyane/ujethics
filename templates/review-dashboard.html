@@ -55,7 +55,15 @@
             <td>Form A</td>
             <td><span class="badge status-high">{{item.risk_rating}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td><span class="badge status-pending">
+              {% if item.rejected_or_accepted and not item.review_date%}
+              Awaiting for review
+              {% elif item.rec_status and item.risk_level != 'low' %}
+              {{item.rec_status}}
+              {% elif item.certificate_issued%}
+              Certificate Issued
+              {% endif %}
+            </span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -127,7 +135,15 @@
             <td>Form B</td>
             <td><span class="badge status-high">{{item.risk_level}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td><span class="badge status-pending">
+              {% if item.rejected_or_accepted and not item.review_date%}
+              Awaiting for review
+              {% elif item.rec_status and item.risk_level != 'low' %}
+              {{item.rec_status}}
+              {% elif item.certificate_issued%}
+              Certificate Issued
+              {% endif %}
+            </span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -186,7 +202,15 @@
             <td>Form C</td>
             <td><span class="badge status-high">{{item.risk_level}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td><span class="badge status-pending">
+              {% if item.rejected_or_accepted and not item.review_date%}
+              Awaiting for review
+              {% elif item.rec_status and item.risk_level != 'low' %}
+              {{item.rec_status}}
+              {% elif item.certificate_issued%}
+              Certificate Issued
+              {% endif %}
+            </span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}

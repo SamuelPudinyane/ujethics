@@ -1,8 +1,8 @@
-"""Add missing columns to form_a_requirements
+"""Fix watched_id type
 
-Revision ID: b6684e0368fc
-Revises: 7a3cde0a05b6
-Create Date: 2025-06-17 14:10:27.081972
+Revision ID: 3a29118d812e
+Revises: 2c433f1fc9b9
+Create Date: 2025-06-23 18:40:34.378369
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'b6684e0368fc'
-down_revision: Union[str, None] = '7a3cde0a05b6'
+revision: str = '3a29118d812e'
+down_revision: Union[str, None] = '2c433f1fc9b9'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

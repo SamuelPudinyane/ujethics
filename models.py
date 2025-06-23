@@ -160,6 +160,21 @@ class FormARequirements(Base):
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=True)  # Link to user who submitted
+    form_a = relationship(
+        "FormA",
+        primaryjoin="FormA.user_id == foreign(FormARequirements.user_id)",
+        back_populates="form_a_requirements"
+    )
+    form_b = relationship(
+        "FormB",
+        primaryjoin="FormB.user_id == foreign(FormARequirements.user_id)",
+        back_populates="form_a_requirements"
+    )
+    form_c = relationship(
+        "FormC",
+        primaryjoin="FormC.user_id == foreign(FormARequirements.user_id)",
+        back_populates="form_a_requirements"
+    )
     form_type = Column(String, nullable=False)
     needs_permission = Column(Boolean,default=False, nullable=True)
     permission_letter = Column(String(255), nullable=True)
@@ -184,6 +199,12 @@ class FormA(Base):
     __tablename__ = 'form_a'
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
+    form_a_requirements = relationship(
+        "FormARequirements",
+        primaryjoin="FormA.user_id == foreign(FormARequirements.user_id)",
+        back_populates="form_a",
+        uselist=False  # Assuming one requirements record per FormA/user
+    )
     attachment_id = Column(String(255), nullable=False) #id of "form-a-upload", stored in current session
     applicant_name = Column(String(120), nullable=False)
     student_number = Column(String(50), nullable=False)
@@ -480,6 +501,12 @@ class FormB(Base):
     __tablename__ = "form_b"
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
+    form_a_requirements = relationship(
+        "FormARequirements",
+        primaryjoin="FormB.user_id == foreign(FormARequirements.user_id)",
+        back_populates="form_b",
+        uselist=False  # Assuming one requirements record per FormA/user
+    )
     need_permission = Column(Boolean, nullable=True)  # "Yes" or "No"
     permission_letter = Column(String(255), nullable=True)  # file path or filename
 
@@ -633,6 +660,12 @@ class FormC(Base):
     __tablename__ = "form_c"
     form_id = Column(String(255), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=False)
+    form_a_requirements = relationship(
+        "FormARequirements",
+        primaryjoin="FormC.user_id == foreign(FormARequirements.user_id)",
+        back_populates="form_c",
+        uselist=False  # Assuming one requirements record per FormA/user
+    )
     # Section 1
     applicant_name = Column(String(100))
     student_number = Column(String(50))

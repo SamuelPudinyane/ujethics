@@ -1282,7 +1282,7 @@ def form_a_sec6 ():
         # Convert string to date
         date_str = request.form.get('declaration_date')
         try:
-            form.declaration_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            form.declaration_date = datetime.strptime(date_str, '%Y-%m-%d')
         except (ValueError, TypeError):
             return "Invalid date format. Please use YYYY-MM-DD.", 400
 
@@ -3404,16 +3404,36 @@ def supervisor_dashboard():
     formB = db_session.query(FormB).all()
     formC = db_session.query(FormC).all()
  
-    supervisor_formA = db_session.query(FormA).join(User, FormA.user_id == User.user_id).join(FormARequirements, FormARequirements.user_id == FormA.user_id).filter(User.supervisor_id == supervisor_id).all()
+    # Query FormA and its FormARequirements for supervisor's users
+    supervisor_formA = db_session.query(FormA, FormARequirements) \
+        .join(User, FormA.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormA.user_id) \
+        .filter(User.supervisor_id == supervisor_id) \
+        .all()
 
-    supervisor_formB = db_session.query(FormB).join(User, FormB.user_id == User.user_id).join(FormARequirements, FormARequirements.user_id == FormB.user_id).filter(User.supervisor_id == supervisor_id).all()
+    # Query FormB and its FormARequirements for supervisor's users
+    supervisor_formB = db_session.query(FormB, FormARequirements) \
+        .join(User, FormB.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormB.user_id) \
+        .filter(User.supervisor_id == supervisor_id) \
+        .all()
 
-    supervisor_formC = db_session.query(FormC).join(User, FormC.user_id == User.user_id).join(FormARequirements, FormARequirements.user_id == FormC.user_id).filter(User.supervisor_id == supervisor_id).all()
-    for form in supervisor_formC:
-        print(form.FormC)
+    # Query FormC and its FormARequirements for supervisor's users
+    supervisor_formC = db_session.query(FormC, FormARequirements) \
+        .join(User, FormC.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormC.user_id) \
+        .filter(User.supervisor_id == supervisor_id) \
+        .all()
+
+    for formC, req in supervisor_formC:
+        print(formC.declaration_name,req)
+
     #supervisor_formA_req=db_session.query(model).filter(FormARequirements.user_id == FormA.user_id).all()
 
     return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+
+
+
 @app.route('/dean_dashboard', methods=['GET','POST'])
 def dean_dashboard():
     role="STUDENT"
