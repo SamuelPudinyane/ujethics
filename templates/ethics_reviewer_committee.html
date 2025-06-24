@@ -68,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for forma in submitted_form_a %}
+          {% for forma,req in submitted_form_a %}
           <tr>
             <td>{{forma.student_number}}</td>
             <td>{{forma.applicant_name}}</td>
@@ -81,12 +81,22 @@
               Awaiting for review
               {% elif forma.rec_status and forma.risk_rating != 'low' %}
               {{forma.rec_status}}
-              {% elif forma.certificate_issued%}
-              Certificate Issued
+              {% elif forma.risk_rating=='low' and forma.review_status and forma.review_status1 and not forma.certificate_email %}
+              Issue Certificate
+              {% elif forma.certificate_email%}
+              Certificate issued
+              {% elif not forma.review_status and not forma.review_status%}
+              Rejected
               {% endif %}
             </span>
             <br>
-            {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>{% endif %}
+            {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}
+            <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
+            {% elif forma.risk_rating=='low' and forma.review_status and forma.review_status1 and not forma.certificate_email%}
+            <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
+            {% elif forma.certificate_email %}
+            <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
+            {% endif %}
 
               <br>
               <a href="{{url_for('ethics_view_feedback',id=forma.form_id)}}">View Feedback</a>
@@ -94,30 +104,28 @@
             <td>{{forma.risk_rating}}</td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
+              
+                  {% if req.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.impact_assessment_path %}
+                  {% if req.impact_assessment_path %}
                   
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
+                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
-                  {% if formR.permission_letter %}
+                  {% if req.permission_letter %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance_path %}
+                  {% if req.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
+                  {% if req.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
                 <br>
-                {% endfor %}
-                {% endif %}
+              
                 <br>
               </ul>
             </td>
@@ -149,7 +157,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for formb in submitted_form_b %}
+          {% for formb,req in submitted_form_b %}
           <tr>
             <td>{{formb.student_number}}</td>
             <td>{{formb.applicant_name}}</td>
@@ -157,16 +165,26 @@
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
             <td><span class="status-pill approved">
-              {% if formb.rejected_or_accepted and not formb.review_date%}
+               {% if formb.rejected_or_accepted and not formb.review_date%}
               Awaiting for review
-              {% elif formb.rec_status and formb.risk_level != 'low' %}
+              {% elif formb.rec_status and formb.risk_rating != 'low' %}
               {{formb.rec_status}}
-              {% elif formb.certificate_issued%}
-              Certificate Issued
-            {% endif %}
+              {% elif formb.risk_rating=='low' and formb.review_status and formb.review_status1 and not formb.certificate_email %}
+              Issue Certificate
+              {% elif formb.certificate_email%}
+              Certificate issued
+              {% elif not formb.review_status and not formb.review_status%}
+              Rejected
+              {% endif %}
             </span>
             <br>
-            {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>{% endif %}
+            {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}
+            <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
+            {% elif formb.risk_rating=='low' and formb.review_status and formb.review_status1 and not formb.certificate_email%}
+            <a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>
+            {% elif formb.certificate_email %}
+            <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
+            {% endif %}
             <br>
 
             <a href="{{url_for('ethics_view_feedback',id=formb.form_id)}}">View Feedback</a>
@@ -175,30 +193,27 @@
             <td>
               
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
-                      
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
-                  {% endif %}
-                  {% if formR.impact_assessment_path %}
-                  
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
-                  {% endif %}
-                  {% if formR.permission_letter%}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                  {% if req.proposal_path %}
+                      
+                      <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance_path %}
+                  {% if req.impact_assessment_path %}
+                  
+                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">Impact Form</a></li>
+                  {% endif %}
+                  {% if req.permission_letter%}
+                
+                      <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                  {% endif %}
+                  {% if req.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
+                  {% if req.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
-                <br>
-                {% endfor %}
-                {% endif %}
+               
                 <br>
               </ul>
             </td>
@@ -229,7 +244,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for formc in submitted_form_c %}
+          {% for formc,req in submitted_form_c %}
           <tr>
             <td>{{formc.student_number}}</td>
             <td>{{formc.applicant_name}}</td>
@@ -237,25 +252,34 @@
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="status-pill approved">
-              {% if formc.rejected_or_accepted and not formc.review_date%}
+       {% if formc.rejected_or_accepted and not formc.review_date%}
               Awaiting for review
-              {% elif formc.rec_status and formc.risk_level != 'low' %}
+              {% elif formc.rec_status and formc.risk_rating != 'low' %}
               {{formc.rec_status}}
-              {% elif formc.certificate_issued%}
-              Certificate Issued
+              {% elif formc.risk_rating=='low' and formc.review_status and formc.review_status1 and not formc.certificate_email %}
+              Issue Certificate
+              {% elif formc.certificate_email%}
+              Certificate issued
+              {% elif not formc.review_status and not formc.review_status%}
+              Rejected
               {% endif %}
             </span>
             <br>
-            {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}<a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>{% endif %}
-
+            {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}
+            <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
+            {% elif formc.risk_rating=='low' and formc.review_status and formc.review_status1 and not formc.certificate_email%}
+            <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
+            {% elif formc.certificate_email %}
+            <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
+            {% endif %}
             <br>
             <a href="{{url_for('ethics_view_feedback',id=formc.form_id)}}">View Feedback</a>
             </td>
             <td>{{formc.risk_level}}</td>
             <td>
-              {% for items in supervisor_formA_req%}
-              <a href="{{ url_for('static', filename=items.files) }}" target="_blank">Proposal</a>
-              {% endfor%}
+              
+              <a href="{{ url_for('static', filename=req.files) }}" target="_blank">Proposal</a>
+              
             </td>
             <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >Review</a></td>
           </tr>

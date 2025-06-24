@@ -138,21 +138,21 @@
         </thead>
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td>
-            <td>{% if formc.vulnerable%}{{formc.vulnerable}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.vulnerable else 'NO'}}</td></tr>
           <tr><td>People under the age of 18 or over 65</td>
-            <td>{% if formc.age_under_18_or_over_65%}{{formc.age_under_18_or_over_65}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.age_under_18_or_over_65 else 'NO'}}</td></tr>
           <tr><td>UJ employees or students</td>
-            <td>{% if formc.uj_employees%}{{formc.uj_employees}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.uj_employees else 'NO'}}</td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td>
-            <td>{% if formc.non_vulnerable_context%}{{formc.non_vulnerable_context}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.non_vulnerable_context else 'NO'}}</td></tr>
           <tr><td>Non-English-speaking participants</td>
-            <td>{% if formc.non_english%}{{formc.non_english}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.non_english else 'NO'}}</td></tr>
           <tr><td>A researcher’s own students</td>
-            <td>{% if formc.own_students%}{{formc.own_students}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.own_students else 'NO'}}</td></tr>
           <tr><td>People living in poverty</td>
-            <td>{% if formc.poverty%}{{formc.poverty}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.poverty else 'NO'}}</td></tr>
           <tr><td>People with little or no education</td>
-            <td>{% if formc.no_education%}{{formc.no_education}}{% endif%}</td></tr>
+            <td>{{'YES' if formc.no_education else 'NO'}}</td></tr>
           <tr><td>Other: Please describe.</td>
             <td>{{formc.vulnerable_other_description}}</td></tr>
         </tbody>
@@ -172,28 +172,28 @@
     </tr>
   </thead>
   <tbody>
-  <tr><td>Collection/use/disclosure of info without individual’s consent (excluding StatsSA, etc.)</td>
-    <td>{% if formc.consent_violation%}{{formc.consent_violation}}{% endif%}</td></tr>
+  <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
+    <td>{{'YES' if formc.consent_violation else 'NO'}}</td></tr>
 <tr><td>Causing discomfiture beyond normal inconvenience</td>
-  <td>{% if formc.discomfiture%}{{formc.discomfiture}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.discomfiture else 'NO'}}</td></tr>
 <tr><td>Deception of participants or covert observation</td>
-  <td>{% if formc.deception%}{{formc.deception}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.deception else 'NO'}}</td></tr>
 <tr><td>Examining sensitive or contentious issues</td>
-  <td>{% if formc.sensitive_issues%}{{formc.sensitive_issues}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.sensitive_issues else 'YES'}}</td></tr>
 <tr><td>Seeking prejudicial information about participants</td>
-  <td>{% if formc.prejudicial_info%}{{formc.prejudicial_info}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.prejudicial_info else 'NO'}}</td></tr>
 <tr><td>Using intrusive techniques</td>
-  <td>{% if formc.intrusive%}{{formc.intrusive}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.intrusive else 'NO'}}</td></tr>
 <tr><td>Study/participation in illegal activities</td>
-  <td>{% if formc.illegal%}{{formc.illegal}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.illegal else 'NO'}}</td></tr>
 <tr><td>Collecting personal/social info directly from participants</td>
-  <td>{% if formc.direct_social_info%}{{formc.direct_social_info}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.direct_social_info else 'NO'}}</td></tr>
 <tr><td>Identifiable info collected from available records (staff/student records)</td>
-  <td>{% if formc.identifiable_records%}{{formc.identifiable_records}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.identifiable_records else 'NO'}}</td></tr>
 <tr><td>Psychology inventories / scales / tests</td>
-  <td>{% if formc.psychology_tests%}{{formc.psychology_tests}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.psychology_tests else 'NO'}}</td></tr>
 <tr><td>Activities putting researcher/data collector at risk</td>
-  <td>{% if formc.researcher_risk%}{{formc.researcher_risk}}{% endif%}</td></tr>
+  <td>{{'YES' if formc.researcher_risk else 'NO'}}</td></tr>
     <tr><td>Other:  Please describe.</td>
       <td>{{formc.activity_other_description}}</td></tr>
   </tbody>
