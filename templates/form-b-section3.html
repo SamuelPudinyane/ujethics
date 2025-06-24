@@ -54,14 +54,15 @@
     <div class="nav-content">
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
       <span class="nav-title">Form B – Ethical Considerations & Declaration</span>
+      <div style="text-align: right;">
+        <a href="{{url_for('logout')}}" class="btn-logout">Logout</a>
+      </div>
     </div>
   </header>
 
     <!-- Main Content -->
     <main class="main-content">
 
-    <!-- Main Content -->
-    <main class="main-content">
 
   <!-- Top Bar -->
   <div class="form-header">
@@ -150,7 +151,7 @@
       <!-- Navigation and Action Buttons -->
       <div class="form-navigation">
         <a href="form-b-section2.html" class="revise-btn">⬅ Back</a>
-        <button type="submit" class="approve-btn">✅ Submit Form B</button>
+        <button type="submit" class="approve-btn">✅ Submit Form B To Supervisor</button>
       </div>
     </form>
   </main>

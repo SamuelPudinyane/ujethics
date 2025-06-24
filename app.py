@@ -786,7 +786,7 @@ def form_a_sec1 ():
 
         db_session.add(form)
         db_session.commit()
-        message='form submitted succesffuly'
+        message='Form submitted succesffuly'
         return render_template("form-a-section2.html",messages=[message])
 
     
@@ -1416,7 +1416,7 @@ def form_b_sec1():
             )
         db_session.add(form)
         db_session.commit()
-        message='form submitted succesffuly'
+        message='Form submitted succesffuly'
         return render_template("form-b-section2.html",messages=[message])
     return render_template('form-b-section1.html')
 
@@ -1544,7 +1544,7 @@ def form_c_sec1():
         form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
-        message="form submitted succesfully"
+        message="Form submitted succesfully"
         return render_template("form-c-section2.html",messages=[message])
 
     return render_template("form-c-section1.html")
@@ -1797,11 +1797,9 @@ def form_c_sec2():
 
         db_session.add(form)
         db_session.commit()
-        message="form submitted succesfully"
+        message="Form submitted succesfully"
         return render_template("form-c-section3.html",messages=[message])
     return render_template("form-c-section2.html")
-
-
 
 
 @app.route('/form_c_sec3', methods=['GET','POST'])
@@ -1845,7 +1843,7 @@ def form_c_sec4():
         form.submission_date=datetime.now().strptime(request.form.get('submission_date'), '%Y-%m-%d')
         db_session.add(form)
         db_session.commit()
-        message="form submitted succesfully"
+        message="Form submitted succesfully"
         return redirect(url_for('student_dashboard'))
     return render_template("form-c-section4.html")
 
