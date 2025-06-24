@@ -3425,8 +3425,6 @@ def supervisor_dashboard():
         .filter(User.supervisor_id == supervisor_id) \
         .all()
 
-    for formC, req in supervisor_formC:
-        print(formC.declaration_name,req)
 
     #supervisor_formA_req=db_session.query(model).filter(FormARequirements.user_id == FormA.user_id).all()
 
