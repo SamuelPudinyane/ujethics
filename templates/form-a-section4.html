@@ -77,7 +77,8 @@
     <label>5.2 Research Design / Approach</label>
     <textarea name="design" rows="4" placeholder="Name & describe the research design you intend to use, e.g. descriptive correlation, case study, grounded theory, etc. If your research will proceed in different phases, describe each phase sequentially"></textarea>
 
-    <h3>5.3 Details of the participants</h3>
+    <br>
+    <label>5.3 Details of the participants</label>
 
     <h4>5.3.1 Participant Group Description</h4>
     <textarea name="participants_description" rows="3"></textarea>
@@ -119,8 +120,9 @@
             <textarea name="conflict_explanation" rows="2"
               placeholder="If yes, give details and explain how it will be mitigated"></textarea>
           </div>
-    <h3>5.4 Research Instruments for Data Collection</h3>
-    <label>5.4.1 Indicate which data collection methds will be used</label>
+          <br>
+    <label>5.4 Research Instruments for Data Collection</label>
+    <label>5.4.1 Indicate which data collection methods will be used</label>
     <div id="data-methods">
             <label><input type="checkbox" value="questionnaire" class="method-check"> Questionnaire</label><br>
             <label><input type="checkbox" value="interview" class="method-check"> Interview</label><br>
@@ -203,12 +205,15 @@
     <textarea name="sensitive_data" rows="2"></textarea>
 
     <label>5.4.6 Will a translator be required?</label><br>
-    <input type="radio" name="translator" value="No"> No
-    <input type="radio" name="translator" value="Yes"> Yes
-    <div id="translator_details_box" style="display:none;">
-            <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
-          </div>
-    <h3>5.5 Secondary Data Usage</h3>
+    <input type="radio" name="translator" value="No" onclick="toggleTranslatorBox()"> No
+    <input type="radio" name="translator" value="Yes" onclick="toggleTranslatorBox()"> Yes
+
+    <div id="translator_details_box" style="display:none; margin-top: 1rem;">
+      <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
+    </div>
+    <br>
+
+    <label>5.5 Secondary Data Usage</label>
 
     <label>Will secondary data be used?</label><br>
     <select id="secondaryData" name="secondary_data" class="form-select" onchange="handleSecondaryData()">
@@ -293,6 +298,18 @@
         alert("You must have at least one row.");
       }
     }
+
+  function toggleTranslatorBox() {
+    const radios = document.getElementsByName("translator");
+    const box = document.getElementById("translator_details_box");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "Yes") {
+        box.style.display = "block";
+        return;
+      }
+    }
+    box.style.display = "none";
+  }
 
     function handleSecondaryData() {
       const val = document.getElementById("secondaryData").value;

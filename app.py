@@ -786,7 +786,7 @@ def form_a_sec1 ():
 
         db_session.add(form)
         db_session.commit()
-        message='form submitted succesffuly'
+        message='Form submitted succesffuly'
         return render_template("form-a-section2.html",messages=[message])
 
     
@@ -1416,7 +1416,7 @@ def form_b_sec1():
             )
         db_session.add(form)
         db_session.commit()
-        message='form submitted succesffuly'
+        message='Form submitted succesffuly'
         return render_template("form-b-section2.html",messages=[message])
     return render_template('form-b-section1.html')
 
@@ -1544,7 +1544,7 @@ def form_c_sec1():
         form.supervisor_comments=""
         db_session.add(form)
         db_session.commit()
-        message="form submitted succesfully"
+        message="Form submitted succesfully"
         return render_template("form-c-section2.html",messages=[message])
 
     return render_template("form-c-section1.html")
@@ -1797,11 +1797,9 @@ def form_c_sec2():
 
         db_session.add(form)
         db_session.commit()
-        message="form submitted succesfully"
+        message="Form submitted succesfully"
         return render_template("form-c-section3.html",messages=[message])
     return render_template("form-c-section2.html")
-
-
 
 
 @app.route('/form_c_sec3', methods=['GET','POST'])
@@ -1845,7 +1843,7 @@ def form_c_sec4():
         form.submission_date=datetime.now().strptime(request.form.get('submission_date'), '%Y-%m-%d')
         db_session.add(form)
         db_session.commit()
-        message="form submitted succesfully"
+        message="Form submitted succesfully"
         return redirect(url_for('student_dashboard'))
     return render_template("form-c-section4.html")
 
@@ -2972,7 +2970,11 @@ def ethics_reviewer_committee_form_c():
     .distinct(FormC.user_id)
     .all())
     
-    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    supervisor_formC = db_session.query(FormC, FormARequirements) \
+        .join(User, FormC.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormC.user_id) \
+        .all()
+    
     today = date.today()
     return render_template('ethics_reviewer_committee.html',today=today,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
 
@@ -3109,16 +3111,16 @@ def rec_dashboard():
     
     submitted_form_a = (db_session.query(FormA)
     .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.risk_rating != 'low',FormA.review_status==True,FormA.review_status1==True)
-    .distinct(FormA.user_id)
+    .group_by(FormA.user_id)
     .all())
     
     submitted_form_b = (db_session.query(FormB)
     .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'low',FormB.review_status==True,FormB.review_status1==True)
-    .distinct(FormB.user_id)
+    .group_by(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
     .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormB.risk_level != 'low',FormC.review_status==True,FormC.review_status1==True)
-    .distinct(FormC.form_id)
+    .group_by(FormC.form_id)
     .all())
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()

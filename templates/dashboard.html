@@ -53,17 +53,7 @@
             engagement required.">ℹ️</span>
         
         </div>
-        <!--
-        <div class="form-card" onclick="location.href='form-a-upload.html'">
-          <h5>Form D</h5>
-          <p>Both Primary and Secondary Data Collection</p>ℹ️
-          <span class="info-icon">Use when your research involves both human interaction and the use of secondary
-            data.</span>
-          <p>Both Primary and Secondary Data Collection</p>ℹ️
-          <span class="info-icon">Use when your research involves both human interaction and the use of secondary
-            data.</span>
-        </div>
-        -->
+
       </div>
     </section>
 
@@ -94,7 +84,7 @@
                 </em>
                
                 <span style="color:green; font-size:12px;">
-                  {% if formA.submitted_date and formA.applicant_signature %}
+                  {% if formA.submitted_at and formA.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR{% elif not formA.rejected_or_accepted and formA.supervisor_date%}
                   FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT{% endif %}
                 </span>
@@ -146,7 +136,7 @@
             <td>{% if formC.submission_date %}{{formC.submission_date.strftime('%d/%m/%Y')}} {% endif %}</td>
             <td>
                 <span style="color:green; font-size:12px;">
-                  {% if formC.submission_date and formC.applicant_signature %}
+                  {% if formC.submission_date and formC.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR{% elif not formC.rejected_or_accepted and formC.supervisor_date%}
                   FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT{% endif %}
 
@@ -171,13 +161,13 @@
     </section>
 
     <!-- Notifications -->
-    <section class="notification-box">
+    <!-- <section class="notification-box">
       <h4>Notifications</h4>
       <ul>
         <li>✅ Supervisor returned Form A for corrections</li>
         <li>📬 Ethics Office received Form A</li>
       </ul>
-    </section>
+    </section> -->
 
   </main>
 

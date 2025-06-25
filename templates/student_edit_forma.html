@@ -608,7 +608,7 @@
                     <br>
 
                     <h3>5.4 Research Instruments for Data Collection</h3>
-                    <label>5.4.1 Indicate which data collection methds will be used</label><br>
+                    <label>5.4.1 Indicate which data collection methods will be used</label><br>
                     <div id="data-methods">
                             <label><input type="checkbox" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> Questionnaire</label><br>
                             <label><input type="checkbox" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> Interview</label><br>
@@ -689,12 +689,13 @@
 
                     <label>5.4.6 Will a translator be required?
                     </label>
-                    <input type="radio" name="translator" {% if not formA.translator %}checked{% endif%} value="No"> No
-                    <input type="radio" name="translator" {% if formA.translator%}checked{% endif%} value="Yes"> Yes
-                    <textarea name="translator_procedure"  rows="2" placeholder="Explain how translator will be used">{{formA.translator_procedure}}</textarea>
+                    <input type="radio" name="translator" {% if not formA.translator %}checked{% endif%} value="No" onclick="toggleTranslatorBox()"> No
+                    <input type="radio" name="translator" {% if formA.translator%}checked{% endif%} value="Yes" onclick="toggleTranslatorBox()"> Yes
+                    <div id="translator_details_box" style="margin-top: 1rem; {% if not formA.translator %}display:none;{% endif %}">
+                      <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used">{{ formA.translator_procedure }}</textarea>
+                    </div>
 
-                    
-
+                  
                     <h3>5.5 Secondary Data Usage</h3>
 
                     <label>Will secondary data be used?
@@ -894,7 +895,7 @@
 
               <!-- Navigation Buttons -->
                     <div class="form-navigation">
-                      <button type="submit" id="check"  class="approve-btn">✅ Submit Form</button>
+                      <button type="submit" id="check"  class="approve-btn">✅ Submit Form To Supervisor</button>
                     </div>
   </form>
 
@@ -945,6 +946,18 @@
         alert("You must have at least one row.");
       }
     }
+
+  function toggleTranslatorBox() {
+    const radios = document.getElementsByName("translator");
+    const box = document.getElementById("translator_details_box");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "Yes") {
+        box.style.display = "block";
+        return;
+      }
+    }
+    box.style.display = "none";
+  }
 
     function handleSecondaryData() {
       const val = document.getElementById("secondaryData").value;

@@ -172,7 +172,7 @@
     </tr>
   </thead>
   <tbody>
-  <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
+  <tr><td>Collection/use/disclosure of info without individual’s consent (excluding StatsSA, etc.)</td>
     <td>{% if formc.consent_violation%}{{formc.consent_violation}}{% endif%}</td></tr>
 <tr><td>Causing discomfiture beyond normal inconvenience</td>
   <td>{% if formc.discomfiture%}{{formc.discomfiture}}{% endif%}</td></tr>
@@ -203,7 +203,7 @@
 
       <hr>
 
-      <h4>2.3 Additional Research Considerations</h4>
+      <!-- <h4>2.3 Additional Research Considerations</h4>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -231,7 +231,7 @@
       
 <label><strong>Comments:</strong></label>
 
-      <hr>
+      <hr> -->
 
       <h4>2.3 Additional Research Considerations</h4>
       <table class="table table-bordered">
@@ -398,7 +398,7 @@
   <div class="form-check">
     <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
     <label class="form-check-label" for="ready">
-      ✅ Ready for submission to JBS ETHICS ADMIN
+      ✅ Ready for submission to Reviewers
     </label>
   </div>
 
@@ -434,12 +434,12 @@
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
 
-    <button type="submit" name="accept" value="Accept" class="btn btn-success">Accept</button>
+    <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Reviewers</button>
   </div>
 
   <!-- Reject Button (initially hidden) -->
   <div id="rejectBtn" style="display: none;">
-    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Reject</button>
+    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Submit back to Student (Requires Submission)</button>
   </div>
   </main>
 </form>  
