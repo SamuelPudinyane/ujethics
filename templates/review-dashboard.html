@@ -49,7 +49,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for item in submitted_form_a %}
+          {% for item,req in submitted_form_a %}
           <tr>
             <td>{{item.student_number}}</td>
             <td>Form A</td>
@@ -66,42 +66,39 @@
             </span></td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
+                  {% if req.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
 
-                  {% if formR.permission_letter %}
+                  {% if req.permission_letter %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance_path %}
+                  {% if req.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if formR.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=formR.research_tools_path) }}" target="_blank">Survey</a></li>
+                  {% if req.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey</a></li>
                   {% endif %}
-                  {% if formR.impact_assessment_path %}
-                      <li><a href="{{ url_for('static', filename=formR.impact_assessment_path) }}" target="_blank">impact assessment path</a></li>
+                  {% if req.impact_assessment_path %}
+                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">impact assessment path</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance %}
-                  <li><a href="{{url_for('static',filename=formR.prior_clearance)}}">Clearance</a></li>
+                  {% if req.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=req.prior_clearance)}}">Clearance</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance1 %}
-                  <li><a href="{{url_for('static',filename=formR.prior_clearance1)}}">Clearance 1</a></li>
+                  {% if req.prior_clearance1 %}
+                  <li><a href="{{url_for('static',filename=req.prior_clearance1)}}">Clearance 1</a></li>
                   {% endif %}
-                  {% if formR.need_jbs_clearance%}
-                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance)}}">JBS Clearance</a></li>
+                  {% if req.need_jbs_clearance%}
+                  <li><a href="{{url_for('static',filename=req.need_jbs_clearance)}}">JBS Clearance</a></li>
                   {% endif %}
-                  {% if formR.need_jbs_clearance1%}
-                  <li><a href="{{url_for('static',filename=formR.need_jbs_clearance1)}}">JBS clearance 2</a></li>
+                  {% if req.need_jbs_clearance1%}
+                  <li><a href="{{url_for('static',filename=req.need_jbs_clearance1)}}">JBS clearance 2</a></li>
                   {% endif %}
                 <br>
-                {% endfor %}
-                {% endif %}
+                
               </ul>
             </td>
             <td>
@@ -129,7 +126,7 @@
          
         </thead>
         <tbody>
-          {% for item in submitted_form_b%}
+          {% for item,req in submitted_form_b%}
           <tr>
             <td>{{item.student_number}}</td>
             <td>Form B</td>
@@ -146,28 +143,26 @@
             </span></td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.proposal_path %}
-                      
-                      <li><a href="{{ url_for('static', filename=formR.proposal_path) }}" target="_blank">Proposal</a></li>
-                  {% endif %}
-                  {% if formR.permission_letter %}
-                  
-                      <li><a href="{{ url_for('static', filename=formR.permission_letter) }}" target="_blank">Impact Form</a></li>
-                  {% endif %}
-                  {% if formR.ethics_evidence %}
                 
-                      <li><a href="{{ url_for('static', filename=formR.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
+                  {% if req.proposal_path %}
+                      
+                      <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if formR.prior_clearance_path %}
+                  {% if req.permission_letter %}
+                  
+                      <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Impact Form</a></li>
+                  {% endif %}
+                  {% if req.ethics_evidence %}
+                
+                      <li><a href="{{ url_for('static', filename=req.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
+                  {% endif %}
+                  {% if req.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=formR.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                  
                 <br>
-                {% endfor %}
-                {% endif %}
+                
               </ul>
             </td>
             <td>
@@ -196,7 +191,7 @@
         </thead>
         <tbody>
 
-          {% for item in submitted_form_c%}
+          {% for item,req in submitted_form_c%}
           <tr>
             <td>{{item.student_number}}</td>
             <td>Form C</td>
@@ -207,21 +202,24 @@
               Awaiting for review
               {% elif item.rec_status and item.risk_level != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued%}
+              {% elif item.certificate_issued and item.risk_level != 'low' and item.review_status and item.review_status1 %}
               Certificate Issued
+              {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
+              Certificate Issued
+              {% elif item.review_status and not item.review_status1%}
+              Awaiting for second Reviewer
+              {% elif not item.review_status or not item.review_status1 %}
+              Rejected
               {% endif %}
             </span></td>
             <td>
               <ul class="doc-link">
-                {% if supervisor_formA_req %}
-                  {% for formR in supervisor_formA_req %}
-                  {% if formR.files %}
+                
+                  {% if req.files %}
                       
-                      <li><a href="{{ url_for('static', filename=formR.files) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=req.files) }}" target="_blank">Proposal</a></li>
                   {% endif %}
                   
-                {% endfor %}
-                {% endif %}
                 <br>
               </ul>
             </td>

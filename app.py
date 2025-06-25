@@ -2761,6 +2761,7 @@ def chair_form_view(id,form_name):
                 formA.review_additional_comments=review_additional_comments
                 formA.review_recommendation=review_recommendation
                 formA.review_status=False
+                formA.rejected_or_accepted=False
                 
             db_session.add(formA)
             db_session.commit()
@@ -2842,7 +2843,8 @@ def chair_form_view(id,form_name):
                 formB.review_proposal_comments=review_proposal_comments
                 formB.review_additional_comments=review_additional_comments
                 formB.review_recommendation=review_recommendation
-                formB.review_status1=False
+                formB.review_status=False
+                formB.rejected_or_accepted=False
             db_session.add(formB)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -2927,7 +2929,8 @@ def chair_form_view(id,form_name):
                 formC.review_proposal_comments=review_proposal_comments
                 formC.review_additional_comments=review_additional_comments
                 formC.review_recommendation=review_recommendation
-                formC.review_status1=False
+                formC.review_status=False
+                formC.rejected_or_accepted=False
             db_session.add(formC)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -2937,46 +2940,38 @@ def chair_form_view(id,form_name):
 
 @app.route('/ethics_reviewer_committee_form_a', methods=['GET','POST'])
 def ethics_reviewer_committee_form_a():
-    submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
-    .distinct(FormA.user_id)
-    .all())
-    
-    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    supervisor_formA = db_session.query(FormA, FormARequirements) \
+        .join(User, FormA.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormA.user_id).all()
     today = date.today()
-    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=submitted_form_a,supervisor_formA_req=supervisor_formA_req)
+    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_a=supervisor_formA)
 
 
 @app.route('/ethics_reviewer_committee_form_b', methods=['GET','POST'])
 def ethics_reviewer_committee_form_b():
    
-    
-    submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
-    .distinct(FormB.user_id)
-    .all())
-    
-    
-    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+    supervisor_formB = db_session.query(FormB, FormARequirements) \
+        .join(User, FormB.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormB.user_id).all()
     today = date.today()
-    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_b=submitted_form_b,supervisor_formA_req=supervisor_formA_req)
+    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_b=supervisor_formB)
 
 
 @app.route('/ethics_reviewer_committee_form_c', methods=['GET','POST'])
 def ethics_reviewer_committee_form_c():
     
-    submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
-    .distinct(FormC.user_id)
-    .all())
     
     supervisor_formC = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id) \
+<<<<<<< HEAD
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id) \
         .all()
+=======
+        .join(FormARequirements, FormARequirements.user_id == FormC.user_id).all()
+>>>>>>> 3946a33f368b2fff71a87db0ffc7560115e8b05a
     
     today = date.today()
-    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
+    return render_template('ethics_reviewer_committee.html',today=today,submitted_form_c=supervisor_formC)
 
 
 
@@ -3036,33 +3031,28 @@ def chair_landing():
 @app.route('/review_dashboard', methods=['GET','POST'])
 def review_dashboard():
     user_id=session['id']
-    submitted_form_a = (db_session.query(FormA)
-    .filter(or_(
-            FormA.reviewer_name1 == user_id,
-            FormA.reviewer_name2 == user_id
-        ),FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.supervisor_signature!= None)
-    .distinct(FormA.user_id)
-    .all())
+  
+    submitted_form_a = db_session.query(FormA, FormARequirements) \
+        .join(User, FormA.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
+        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)\
+        .distinct()\
+        .all()
     
-    submitted_form_b = (db_session.query(FormB)
-    .filter(or_(
-            FormB.reviewer_name1 == user_id,
-            FormB.reviewer_name2 == user_id
-        ),FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.supervisor_signature!= None)
-    .distinct(FormB.user_id)
-    .all())
-    submitted_form_c = (db_session.query(FormC)
-    .filter(or_(
-            FormC.reviewer_name1 == user_id,
-            FormC.reviewer_name2 == user_id
-        ),FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.supervisor_signature!= None)
-    .distinct(FormC.user_id)
-    .all())
-    x=(db_session.query(FormC)
-    .filter(or_(
-            FormC.reviewer_name1 == user_id,
-            FormC.reviewer_name2 == user_id
-        )).all())
+    
+    submitted_form_b = db_session.query(FormB, FormARequirements) \
+        .join(User, FormB.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
+        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)\
+        .distinct()\
+        .all()
+
+    submitted_form_c = db_session.query(FormC, FormARequirements) \
+        .join(User, FormC.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
+        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)\
+        .distinct()\
+        .all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('review-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
@@ -3111,6 +3101,7 @@ def rec_dashboard():
     
     submitted_form_a = (db_session.query(FormA)
     .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.risk_rating != 'low',FormA.review_status==True,FormA.review_status1==True)
+<<<<<<< HEAD
     .group_by(FormA.user_id)
     .all())
     
@@ -3122,6 +3113,16 @@ def rec_dashboard():
     .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormB.risk_level != 'low',FormC.review_status==True,FormC.review_status1==True)
     .group_by(FormC.form_id)
     .all())
+=======
+    .distinct().all())
+    
+    submitted_form_b = (db_session.query(FormB)
+    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'low',FormB.review_status==True,FormB.review_status1==True)
+    .distinct().all())
+    submitted_form_c = (db_session.query(FormC)
+    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormC.risk_level != 'low',FormC.review_status==True,FormC.review_status1==True)
+    .distinct().all())
+>>>>>>> 3946a33f368b2fff71a87db0ffc7560115e8b05a
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
@@ -3277,8 +3278,9 @@ def ethics_reviewer_committee_forms(id,form_name):
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
             
-            formA.reviewer_name1=reviewers[0]
-            formA.reviewer_name2=reviewers[1] if reviewers[1] else None
+            if reviewers:
+                formA.reviewer_name1=reviewers[0]
+                formA.reviewer_name2=reviewers[1] if reviewers[1] else None
             formA.supervisor_date=request.form.get('review_date')
             formA.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formA.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -3300,7 +3302,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                 
                 formA.rejected_or_accepted=True
             else:
-              
+                formA.supervisor_date=request.form.get('review_date')
                 formA.rejected_or_accepted=False
             db_session.add(formA)
             db_session.commit()
@@ -3310,8 +3312,9 @@ def ethics_reviewer_committee_forms(id,form_name):
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
-            formB.reviewer_name1=reviewers[0]
-            formB.reviewer_name2=reviewers[1] if reviewers[1] else None
+            if reviewers:
+                formB.reviewer_name1=reviewers[0]
+                formB.reviewer_name2=reviewers[1] if reviewers[1] else None
             formB.supervisor_date=request.form.get('review_date')
             formB.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formB.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -3335,7 +3338,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                 formB.rejected_or_accepted=True
                 
             else:
-                
+                formB.supervisor_date=request.form.get('review_date')
                 formB.rejected_or_accepted=False
                
             db_session.add(formB)
@@ -3347,8 +3350,9 @@ def ethics_reviewer_committee_forms(id,form_name):
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
           
-            formC.reviewer_name1=reviewers[0]
-            formC.reviewer_name2=reviewers[1] if reviewers[1] else None
+            if reviewers:
+                formC.reviewer_name1=reviewers[0]
+                formC.reviewer_name2=reviewers[1] if reviewers[1] else None
             formC.supervisor_date=request.form.get('review_date')
             formC.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formC.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -3370,7 +3374,7 @@ def ethics_reviewer_committee_forms(id,form_name):
 
                 formC.rejected_or_accepted=True
             else:
-                
+                formC.supervisor_date=request.form.get('review_date')
                 formC.rejected_or_accepted=False
             db_session.add(formC)
             db_session.commit()
