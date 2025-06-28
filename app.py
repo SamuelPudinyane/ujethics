@@ -737,6 +737,8 @@ def edit_form_a(form_id):
     data = getFormAData(form_id)
     return render_template('form-a-section1.html', formdata = data)
 
+
+
 # ---------------- Section 1 ------------------
 @app.route('/form_a_sec1', methods=['GET', 'POST'])
 def form_a_sec1 ():
@@ -3094,14 +3096,14 @@ def rec_dashboard():
     user_id=session['id']
     
     submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,func.lower(FormA.risk_rating) != 'low',FormA.review_status==True,FormA.review_status1==True)
+    .filter(FormA.reviewer_name1 !=user_id,FormA.reviewer_name2 !=user_id, FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,func.lower(FormA.risk_rating) != 'low',FormA.review_status==True,FormA.review_status1==True)
     .distinct().all())
     
     submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,func.lower(FormB.risk_level) != 'low',FormB.review_status==True,FormB.review_status1==True)
+    .filter(FormB.reviewer_name1 != user_id,FormB.reviewer_name2 !=user_id, FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,func.lower(FormB.risk_level) != 'low',FormB.review_status==True,FormB.review_status1==True)
     .distinct().all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,func.lower(FormC.risk_level) != 'low',FormC.review_status==True,FormC.review_status1==True)
+    .filter(FormC.reviewer_name1 !=user_id,FormC.reviewer_name2 !=user_id,FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,func.lower(FormC.risk_level) != 'low',FormC.review_status==True,FormC.review_status1==True)
     .distinct().all())
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
