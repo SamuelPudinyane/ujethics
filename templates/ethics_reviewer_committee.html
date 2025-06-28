@@ -50,6 +50,7 @@
 
     <section class="admin-content">
       <h3>Submitted Student Forms</h3>
+    {% if submitted_form_a or submitted_form_b or submitted_form_c %}
      {% if submitted_form_a %}
       <!-- Table -->
       <table class="table table-bordered table-striped status-table ">
@@ -286,6 +287,8 @@
           {% endfor %}
         </tbody>
       </table>
+      {% else %}
+      No Submissions
       {% endif %}
     </section>
 
