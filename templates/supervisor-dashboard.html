@@ -34,6 +34,7 @@
 
     <section class="admin-content">
       <h3>Student Submissions</h3>
+      {% if supervisor_formA or supervisor_formB or supervisor_formC%}
       <table class="status-table">
         <thead>
           <tr>
@@ -62,7 +63,7 @@
             {% elif forma.recommendation=='Ready for submission' and forma.rejected_or_accepted %}
             Accepted
             {% elif not forma.rejected_or_accepted and not forma.recommendation=='Ready for submission'%}
-            Awaiting for review 
+            Awaiting for Review 
             {% elif not forma.rejected_or_accepted and not forma.supervisor_comment %}
             Rejected
             
@@ -147,7 +148,7 @@
               {% elif formb.recommendation=='Ready for submission' and formb.rejected_or_accepted %}
               Accepted
               {% elif not formb.rejected_or_accepted and not formb.recommendation=='Ready for submission'%}
-              Awaiting for review 
+              Awaiting for Review 
               {% elif not formb.rejected_or_accepted and not formb.supervisor_comment %}
               Rejected
               {% endif %}
@@ -218,7 +219,7 @@ Accepted
 {% elif formc.recommendation=='Ready for submission' and formc.rejected_or_accepted %}
 Accepted
 {% elif not formc.rejected_or_accepted and not formc.recommendation=='Ready for submission'%}
-Awaiting for review 
+Awaiting for Review 
 {% elif not formc.rejected_or_accepted and formc.supervisor_comment %}
 Rejected
 {% endif %}
@@ -264,6 +265,10 @@ Rejected
           {% endif %}
         </tbody>
       </table>
+      {% else %}
+      No submissions 
+      {% endif %}
+
     </section>
 
     <footer class="footer">

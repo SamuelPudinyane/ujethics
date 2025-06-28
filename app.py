@@ -14,11 +14,10 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from datetime import date
-from sqlalchemy import desc,cast ,Date
+from sqlalchemy import desc,cast ,Date,func
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from sqlalchemy import or_
-from sqlalchemy import func
 
 # Load environment variables from .env file
 load_dotenv()
@@ -696,7 +695,7 @@ def submit_form_b_requirements():
             db_session.add(form)
             db_session.commit()
             
-            return redirect(url_for('form_c_sec1'))
+            return redirect(url_for('form_b_sec1'))
             
         except Exception as e:
             db_session.rollback()
@@ -737,6 +736,8 @@ def submit_form_a_upload ():
 def edit_form_a(form_id):
     data = getFormAData(form_id)
     return render_template('form-a-section1.html', formdata = data)
+
+
 
 # ---------------- Section 1 ------------------
 @app.route('/form_a_sec1', methods=['GET', 'POST'])
@@ -1343,7 +1344,7 @@ def form_b_upload():
         permission_letter = save_file('permission_letter')
         prior_clearance = save_file('prior_clearance')
         ethics_evidence = save_file('ethics_evidence')
-        proposal = save_file('proposal')
+        proposal = save_file('proposal_path')
 
         if form:
             form.user_id=user_id
@@ -1353,7 +1354,7 @@ def form_b_upload():
             form.prior_clearance=prior_clearance
             form.has_ethics_evidence=has_ethics_evidence=='Yes'
             form.ethics_evidence=ethics_evidence
-            form.proposal=proposal
+            form.proposal_path=proposal
         else:
             # Save to database
             form = FormB(
@@ -1364,7 +1365,7 @@ def form_b_upload():
                 prior_clearance=prior_clearance,
                 has_ethics_evidence=has_ethics_evidence=='Yes',
                 ethics_evidence=ethics_evidence,
-                proposal=proposal
+                proposal_path=proposal
             )
 
         db_session.add(form)
@@ -2963,12 +2964,7 @@ def ethics_reviewer_committee_form_c():
     
     supervisor_formC = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id) \
-<<<<<<< HEAD
-        .join(FormARequirements, FormARequirements.user_id == FormC.user_id) \
-        .all()
-=======
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id).all()
->>>>>>> 3946a33f368b2fff71a87db0ffc7560115e8b05a
     
     today = date.today()
     return render_template('ethics_reviewer_committee.html',today=today,submitted_form_c=supervisor_formC)
@@ -3100,29 +3096,15 @@ def rec_dashboard():
     user_id=session['id']
     
     submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,FormA.risk_rating != 'low',FormA.review_status==True,FormA.review_status1==True)
-<<<<<<< HEAD
-    .group_by(FormA.user_id)
-    .all())
-    
-    submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'low',FormB.review_status==True,FormB.review_status1==True)
-    .group_by(FormB.user_id)
-    .all())
-    submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormB.risk_level != 'low',FormC.review_status==True,FormC.review_status1==True)
-    .group_by(FormC.form_id)
-    .all())
-=======
+    .filter(FormA.reviewer_name1 !=user_id,FormA.reviewer_name2 !=user_id, FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,func.lower(FormA.risk_rating) != 'low',FormA.review_status==True,FormA.review_status1==True)
     .distinct().all())
     
     submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,FormB.risk_level != 'low',FormB.review_status==True,FormB.review_status1==True)
+    .filter(FormB.reviewer_name1 != user_id,FormB.reviewer_name2 !=user_id, FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,func.lower(FormB.risk_level) != 'low',FormB.review_status==True,FormB.review_status1==True)
     .distinct().all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,FormC.risk_level != 'low',FormC.review_status==True,FormC.review_status1==True)
+    .filter(FormC.reviewer_name1 !=user_id,FormC.reviewer_name2 !=user_id,FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,func.lower(FormC.risk_level) != 'low',FormC.review_status==True,FormC.review_status1==True)
     .distinct().all())
->>>>>>> 3946a33f368b2fff71a87db0ffc7560115e8b05a
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)

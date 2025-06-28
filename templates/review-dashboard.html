@@ -34,6 +34,7 @@
 
     <section class="admin-content">
       <h3>Assigned Submissions</h3>
+      {% if submitted_form_a or submitted_form_b or submitted_form_c%}
     {% if submitted_form_a %}
 
       <table class="status-table">
@@ -56,12 +57,20 @@
             <td><span class="badge status-high">{{item.risk_rating}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {% if item.rejected_or_accepted and not item.review_date%}
+               {% if item.rejected_or_accepted and not item.review_date%}
               Awaiting for review
-              {% elif item.rec_status and item.risk_level != 'low' %}
+              {% elif item.rec_status and item.risk_rating != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued%}
-              Certificate Issued
+              {% elif item.certificate_issued and item.risk_rating != 'low' and item.review_status and item.review_status1 %}
+              Certificate will be Issued
+              {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
+              Certificate Will be Issued
+              {% elif item.review_status and not item.review_status1%}
+              Awaiting for second Reviewer
+              {% if not item.review_status %}
+              Awaiting for Review
+              {% elif not item.review_status or not item.review_status1 %}
+              Rejected
               {% endif %}
             </span></td>
             <td>
@@ -133,12 +142,20 @@
             <td><span class="badge status-high">{{item.risk_level}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {% if item.rejected_or_accepted and not item.review_date%}
+               {% if item.rejected_or_accepted and not item.review_date%}
               Awaiting for review
               {% elif item.rec_status and item.risk_level != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued%}
-              Certificate Issued
+              {% elif item.certificate_issued and item.risk_level != 'low' and item.review_status and item.review_status1 %}
+              Certificate will be Issued
+              {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
+              Certificate Will be Issued
+              {% elif item.review_status and not item.review_status1%}
+              Awaiting for second Reviewer
+              {% if not item.review_status %}
+              Awaiting for Review
+              {% elif not item.review_status or not item.review_status1 %}
+              Rejected
               {% endif %}
             </span></td>
             <td>
@@ -203,11 +220,13 @@
               {% elif item.rec_status and item.risk_level != 'low' %}
               {{item.rec_status}}
               {% elif item.certificate_issued and item.risk_level != 'low' and item.review_status and item.review_status1 %}
-              Certificate Issued
+              Certificate will be Issued
               {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
-              Certificate Issued
+              Certificate Will be Issued
               {% elif item.review_status and not item.review_status1%}
               Awaiting for second Reviewer
+              {% if not item.review_status %}
+              Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
               {% endif %}
@@ -230,6 +249,8 @@
            {% endfor %}
         </tbody>
       </table>
+      {% else %}
+      No Submissions
       {% endif %}
     </section>
 
