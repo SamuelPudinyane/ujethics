@@ -31,7 +31,7 @@
     <form action="{{url_for('form_a_sec4')}}" method="post">
   <!-- Error Messages -->
             {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
@@ -145,7 +145,7 @@
           </div>
     <!-- Interview -->
           <div id="interview_fields" style="display:none; margin-top: 1rem;">
-            <label>5.4.2.1 Interviews</label><br>
+            <label>5.4.1.2 Interviews</label><br>
             <input type="radio" name="interview_type" value="In-depth"> In-depth
             <input type="radio" name="interview_type" value="Semi-structured"> Semi-structured
             <input type="radio" name="interview_type" value="Unstructured"> Unstructured<br>
@@ -156,7 +156,7 @@
 
           <!-- Focus Group -->
           <div id="focus_fields" style="display:none; margin-top: 1rem;">
-            <label>5.4.2.2 Focus Groups</label><br>
+            <label>5.4.1.3 Focus Groups</label><br>
             <input type="radio" name="use_focus_groups" value="Yes"> Yes
             <input type="radio" name="use_focus_groups" value="No"> No<br>
             <label>Will focus groups be recorded?</label><br>
@@ -166,28 +166,27 @@
 
           <!-- Observation -->
           <div id="observation_fields" style="display:none; margin-top: 1rem;">
-            <label>Please describe your observation protocol:</label>
+            <label>5.4.1.4 Please describe your observation protocol:</label>
             <textarea name="observation_details" rows="3"
               placeholder="Explain how observations will be conducted."></textarea>
           </div>
 
           <!-- Documents -->
           <div id="documents_fields" style="display:none; margin-top: 1rem;">
-            <label>What type of documents will be analyzed?</label>
+            <label>5.4.1.5 What type of documents will be analyzed?</label>
             <textarea name="documents_details" rows="3"
               placeholder="E.g. reports, archives, publications..."></textarea>
           </div>
 
           <!-- Other -->
           <div id="other_fields" style="display:none; margin-top: 1rem;">
-            <label>Please describe other data collection method(s):</label>
-            <textarea name="other_details" rows="3" placeholder="Describe..."></textarea>
+            <label>5.4.1.6 Please describe other data collection method(s):</label>
+            <textarea name="other_details" rows="3" placeholder="Describe any other data collection methods you plan to use"></textarea>
           </div>
 
           <!-- General Data Collection Procedure -->
           <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
-          <textarea name="data_collection_procedure" rows="3"
-            placeholder="Describe the data collection procedure in detail"></textarea>
+          <textarea name="data_collection_procedure" rows="3" placeholder="Describe the data collection procedure in detail"></textarea>
 
           <br><br>
 

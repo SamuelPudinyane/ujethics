@@ -80,7 +80,7 @@
     <form id="formBFinal" action="{{url_for('form_b_sec3')}}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
             {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}

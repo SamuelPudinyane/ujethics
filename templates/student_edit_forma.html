@@ -358,7 +358,7 @@
                           </table>
                       <textarea name="apply_comments" value="{{formA.apply_comments}}" rows="3" placeholder="Comments (if any)..."></textarea>
                           <div class="mb-3">
-                        <label><strong>Rate your project (Negligible, Low, Medium, High Risk):</strong>
+                        <label><strong>Rate your project (Low, Medium, High Risk):</strong>
                           <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ</span>
                         </label>
                         <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
@@ -457,9 +457,9 @@
                       >
                       <label
                         ><input type="radio" name="researcher_affiliation" {% if formA.researcher_affiliation%} checked{% endif %}value="Yes" />
-                        Yes (Explain below)</label
+                        Yes</label
                       >
-                      <div id="affiliation_comment" style="display:none;" placeholfder="Please provide details of the affiliation">
+                      <div id="affiliation_comment" placeholfder="Please provide details of the affiliation">
                   <textarea name="affiliation_details" value="{{formA.affiliation_details}}" rows="3"></textarea>
                 </div>
                       <label>4.3 Does your research involve collectives or communities?
@@ -469,7 +469,7 @@
                           >
                           <label
                             ><input type="radio" {% if formA.collective_involvement%}checked{% endif %} name="collective_involvement" value="Yes" />
-                            Yes (Explain below)</label
+                            Yes</label
                           >
                           <textarea name="collective_details" value="{{formA.collective_details}}" rows="3"></textarea>
 
@@ -601,9 +601,8 @@
                     </label>
                     <input type="radio" name="conflict_interest" {% if not formA.conflict_interest %}checked{% endif%} value="No"> No
                     <input type="radio" name="conflict_interest" {% if formA.conflict_interest %}checked{% endif%} value="Yes"> Yes
-                    <div id="conflict_explanation_box" style="display: none;">
-                            <textarea name="conflict_explanation"  rows="2"
-                              placeholder="If yes, give details and explain how it will be mitigated">{{formA.conflict_explanation}}</textarea>
+                    <div id="conflict_explanation_box">
+                            <textarea name="conflict_explanation"  rows="2" placeholder="If yes, give details and explain how it will be mitigated">{{formA.conflict_explanation}}</textarea>
                           </div>
                     <br>
 
@@ -629,7 +628,7 @@
                           </div>
                     <!-- Interview -->
                           <div id="interview_fields" style="display:none; margin-top: 1rem;">
-                            <label>5.4.2.1 Interviews</label><br>
+                            <label>5.4.1.2 Interviews</label><br>
                             <input type="radio" {% if formA.interview_type=='In-depth' %}checked{% endif%} name="interview_type" value="In-depth"> In-depth
                             <input type="radio" {% if formA.interview_type=='Semi-structured'%}checked{% endif %} name="interview_type" value="Semi-structured"> Semi-structured
                             <input type="radio" {% if formA.interview_type=='Unstructured'%}checked{% endif%} name="interview_type" value="Unstructured"> Unstructured<br>
@@ -639,7 +638,7 @@
                           </div>
                     <!-- Focus Group -->
                           <div id="focus_fields" style="display:none; margin-top: 1rem;">
-                            <label>5.4.2.2 Focus Groups</label><br>
+                            <label>5.4.1.3 Focus Groups</label><br>
                             <input type="radio" {% if formA.use_focus_groups%}checked{% endif%} name="use_focus_groups" value="Yes"> Yes
                             <input type="radio" {% if not formA.use_focus_groups=='Audio'%}checked{% endif%} name="use_focus_groups" value="No"> No<br>
                             <label>Will focus groups be recorded?</label><br>
@@ -648,19 +647,19 @@
                           </div>
                 <!-- Observation -->
                           <div id="observation_fields" style="display:none; margin-top: 1rem;">
-                            <label>Please describe your observation protocol:</label>
+                            <label>5.1.4.4 Please describe your observation protocol:</label>
                             <textarea name="observation_details"  rows="3"
                               placeholder="Explain how observations will be conducted.">{{formA.observation_details}}</textarea>
                           </div>
                           <!-- Documents -->
                           <div id="documents_fields" style="display:none; margin-top: 1rem;">
-                            <label>What type of documents will be analyzed?</label>
+                            <label>5.1.4.5 What type of documents will be analyzed?</label>
                             <textarea name="documents_details" rows="3"
                               placeholder="E.g. reports, archives, publications...">{{formA.documents_details}}</textarea>
                           </div>
                           <!-- Other -->
                           <div id="other_fields" style="display:none; margin-top: 1rem;">
-                            <label>Please describe other data collection method(s):</label>
+                            <label>5.1.4.6 Please describe other data collection method(s):</label>
                             <textarea name="other_details"  rows="3" placeholder="Describe...">{{formA.other_details}}</textarea>
                           </div>
 
@@ -707,7 +706,7 @@
                     </select>
                   
                     
-                    <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
+                    <div id="secondaryDetails" style="margin-top: 1rem;">
                     
                       <label>Is the data Public or Private?</label><br>
                       <select id="dataType" name="data_type"  class="form-select" onchange="handleDataType()">
@@ -718,7 +717,7 @@
                       </select>
                     
                       <!-- Private Data Section -->
-                      <div id="privateDataSection" style="display: none; margin-top: 1rem;">
+                      <div id="privateDataSection" style="margin-top: 1rem;">
                         <label>Is the data from a company that has provided permission?</label><br>
                         <select id="privatePermission" name="org_permision"  class="form-select" onchange="handlePrivatePermission()">
                           <option value="">-- Select --</option>
@@ -726,14 +725,14 @@
                           <option value="No">No</option>
                         </select>
                     
-                        <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
+                        <div id="uploadPrivatePermission" style="margin-top: 1rem;">
                           <label>Please upload the permission for use of private data:</label>
                           <input type="file" value="{{formA.private_permission_file}}" name="private_permission_file" class="form-control">
                         </div>
                       </div>
                     
                       <!-- Public Data Section -->
-                      <div id="publicDataSection" style="display: none; margin-top: 1rem;">
+                      <div id="publicDataSection" style="margin-top: 1rem;">
                         <label>What type of public data is going to be used?</label>
                         <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports">{{formA.public_data_description}}</textarea>
                       </div>
