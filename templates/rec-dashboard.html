@@ -21,7 +21,8 @@
       <h3>REC Committee</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="{{url_for('rec_dashboard')}}" class="active">📋 Dashboard</a>
+      <a href="{{url_for('rec_dashboard')}}" class="active">📋 Rec Team Dashboard</a>
+      <a href="{{url_for('chair_landing')}}">📋 Reviewer Dashboard</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -34,7 +35,7 @@
 
     <section class="admin-content">
       <h3>Assigned Submissions</h3>
-      {% if submitted_form_a or submitted_form_b or submitted_form_c %}
+      
     {% if submitted_form_a %}
 
       <table class="status-table">

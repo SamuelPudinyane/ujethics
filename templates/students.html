@@ -34,7 +34,7 @@
 
     <section class="admin-content">
       <h3>Student List</h3>
-
+      {% if students %}
       <table class="student-table">
         <thead>
           <tr>
@@ -58,6 +58,9 @@
           
         </tbody>
       </table>
+      {% else %}
+      No Students available
+      {% endif %}
     </section>
 
     <footer class="footer">

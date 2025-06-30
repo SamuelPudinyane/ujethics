@@ -190,6 +190,7 @@ class FormARequirements(Base):
     impact_assessment_path = Column(String(255), nullable=True)
     has_ethics_evidence=Column(Boolean,default=False,nullable=True)
     ethics_evidence = Column(Boolean, default=False, nullable=True)
+    ethics_evidence_path=Column(String,nullable=True)
     files = Column(Text, nullable=True)  # Will store JSON list containing id's of files
     submitted_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), nullable=False)
@@ -483,7 +484,7 @@ class FormA(Base):
     certificate_issued=Column(DateTime,server_default=func.now(),nullable=True)
     
     certificate_valid_years=Column(String,nullable=True)
-    certificate_end_date=Column(DateTime,server_default=func.now())
+    certificate_end_date=Column(DateTime)
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
 
@@ -647,7 +648,7 @@ class FormB(Base):
     certificate_issued=Column(DateTime,server_default=func.now(),nullable=True)
 
     certificate_valid_years=Column(String,nullable=True)
-    certificate_end_date=Column(DateTime,server_default=func.now())
+    certificate_end_date=Column(DateTime)
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
 
@@ -822,7 +823,7 @@ class FormC(Base):
     certificate_issued=Column(DateTime,server_default=func.now(),nullable=True)
 
     certificate_valid_years=Column(String,nullable=True)
-    certificate_end_date=Column(DateTime,server_default=func.now())
+    certificate_end_date=Column(DateTime)
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
 
