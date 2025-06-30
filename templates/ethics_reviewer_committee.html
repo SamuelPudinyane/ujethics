@@ -91,9 +91,9 @@
               {% endif %}
             </span>
             <br>
-            {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}
+            {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' %}
             <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
-            {% elif forma.risk_rating=='low' and forma.review_status and forma.review_status1 and not forma.certificate_email%}
+            {% elif forma.risk_rating=='low' and forma.review_status and forma.review_status1 and not forma.certificate_email %}
             <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
             {% elif forma.certificate_email %}
             <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>

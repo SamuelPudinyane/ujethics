@@ -223,13 +223,13 @@
               Certificate will be Issued
               {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
               Certificate Will be Issued
-              {% elif item.review_status and not item.review_status1%}
+              {% elif item.review_status and not item.review_status1 %}
               Awaiting for second Reviewer
               {% if not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
-              {% endif %}
+            {% endif %}
             </span></td>
             <td>
               <ul class="doc-link">
