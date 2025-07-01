@@ -119,7 +119,7 @@
             <tr><td class="highlight">Supervisor</td><td>{% if certificate_details.supervisor%}{{certificate_details.supervisor}}{% elif certificate_details.supervisor_name%}{{certificate_details.supervisor_name}}{% endif%}</td></tr>
             <tr><td class="highlight">Staff/Student number</td><td>{{certificate_details.student_number}}</td></tr>
             <tr><td class="highlight">Title of Research</td><td>{% if certificate_details.study_title%}{{certificate_details.study_title}}{% elif certificate_details.project_title %} {{certificate_details.project_title}}{% endif%}</td></tr>
-            <tr><td class="highlight">Academic article/MCom</td><td>MCom</td></tr>
+            <!-- <tr><td class="highlight">Academic article/MCom</td><td>MCom</td></tr> -->
             <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</td></tr>
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
@@ -143,9 +143,9 @@
 
         <div class="signature">
             <p><strong>Date:</strong> {% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</p>
-            <p><strong>Name <input type="text" name="certificate_issuer" required></strong><br>
-               Chairperson: JBSREC<br>
-               Email: <input type="text" name="email" required></p>
+            <!-- <p><strong>Name <input type="text" name="certificate_issuer" required></strong><br> -->
+               Chairperson: JBS Research Ethics Committee<br>
+               Email: <a href="mailto:user@example.com" class="text-primary">jbssubmissions@uj.ac.za</a>
         </div>
     </div>
 

@@ -77,12 +77,9 @@
             <td>Organisational Permission<br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
             <td><span id="org_permission_comment">{{view_form.org_permission_comment}}</span></td>
           </tr>
+
           <tr>
-            <td>Signed Waiver from Business<br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
-            <td><span id="waiver_comment">{{view_form.waiver_comment}}</span></td>
-          </tr>
-          <tr>
-            <td>Form  – Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
+            <td>Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
             <td><span id="form_a_comment">{{view_form.form_a_comment}}</span></td>
           </tr>
           <tr>
@@ -92,6 +89,10 @@
           <tr>
             <td>Participant Information Sheet and Informed Consent Form<br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
             <td><span id="consent_comment">{{view_form.consent_comment}}</span></td>
+          </tr>
+          <tr>
+            <td>Impact Assessment Form<br><small>Impact assessment form submitted.</small></td>
+            <td><span id="waiver_comment">{{view_form.waiver_comment}}</span></td>
           </tr>
           <tr>
             <td>Refined Concept Proposal<br><small>This should match the approved version with the literature review.</small></td>
@@ -160,7 +161,7 @@
       <tbody>
         <tr>
           <td>
-            <strong>Organisational permission</strong><br>
+            <strong>Organisational permission/Signed Waiver</strong><br>
             • Can be an email or formal letter.<br>
             • Include permission to access relevant business documents.<br>
             • If not requested, use the “Request for Permission” template.
@@ -178,7 +179,7 @@
         </tr>
         <tr>
           <td>
-            <strong>Form A – Ethics Application Form</strong><br>
+            <strong>Ethics Application Form</strong><br>
             • Must be completed and co-signed by supervisor.<br>
             • Submit updated version if changes were made since proposal.
           </td>
@@ -216,7 +217,7 @@
   </div>
 
   <div class="section">
-    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
+    <h3>Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
 
