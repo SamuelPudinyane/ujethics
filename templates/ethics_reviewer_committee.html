@@ -37,7 +37,7 @@
      <a href="{{url_for('chair_landing')}}">📋 Dashboard</a>
       <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
       <a href="{{url_for('all_users')}}">👥 User Management</a>
-      <a href="{{url_for('rec_dashboard')}}"> Rec Team Dashboard</a>
+      <a href="{{url_for('rec_dashboard')}}">👥 Rec Team Dashboard</a>
       <a href="{{url_for('logout')}}">🔒 Logout</a>
     </nav>
   </aside>
@@ -50,7 +50,7 @@
 
     <section class="admin-content">
       <h3>Submitted Student Forms</h3>
-    {% if submitted_form_a or submitted_form_b or submitted_form_c %}
+
      {% if submitted_form_a %}
       <!-- Table -->
       <table class="table table-bordered table-striped status-table ">
