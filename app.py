@@ -14,7 +14,7 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from datetime import date
-from sqlalchemy import desc,cast ,Date,func
+from sqlalchemy import desc,cast ,Date,func,union_all
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from sqlalchemy import or_
@@ -2973,6 +2973,38 @@ def ethics_reviewer_committee_form_c():
 
 @app.route('/chair_landing',methods=['POST','GET'])
 def chair_landing():
+    ### get all degrees in all forms to allow filetring
+    # Query FormA + User
+    form_a_query = db_session.query(
+        FormA.degree.label('degree')
+    )
+
+    # Query FormB + User
+    form_b_query = db_session.query(
+        FormB.degree.label('degree')
+    )
+
+    # Query FormC + User
+    form_c_query = db_session.query(
+        FormC.degree.label('degree')
+    )
+
+    # Combine all forms using UNION ALL
+    combined_query = form_a_query.union_all(form_b_query, form_c_query)
+    results = combined_query.all()
+
+    # Execute the query
+    specializations = []
+    for row in results:
+        if isinstance(row.degree, list):
+            specializations.extend(row.degree)
+        elif row.degree:
+            specializations.append(row.degree)
+
+    # Remove duplicates and sort
+    unique_specializations = sorted(set(specializations))
+    print( "degree -------",unique_specializations)
+
     ##form A retrival
     formAs = (db_session.query(FormA)
     .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
@@ -2980,7 +3012,7 @@ def chair_landing():
     .all())
 
     forms_by_yearA = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
-
+    print("forms_by_yearA ------", forms_by_yearA)
     for form in formAs:
         if form.submitted_at:
             year = form.submitted_at.year
@@ -3021,7 +3053,7 @@ def chair_landing():
 
     sorted_yearsC = sorted(forms_by_yearC.keys(), reverse=True)
  
-    return render_template("chair-landing-dashboard.html", forms_by_yearA=forms_by_yearA, sorted_yearsA=sorted_yearsA,sorted_yearsB=sorted_yearsB,forms_by_yearB=forms_by_yearB,sorted_yearsC=sorted_yearsC,forms_by_yearC=forms_by_yearC)
+    return render_template("chair-landing-dashboard.html",results=unique_specializations, forms_by_yearA=forms_by_yearA, sorted_yearsA=sorted_yearsA,sorted_yearsB=sorted_yearsB,forms_by_yearB=forms_by_yearB,sorted_yearsC=sorted_yearsC,forms_by_yearC=forms_by_yearC)
 
 
 @app.route('/review_dashboard', methods=['GET','POST'])
