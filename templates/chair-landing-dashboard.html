@@ -53,6 +53,9 @@
     .year-section { margin-bottom: 2rem; }
     .month-header { font-weight: bold; color: #022169; margin-top: 1rem; }
     .form-list { margin-left: 1rem; list-style-type: square; }
+    .no-data { display: none; text-align: center; font-weight: bold; color: #cc0000; margin-top: 2rem; }
+    .table-container { display: block; }
+    .table-container.hidden { display: none; }
   </style>
 </head>
 <body>
@@ -101,26 +104,29 @@
     <section class="admin-content container-fluid">
       {% for form_type, sorted_years, forms_by_year in [('A', sorted_yearsA, forms_by_yearA), ('B', sorted_yearsB, forms_by_yearB), ('C', sorted_yearsC, forms_by_yearC)] %}
         {% if sorted_years %}
-        <h2 class="mt-5 text-center">Form {{ form_type }}</h2>
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped text-center w-100 align-middle">
-            <thead class="table-dark">
-              <tr><th>Year</th><th>Month</th><th>Folder</th></tr>
-            </thead>
-            <tbody>
-              {% for year in sorted_years %}
-                {% for month, forms in forms_by_year[year]|dictsort %}
-                  {% for form in forms %}
-                  <tr data-degree="{{ form.degree | lower }}">
-                    <td>{{ year }}</td>
-                    <td>{{ month }}</td>
-                    <td><a href="{{ url_for('ethics_reviewer_committee_form_' + form_type|lower, year=year, month=month) }}">📁 View</a></td>
-                  </tr>
+        <div class="table-container">
+          <h2 class="mt-5 text-center">Form {{ form_type }}</h2>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center w-100 align-middle">
+              <thead class="table-dark">
+                <tr><th>Year</th><th>Month</th><th>Folder</th></tr>
+              </thead>
+              <tbody>
+                {% for year in sorted_years %}
+                  {% for month, forms in forms_by_year[year]|dictsort %}
+                    {% for form in forms %}
+                    <tr data-degree="{{ form.degree | lower }}">
+                      <td>{{ year }}</td>
+                      <td>{{ month }}</td>
+                      <td><a href="{{ url_for('ethics_reviewer_committee_form_' + form_type|lower, year=year, month=month) }}">📁 View</a></td>
+                    </tr>
+                    {% endfor %}
                   {% endfor %}
                 {% endfor %}
-              {% endfor %}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+            <p class="no-data">No data</p>
+          </div>
         </div>
         {% endif %}
       {% endfor %}
@@ -139,9 +145,17 @@ function applyFilters() {
   const text = type === "specialization" ? document.getElementById("specializationDropdown").value : document.getElementById("searchInput").value;
   if (!type || !text.trim()) return alert("Please select a filter type and provide a value.");
   const input = text.trim().toLowerCase();
-  document.querySelectorAll("table tbody tr").forEach(row => {
-    const show = type === "year" ? row.cells[0].innerText.toLowerCase().includes(input) : row.dataset.degree.includes(input);
-    row.style.display = show ? "" : "none";
+
+  document.querySelectorAll(".table-container").forEach(container => {
+    let matchCount = 0;
+    const rows = container.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+      const show = type === "year" ? row.cells[0].innerText.toLowerCase().includes(input) : row.dataset.degree.includes(input);
+      row.style.display = show ? "" : "none";
+      if (show) matchCount++;
+    });
+    container.querySelector(".no-data").style.display = matchCount === 0 ? "block" : "none";
+    container.classList.toggle("hidden", matchCount === 0);
   });
 }
 </script>
