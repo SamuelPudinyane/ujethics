@@ -2584,15 +2584,15 @@ def get_form_c(form_id):
 @app.route('/chair_dashboard', methods=['GET','POST'])
 def chair_dashboard():
     submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
+    .filter(FormA.submitted_at != None)
     .distinct(FormA.user_id)
     .all())
     submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
+    .filter(FormB.submitted_at != None)
     .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
+    .filter(FormC.submission_date != None)
     .distinct(FormC.user_id)
     .all())
 
