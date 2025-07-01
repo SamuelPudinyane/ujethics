@@ -3007,7 +3007,7 @@ def chair_landing():
 
     ##form A retrival
     formAs = (db_session.query(FormA)
-    .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)
+    .filter(FormA.submitted_at != None)
     .distinct(FormA.user_id)
     .all())
 
@@ -3023,7 +3023,7 @@ def chair_landing():
 
     ## form B retrival
     formBs = (db_session.query(FormB)
-    .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)
+    .filter(FormB.submitted_at != None)
     .distinct(FormB.user_id)
     .all())
 
@@ -3039,7 +3039,7 @@ def chair_landing():
 
     ## form c retrival
     formCs = (db_session.query(FormC)
-    .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)
+    .filter(FormC.submission_date != None)
     .distinct(FormC.user_id)
     .all())
 
