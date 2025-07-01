@@ -56,7 +56,7 @@
             <td>{{forma.declaration_name}}</td>
             <td>{{forma.student_number}}</td>
             <td><span class="badge status-pending">
-              {% if forma.rec_status='Approved' or forma.rec_status=='Approved with Minor Changes'%}
+            {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}
             Accepted
             {% elif forma.reviwer_status and forma.reviewer_status1 and not forma.rec_status and forma.risk_level=='low'%}
             Accepted

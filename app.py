@@ -2679,7 +2679,7 @@ def reviewer_list():
 
 @app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])
 def chair_form_view(id,form_name):
-
+    user_id=session['id']
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
 
     if form_name=="FORM A":
@@ -2704,6 +2704,9 @@ def chair_form_view(id,form_name):
             review_recommendation=request.form.get('recommendation')
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
+            form_review_comment=request.form.get('status')
+            form_reviewed_by=user_id
+
             if request.form.get('recommendation')=='Ready for submission':
                 if not formA.review_date and not formA.review_date1:
                     
@@ -2724,6 +2727,8 @@ def chair_form_view(id,form_name):
                     formA.review_recommendation=review_recommendation
                     formA.review_supervisor_signature=review_supervisor_signature
                     formA.review_signature_date=review_signature_date
+                    formA.form_review_comment=form_review_comment
+                    formA.form_reviewed_by=form_reviewed_by
                     formA.review_status=True
                 else:
                     formA.review_date1=review_date
@@ -2743,6 +2748,8 @@ def chair_form_view(id,form_name):
                     formA.review_recommendation1=review_recommendation
                     formA.review_supervisor_signature1=review_supervisor_signature
                     formA.review_signature_date1=review_signature_date
+                    formA.form_review_comment1=form_review_comment
+                    formA.form_reviewed_by1=form_reviewed_by
                     formA.review_status1=True
                 
             else:
@@ -2761,13 +2768,15 @@ def chair_form_view(id,form_name):
                 formA.review_proposal_comments=review_proposal_comments
                 formA.review_additional_comments=review_additional_comments
                 formA.review_recommendation=review_recommendation
+                formA.form_review_comment=form_review_comment
+                formA.form_reviewed_by=form_reviewed_by
                 formA.review_status=False
                 formA.rejected_or_accepted=False
                 
             db_session.add(formA)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
-        return render_template("form_a_ethics.html",formA=formA,formReviewers=formReviewers)
+        return render_template("form_a_ethics.html",user_id=user_id,formA=formA,formReviewers=formReviewers)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
@@ -2788,6 +2797,8 @@ def chair_form_view(id,form_name):
             review_recommendation=request.form.get('recommendation')
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
+            form_review_comment=request.form.get('status')
+            form_reviewed_by=user_id
             if request.form.get('recommendation')=='Ready for submission':
                 if not formB.review_date and not formB.review_date1:
                 
@@ -2808,6 +2819,8 @@ def chair_form_view(id,form_name):
                     formB.review_recommendation=review_recommendation
                     formB.review_supervisor_signature=review_supervisor_signature
                     formB.review_signature_date=review_signature_date
+                    formB.form_review_comment=form_review_comment
+                    formB.form_reviewed_by=form_reviewed_by
                     formB.review_status=True
                 else:
                     formB.review_date1=review_date
@@ -2827,6 +2840,8 @@ def chair_form_view(id,form_name):
                     formB.review_recommendation1=review_recommendation
                     formB.review_supervisor_signature1=review_supervisor_signature
                     formB.review_signature_date1=review_signature_date
+                    formB.form_review_comment1=form_review_comment
+                    formB.form_reviewed_by=form_reviewed_by
                     formB.review_status1=True
             else:
                 formB.review_date=review_date
@@ -2844,12 +2859,14 @@ def chair_form_view(id,form_name):
                 formB.review_proposal_comments=review_proposal_comments
                 formB.review_additional_comments=review_additional_comments
                 formB.review_recommendation=review_recommendation
+                formB.form_review_comment=form_review_comment
+                formB.form_reviewed_by=form_reviewed_by
                 formB.review_status=False
                 formB.rejected_or_accepted=False
             db_session.add(formB)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
-        return render_template("form_b_ethics.html",formB=formB,formReviewers=formReviewers)
+        return render_template("form_b_ethics.html",user_id=user_id,formB=formB,formReviewers=formReviewers)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
      
@@ -2873,6 +2890,8 @@ def chair_form_view(id,form_name):
             review_recommendation=request.form.get('recommendation')
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
+            form_review_comment=request.form.get('status')
+            form_reviewed_by=user_id
             if request.form.get('recommendation')=='Ready for submission':
                 
                 if not formC.review_date and not formC.review_date1:
@@ -2894,6 +2913,8 @@ def chair_form_view(id,form_name):
                     formC.review_recommendation=review_recommendation
                     formC.review_supervisor_signature=review_supervisor_signature
                     formC.review_signature_date=review_signature_date
+                    formC.form_review_comment=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
                     formC.review_status=True
                 else:
                     formC.review_date1=review_date
@@ -2913,6 +2934,8 @@ def chair_form_view(id,form_name):
                     formC.review_recommendation1=review_recommendation
                     formC.review_supervisor_signature1=review_supervisor_signature
                     formC.review_signature_date1=review_signature_date
+                    formC.form_review_comment1=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
                     formC.review_status1=True
             else:
                 formC.review_date=review_date
@@ -2930,12 +2953,14 @@ def chair_form_view(id,form_name):
                 formC.review_proposal_comments=review_proposal_comments
                 formC.review_additional_comments=review_additional_comments
                 formC.review_recommendation=review_recommendation
+                formC.form_review_comment=form_review_comment
+                formC.form_reviewed_by=form_reviewed_by
                 formC.review_status=False
                 formC.rejected_or_accepted=False
             db_session.add(formC)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
-        return render_template("form_c_ethics.html",formc=formC,formReviewers=formReviewers)
+        return render_template("form_c_ethics.html",user_id=user_id,formc=formC,formReviewers=formReviewers)
 
 
 
@@ -3003,7 +3028,7 @@ def chair_landing():
 
     # Remove duplicates and sort
     unique_specializations = sorted(set(specializations))
-    print( "degree -------",unique_specializations)
+    
 
     ##form A retrival
     formAs = (db_session.query(FormA)
@@ -3012,7 +3037,7 @@ def chair_landing():
     .all())
 
     forms_by_yearA = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
-    print("forms_by_yearA ------", forms_by_yearA)
+   
     for form in formAs:
         if form.submitted_at:
             year = form.submitted_at.year

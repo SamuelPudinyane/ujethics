@@ -369,6 +369,7 @@
     <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
     <textarea name="additional_comments"></textarea>
   </div>
+    <input type="hidden" name="status" id="status" value="" />
 
   <!-- Radio Buttons -->
   <div class="form-check">
@@ -384,7 +385,8 @@
       ✏️ Revisions required before submission
     </label>
   </div>
-
+  <!-- Accept Fields (initially hidden) -->
+  <div id="acceptFields" style="display: none;">
 
 
     <div class="form-group">
@@ -396,14 +398,17 @@
       <label for="signature_date">Date:</label>
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
-
-    <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committe</button>
+    <div class="submit-row">
+       <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
+        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
+    </div>
+    <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
   </div>
-
-  <!-- Reject Button (initially hidden) -->
-  <div id="rejectBtn" style="display: none;">
-    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Requires Resubmission</button>
+  <div class="submit-row" id="rejectBtn" style="display: none;">
+    <button type="submit" class="btn btn-danger" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
+        <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
   </div>
+  
 
 </form>
   </main>

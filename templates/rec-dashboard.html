@@ -58,7 +58,15 @@
             <td><span class="badge status-high">{{item.risk_rating}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            {% if item.rec_status=='Approved'%}
+             {{item.rec_status}}
+             {% elif item.rec_status=='Approved with Minor Changes' %}
+             {{item.rec_status}}
+             {% else %}
+             {{item.rec_status}}
+             {% endif %}
+
+            </span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -132,7 +140,15 @@
             <td><span class="badge status-high">{{item.risk_level}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            {% if item.rec_status=='Approved'%}
+             {{item.rec_status}}
+             {% elif item.rec_status=='Approved with Minor Changes' %}
+             {{item.rec_status}}
+             {% else %}
+             {{item.rec_status}}
+             {% endif %}
+            </span>
+            </td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}
@@ -193,7 +209,15 @@
               <span class="badge status-high">{{item.risk_level}}</span>
             </td>
             <td>{% if item.review_signature_date%}{{item.review_signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
-            <td><span class="badge status-pending">{{'Pending, Awaiting for Review' if item.review_signature_date and not item.reviewers_status else 'Accepted by Reviewers'}}</span></td>
+            <td><span class="badge status-pending">
+            {% if item.rec_status=='Approved'%}
+             {{item.rec_status}}
+             {% elif item.rec_status=='Approved with Minor Changes' %}
+             {{item.rec_status}}
+             {% else %}
+             {{item.rec_status}}
+             {% endif %}
+            </span></td>
             <td>
               <ul class="doc-link">
                 {% if supervisor_formA_req %}

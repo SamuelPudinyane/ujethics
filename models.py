@@ -433,7 +433,7 @@ class FormA(Base):
     supervisor_recommendation=Column(String(255),nullable=True)
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
-
+    supervisor_form_status=Column(String(255),nullable=True)
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -456,6 +456,10 @@ class FormA(Base):
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
     review_status=Column(Boolean,default=False)
+    form_review_comment=Column(String(255),nullable=True)
+    form_reviewed_by=Column(String,nullable=True)
+
+
 
     review_date1=Column(String(255),nullable=True)
     review_org_permission_status1=Column(String(255),nullable=True)
@@ -475,13 +479,15 @@ class FormA(Base):
     review_supervisor_signature1=Column(String(255),nullable=True)
     review_signature_date1=Column(DateTime,nullable=True)
     review_status1=Column(Boolean,default=False)
+    form_review_comment1=Column(String(255),nullable=True)
+    form_reviewed_by1=Column(String,nullable=True)
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
     rec_date=Column(DateTime,server_default=func.now())
 
     certificate_code=Column(String(255),nullable=True)
-    certificate_issued=Column(DateTime,server_default=func.now(),nullable=True)
+    certificate_issued=Column(DateTime,nullable=True)
     
     certificate_valid_years=Column(String,nullable=True)
     certificate_end_date=Column(DateTime)
@@ -597,6 +603,7 @@ class FormB(Base):
     supervisor_recommendation=Column(String(255),nullable=True)
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
+    supervisor_form_status=Column(String(255),nullable=True)
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -619,6 +626,8 @@ class FormB(Base):
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
     review_status=Column(Boolean,default=False)
+    form_review_comment=Column(String(255),nullable=True)
+    form_reviewed_by=Column(String,nullable=True)
 
     
     review_date1=Column(String(255),nullable=True)
@@ -639,13 +648,16 @@ class FormB(Base):
     review_supervisor_signature1=Column(String(255),nullable=True)
     review_signature_date1=Column(DateTime,nullable=True)
     review_status1=Column(Boolean,default=False)
+    form_review_comment1=Column(String(255),nullable=True)
+    form_reviewed_by1=Column(String,nullable=True)
+
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
     rec_date=Column(DateTime,server_default=func.now(),nullable=True)
 
     certificate_code=Column(String(255),nullable=True)
-    certificate_issued=Column(DateTime,server_default=func.now(),nullable=True)
+    certificate_issued=Column(DateTime,nullable=True)
 
     certificate_valid_years=Column(String,nullable=True)
     certificate_end_date=Column(DateTime)
@@ -772,6 +784,7 @@ class FormC(Base):
     supervisor_recommendation=Column(String(255),nullable=True)
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
+    
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -794,6 +807,8 @@ class FormC(Base):
     review_supervisor_signature=Column(String(255),nullable=True)
     review_signature_date=Column(DateTime,nullable=True)
     review_status=Column(Boolean,default=False)
+    form_review_comment=Column(String(255),nullable=True)
+    form_reviewed_by=Column(String,nullable=True)
 
 
     review_date1=Column(String(255),nullable=True)
@@ -814,13 +829,16 @@ class FormC(Base):
     review_supervisor_signature1=Column(String(255),nullable=True)
     review_signature_date1=Column(DateTime,nullable=True)
     review_status1=Column(Boolean,default=False)
+    form_review_comment1=Column(String(255),nullable=True)
+    form_reviewed_by1=Column(String,nullable=True)
+
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
     rec_date=Column(DateTime,server_default=func.now(),nullable=True)
 
     certificate_code=Column(String(255),nullable=True)
-    certificate_issued=Column(DateTime,server_default=func.now(),nullable=True)
+    certificate_issued=Column(DateTime,nullable=True)
 
     certificate_valid_years=Column(String,nullable=True)
     certificate_end_date=Column(DateTime)

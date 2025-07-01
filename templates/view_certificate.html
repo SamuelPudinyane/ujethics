@@ -119,14 +119,25 @@
             <tr><td class="highlight">Supervisor</td><td>{% if certificate_details.supervisor%}{{certificate_details.supervisor}}{% elif certificate_details.supervisor_name%}{{certificate_details.supervisor_name}}{% endif%}</td></tr>
             <tr><td class="highlight">Staff/Student number</td><td>{{certificate_details.student_number}}</td></tr>
             <tr><td class="highlight">Title of Research</td><td>{% if certificate_details.study_title%}{{certificate_details.study_title}}{% elif certificate_details.project_title %} {{certificate_details.project_title}}{% endif%}</td></tr>
-            <tr><td class="highlight">Academic article/MCom</td><td>MCom</td></tr>
             <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% endif%}</td></tr>
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
-            <tr><td class="highlight">Rating of application</td><td>{{certificate_details.rec_status}}</td></tr>
+            <tr><td class="highlight">Rating of application</td><td>
+            {% if certificate_details.rec_status=='Approved'%}
+            CODE 1
+            {% elif certificate_details.rec_status =='Approved with suggestions without re-submission'%}
+            CODE 2
+            {% elif certificate_details.rec_status=='Referred back'%}
+            CODE 3
+            {% elif certificate_details.rec_status=='Disapproved, cannot re-submit'%}
+            CODE 4
+            {% endif %}
+        </td></tr>
         </table>
-
-        <div class="conditions">
+        <small>CODE 01 - Approved CODE 02 - Approved with suggestions without re-submission 
+            CODE 03 - Referred back CODE 04 - Disapproved, cannot re-submit </small>
+        <br>
+        <div class="conditions mt-5">
             <p>The researcher may now commence with the study provided that:</p>
             <ol>
                 <li>The researcher ensures adherence to POPI Act.</li>
@@ -145,7 +156,7 @@
             <p>Date:<strong> {% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% endif%}</strong></p>
             <p>Name<strong> {{certificate_details.certificate_issuer}}</strong><br>
                Chairperson: JBSREC<br>
-               Email: <strong>{{certificate_details.certificate_email}}</strong></p>
+               Email: <strong><a href="mailto:user@example.com">user@example.com</a></strong></p>
         </div>
     </div>
 

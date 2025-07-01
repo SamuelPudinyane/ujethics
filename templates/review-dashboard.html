@@ -58,14 +58,14 @@
             <td><span class="badge status-pending">
                {% if item.rejected_or_accepted and not item.review_date%}
               Awaiting for review
-              {% elif item.rec_status and item.risk_rating != 'low' %}
+              {% elif item.rec_status and item.risk_rating|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued and item.risk_rating != 'low' and item.review_status and item.review_status1 %}
-              Certificate will be Issued
-              {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
+              {% elif item.certificate_issued and item.risk_rating|lower != 'low' and item.review_status and item.review_status1 %}
+              Submitted to Rec
+              {% elif item.certificate_issued and item.risk_level|lower == 'low' or item.risk_rating |lower =='low' %}
               Certificate Will be Issued
               {% elif item.review_status and not item.review_status1%}
-              Awaiting for second Reviewer
+              Submitted to Ethics Admin
               {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
@@ -143,14 +143,16 @@
             <td><span class="badge status-pending">
                {% if item.rejected_or_accepted and not item.review_date%}
               Awaiting for review
-              {% elif item.rec_status and item.risk_level != 'low' %}
+              {% elif item.rec_status and item.risk_level|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued and item.risk_level != 'low' and item.review_status and item.review_status1 %}
-              Certificate will be Issued
-              {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
+              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
+              Submitted to Rec
+              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
               Certificate Will be Issued
-              {% elif item.review_status and not item.review_status1%}
-              Awaiting for second Reviewer
+              {% elif item.review_status or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and not item.review_status1%}
+              Submitted to Ethics Admin
+              {% elif item.review_status or item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id and not item.review_status1%}
+              Awaiting for Review
               {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
@@ -216,14 +218,16 @@
             <td><span class="badge status-pending">
               {% if item.rejected_or_accepted and not item.review_date%}
               Awaiting for review
-              {% elif item.rec_status and item.risk_level != 'low' %}
+              {% elif item.rec_status and item.risk_level|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued and item.risk_level != 'low' and item.review_status and item.review_status1 %}
-              Certificate will be Issued
-              {% elif item.certificate_issued and item.risk_level == 'low' or item.risk_rating=='low' %}
+              {% elif item.certificate_issued and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
+              Submitted to Rec
+              {% elif item.certificate_issued and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
               Certificate Will be Issued
-              {% elif item.review_status and not item.review_status1%}
-              Awaiting for second Reviewer
+              {% elif item.review_status and item.form_reviewed_by==user_id and not item.review_status1%}
+              Submitted to Ethics Admin
+              {% elif item.review_status or item.form_reviewed_by!=user_id or item.form_reviewed_by1 !=user_id and not item.review_status1%}
+              Awaiting for Review
               {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
