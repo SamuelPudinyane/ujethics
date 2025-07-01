@@ -673,7 +673,7 @@ def submit_form_b_requirements():
                 if prior_clearance_path:
                     form.prior_clearance_path = prior_clearance_path
                 if ethics_evidence_path:
-                    form.ethics_evidence = ethics_evidence_path
+                    form.ethics_evidence_path = ethics_evidence_path
                 if proposal_path:
                     form.proposal_path = proposal_path
               
@@ -687,7 +687,7 @@ def submit_form_b_requirements():
                     has_clearance=has_clearance,
                     prior_clearance_path=prior_clearance_path,
                     has_ethics_evidence=has_ethics_evidence,
-                    ethics_evidence=ethics_evidence_path,
+                    ethics_evidence_path=ethics_evidence_path,
                     proposal_path=proposal_path,
                     
                 )

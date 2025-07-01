@@ -34,7 +34,6 @@
 
     <section class="admin-content">
       <h3>Assigned Submissions</h3>
-      {% if submitted_form_a or submitted_form_b or submitted_form_c%}
     {% if submitted_form_a %}
 
       <table class="status-table">
@@ -67,11 +66,11 @@
               Certificate Will be Issued
               {% elif item.review_status and not item.review_status1%}
               Awaiting for second Reviewer
-              {% if not item.review_status %}
+              {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
-              {% endif %}
+              {% endif %}
             </span></td>
             <td>
               <ul class="doc-link">
@@ -152,11 +151,11 @@
               Certificate Will be Issued
               {% elif item.review_status and not item.review_status1%}
               Awaiting for second Reviewer
-              {% if not item.review_status %}
+              {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
-              {% endif %}
+              {% endif %}
             </span></td>
             <td>
               <ul class="doc-link">
@@ -225,11 +224,11 @@
               Certificate Will be Issued
               {% elif item.review_status and not item.review_status1 %}
               Awaiting for second Reviewer
-              {% if not item.review_status %}
+              {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
-            {% endif %}
+              {% endif %}
             </span></td>
             <td>
               <ul class="doc-link">
@@ -249,9 +248,8 @@
            {% endfor %}
         </tbody>
       </table>
-      {% else %}
-      No Submissions
       {% endif %}
+    
     </section>
 
     <footer class="footer">
