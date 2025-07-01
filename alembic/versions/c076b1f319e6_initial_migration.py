@@ -1,8 +1,8 @@
-"""Fix watched_id type
+"""Initial migration
 
-Revision ID: f611d3b12ead
+Revision ID: c076b1f319e6
 Revises: 
-Create Date: 2025-06-30 11:39:46.248360
+Create Date: 2025-06-30 14:25:25.528759
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'f611d3b12ead'
+revision: str = 'c076b1f319e6'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

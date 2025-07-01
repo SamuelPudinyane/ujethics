@@ -62,8 +62,6 @@
 
     <!-- Main Content -->
     <main class="main-content">
-
-
   <!-- Top Bar -->
   <div class="form-header">
     <button class="approve-btn">💾 Save Draft</button>
@@ -80,7 +78,7 @@
     <form id="formBFinal" action="{{url_for('form_b_sec3')}}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
             {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
@@ -110,7 +108,7 @@
       </div>
 
       <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:</label>
-      <textarea name="data_safekeeping" rows="4"></textarea>
+      <textarea name="data_safekeeping" rows="4" placeholder="Describe the measures for data security and destruction after the study."></textarea>
 
       <hr>
 
@@ -119,7 +117,7 @@
       <div class="question-block">
         <label>The study presents:</label>
         <div class="yes-no">
-          <input type="radio" name="risk_level" value="Minimal Risk" required> Low Risk
+          <input type="radio" name="risk_level" value="Low Risk" required> Low Risk
           <input type="radio" name="risk_level" value="Medium Risk" required> Medium Risk
           <input type="radio" name="risk_level" value="High Risk" required> High Risk
         </div>
@@ -156,11 +154,11 @@
     </form>
   </main>
 
+</div>
+
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>
-
-</div>
 
 <!-- Confirmation Modal 
 <div id="confirmationModal" class="modal-overlay">

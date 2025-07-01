@@ -294,7 +294,7 @@
     <span>{{form.study_title}}</span>
 
     <label>Date of Review:</label>
-    <input type="date" name="review_date">
+    <input type="date" name="review_date" required>
   </div>
 
   <div class="section">
@@ -310,7 +310,7 @@
       <tbody>
         <tr>
           <td>
-            <strong>Organisational permission</strong><br>
+            <strong>Organisational permission/Signed Waiver</strong><br>
             • Can be an email or formal letter.<br>
             • Include permission to access relevant business documents.<br>
             • If not requested, use the “Request for Permission” template.
@@ -320,7 +320,7 @@
         </tr>
         <tr>
           <td>
-            <strong>Signed waiver from business</strong><br>
+            <strong>Impact Assessment</strong><br>
             • Use template provided in “Ethical clearance templates”.
           </td>
           <td><input type="text" name="waiver_status"></td>
@@ -328,7 +328,7 @@
         </tr>
         <tr>
           <td>
-            <strong>Form A – Ethics Application Form</strong><br>
+            <strong>Ethics Application Form</strong><br>
             • Must be completed and co-signed by supervisor.<br>
             • Submit updated version if changes were made since proposal.
           </td>
@@ -366,7 +366,7 @@
   </div>
 
   <div class="section">
-    <h3>Additional Reviewer Comments (Recommendation towards approval)</h3>
+    <h3>Comments</h3>
     <textarea name="additional_comments"></textarea>
   </div>
     <input type="hidden" name="status" id="status" value="" />

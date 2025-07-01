@@ -32,7 +32,7 @@
 <form  action="{{url_for('form_a_sec2')}}" method="post" enctype="multipart/form-data">
         <!-- Error Messages -->
             {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
@@ -285,7 +285,7 @@
 
     <textarea name="apply_comments" rows="3" placeholder="Comments (if any)..."></textarea>
   <div class="mb-3">
-                        <label><strong>Rate your project (Negligible, Low, Medium, High Risk):</strong>
+                        <label><strong>Rate your project (Low, Medium, High Risk):</strong>
                           <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ</span>
                         </label>
                         <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
@@ -295,15 +295,15 @@
                           <option value="high">High</option>
                         </select>
                           <label for="risk_justification">Please justify your risk level (Mandatory)</label>
-                          <input type="text" name="risk_justification" required>
+                          <input type="text" name="risk_justification" required placeholder="Justification for risk level">
                         <div id="risk-fields">
                           
 
                           <label for="benefits_description">For medium and high risk, describe the potential benefits of the study:</label>
-                          <input type="text" name="benefits_description" >
+                          <input type="text" name="benefits_description" placeholder="Describe potential benefits">
 
                           <label for="risk_mitigation">For medium and high risk, describe how potential risks will be mitigated against:</label>
-                          <input type="text" name="risk_mitigation" >
+                          <input type="text" name="risk_mitigation" placeholder="Describe risk mitigation strategies">
                         </div>
                       </div>
 

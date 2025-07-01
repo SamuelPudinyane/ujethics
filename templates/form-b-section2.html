@@ -43,7 +43,7 @@
     <form action="{{ url_for('form_b_sec2') }}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
             {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
@@ -62,10 +62,10 @@
       <h3>2. Details of the Data</h3>
 
       <label>2.1 Nature of the Data</label>
-      <input type="text" name="data_nature" required>
+      <input type="text" name="data_nature" required placeholder="Describe the type of data you will collect (e.g., survey, interviews, secondary data).">
 
       <label>2.2 Origin/Source of Research Data</label>
-      <input type="text" name="data_origin" required>
+      <input type="text" name="data_origin" required placeholder="Specify where the data will come from (e.g., primary collection, existing databases, public records).">
 
       <div class="question-block">
         <label>2.3 Are the sources of the research data in the public domain?</label>
@@ -149,11 +149,12 @@
     </form>
   </main>
 
+
+
+</div>
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
-
-</div>
 <script>
   // Hide alert after 3 seconds
     setTimeout(function() {
