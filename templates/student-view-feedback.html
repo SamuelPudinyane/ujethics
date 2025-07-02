@@ -148,6 +148,12 @@
     <strong type="date" id="review_date">{{view_form.review_date}}</strong>
   </div>
 <br>
+ {% if view_form.review_date %}
+<section class="admin-content">
+<div id="supervisorDeclaration" >
+    
+    
+  {% if view_form.review_form_status %}
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -161,7 +167,7 @@
       <tbody>
         <tr>
           <td>
-            <strong>Organisational permission/Signed Waiver</strong><br>
+            <strong>Organisational permission</strong><br>
             • Can be an email or formal letter.<br>
             • Include permission to access relevant business documents.<br>
             • If not requested, use the “Request for Permission” template.
@@ -217,11 +223,89 @@
   </div>
 
   <div class="section">
-    <h3>Reviewer Comments</h3>
+    <h3>First Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
-
+</div>
+  {% endif %}
+  <br>
+  <hr>
+  {% if view_form.review_form_status1 %}
+  
+  <div class="section">
+    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Submitted (Yes or No)</th>
+          <th>Reviewer Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Organisational permission</strong><br>
+            • Can be an email or formal letter.<br>
+            • Include permission to access relevant business documents.<br>
+            • If not requested, use the “Request for Permission” template.
+          </td>
+          <td><span id="org_permission_status">{{view_form.review_org_permission_status1}}</span></td>
+          <td><span id="org_permission_comments">{{view_form.review_org_permission_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Signed waiver from business</strong><br>
+            • Use template provided in “Ethical clearance templates”.
+          </td>
+          <td><span id="waiver_status">{{view_form.review_waiver_status1}}</span></td>
+          <td><span id="waiver_comments">{{view_form.review_waiver_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Ethics Application Form</strong><br>
+            • Must be completed and co-signed by supervisor.<br>
+            • Submit updated version if changes were made since proposal.
+          </td>
+          <td><span id="form_status">{{view_form.review_form_status1}}</span></td>
+          <td><span id="form_comments">{{view_form.review_form_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Interview Questions and/or Questionnaire</strong><br>
+            • As close to final as possible.<br>
+            • If preliminary, indicate clearly.<br>
+            • Sensitive/invasive questions increase risk – avoid where possible.
+          </td>
+          <td><span id="questions_status">{{view_form.review_questions_status1}}</span></td>
+          <td><span id="questions_comments">{{view_form.review_questions_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Participant Information Sheet & Informed Consent</strong><br>
+            • Use and adapt the provided template for your study.
+          </td>
+          <td><span  id="consent_status">{{view_form.review_consent_status1}}</td>
+          <td><span id="consent_comments">{{view_form.review_consent_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Refined Concept Proposal</strong><br>
+            • Should match the version submitted with Literature Review.
+          </td>
+          <td><span id="proposal_status">{{view_form.review_proposal_status1}}</td>
+          <td><span id="proposal_comments">{{view_form.review_proposal_comments1}}</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <div class="section">
+    <h3>Second Reviewer Comments</h3>
+    <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
+  </div>
+</div>
+  {% endif %}
 {% endif %}
 </section>
     <footer class="footer">

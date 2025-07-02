@@ -125,29 +125,8 @@
     {% if view_form.review_date %}
 <section class="admin-content">
 <div id="supervisorDeclaration" >
-    
-      <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
-
-  <div class="section">
-    <label>Student Name:</label>
-    <strong>{{view_form.declaration_name}}</strong>
-<br>
-    <label>Date of Submission:</label>
-    <strong>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
-<br>
-    <label>Date of Re-submission:</label>
-    <strong>{% if view_form.signature_date%}{{view_form.signature_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
-<br>
-    <label>Supervisor:</label>
-    <strong>{{view_form.supervisor_name}}</strong>
-<br>
-    <label>Title of Research:</label>
-    <strong>{% if view_form.study_title%}{{view_form.study_title}} {% elif view_form.project_title%}{{view_form.project_title}}{% endif%}</strong>
-<br>
-    <label>Date of Review:</label>
-    <strong type="date" id="review_date">{{view_form.review_date}}</strong>
-  </div>
-
+ 
+  {% if view_form.review_form_status %}
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -217,13 +196,92 @@
   </div>
 
   <div class="section">
-    <h3>Reviewer Comments</h3>
+    <h3>First Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
-
+</div>
+  {% endif %}
+  <br>
+  <hr>
+  {% if view_form.review_form_status1 %}
+  
+  <div class="section">
+    <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Submitted (Yes or No)</th>
+          <th>Reviewer Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Organisational permission</strong><br>
+            • Can be an email or formal letter.<br>
+            • Include permission to access relevant business documents.<br>
+            • If not requested, use the “Request for Permission” template.
+          </td>
+          <td><span id="org_permission_status">{{view_form.review_org_permission_status1}}</span></td>
+          <td><span id="org_permission_comments">{{view_form.review_org_permission_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Signed waiver from business</strong><br>
+            • Use template provided in “Ethical clearance templates”.
+          </td>
+          <td><span id="waiver_status">{{view_form.review_waiver_status1}}</span></td>
+          <td><span id="waiver_comments">{{view_form.review_waiver_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Ethics Application Form</strong><br>
+            • Must be completed and co-signed by supervisor.<br>
+            • Submit updated version if changes were made since proposal.
+          </td>
+          <td><span id="form_status">{{view_form.review_form_status1}}</span></td>
+          <td><span id="form_comments">{{view_form.review_form_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Interview Questions and/or Questionnaire</strong><br>
+            • As close to final as possible.<br>
+            • If preliminary, indicate clearly.<br>
+            • Sensitive/invasive questions increase risk – avoid where possible.
+          </td>
+          <td><span id="questions_status">{{view_form.review_questions_status1}}</span></td>
+          <td><span id="questions_comments">{{view_form.review_questions_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Participant Information Sheet & Informed Consent</strong><br>
+            • Use and adapt the provided template for your study.
+          </td>
+          <td><span  id="consent_status">{{view_form.review_consent_status1}}</td>
+          <td><span id="consent_comments">{{view_form.review_consent_comments1}}</span></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Refined Concept Proposal</strong><br>
+            • Should match the version submitted with Literature Review.
+          </td>
+          <td><span id="proposal_status">{{view_form.review_proposal_status1}}</td>
+          <td><span id="proposal_comments">{{view_form.review_proposal_comments1}}</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <div class="section">
+    <h3>Second Reviewer Comments</h3>
+    <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
+  </div>
+</div>
+  {% endif %}
 {% endif %}
 </section>
+{% endif %}
     <footer class="footer">
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>

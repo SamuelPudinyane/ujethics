@@ -148,6 +148,11 @@
     <strong type="date" id="review_date">{{view_form.review_date}}</strong>
   </div>
 <br>
+  {% if view_form.review_date %}
+<section class="admin-content">
+<div id="supervisorDeclaration" >
+    
+  {% if view_form.review_form_status %}
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -155,13 +160,13 @@
         <tr>
           <th>Document</th>
           <th>Submitted (Yes or No)</th>
-          <th>First Reviewer Comments</th>
+          <th>Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            <strong>Organisational permission/Signed Waiver</strong><br>
+            <strong>Organisational permission</strong><br>
             • Can be an email or formal letter.<br>
             • Include permission to access relevant business documents.<br>
             • If not requested, use the “Request for Permission” template.
@@ -171,7 +176,7 @@
         </tr>
         <tr>
           <td>
-            <strong>Impact Assessment Form</strong><br>
+            <strong>Signed waiver from business</strong><br>
             • Use template provided in “Ethical clearance templates”.
           </td>
           <td><span id="waiver_status">{{view_form.review_waiver_status}}</span></td>
@@ -217,12 +222,15 @@
   </div>
 
   <div class="section">
-    <h3>Supervisor Comments</h3>
+    <h3>First Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
-
-
-{% if view_form_review_status1%}
+</div>
+  {% endif %}
+  <br>
+  <hr>
+  {% if view_form.review_form_status1 %}
+  
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -230,13 +238,13 @@
         <tr>
           <th>Document</th>
           <th>Submitted (Yes or No)</th>
-          <th>Second Reviewer Comments</th>
+          <th>Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            <strong>Organisational permission/Signed Waiver</strong><br>
+            <strong>Organisational permission</strong><br>
             • Can be an email or formal letter.<br>
             • Include permission to access relevant business documents.<br>
             • If not requested, use the “Request for Permission” template.
@@ -246,7 +254,7 @@
         </tr>
         <tr>
           <td>
-            <strong>Impact Assessment Form</strong><br>
+            <strong>Signed waiver from business</strong><br>
             • Use template provided in “Ethical clearance templates”.
           </td>
           <td><span id="waiver_status">{{view_form.review_waiver_status1}}</span></td>
@@ -292,13 +300,14 @@
   </div>
 
   <div class="section">
-    <h3>Ethics Comments</h3>
+    <h3>Second Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
   </div>
-{% endif %}
-  </div>
+</div>
+  {% endif %}
 {% endif %}
 </section>
+{% endif %}
     <footer class="footer">
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>
