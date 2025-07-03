@@ -361,18 +361,18 @@
     <input type="hidden" name="status" id="status" value="" />
 
     <div class="submit-row">
-        <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
-        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
-        <button type="submit" class="btn btn-danger" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
-        <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
+        <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
+        <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
+        <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
     </div>
 </form>
+
+</div>
 
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>
-
-</div>
 
 <!-- SCRIPT: Confirmation Modal Logic -->
 <script>

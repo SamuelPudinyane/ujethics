@@ -105,7 +105,7 @@
                   This is the previous version
                   {% endif %}
             </span></td>
-            <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}} {% endif%}</td>
+            <td>{% if form.risk_level%}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}}{% endif%}</td>
             <td><a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" >Review</a></td>
           </tr>
           

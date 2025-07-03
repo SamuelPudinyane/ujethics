@@ -160,26 +160,63 @@
   }
   
   /* Buttons */
-  button, .revise-btn, .approve-btn {
-    background-color: var(--accent);
-    color: var(--white);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 1.5rem;
-  }
-  button:hover, .revise-btn:hover, .approve-btn:hover {
-    background-color: black;
-    color: var(--white);
-  }
-  .revise-btn {
-    text-decoration: none;
-    background-color: var(--jbs-grey);
-    margin-right: 1rem;
-  }
+.submit-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Base Button Style */
+.submit-row button {
+  padding: 0.7rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Approve */
+.btn-approve {
+  background-color: #198754; /* Bootstrap green */
+}
+
+.btn-approve:hover {
+  background-color: #146c43;
+}
+
+/* Minor Changes */
+.btn-minor {
+  background-color: #caa228; /* Bootstrap yellow */
+  color: #212529;
+}
+
+.btn-minor:hover {
+  background-color: #b79b48;
+  color: white;
+}
+
+/* Resubmission */
+.btn-resubmit {
+  background-color: #0d6efd; /* Bootstrap blue */
+}
+
+.btn-resubmit:hover {
+  background-color: #0b5ed7;
+}
+
+/* Reject */
+.btn-reject {
+  background-color: #dc3545; /* Bootstrap red */
+}
+
+.btn-reject:hover {
+  background-color: #bb2d3b;
+}
+
   
   /* Footer */
   .footer {
