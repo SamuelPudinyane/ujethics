@@ -30,15 +30,30 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="sidebar-logo">
-      <h3>Ethics Admin Panel</h3>
+      <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
+      <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
-     <a href="{{url_for('chair_landing')}}">📋 Dashboard</a>
-      <a href="{{url_for('reviewer_list')}}">👤 Reviewer List</a>
-      <a href="{{url_for('all_users')}}">👥 User Management</a>
-      <a href="{{url_for('rec_dashboard')}}">👥 Rec Team Dashboard</a>
-      <a href="{{url_for('logout')}}">🔒 Logout</a>
+      <a href="{{url_for('chair_landing')}}" class="sidebar-link">
+        <i class="fas fa-clipboard-list"></i> Dashboard
+      </a>
+
+      <a href="{{url_for('reviewer_list')}}" class="sidebar-link">
+        <i class="fas fa-user"></i> Reviewer List
+      </a>
+
+      <a href="{{url_for('all_users')}}" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> User Management
+      </a>
+
+      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
+        <i class="fas fa-users"></i> Rec Team Dashboard
+      </a>
+
+      <a href="{{url_for('logout')}}" class="sidebar-link">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+
     </nav>
   </aside>
 
@@ -292,12 +307,14 @@
       {% endif %}
     </section>
 
-    <footer class="footer">
-      <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
-    </footer>
+
   </main>
 
 </div>
+
+    <!-- <footer class="footer">
+      <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
+    </footer> -->
 
 </body>
 </html>

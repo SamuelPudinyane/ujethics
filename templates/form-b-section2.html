@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="css/form_a.css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}">
 </head>
+<style>
+  #personalInfoComment textarea {
+  width: 100%;
+}
+
+</style>
 <body>
 
 <div class="form-wrapper">
@@ -70,14 +76,14 @@
       <div class="question-block">
         <label>2.3 Are the sources of the research data in the public domain?</label>
         <div class="yes-no">
-          <input type="radio" name="data_public" value="Yes" required> Yes
-          <input type="radio" name="data_public" value="No" required> No
+          <input type="radio" name="data_public" value="Yes" required onchange="togglePublicData()"> Yes
+          <input type="radio" name="data_public" value="No" required onchange="togglePublicData()"> No
         </div>
       </div>
 
       <!-- Shown only if data_public = No -->
         <div id="public_data_fields" style="display: none;">
-          <label>2.3.1Provide evidence or explanation (if applicable)</label>
+          <label>2.3.1 Provide evidence or explanation (if applicable)</label>
           <textarea name="public_evidence" rows="3" placeholder="Explain why the data is not publicly accessible."></textarea>
 
           <label>2.3.2 If data is not public, what are the access conditions?</label>
@@ -87,11 +93,15 @@
       <div class="question-block">
         <label>2.4 Does the database contain personal information/identifiers?</label>
         <div class="yes-no">
-          <input type="radio" name="personal_info" value="Yes" required> Yes
-          <input type="radio" name="personal_info" value="No" required> No
+          <input type="radio" name="personal_info" value="Yes" required onchange="togglePersonalInfo()"> Yes
+          <input type="radio" name="personal_info" value="No" required onchange="togglePersonalInfo()"> No
         </div>
-        <textarea name="personal_info_comment" rows="3" placeholder="If yes, please specify what kind of personal information/identifiers to be collected"></textarea>
-      </div>
+
+        <div id="personalInfoComment" style="display: none; margin-top: 1rem;">
+          <textarea name="personal_info_comment" rows="3"
+            placeholder="If yes, please specify what kind of personal information/identifiers to be collected"></textarea>
+        </div>
+
 
       <div class="question-block">
         <label>2.5 If yes, has the data been anonymized?</label>
@@ -108,8 +118,8 @@
       <div class="question-block">
         <label>2.6 Private database: does it contain confidential private company data requiring permission?</label>
         <div class="yes-no">
-          <input type="radio" name="private_permission" value="Yes" nchange="togglePrivatePermission()" required> Yes
-          <input type="radio" name="private_permission" value="No" nchange="togglePrivatePermission()" required> No
+          <input type="radio" name="private_permission" value="Yes" onchange="togglePrivatePermission()" required> Yes
+          <input type="radio" name="private_permission" value="No" onchange="togglePrivatePermission()" required> No
         </div>
       </div>
 
@@ -155,6 +165,7 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
+
 <script>
   // Hide alert after 3 seconds
     setTimeout(function() {
@@ -165,14 +176,16 @@
         alert.style.display = 'none'; // or use .remove() if you prefer
       }
     }, 3000); // 3000ms = 3 seconds
+
+  function togglePersonalInfo() {
+    const yesSelected = document.querySelector('input[name="personal_info"]:checked').value === "Yes";
+    const commentBox = document.getElementById("personalInfoComment");
+    commentBox.style.display = yesSelected ? "block" : "none";
+  }
+
 function togglePublicData() {
     const value = document.querySelector('input[name="data_public"]:checked').value;
     document.getElementById('public_data_fields').style.display = value === "No" ? 'block' : 'none';
-  }
-
-  function togglePersonalInfo() {
-    const value = document.querySelector('input[name="personal_info"]:checked').value;
-    document.getElementById('personal_info_box').style.display = value === "Yes" ? 'block' : 'none';
   }
 
   function toggleAnonymization() {
@@ -185,6 +198,6 @@ function togglePublicData() {
     document.getElementById('permission_details_box').style.display = value === "Yes" ? 'block' : 'none';
   }
 </script>
-</script>
+
 </body>
 </html>

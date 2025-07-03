@@ -46,7 +46,7 @@
   .main-content,
   .auth-container,
   .container {
-    max-width: 1100px;
+    max-width: 1500px;
     margin: 2rem auto;
     background: white;
     padding: 2.5rem;
@@ -247,8 +247,7 @@
   .btn-logout {
     display: inline-block;
     padding: 12px 24px;
-    background-color: #CE0F46;
-    /* JBS Deep Pink */
+    background-color: #e85f1b;
     color: white;
     text-decoration: none;
     font-weight: bold;
@@ -396,15 +395,7 @@
   .revise-btn:hover {
     background-color: #a5adec;
   }
-  
-  .btn-logout {
-    background-color: #CE0F46;
-    color: white;
-  }
-  
-  .btn-logout:hover {
-    background-color: #a50c38;
-  }
+
   
   /* Responsive Adjustments */
   @media (max-width: 600px) {

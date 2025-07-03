@@ -100,7 +100,7 @@
   
   /* Main content styling */
   .main-content {
-    max-width: 900px;
+    max-width: 1500px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: var(--white);
@@ -172,7 +172,7 @@
     margin-top: 1.5rem;
   }
   button:hover, .revise-btn:hover, .approve-btn:hover {
-    background-color: var(--jbs-purple);
+    background-color: black;
     color: var(--white);
   }
   .revise-btn {
@@ -204,8 +204,7 @@
     .btn-logout {
       display: inline-block;
       padding: 12px 24px;
-      background-color: #CE0F46;
-      /* JBS Deep Pink */
+      background-color: #e85f1b;
       color: white;
       text-decoration: none;
       font-weight: bold;
