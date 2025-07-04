@@ -69,7 +69,7 @@
             
             {% endif %}
 <br>
-{% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' %}
+{% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' or forma.certificate_issued %}
 <a href="{{url_for('view_certificate',id=forma.form_id)}}">view Certificate</a>
 {% elif forma.risk_rating=='low' and forma.certificate_issued %}
 <a href="{{url_for('view_certificate',id=forma.form_id)}}">view Certificate</a>
@@ -154,7 +154,7 @@
               Rejected
               {% endif %}
         <br>
-{% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}
+{% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes' or formb.certificate_issued%}
 <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
 {% elif formb.risk_level=='low' and formb.certificate_issued %}
 <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
@@ -226,7 +226,7 @@ Rejected
 {% endif %}
 
 <br>
-{% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}
+{% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes' or formc.certificate_issued%}
 <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
 {% elif formc.risk_level=='low' and formc.certificate_issued %}
 <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
