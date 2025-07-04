@@ -45,11 +45,7 @@
       border-radius: 5px;
       cursor: pointer;
     }
-      body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      background-color: #f8f8f8;
-    }
+
     h1 {
       text-align: center;
       color: #022169;
@@ -99,6 +95,8 @@
 </head>
 
 <body>
+
+  <div class="form-wrapper">
 
   <!-- Navbar -->
   <header class="navbar">
@@ -925,6 +923,8 @@
     <input type="date" name="review_date" required>
   </div>
 
+  <br>
+
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -1027,19 +1027,21 @@
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
     <div class="submit-row">
-       <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
-        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
+       <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
     </div>
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
   </div>
   <div class="submit-row" id="rejectBtn" style="display: none;">
-    <button type="submit" class="btn btn-danger" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
-        <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
+    <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
+    <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
   </div>
   
-      </main>
+</main>
 
-     </form>
+</form>
+
+</div>
   <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>

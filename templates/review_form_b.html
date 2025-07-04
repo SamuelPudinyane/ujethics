@@ -297,6 +297,8 @@
     <input type="date" name="review_date" required>
   </div>
 
+  <br>
+
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -318,14 +320,14 @@
           <td><input type="text" name="org_permission_status"></td>
           <td><textarea name="org_permission_comments"></textarea></td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>
             <strong>Impact Assessment</strong><br>
             • Use template provided in “Ethical clearance templates”.
           </td>
           <td><input type="text" name="waiver_status"></td>
           <td><textarea name="waiver_comments"></textarea></td>
-        </tr>
+        </tr> -->
         <tr>
           <td>
             <strong>Ethics Application Form</strong><br>
@@ -335,7 +337,7 @@
           <td><input type="text" name="form_status"></td>
           <td><textarea name="form_comments"></textarea></td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>
             <strong>Interview Questions and/or Questionnaire</strong><br>
             • As close to final as possible.<br>
@@ -352,7 +354,7 @@
           </td>
           <td><input type="text" name="consent_status"></td>
           <td><textarea name="consent_comments"></textarea></td>
-        </tr>
+        </tr> -->
         <tr>
           <td>
             <strong>Refined Concept Proposal</strong><br>
@@ -399,14 +401,14 @@
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
     <div class="submit-row">
-       <button type="submit" class="approve-btn" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
-        <button type="submit" class="revise-btn" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
+       <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
     </div>
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
   </div>
   <div class="submit-row" id="rejectBtn" style="display: none;">
-    <button type="submit" class="btn btn-danger" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
-        <button type="submit" class="reject-btn" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
+    <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
+    <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
   </div>
   
 

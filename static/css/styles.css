@@ -24,7 +24,7 @@ body {
   max-width: 1100px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* gap: 50px; */
 }
 
@@ -44,7 +44,7 @@ body {
 .main-content,
 .auth-container,
 .container {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 1rem auto;
   background: white;
   padding: 2rem;

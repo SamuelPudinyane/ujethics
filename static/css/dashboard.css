@@ -1,4 +1,15 @@
-/* === BASE RESET === */
+:root {
+  --jbs-navy: #000000;
+  --jbs-teal: #022169;
+  --jbs-purple: #4F2365;
+  --jbs-yellow: #FFCB05;
+  --jbs-grey: #939598;
+  --jbs-lightgrey: #DCDDDE;
+  --white: #ffffff;
+  --black: #000000;
+  --accent: #F26522;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -137,7 +148,7 @@ button:disabled {
 
 /* === FOOTER === */
 .footer {
-  background-color: #939598;
+  background-color: var(--jbs-lightgrey);
   color: white;
   text-align: center;
   padding: 1rem;
@@ -245,7 +256,7 @@ button:disabled {
 .btn-logout {
   display: inline-block;
   padding: 12px 24px;
-  background-color: #CE0F46;
+  background-color: #F26522;
   /* JBS Deep Pink */
   color: white;
   text-decoration: none;

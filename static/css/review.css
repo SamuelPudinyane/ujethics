@@ -1,3 +1,15 @@
+:root {
+  --jbs-navy: #000000;
+  --jbs-teal: #022169;
+  --jbs-purple: #4F2365;
+  --jbs-yellow: #FFCB05;
+  --jbs-grey: #939598;
+  --jbs-lightgrey: #DCDDDE;
+  --white: #ffffff;
+  --black: #000000;
+  --accent: #F26522;
+}
+
 /* Buttons in Admin Review */
 .view-btn, .approve-btn, .revise-btn, .reject-btn {
     padding: 8px 18px;
@@ -49,7 +61,7 @@
  /* Sidebar */
 .sidebar {
     width: 250px;
-    background-color: #022169; /* JBS Navy */
+    background-color: var(--jbs-grey);
     color: white;
     padding: 1.5rem 1rem;
     display: flex;
@@ -103,7 +115,7 @@
   /* Sidebar styles */
   .sidebar {
     width: 250px;
-    background-color: #022169;
+    background-color: 
     color: white;
     padding: 1.5rem 1rem;
     display: flex;
@@ -186,6 +198,38 @@
   .filter-row button:hover {
     background-color: #00B6B5;
   }
+
+  .sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-link i {
+  color: white;
+  font-size: 1.1rem;
+}
+
+/* Hover effect */
+.sidebar-link:hover {
+  background-color: #022169;
+  border: 1px solid #ffffff30;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--jbs-grey);
+  color: var(--white);
+}
+
   
   
   

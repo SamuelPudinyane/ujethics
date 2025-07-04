@@ -194,11 +194,10 @@
     <textarea name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
 
     <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?</label><br>
-    <input type="radio" name="intervention" value="No"> No
-    <input type="radio" name="intervention" value="Yes"> Yes<br>
-    <div id="intervention_details_box" style="display:none;">
-            <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea>
-          </div>
+    <input type="radio" name="intervention" value="No" onchange="toggleIntervention()"> No
+    <input type="radio" name="intervention" value="Yes" onchange="toggleIntervention()"> Yes<br>
+    <div id="intervention_details_box" style="display:none; margin-top: 1rem;"><textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea></div>
+
     <label>5.4.5 Will sensitive data be used or vulnerable populations be questioned?</label>
     <textarea name="sensitive_data" rows="2" placeholder="If yes, explain how you will handle sensitive data or vulnerable populations"></textarea>
 
@@ -307,6 +306,12 @@
       }
     }
     box.style.display = "none";
+  }
+
+  function toggleIntervention() {
+    const selected = document.querySelector('input[name="intervention"]:checked').value;
+    const box = document.getElementById("intervention_details_box");
+    box.style.display = selected === "Yes" ? "block" : "none";
   }
 
     function handleSecondaryData() {

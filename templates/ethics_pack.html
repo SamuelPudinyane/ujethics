@@ -8,13 +8,13 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <style>
-.template-grid {
-  display: flex;
-  flex-wrap: nowrap; /* Prevent wrapping to next line */
-  gap: 1.5rem;
-  overflow-x: auto; /* Allows horizontal scroll if content overflows */
-  margin-top: 2rem;
-}
+    .template-grid {
+      display: flex;
+      flex-wrap: nowrap; /* Prevent wrapping to next line */
+      gap: 1.5rem;
+      overflow-x: auto; /* Allows horizontal scroll if content overflows */
+      margin-top: 2rem;
+    }
 
     .template-card {
       background-color: var(--white);
@@ -52,7 +52,9 @@
 </head>
 <body>
 
-  <!-- Navbar -->
+<div class="form-wrapper">
+
+    <!-- Navbar -->
   <header class="navbar">
     <div class="nav-content">
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
@@ -131,29 +133,10 @@
 
   </div>
 
-  <!-- <div id="templateC" class="template-grid" style="display:none;">
-    <h3>Templates for Form C</h3>
-    <br>
-    <div class="template-card">
-      <h4>Exemption Request Template</h4>
-      <a href="docs/Exemption_Request_Template.docx" download>⬇ Download</a>
-    </div>
-  </div> -->
-
-
     <a href="{{url_for('student_dashboard')}}" class="approve-btn next-btn">Proceed to Dashboard ➔</a>
-    <br>
-    <br>
-    <br>
+
   </main>
-
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
+</div>
 
   <!-- Footer -->
   <footer class="footer">
