@@ -447,6 +447,7 @@ def submit_form_a_requirements():
 
             if not user_id:
                 return jsonify({'error': 'Unauthorized'}), 401
+            
             formB = db_session.query(FormB).filter_by(user_id=user_id).first()
             if formB:
                 message="You are not permited to fill this form"

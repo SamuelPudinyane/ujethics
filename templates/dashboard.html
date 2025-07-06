@@ -114,7 +114,7 @@
                   {% endif %}
                 </span>
                 <br>
-                {% if formA.review_status formA.certificate_issued %}<a href="{{url_for('view_certificate',id=formA.form_id)}}"> View Certificate</a>{% endif %}
+                {% if formA.review_status and formA.certificate_issued %}<a href="{{url_for('view_certificate',id=formA.form_id)}}"> View Certificate</a>{% endif %}
                 <br>
                 <strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
                 <br>
