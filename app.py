@@ -482,8 +482,39 @@ def submit_form_a_requirements():
             if not all([research_tools_path, proposal_path, impact_assessment_path]):
                 return jsonify({'error': 'Missing required files'}), 400
                 
-            
-            form = FormARequirements(
+            # Check if form exists for this user
+            form = db_session.query(FormARequirements).filter(FormARequirements.id).first()
+         
+            if form:
+                # Update existing form
+                form.needs_permission = needs_permission
+                form.has_clearance = has_clearance
+                form.company_requires_jbs = company_requires_jbs
+                form.prior_clearance1=prior_clearance1
+                form.need_jbs_clearance1=need_jbs_clearance1
+                form.form_type="FORM A"
+                if permission_letter_path:
+                    form.permission_letter = permission_letter_path
+                if prior_clearance_path:
+                    form.prior_clearance = prior_clearance_path
+                if research_tools_path:
+                    form.research_tools_path = research_tools_path
+                if prior_clearance:
+                    form.prior_clearance=prior_clearance
+                if prior_clearance1:
+                    form.prior_clearance1=prior_clearance1
+                if need_jbs_clearance:
+                    form.need_jbs_clearance=need_jbs_clearance
+                if need_jbs_clearance1:
+                    form.need_jbs_clearance1=need_jbs_clearance1
+                if proposal_path:
+                    form.proposal_path = proposal_path
+                if impact_assessment_path:
+                    form.impact_assessment_path = impact_assessment_path
+                
+            else:
+                # Create new record
+                form = FormARequirements(
                     user_id=user_id,
                     form_type="FORM A",
                     needs_permission=needs_permission,
@@ -552,8 +583,21 @@ def submit_form_c_requirements():
             if not all([proposal_path]):
                 return jsonify({'error': 'Missing required files'}), 400
                 
-            # Create new record
-            form = FormARequirements(
+            # Check if form exists for this user
+            form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
+         
+            if form:
+                # Update existing form
+                form.user_id=user_id
+                form.form_type="FORM C"
+                form.updated_at=datetime.now()
+                
+                if proposal_path:
+                    form.files = proposal_path
+                
+            else:
+                # Create new record
+                form = FormARequirements(
                     user_id=user_id,
                     form_type="FORM C",
                     updated_at=datetime.now(),
@@ -615,9 +659,27 @@ def submit_form_b_requirements():
             proposal_path = save_file('proposal_path')
             
                 
-            
-            # Create new record
-            form = FormARequirements(
+            # Check if form exists for this user
+            form = db_session.query(FormARequirements).filter_by(user_id=user_id).first()
+         
+            if form:
+                # Update existing form
+                form.needs_permission = needs_permission
+                form.has_clearance = has_clearance
+                form.has_ethics_evidence=has_ethics_evidence
+                form.form_type="FORM B"
+                if permission_letter_path:
+                    form.permission_letter = permission_letter_path
+                if prior_clearance_path:
+                    form.prior_clearance_path = prior_clearance_path
+                if ethics_evidence_path:
+                    form.ethics_evidence_path = ethics_evidence_path
+                if proposal_path:
+                    form.proposal_path = proposal_path
+              
+            else:
+                # Create new record
+                form = FormARequirements(
                     user_id=user_id,
                     form_type="FORM B",
                     needs_permission=needs_permission,
@@ -680,13 +742,22 @@ def edit_form_a(form_id):
 # ---------------- Section 1 ------------------
 @app.route('/form_a_sec1', methods=['GET', 'POST'])
 def form_a_sec1 ():
+    
     sup_list = getSupervisorsList()
     if request.method == 'POST':
         # Verify user is logged in
         user_id = session.get('id')
         if not user_id:
             return jsonify({'error': 'Unauthorized'}), 401
-
+        formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+        if formB:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
+        
+        formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if formC:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
         # Get form data
         form_data = request.form
         user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -754,6 +825,16 @@ def form_a_sec2 ():
     if request.method == 'POST':
         user_id = session.get('id')
 
+        formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+        if formB:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
+        
+        formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if formC:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
+        
         # Fetch the existing record using user_id
         form = db_session.query(FormA).filter_by(user_id=user_id).first()
         if not form:
@@ -1318,10 +1399,20 @@ def form_b_upload():
 @app.route('/form_b_sec1', methods=['GET','POST'])
 def form_b_sec1():
     if request.method == 'POST':
-        print("im here ")
+        
         user_id=session.get('id')
         if not user_id:
             return jsonify({'error':'unauthorized'}),401
+        
+        formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if formA:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
+        
+        formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+        if formC:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
         
         form_data=request.form
         user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -1365,7 +1456,17 @@ def form_b_sec2():
     user_id = session.get('id')
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
-
+    
+    formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+    if formA:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+        
+    formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+    if formC:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+    
     if request.method == 'POST':
         form_data = request.form
 
@@ -1463,6 +1564,18 @@ def form_c_sec1():
         user_id=session.get('id')
         if not user_id:
             return jsonify({'error': 'Unauthorized'}), 401
+        
+        formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+        if formA:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
+        
+        formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+        if formB:
+            message="You are not permited to fill this form"
+            return render_template("dashboard.html",messages=[message])
+
+
         user = db_session.query(User).filter(User.user_id == user_id).first()
         supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
         form = db_session.query(FormC).filter_by(user_id=user_id).first()
@@ -1800,6 +1913,18 @@ def form_a_answers():
 @app.route('/student_edit_forma', methods=['GET','POST'])
 def student_edit_forma():
     user_id=session.get('id')
+
+    formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+    if formB:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+        
+    formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+    if formC:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+    
+
     public_data_description=""
     private_permission_file=""
     if not user_id:
@@ -2249,6 +2374,17 @@ def student_edit_forma():
 def student_edit_formb():
     user_id=session.get('id')
     
+    formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+    if formA:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+        
+    formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+    if formC:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+    
+
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
     user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -2321,6 +2457,18 @@ def student_edit_formc():
     
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
+
+    formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+    if formA:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+        
+    formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+    if formB:
+        message="You are not permited to fill this form"
+        return render_template("dashboard.html",messages=[message])
+    
+
     user = db_session.query(User).filter(User.user_id == user_id).first()
     supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
     form = db_session.query(FormC).filter_by(user_id=user_id).first()
