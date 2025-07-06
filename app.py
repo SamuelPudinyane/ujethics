@@ -444,8 +444,18 @@ def submit_form_a_requirements():
 
             # Get user ID from session (adjust based on your auth system)
             user_id = session.get('id')
+
             if not user_id:
                 return jsonify({'error': 'Unauthorized'}), 401
+            formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+            if formB:
+                message="You are not permited to fill this form"
+                return render_template("dashboard.html",messages=[message])
+                
+            formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+            if formC:
+                message="You are not permited to fill this form"
+                return render_template("dashboard.html",messages=[message])
             
             # Create uploads directory if it doesn't exist
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -556,6 +566,16 @@ def submit_form_c_requirements():
             if not user_id:
                 return jsonify({'error': 'Unauthorized'}), 401
             
+            formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+            if formB:
+                message="You are not permited to fill this form"
+                return render_template("dashboard.html",messages=[message])
+                
+            formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+            if formA:
+                message="You are not permited to fill this form"
+                return render_template("dashboard.html",messages=[message])
+
             # Create uploads directory if it doesn't exist
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
             
@@ -631,6 +651,16 @@ def submit_form_b_requirements():
             user_id = session.get('id')
             if not user_id:
                 return jsonify({'error': 'Unauthorized'}), 401
+            
+            formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+            if formA:
+                message="You are not permited to fill this form"
+                return render_template("dashboard.html",messages=[message])
+                
+            formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+            if formC:
+                message="You are not permited to fill this form"
+                return render_template("dashboard.html",messages=[message])
             
             # Create uploads directory if it doesn't exist
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -1336,10 +1366,20 @@ def get_form_b(form_id):
 def form_b_upload():
     UPLOAD_FOLDER = 'static/uploads/form_b'
     user_id = session.get('id')
- 
+
     if not user_id:
         return "Unauthorized", 401
     
+    formA = db_session.query(FormA).filter_by(user_id=user_id).first()
+    if formA:
+        message="You are not permited to fill this form"
+        return render_template("form-a-section2.html",messages=[message])
+        
+    formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+    if formC:
+        message="You are not permited to fill this form"
+        return render_template("form-a-section2.html",messages=[message])
+
     if request.method=='POST':
         form = db_session.query(FormB).filter_by(user_id=user_id).first()
         # Get form data
