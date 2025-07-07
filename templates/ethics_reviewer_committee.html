@@ -97,9 +97,9 @@
             <span class="status-pill approved">
               {% if forma.rejected_or_accepted and not forma.review_date%}
               Awaiting for review
-              {% elif forma.rec_status and forma.risk_rating != 'low' %}
+              {% elif forma.rec_status and forma.risk_rating|lower != 'low' %}
               {{forma.rec_status}}
-              {% elif forma.risk_rating=='low' and forma.review_status and forma.review_status1 and not forma.certificate_email %}
+              {% elif forma.risk_rating|lower =='low' and forma.review_status and forma.review_status1 and not forma.certificate_email %}
               Issue Certificate
               {% elif forma.certificate_email%}
               Certificate issued
@@ -110,7 +110,7 @@
             <br>
             {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' %}
             <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
-            {% elif forma.risk_rating=='low' and forma.review_status and forma.review_status1 and not forma.certificate_email %}
+            {% elif forma.risk_rating|lower =='low' and forma.review_status and forma.review_status1 and not forma.certificate_email %}
             <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
             {% elif forma.certificate_email %}
             <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
@@ -185,9 +185,9 @@
             <td><span class="status-pill approved">
                {% if formb.rejected_or_accepted and not formb.review_date%}
               Awaiting for review
-              {% elif formb.rec_status and formb.risk_rating != 'low' %}
+              {% elif formb.rec_status and formb.risk_level|lower != 'low' %}
               {{formb.rec_status}}
-              {% elif formb.risk_rating=='low' and formb.review_status and formb.review_status1 and not formb.certificate_email %}
+              {% elif formb.risk_level|lower =='low' and formb.review_status and formb.review_status1 and not formb.certificate_email %}
               Issue Certificate
               {% elif formb.certificate_email%}
               Certificate issued
@@ -198,7 +198,7 @@
             <br>
             {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}
             <a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>
-            {% elif formb.risk_rating=='low' and formb.review_status and formb.review_status1 and not formb.certificate_email%}
+            {% elif formb.risk_level|lower =='low' and formb.review_status and formb.review_status1 and not formb.certificate_email%}
             <a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>
             {% elif formb.certificate_email %}
             <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
@@ -272,9 +272,9 @@
             <td><span class="status-pill approved">
        {% if formc.rejected_or_accepted and not formc.review_date%}
               Awaiting for review
-              {% elif formc.rec_status and formc.risk_rating != 'low' %}
+              {% elif formc.rec_status and formc.risk_level|lower != 'low' %}
               {{formc.rec_status}}
-              {% elif formc.risk_rating=='low' and formc.review_status and formc.review_status1 and not formc.certificate_email %}
+              {% elif formc.risk_level|lower =='low' and formc.review_status and formc.review_status1 and not formc.certificate_email %}
               Issue Certificate
               {% elif formc.certificate_email%}
               Certificate issued
@@ -285,7 +285,7 @@
             <br>
             {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}
             <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
-            {% elif formc.risk_rating=='low' and formc.review_status and formc.review_status1 and not formc.certificate_email%}
+            {% elif formc.risk_level|lower =='low' and formc.review_status and formc.review_status1 and not formc.certificate_email%}
             <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
             {% elif formc.certificate_email %}
             <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
