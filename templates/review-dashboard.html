@@ -66,12 +66,16 @@
               Awaiting for review
               {% elif item.rec_status and item.risk_rating|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued and item.risk_rating|lower != 'low' and item.review_status and item.review_status1 %}
+              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
               Submitted to Rec
               {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating |lower =='low' %}
               Certificate Will be Issued
-              {% elif item.review_status and not item.review_status1%}
+              {% elif item.review_status or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and not item.review_status1 %}
               Submitted to Ethics Admin
+              {% elif item.review_status and item.form_reviewed_by1==user_id%}
+              Submitted to Ethics Admin
+              {% elif item.review_status or item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id and not item.review_status1%}
+              Awaiting for Review
               {% elif not item.review_status %}
               Awaiting for Review
               {% elif not item.review_status or not item.review_status1 %}
@@ -157,6 +161,8 @@
               Certificate Will be Issued
               {% elif item.review_status or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and not item.review_status1%}
               Submitted to Ethics Admin
+              {% elif item.review_status and item.form_reviewed_by1==user_id%}
+              Submitted to Ethics Admin
               {% elif item.review_status or item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id and not item.review_status1%}
               Awaiting for Review
               {% elif not item.review_status %}
@@ -226,11 +232,13 @@
               Awaiting for review
               {% elif item.rec_status and item.risk_level|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
+              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
               Submitted to Rec
               {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
               Certificate Will be Issued
-              {% elif item.review_status and item.form_reviewed_by==user_id and not item.review_status1%}
+              {% elif item.review_status or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and not item.review_status1%}
+              Submitted to Ethics Admin
+              {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
               {% elif item.review_status or item.form_reviewed_by!=user_id or item.form_reviewed_by1 !=user_id and not item.review_status1%}
               Awaiting for Review
