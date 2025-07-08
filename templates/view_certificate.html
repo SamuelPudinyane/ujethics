@@ -123,13 +123,13 @@
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
             <tr><td class="highlight">Rating of application</td><td>
-            {% if certificate_details.rec_status=='Approved'%}
+            {% if certificate_details.rec_status=='Approved' or certificate_details.status=='Approved'%}
             CODE 1
-            {% elif certificate_details.rec_status =='Approved with suggestions without re-submission'%}
+            {% elif certificate_details.rec_status =='Approved with suggestions without re-submission' or certificate_details.status =='Approved with suggestions without re-submission'%}
             CODE 2
-            {% elif certificate_details.rec_status=='Referred back'%}
+            {% elif certificate_details.rec_status=='Referred back' or certificate_details.status=='Referred back'%}
             CODE 3
-            {% elif certificate_details.rec_status=='Disapproved, cannot re-submit'%}
+            {% elif certificate_details.rec_status=='Disapproved, cannot re-submit' or certificate_details.status=='Disapproved, cannot re-submit'%}
             CODE 4
             {% endif %}
         </td></tr>

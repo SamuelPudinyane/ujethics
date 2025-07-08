@@ -66,10 +66,10 @@
             <td><span class="badge status-pending">
             {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes'%}
             Accepted
-            {% elif forma.reviwer_status and forma.reviewer_status1 and not forma.rec_status and forma.risk_level=='low'%}
+            {% elif forma.reviwer_status and forma.reviewer_status1 and not forma.rec_status and forma.risk_rating|lower !='low'%}
             Accepted
-            {% elif forma.recommendation=='Ready for submission' and forma.rejected_or_accepted %}
-            Awaiting for Review 
+            {% elif forma.recommendation=='Ready for submission' and forma.rejected_or_accepted and forma.risk_rating|lower =='low'%}
+              Certificate will be issued
             {% elif not forma.rejected_or_accepted and not forma.recommendation=='Ready for submission'%}
             Awaiting for Review 
             {% elif not forma.rejected_or_accepted and not forma.supervisor_comment %}
@@ -79,7 +79,7 @@
 <br>
 {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' or forma.certificate_issued %}
 <a href="{{url_for('view_certificate',id=forma.form_id)}}">view Certificate</a>
-{% elif forma.risk_rating=='low' and forma.certificate_issued %}
+{% elif forma.risk_rating|lower =='low' and forma.certificate_issued %}
 <a href="{{url_for('view_certificate',id=forma.form_id)}}">view Certificate</a>
 {% endif %}
             </span></td>
@@ -187,17 +187,18 @@
                       
                       <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
+                  
                   {% if req.permission_letter %}
                   
                       <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
                   {% if req.ethics_evidence %}
                 
-                      <li><a href="{{ url_for('static', filename=req.ethics_evidence) }}" target="_blank">Ethics Evidence</a></li>
+                      <li><a href="{{ url_for('static', filename=req.ethics_evidence) }}" target="_blank">Ethical Compliance</a></li>
                   {% endif %}
                   {% if req.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethical Clearance</a></li>
                   {% endif %}
                  
                 

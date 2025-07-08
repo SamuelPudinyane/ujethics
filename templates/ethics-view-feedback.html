@@ -199,12 +199,14 @@
     <h3>First Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
+  {% endif %}
 </div>
+</section>
   {% endif %}
   <br>
   <hr>
   {% if view_form.review_form_status1 %}
-  
+  <section>
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <table>
@@ -278,10 +280,10 @@
     <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
   </div>
 </div>
-  {% endif %}
-{% endif %}
 </section>
-{% endif %}
+  {% endif %}
+
+
 
   </main>
 </div>

@@ -123,7 +123,17 @@
             <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</td></tr>
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
-            <tr><td class="highlight">Rating of application</td><td>{{certificate_details.rec_status}}</td></tr>
+            <tr><td class="highlight">Rating of application</td><td>{% if certificate_details.rec_status%} {{certificate_details.rec_status}} {% elif certificate_details.status %}{{certificate_details.status}}{% endif%}
+               <br> {% if certificate_details.rec_status=='Approved' or certificate_details.status=='Approved'%}
+            CODE 1
+            {% elif certificate_details.rec_status =='Approved with suggestions without re-submission' or certificate_details.status =='Approved with suggestions without re-submission'%}
+            CODE 2
+            {% elif certificate_details.rec_status=='Referred back' or certificate_details.status=='Referred back'%}
+            CODE 3
+            {% elif certificate_details.rec_status=='Disapproved, cannot re-submit' or certificate_details.status=='Disapproved, cannot re-submit'%}
+            CODE 4
+            {% endif %}
+            </td></tr>
         </table>
 
         <div class="conditions">

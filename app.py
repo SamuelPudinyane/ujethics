@@ -430,7 +430,7 @@ def dashboard ():
 # FORM A =====================================================================================================
 
 
-@app.route('/submit_form_a_requirements', methods=['POST'])
+@app.route('/submit_form_a_requirements', methods=['GET','POST'])
 def submit_form_a_requirements():
 
     if request.method=='POST':
@@ -450,13 +450,13 @@ def submit_form_a_requirements():
             
             formB = db_session.query(FormB).filter_by(user_id=user_id).first()
             if formB:
-                message="You are not permited to fill this form"
-                return render_template("dashboard.html",messages=[message])
+                flash("You are not permitted to fill this form", "warning")
+                return redirect(url_for("student_dashboard"))
                 
             formC = db_session.query(FormC).filter_by(user_id=user_id).first()
             if formC:
-                message="You are not permited to fill this form"
-                return render_template("dashboard.html",messages=[message])
+                flash("You are not permitted to fill this form", "warning")
+                return redirect(url_for("student_dashboard"))
             
             # Create uploads directory if it doesn't exist
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -479,13 +479,13 @@ def submit_form_a_requirements():
                 return None
             
             # Save files based on form field names (corrected from request.form to request.files)
-            permission_letter_path = save_file('permission_letter') if needs_permission else None
-            prior_clearance_path = save_file('prior_clearance_path') if has_clearance else None
+            permission_letter = save_file('permission_letter') if needs_permission else None
+            #prior_clearance_path = save_file('prior_clearance_path') 
             research_tools_path = save_file('research_tools_path')
-            prior_clearance = save_file('prior_clearance') if company_requires_jbs else None
+            prior_clearance = save_file('prior_clearance') if has_clearance else None
             prior_clearance1 = save_file('prior_clearance1') if company_requires_jbs else None
-            need_jbs_clearance = save_file('need_jbs_clearance') if company_requires_jbs else None
-            need_jbs_clearance1 = save_file('need_jbs_clearance1')
+            #need_jbs_clearance = save_file('need_jbs_clearance')
+            #need_jbs_clearance1 = save_file('need_jbs_clearance1')
             proposal_path = save_file('proposal_path')
             impact_assessment_path = save_file('impact_assessment_path')
             
@@ -494,30 +494,22 @@ def submit_form_a_requirements():
                 return jsonify({'error': 'Missing required files'}), 400
                 
             # Check if form exists for this user
-            form = db_session.query(FormARequirements).filter(FormARequirements.id).first()
+            form = db_session.query(FormARequirements).filter(FormARequirements.user_id==user_id).first()
          
             if form:
                 # Update existing form
                 form.needs_permission = needs_permission
                 form.has_clearance = has_clearance
                 form.company_requires_jbs = company_requires_jbs
-                form.prior_clearance1=prior_clearance1
-                form.need_jbs_clearance1=need_jbs_clearance1
                 form.form_type="FORM A"
-                if permission_letter_path:
-                    form.permission_letter = permission_letter_path
-                if prior_clearance_path:
-                    form.prior_clearance = prior_clearance_path
+                if permission_letter:
+                    form.permission_letter = permission_letter
                 if research_tools_path:
                     form.research_tools_path = research_tools_path
                 if prior_clearance:
                     form.prior_clearance=prior_clearance
                 if prior_clearance1:
                     form.prior_clearance1=prior_clearance1
-                if need_jbs_clearance:
-                    form.need_jbs_clearance=need_jbs_clearance
-                if need_jbs_clearance1:
-                    form.need_jbs_clearance1=need_jbs_clearance1
                 if proposal_path:
                     form.proposal_path = proposal_path
                 if impact_assessment_path:
@@ -529,17 +521,14 @@ def submit_form_a_requirements():
                     user_id=user_id,
                     form_type="FORM A",
                     needs_permission=needs_permission,
-                    permission_letter=permission_letter_path,
+                    permission_letter=permission_letter,
                     has_clearance=has_clearance,
-                    prior_clearance_path=prior_clearance_path,
                     company_requires_jbs=company_requires_jbs,
                     research_tools_path=research_tools_path,
                     proposal_path=proposal_path,
                     impact_assessment_path=impact_assessment_path,
                     prior_clearance=prior_clearance,
                     prior_clearance1=prior_clearance1,
-                    need_jbs_clearance=need_jbs_clearance,
-                    need_jbs_clearance1=need_jbs_clearance1
                 )
             
             db_session.add(form)
@@ -569,13 +558,13 @@ def submit_form_c_requirements():
             
             formB = db_session.query(FormB).filter_by(user_id=user_id).first()
             if formB:
-                message="You are not permited to fill this form"
-                return render_template("dashboard.html",messages=[message])
+                flash("You are not permitted to fill this form", "warning")
+                return redirect(url_for("student_dashboard"))
                 
             formA = db_session.query(FormA).filter_by(user_id=user_id).first()
             if formA:
-                message="You are not permited to fill this form"
-                return render_template("dashboard.html",messages=[message])
+                flash("You are not permitted to fill this form", "warning")
+                return redirect(url_for("student_dashboard"))
 
             # Create uploads directory if it doesn't exist
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -655,13 +644,13 @@ def submit_form_b_requirements():
             
             formA = db_session.query(FormA).filter_by(user_id=user_id).first()
             if formA:
-                message="You are not permited to fill this form"
-                return render_template("dashboard.html",messages=[message])
+                flash("You are not permitted to fill this form", "warning")
+                return redirect(url_for("student_dashboard"))
                 
             formC = db_session.query(FormC).filter_by(user_id=user_id).first()
             if formC:
-                message="You are not permited to fill this form"
-                return render_template("dashboard.html",messages=[message])
+                flash("You are not permitted to fill this form", "warning")
+                return redirect(url_for("student_dashboard"))
             
             # Create uploads directory if it doesn't exist
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -734,35 +723,6 @@ def submit_form_b_requirements():
         
 
 
-@app.route('/submit_form_a_upload', methods=['GET', 'POST'])
-def submit_form_a_upload ():
-    try:
-        id_list = []
-        for field in ['permission_letter', 'prior_clearance', 'need_jbs_clearance', 'research_tools', 'proposal', 'impact_assessment']:
-            file = request.files.get(field)
-            if file:
-                upload = Documents(
-                    filename=file.filename,
-                    data=file.read(),
-                    content_type=file.content_type,
-                    field_name=field
-                )
-                db_session.add(upload)
-                db_session.commit()
-                id_list.append(upload.id)
-
-        new_file_list = FormUploads(
-                    student_id = session['id'],
-                    files = json.dumps(id_list),
-                    form_type = 'formA',
-                )
-        db_session.add(new_file_list)
-        db_session.commit()      
-        session['formA-attachments_id'] = new_file_list.id 
-        return jsonify({"message": "Information saved!"}),200
-    except:
-        return jsonify({"message": "Error, please check all attachments. or check dashboard to continue with form"}),400
-
 @app.route('/edit-form-a/<form_id>', methods=['GET'])
 def edit_form_a(form_id):
     data = getFormAData(form_id)
@@ -782,13 +742,13 @@ def form_a_sec1 ():
             return jsonify({'error': 'Unauthorized'}), 401
         formB = db_session.query(FormB).filter_by(user_id=user_id).first()
         if formB:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         
         formC = db_session.query(FormC).filter_by(user_id=user_id).first()
         if formC:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         # Get form data
         form_data = request.form
         user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -858,13 +818,13 @@ def form_a_sec2 ():
 
         formB = db_session.query(FormB).filter_by(user_id=user_id).first()
         if formB:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         
         formC = db_session.query(FormC).filter_by(user_id=user_id).first()
         if formC:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         
         # Fetch the existing record using user_id
         form = db_session.query(FormA).filter_by(user_id=user_id).first()
@@ -1373,13 +1333,13 @@ def form_b_upload():
     
     formA = db_session.query(FormA).filter_by(user_id=user_id).first()
     if formA:
-        message="You are not permited to fill this form"
-        return render_template("form-a-section2.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
         
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     if formC:
-        message="You are not permited to fill this form"
-        return render_template("form-a-section2.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
 
     if request.method=='POST':
         form = db_session.query(FormB).filter_by(user_id=user_id).first()
@@ -1447,13 +1407,13 @@ def form_b_sec1():
         
         formA = db_session.query(FormA).filter_by(user_id=user_id).first()
         if formA:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         
         formC = db_session.query(FormC).filter_by(user_id=user_id).first()
         if formC:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         
         form_data=request.form
         user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -1500,13 +1460,13 @@ def form_b_sec2():
     
     formA = db_session.query(FormA).filter_by(user_id=user_id).first()
     if formA:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
         
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     if formC:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
     
     if request.method == 'POST':
         form_data = request.form
@@ -1608,13 +1568,13 @@ def form_c_sec1():
         
         formA = db_session.query(FormA).filter_by(user_id=user_id).first()
         if formA:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
         
         formB = db_session.query(FormB).filter_by(user_id=user_id).first()
         if formB:
-            message="You are not permited to fill this form"
-            return render_template("dashboard.html",messages=[message])
+            flash("You are not permitted to fill this form", "warning")
+            return redirect(url_for("student_dashboard"))
 
 
         user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -1957,13 +1917,13 @@ def student_edit_forma():
 
     formB = db_session.query(FormB).filter_by(user_id=user_id).first()
     if formB:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
         
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     if formC:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
     
 
     public_data_description=""
@@ -2417,13 +2377,13 @@ def student_edit_formb():
     
     formA = db_session.query(FormA).filter_by(user_id=user_id).first()
     if formA:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
         
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     if formC:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
     
 
     if not user_id:
@@ -2501,13 +2461,13 @@ def student_edit_formc():
 
     formA = db_session.query(FormA).filter_by(user_id=user_id).first()
     if formA:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
         
     formB = db_session.query(FormB).filter_by(user_id=user_id).first()
     if formB:
-        message="You are not permited to fill this form"
-        return render_template("dashboard.html",messages=[message])
+        flash("You are not permitted to fill this form", "warning")
+        return redirect(url_for("student_dashboard"))
     
 
     user = db_session.query(User).filter(User.user_id == user_id).first()
@@ -2727,7 +2687,7 @@ def chair_dashboard():
     return render_template('chair-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
 
-@app.route('/chair_forma_view<string:id>', methods=['GET'])
+@app.route('/chair_forma_view/<string:id>', methods=['GET'])
 def chair_forma_view(id):
     form = db_session.query(FormA).filter_by(user_id=id).order_by(desc(FormA.submitted_at)).all()
     form_name="FORM A"
@@ -2735,14 +2695,14 @@ def chair_forma_view(id):
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
 
-@app.route('/chair_formb_view<string:id>', methods=['GET'])
+@app.route('/chair_formb_view/<string:id>', methods=['GET'])
 def chair_formb_view(id):
     form = db_session.query(FormB).filter_by(user_id=id).order_by(desc(FormB.submitted_at)).all()
     form_name="FORM B"
     today = date.today()
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
-@app.route('/chair_formc_view<string:id>', methods=['GET'])
+@app.route('/chair_formc_view/<string:id>', methods=['GET'])
 def chair_formc_view(id):
     form = db_session.query(FormC).filter_by(user_id=id).order_by(desc(FormC.submission_date)).all()
     form_name="FORM C"
@@ -2811,10 +2771,11 @@ def chair_form_view(id,form_name):
 
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
-        
+    
         if request.method=="POST":
          
             review_date=request.form.get('review_date')
+            status=request.form.get('status')
             review_org_permission_status=request.form.get('org_permission_status')
             review_org_permission_comments=request.form.get('org_permission_comments')
             review_waiver_status=request.form.get('waiver_status')
@@ -2838,6 +2799,7 @@ def chair_form_view(id,form_name):
                 if not formA.review_date and not formA.review_date1:
                     
                     formA.review_date=review_date
+                    formA.status=status
                     formA.review_org_permission_status=review_org_permission_status
                     formA.review_org_permission_comments=review_org_permission_comments
                     formA.review_waiver_status=review_waiver_status
@@ -2859,6 +2821,7 @@ def chair_form_view(id,form_name):
                     formA.review_status=True
                 else:
                     formA.review_date1=review_date
+                    formA.status=status
                     formA.review_org_permission_status1=review_org_permission_status
                     formA.review_org_permission_comments1=review_org_permission_comments
                     formA.review_waiver_status1=review_waiver_status
@@ -2881,6 +2844,7 @@ def chair_form_view(id,form_name):
                 
             else:
                 formA.review_date=review_date
+                formA.status=status
                 formA.review_org_permission_status=review_org_permission_status
                 formA.review_org_permission_comments=review_org_permission_comments
                 formA.review_waiver_status=review_waiver_status
@@ -2908,6 +2872,7 @@ def chair_form_view(id,form_name):
         formB = db_session.query(FormB).filter_by(form_id=id).first()
         if request.method=="POST":
             review_date=request.form.get('review_date')
+            status=request.form.get('status')
             review_org_permission_status=request.form.get('org_permission_status')
             review_org_permission_comments=request.form.get('org_permission_comments')
             review_waiver_status=request.form.get('waiver_status')
@@ -2930,6 +2895,7 @@ def chair_form_view(id,form_name):
                 if not formB.review_date and not formB.review_date1:
                 
                     formB.review_date=review_date
+                    formB.status=status
                     formB.review_org_permission_status=review_org_permission_status
                     formB.review_org_permission_comments=review_org_permission_comments
                     formB.review_waiver_status=review_waiver_status
@@ -2951,6 +2917,7 @@ def chair_form_view(id,form_name):
                     formB.review_status=True
                 else:
                     formB.review_date1=review_date
+                    formB.status=status
                     formB.review_org_permission_status1=review_org_permission_status
                     formB.review_org_permission_comments1=review_org_permission_comments
                     formB.review_waiver_status1=review_waiver_status
@@ -2972,6 +2939,7 @@ def chair_form_view(id,form_name):
                     formB.review_status1=True
             else:
                 formB.review_date=review_date
+                formB.status=status
                 formB.review_org_permission_status=review_org_permission_status
                 formB.review_org_permission_comments=review_org_permission_comments
                 formB.review_waiver_status=review_waiver_status
@@ -3000,7 +2968,7 @@ def chair_form_view(id,form_name):
         if request.method=="POST":
             
             review_date=request.form.get('review_date')
-          
+            status=request.form.get('status')
             review_org_permission_status=request.form.get('org_permission_status')
             review_org_permission_comments=request.form.get('org_permission_comments')
             review_waiver_status=request.form.get('waiver_status')
@@ -3024,6 +2992,7 @@ def chair_form_view(id,form_name):
                 if not formC.review_date and not formC.review_date1:
                 
                     formC.review_date=review_date
+                    formC.status=status
                     formC.review_org_permission_status=review_org_permission_status
                     formC.review_org_permission_comments=review_org_permission_comments
                     formC.review_waiver_status=review_waiver_status
@@ -3045,6 +3014,7 @@ def chair_form_view(id,form_name):
                     formC.review_status=True
                 else:
                     formC.review_date1=review_date
+                    formC.status=status
                     formC.review_org_permission_status1=review_org_permission_status
                     formC.review_org_permission_comments1=review_org_permission_comments
                     formC.review_waiver_status1=review_waiver_status
@@ -3066,6 +3036,7 @@ def chair_form_view(id,form_name):
                     formC.review_status1=True
             else:
                 formC.review_date=review_date
+                formC.status=status
                 formC.review_org_permission_status=review_org_permission_status
                 formC.review_org_permission_comments=review_org_permission_comments
                 formC.review_waiver_status=review_waiver_status
@@ -3235,7 +3206,7 @@ def review_dashboard():
         .all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
-    return render_template('review-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
+    return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
 
 
 
@@ -3438,7 +3409,6 @@ def view_certificate(id):
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
-  
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
         if request.method=="POST":

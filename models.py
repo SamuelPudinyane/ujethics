@@ -21,17 +21,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-# connection_string = (
-#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-#     "driver=ODBC+Driver+17+for+SQL+Server&"
-#     "trusted_connection=yes"
-# )
-
 connection_string = (
-    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
+
+# connection_string = (
+#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
 
 engine = create_engine(connection_string, echo=True)
 
@@ -434,6 +434,8 @@ class FormA(Base):
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
     supervisor_form_status=Column(String(255),nullable=True)
+    status=Column(String,nullable=True)
+
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -604,6 +606,8 @@ class FormB(Base):
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
     supervisor_form_status=Column(String(255),nullable=True)
+    status=Column(String,nullable=True)
+
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -784,7 +788,8 @@ class FormC(Base):
     supervisor_recommendation=Column(String(255),nullable=True)
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
-    
+    status=Column(String,nullable=True)
+
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)

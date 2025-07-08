@@ -148,6 +148,9 @@
     <strong type="date" id="review_date">{{view_form.review_date}}</strong>
   </div>
 <br>
+</section>
+{% endif %}
+
  {% if view_form.review_date %}
 <section class="admin-content">
 <div id="supervisorDeclaration" >
@@ -229,6 +232,8 @@
 </div>
   {% endif %}
   <br>
+</section>
+  {% endif %}
   <hr>
   {% if view_form.review_form_status1 %}
   
@@ -305,9 +310,10 @@
     <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
   </div>
 </div>
-  {% endif %}
-{% endif %}
 </section>
+
+  {% endif %}
+
     <footer class="footer">
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer>
