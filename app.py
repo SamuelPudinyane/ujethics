@@ -3186,7 +3186,7 @@ def review_dashboard():
     submitted_form_a = db_session.query(FormA, FormARequirements) \
         .join(User, FormA.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
-        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)\
+        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.reviewer_name1==user_id or FormA.reviewer_name2==user_id)\
         .distinct()\
         .all()
     
@@ -3194,14 +3194,14 @@ def review_dashboard():
     submitted_form_b = db_session.query(FormB, FormARequirements) \
         .join(User, FormB.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
-        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)\
+        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.reviewer_name1==user_id or FormB.reviewer_name2==user_id)\
         .distinct()\
         .all()
 
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
-        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)\
+        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.reviewer_name1==user_id or FormC.reviewer_name2==user_id)\
         .distinct()\
         .all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()

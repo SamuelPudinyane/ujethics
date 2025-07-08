@@ -68,13 +68,14 @@
             Accepted
             {% elif forma.reviwer_status and forma.reviewer_status1 and not forma.rec_status and forma.risk_rating|lower !='low'%}
             Accepted
-            {% elif forma.recommendation=='Ready for submission' and forma.rejected_or_accepted and forma.risk_rating|lower =='low'%}
+            {% elif forma.recommendation=='Ready for submission' and forma.rejected_or_accepted and forma.risk_rating|lower =='low' and forma.status=='Approved' or forma.status=='Approved with Minor Changes'%}
               Certificate will be issued
             {% elif not forma.rejected_or_accepted and not forma.recommendation=='Ready for submission'%}
             Awaiting for Review 
+            {% elif forma.rejected_or_accepted and forma.recommendation=='Ready for submission' and not forma.status%}
+            Submitted to Ethics
             {% elif not forma.rejected_or_accepted and not forma.supervisor_comment %}
             Rejected
-            
             {% endif %}
 <br>
 {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' or forma.certificate_issued %}
@@ -150,21 +151,23 @@
             
             <td>{{formb.student_number}}</td>
             <td><span class="badge status-pending">
-              {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}
-              Accepted
-              {% elif formb.reviwer_status and formb.reviewer_status1 and not formb.rec_status and formb.risk_level=='low'%}
-              Accepted
-              {% elif formb.recommendation=='Ready for submission' and formb.rejected_or_accepted %}
-              Awaiting for Review 
-              {% elif not formb.rejected_or_accepted and not formb.recommendation=='Ready for submission'%}
-              Awaiting for Review 
-              {% elif not formb.rejected_or_accepted and not formb.supervisor_comment %}
-              Rejected
-              {% endif %}
+            {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}
+            Accepted
+            {% elif formb.reviwer_status and formb.reviewer_status1 and not formb.rec_status and formb.risk_level|lower !='low'%}
+            Accepted
+            {% elif formb.recommendation=='Ready for submission' and formb.rejected_or_accepted and formb.risk_level|lower =='low' and formb.status=='Approved' or formb.status=='Approved with Minor Changes' %}
+              Certificate will be issued
+            {% elif not formb.rejected_or_accepted and not formb.recommendation=='Ready for submission'%}
+            Awaiting for Review 
+            {% elif formb.rejected_or_accepted and formb.recommendation=='Ready for submission' and not formb.status%}
+            Submitted to Ethics
+            {% elif not formb.rejected_or_accepted and not formb.supervisor_comment %}
+            Rejected
+            {% endif %}
         <br>
 {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes' or formb.certificate_issued%}
 <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
-{% elif formb.risk_level=='low' and formb.certificate_issued %}
+{% elif formb.risk_level|lower =='low' and formb.certificate_issued %}
 <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
 {% endif %}
             </span></td>
@@ -222,23 +225,25 @@
             <td>{{formc.declaration_name}}</td>
             <td>{{formc.student_number}}</td>
             <td><span class="badge status-pending">
-{% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}
-Accepted
-{% elif formc.reviwer_status and formc.reviewer_status1 and not formc.rec_status and formc.risk_level=='low'%}
-Accepted
-{% elif formc.recommendation=='Ready for submission' and formc.rejected_or_accepted %}
-Awaiting for Review 
-{% elif not formc.rejected_or_accepted and not formc.recommendation=='Ready for submission'%}
-Awaiting for Review 
-{% elif not formc.rejected_or_accepted and formc.supervisor_comment %}
-Rejected
-{% endif %}
+            {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}
+            Accepted
+            {% elif formc.reviwer_status and formc.reviewer_status1 and not formc.rec_status and formc.risk_level|lower !='low'%}
+            Accepted
+            {% elif formc.rejected_or_accepted and formc.recommendation=='Ready for submission'%}
+            Submitted to Ethics
+            {% elif formc.recommendation=='Ready for submission' and formc.rejected_or_accepted and formc.risk_level|lower =='low' and formc.status=='Approved' or formc.status=='Approved with Minor Changes'%}
+              Certificate will be issued
+            {% elif not formc.rejected_or_accepted and not formc.recommendation=='Ready for submission'  and not formc.status%}
+            Awaiting for Review 
+            {% elif not formc.rejected_or_accepted and not formc.supervisor_comment %}
+            Rejected
+            {% endif %}
 
 <br>
 {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes' or formc.certificate_issued%}
 <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
-{% elif formc.risk_level=='low' and formc.certificate_issued %}
-<a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
+{% elif formc.risk_level|lower =='low' and formc.certificate_issued %}
+<a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
 {% endif %}
 </span></td>
 <td>
