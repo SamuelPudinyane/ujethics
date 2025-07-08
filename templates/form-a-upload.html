@@ -63,6 +63,13 @@
   </header>
 
   <main class="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
     <h2>Before You Start Form A</h2>
     <form id="formARequirements" action="{{url_for('submit_form_a_requirements')}}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

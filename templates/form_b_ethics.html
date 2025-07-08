@@ -321,6 +321,7 @@
 
   <!-- Accept Fields (initially hidden) -->
   <div id="acceptFields" style="display: none;">
+    {% if formB.risk_level|lower != 'low'%}
     <label>Reviewer(s):</label>
   <div class="dropdown">
     <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -332,7 +333,7 @@
       {% endfor %}
     </ul>
   </div>
-
+{% endif %}
 
     <div class="form-group">
       <label for="supervisor_signature">Ethics Admin Signature:</label>
@@ -343,12 +344,29 @@
       <label for="signature_date">Date:</label>
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
-
-    <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Reviewers</button>
+ <div class="submit-row">
+  <label for="status">Select Approval Status:</label>
+  <select id="status" name="status" class="form-select" >
+    <option value="">-- Choose --</option>
+    <option value="Approved">✅ Approved</option>
+    <option value="Approved with Minor Changes">⚠️ Approved with Minor Changes</option>
+  </select>
+  <br>
+</div>
+    <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit</button>
   </div>
 
   <!-- Reject Button (initially hidden) -->
   <div id="rejectBtn" style="display: none;">
+    <div class="submit-row" id="rejectBtn" style="display: none;">
+  <label for="statusReject">Select Rejection Status:</label>
+  <select id="statusReject" name="status" class="form-select" >
+    <option value="">-- Choose --</option>
+    <option value="Resubmission Required">🔁 Resubmission Required</option>
+    <option value="Reject">❌ Reject</option>
+  </select>
+  <br>
+</div>
     <button type="submit" name="reject" value="Reject" class="btn btn-danger">Submit back to Student (Requires Submission)</button>
   </div>
 
