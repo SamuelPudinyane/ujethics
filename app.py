@@ -3182,28 +3182,41 @@ def chair_landing():
 @app.route('/review_dashboard', methods=['GET','POST'])
 def review_dashboard():
     user_id=session['id']
-  
-    submitted_form_a = db_session.query(FormA, FormARequirements) \
-        .join(User, FormA.user_id == User.user_id) \
+   
+    # Form A
+    submitted_form_a = db_session.query(FormA, FormARequirements)\
+        .join(User, FormA.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
-        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True,FormA.reviewer_name1==user_id or FormA.reviewer_name2==user_id)\
-        .distinct()\
-        .all()
-    
-    
-    submitted_form_b = db_session.query(FormB, FormARequirements) \
-        .join(User, FormB.user_id == User.user_id) \
-        .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
-        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True,FormB.reviewer_name1==user_id or FormB.reviewer_name2==user_id)\
-        .distinct()\
-        .all()
+        .filter(
+            FormA.submitted_at != None,
+            FormA.rejected_or_accepted == True,
+            or_(FormA.reviewer_name1 == user_id, FormA.reviewer_name2 == user_id)
+        ) \
+        .distinct().all()
 
+    # Form B
+    submitted_form_b = db_session.query(FormB, FormARequirements)\
+        .join(User, FormB.user_id == User.user_id)\
+        .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
+        .filter(
+            FormB.submitted_at != None,
+            FormB.rejected_or_accepted == True,
+            or_(FormB.reviewer_name1 == user_id, FormB.reviewer_name2 == user_id)
+        )\
+        .distinct().all()
+
+    # Form C
     submitted_form_c = db_session.query(FormC, FormARequirements) \
-        .join(User, FormC.user_id == User.user_id) \
+        .join(User, FormC.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
-        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True,FormC.reviewer_name1==user_id or FormC.reviewer_name2==user_id)\
-        .distinct()\
-        .all()
+        .filter(
+            FormC.submission_date != None,
+            FormC.rejected_or_accepted == True,
+            or_(FormC.reviewer_name1 == user_id, FormC.reviewer_name2 == user_id)
+        )\
+        .distinct().all()
+
+
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()
     return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
