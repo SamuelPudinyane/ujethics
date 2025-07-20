@@ -321,7 +321,7 @@
 
   <!-- Accept Fields (initially hidden) -->
   <div id="acceptFields" style="display: none;">
-    {% if formB.risk_level|lower != 'low'%}
+   
     <label>Reviewer(s):</label>
   <div class="dropdown">
     <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -333,7 +333,7 @@
       {% endfor %}
     </ul>
   </div>
-{% endif %}
+
 
     <div class="form-group">
       <label for="supervisor_signature">Ethics Admin Signature:</label>
@@ -344,15 +344,7 @@
       <label for="signature_date">Date:</label>
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
- <div class="submit-row">
-  <label for="status">Select Approval Status:</label>
-  <select id="status" name="status" class="form-select" >
-    <option value="">-- Choose --</option>
-    <option value="Approved">✅ Approved</option>
-    <option value="Approved with Minor Changes">⚠️ Approved with Minor Changes</option>
-  </select>
-  <br>
-</div>
+ 
     <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit</button>
   </div>
 

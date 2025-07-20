@@ -102,7 +102,7 @@
         <input type="radio" name="company_requires_jbs" value="No" checked required> No
       </div>
 
-      <div class="question-block hidden" id="clearanceUpload">
+      <div class="question-block hidden" id="clearanceUpload1">
         <label>Upload Ethical Clearance Document</label>
         <input type="file" name="prior_clearance1" accept=".pdf,.docx">
       </div>
@@ -149,6 +149,7 @@
 
     const companyLetterUpload = document.getElementById("companyLetterUpload");
     const clearanceUpload = document.getElementById("clearanceUpload");
+    const clearanceUpload1 = document.getElementById("clearanceUpload1");
     const jbsClearanceUpload = document.getElementById("jbsClearanceUpload");
 
     permissionRadios.forEach(r => {
@@ -165,7 +166,7 @@
 
     jbsRadios.forEach(r => {
       r.addEventListener("change", () => {
-        jbsClearanceUpload.classList.toggle("hidden", r.value === "No");
+        jbsClearanceUpload1.classList.toggle("hidden", r.value === "No");
       });
     });
   });

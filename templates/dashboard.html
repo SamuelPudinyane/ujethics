@@ -109,7 +109,7 @@
                 <span style="color:green; font-size:12px;">
                   {% if formA.rec_status=='Approved' or formA.rec_status=='Approved with Minor Changes' or formA.certificate_issued%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
-                  {% elif formA.risk_rating|lower =='low' and formA.certificate_issued %}
+                  {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif formA.submitted_at and formA.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR
@@ -119,14 +119,12 @@
                   {% endif %}
                 </span>
                 <br>
-                {% if formA.review_status and formA.certificate_issued %}<a href="{{url_for('view_certificate',id=formA.form_id)}}"> View Certificate</a>{% endif %}
-                <br>
+                
                 {% if formA.supervisor_date %}
-                <strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
                 <br>
-                <em>{{formA.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
-                </em>
+                
                 </td>
             <td><a href="{{url_for('student_edit_forma')}}">Review</a></td>
           </tr>
@@ -145,7 +143,7 @@
                 <span style="color:green; font-size:12px;">
                   {% if formB.rec_status=='Approved' or formB.rec_status=='Approved with Minor Changes' or formB.certificate_issued%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
-                  {% elif formB.risk_level|lower =='low' and formB.certificate_issued %}
+                  {% elif 'low' in formB.risk_level|lower and formB.certificate_issued %}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif formB.submitted_at and formB.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR
@@ -155,14 +153,13 @@
                   {% endif %}
                  </span>
                 <br>
-                {% if formB.review_status or formB.certificate_issued %}<a href="{{url_for('view_certificate',id=formB.form_id)}}"> View Certificate</a>{% endif %}
-                <br>
+                
                 {% if formB.supervisor_date %}
-                <strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
                 <br>
-                <em>{{formB.supervisor_date.strftime('%d/%m/%Y')}}
+                
                   {% endif %}
-                </em>
+                
                 
             </td>
             <td><a href="{{url_for('student_edit_formb')}}">Review</a></td>
@@ -178,7 +175,7 @@
     
                   {% if formC.rec_status=='Approved' or formC.rec_status=='Approved with Minor Changes' or formC.certificate_issued%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
-                  {% elif formC.risk_level|lower =='low' and formC.certificate_issued %}
+                  {% elif 'low' in formC.risk_level|lower and formC.certificate_issued %}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif formC.submission_date and formC.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR
@@ -188,12 +185,11 @@
 
                 </span>
                 <br>
-                {% if formC.review_status or formC.certificate_issued%}<a href="{{url_for('view_certificate',id=formC.form_id)}}"> View Certificate</a>{% endif %}
-                <br>
+                
                 {% if formC.supervisor_date%}
-                <strong>Feedback: </strong><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
                 <br>
-                <em>{{formC.supervisor_date.strftime('%d/%m/%Y')}}{% endif%}</em>
+                {% endif%}
                 </td>
             <td><a href="{{url_for('student_edit_formc')}}">Review</a></td>
 
