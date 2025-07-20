@@ -107,9 +107,9 @@
                 </em>
                
                 <span style="color:green; font-size:12px;">
-                  {% if formA.rec_status=='Approved' or formA.rec_status=='Approved with Minor Changes' or formA.certificate_issued%}
+                  {% if formA.rec_status=='Approved'  or formA.certificate_issued and forma.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
-                  {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued%}
+                  {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and forma.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif formA.submitted_at and formA.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR
@@ -141,9 +141,9 @@
                 {% endif %}</em>
                 
                 <span style="color:green; font-size:12px;">
-                  {% if formB.rec_status=='Approved' or formB.rec_status=='Approved with Minor Changes' or formB.certificate_issued%}
+                  {% if formB.rec_status=='Approved'  or formB.certificate_issued and formb.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
-                  {% elif 'low' in formB.risk_level|lower and formB.certificate_issued %}
+                  {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif formB.submitted_at and formB.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR
@@ -173,9 +173,9 @@
             <td>
                 <span style="color:green; font-size:12px;">
     
-                  {% if formC.rec_status=='Approved' or formC.rec_status=='Approved with Minor Changes' or formC.certificate_issued%}
+                  {% if formC.rec_status=='Approved' or formC.certificate_issued and formc.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
-                  {% elif 'low' in formC.risk_level|lower and formC.certificate_issued %}
+                  {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif formC.submission_date and formC.declaration_name %}
                   FORM SUBMITTED FOR REVIEW TO SUPERVISOR
