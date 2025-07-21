@@ -123,7 +123,7 @@
             <tr><td class="highlight">Decision date</td><td>{% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</td></tr>
             <tr><td class="highlight">Reviewers</td><td>JBS REC Members</td></tr>
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
-            <tr><td class="highlight">Rating of application</td><td>{% if certificate_details.rec_status%} {{certificate_details.rec_status}} {% elif certificate_details.status %}{{certificate_details.status}}{% endif%}
+            <tr><td class="highlight">Rating of application</td><td>
                <br> {% if certificate_details.rec_status=='Approved' or certificate_details.status=='Approved'%}
             CODE 1
             {% elif certificate_details.rec_status =='Approved with suggestions without re-submission' or certificate_details.status =='Approved with suggestions without re-submission'%}
@@ -164,9 +164,16 @@
 
 <button type="submit" 
         style="padding: 10px 20px; background: #004785; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; gap:1.5px;">
-        Save 
+        Create Certificate
     </button>
+    
     <a class="btn btn-primary ml-5" href="{{url_for('chair_landing')}}" class="btn btn-primary">Go Back</a>
 </form>
+<br>
+<form action="{{url_for('send_certificate',id=certificate_details.form_id)}}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="btn btn-success">Send certificate</button>
+</form>
+<br>
 </body>
 </html>

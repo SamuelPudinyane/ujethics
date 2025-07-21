@@ -95,26 +95,40 @@
             <td>{{forma.declaration_date}}</td>
             <td>
             <span class="status-pill approved">
-              {% if forma.rejected_or_accepted and not forma.review_date and not forma.status%}
+              {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
               Awaiting for review
-              {% elif forma.rec_status and forma.risk_rating|lower != 'low' %}
+              {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
-              {% elif forma.risk_rating|lower =='low' and forma.status=='Approved' or forma.status=='Approved with Minor Changes' and not forma.certificate_email %}
-              <a href="{{url_for('certificate',id=forma.form_id)}}">Issue Certificate</a>
-              {% elif forma.certificate_email%}
-              Certificate issued
+              {% elif 'low' in formb.risk_rating|lower 
+      and not forma.certificate_issued and forma.form_review_comment in ['Approved', 'Approved with Minor Changes'] and forma.form_review_comment1 in ['Approved', 'Approved with Minor Changes']
+    %}
+  <a href="{{ url_for('certificate', id=forma.form_id) }}" class="btn btn-sm btn-success text-white">
+    🎓 Issue Certificate
+  </a>
+              {% elif forma.certificate_issued and not formb.certificate_received%}
+              Certificate issued but not send
+              {% elif forma.review_recommendation and not forma.review_recommendation1 %}
+              Awaiting second reviewer
+              {% elif forma.submitted_to_rec and 'low' not in forma.risk_rating|lower%}
+              Form submitted to Rec 
+              {% elif (forma.review_recommendation in ['Ready for submission', 'Approved']) and
+              (forma.review_recommendation1 in ['Ready for submission', 'Approved']) and not forma.certificate_received %}
+              Aproved by both Reviewers
+              {% elif forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_feedback%}
+              Submitted to Reviewers
               {% elif not forma.review_status and not forma.review_status%}
               Rejected
+              {% elif forma.certificate_issued and forma.certificate_received %}
+            <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
+            {% elif forma.rec_status=='Approved' and not forma.certificate_issued %}
+              <a href="{{ url_for('certificate', id=forma.form_id) }}" class="btn btn-sm btn-success text-white">🎓 Issue Certificate</a>
+         
               {% endif %}
             </span>
             <br>
-            {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' %}
-      <a href="{{ url_for('certificate', id=forma.form_id) }}" class="btn btn-sm btn-success text-white">🎓 Issue Certificate</a>
-            {% elif forma.certificate_email %}
-            <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
-            {% endif %}
-
+            
               <br>
+              
               <a href="{{url_for('ethics_view_feedback',id=forma.form_id)}}">View Feedback</a>
           </td>
             <td>{{forma.risk_rating}}</td>
@@ -146,7 +160,11 @@
               </ul>
             </td>
             
-            <td><a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >Review</a></td>
+            <td>
+              
+              <a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >Review</a>
+           
+            </td>
           </tr>
           {% endfor %}
           
@@ -181,28 +199,41 @@
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
             <td><span class="status-pill approved">
-               {% if formb.rejected_or_accepted and  not formb.review_date%}
+               {% if formb.rejected_or_accepted and not formb.reviewer_name1 and not formb.review_date%}
               Awaiting for review
-              {% elif formb.rec_status and formb.risk_level|lower != 'low' %}
+              {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
-              {% elif formb.risk_level|lower =='low' and formb.status=='Approved' or formb.status=='Approved with Minor Changes' and not formb.certificate_email  %}
-<a href="{{ url_for('certificate', id=formb.form_id) }}" class="btn btn-sm btn-success text-white">
-  🎓 Issue Certificate
-</a>
-              {% elif formb.certificate_email%}
-              Certificate issued
+              {% elif 'low' in formb.risk_level|lower 
+      and not formb.certificate_issued and formb.form_review_comment in ['Approved'] and formb.form_review_comment1 in ['Approved']
+    and not formc.certificate_received %}
+  <a href="{{ url_for('certificate', id=formb.form_id) }}" class="btn btn-sm btn-success text-white">
+    🎓 Issue Certificate
+  </a>
+
+              {% elif formb.certificate_issued and not formb.certificate_received%}
+              Certificate issued but not send
+              {% elif formb.review_recommendation and not formb.review_recommendation1 %}
+              Awaiting second reviewer
+              {% elif formb.submitted_to_rec and 'low' not in formb.risk_level|lower %}
+              Form submitted to Rec 
+              {% elif (formb.review_recommendation in ['Ready for submission', 'Approved']) and
+              (formb.review_recommendation1 in ['Ready for submission', 'Approved']) and not formb.certificate_received%}
+              Aproved by both Reviewers
+              {% elif formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_feedback%}
+              Submitted to Reviewers
               {% elif not formb.review_status and not formb.review_status%}
               Rejected
-              {% endif %}
-            </span>
-            <br>
-            {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes'%}
-            <a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>
-            {% elif formb.certificate_email %}
+              {% elif formb.certificate_issued and formb.certificate_received %}
             <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
+            
+              {% elif formb.certificate_issued and formb.certificate_received %}
+            <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
+            {% elif 'low' not in formb.risk_level|lower and formb.rec_status=='Approved' and not formb.certificate_received%}
+            <a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>
             {% endif %}
+            </span>
+            
             <br>
-
             <a href="{{url_for('ethics_view_feedback',id=formb.form_id)}}">View Feedback</a>
             </td>
             <td>{{formb.risk_level}}</td>
@@ -232,7 +263,11 @@
               </ul>
             </td>
             
-            <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >Review</a></td>
+            <td>
+             
+              <a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >Review</a>
+             
+            </td>
           </tr>
           {% endfor %}
           
@@ -266,27 +301,41 @@
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="status-pill approved">
-       {% if formc.rejected_or_accepted and not formc.review_date%}
+       {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
               Awaiting for review
-              {% elif formc.rec_status and formc.risk_level|lower != 'low' %}
+              {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
-              {% elif formc.level|lower =='low' and formc.status=='Approved' or formc.status=='Approved with Minor Changes' and not formc.certificate_email %}
-<a href="{{ url_for('certificate', id=formc.form_id) }}" class="btn btn-sm btn-success text-white">
-  🎓 Issue Certificate
-</a>
+              {% elif 'low' in formc.risk_level|lower 
+      and not formc.certificate_issued and formc.form_review_comment in ['Approved'] and formc.form_review_comment1 in ['Approved'] and not formc.certificate_received
+    %}
+  <a href="{{ url_for('certificate', id=formc.form_id) }}" class="btn btn-sm btn-success text-white">
+    🎓 Issue Certificate
+  </a>
+
+
               {% elif formc.certificate_email%}
               Certificate issued
-              {% elif not formc.review_status and not formc.review_status%}
+              {% elif formc.review_recommendation and not formc.review_recommendation1 %}
+              Awaiting second reviewer
+              
+              {% elif formc.submitted_to_rec and 'low' not in formc.risk_level|lower %}
+              Form submitted to Rec 
+             
+              {% elif (formc.review_recommendation in ['Ready for submission', 'Approved']) and
+              (formc.review_recommendation1 in ['Ready for submission', 'Approved']) and not formc.certificate_received %}
+              Aproved by both Reviewers
+              {% elif formc.rejected_or_accepted and formc.reviewer_name1 and formc.supervisor_feedback and not formc.certificate_received%}
+              Submitted to Reviewers
+              {% elif not formc.review_status and not formc.review_status %}
               Rejected
+              {% elif formc.certificate_issued and formc.certificate_received %}
+            <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
+            {% elif formc.rec_status=='Approved' and not formc.certificate_received and not formc.certificate_issued%}
+            <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
               {% endif %}
             </span>
             <br>
-            {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes'%}
-            <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
-            {% elif formc.certificate_email %}
-            <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
-            {% endif %}
-            <br>
+            
             <a href="{{url_for('ethics_view_feedback',id=formc.form_id)}}">View Feedback</a>
             </td>
             <td>{{formc.risk_level}}</td>
@@ -295,7 +344,11 @@
               <a href="{{ url_for('static', filename=req.files) }}" target="_blank">Proposal</a>
               
             </td>
-            <td><a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >Review</a></td>
+            <td>
+              
+              <a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >Review</a>
+             
+            </td>
           </tr>
           {% endfor %}
         </tbody>

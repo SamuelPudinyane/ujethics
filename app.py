@@ -1,5 +1,5 @@
 from flask import Flask,flash,make_response, render_template, request, redirect, url_for, session, jsonify
-from models import db_session, User, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements,Watched
+from models import db_session, User,Rec, UserRole, UserInfo, FormA, FormB, FormC, FormD, FormUploads, Documents,FormARequirements,Watched
 from utils.helpers import generate_reset_token, send_email, validate_password
 import json
 from db_queries import getFormAData, getSupervisorsList
@@ -14,10 +14,9 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from datetime import date
-from sqlalchemy import desc,cast ,Date,func,union_all
+from sqlalchemy import desc,cast ,Date,func,union_all,and_, not_, or_
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
-from sqlalchemy import or_
 
 # Load environment variables from .env file
 load_dotenv()
@@ -143,7 +142,7 @@ def register():
         password = request.form.get('password', '').strip()
         supervisor_id = request.form.get('supervisors')
         
-        # Debug print to verify raw inputs
+        print("name ----------",request.method)
        
         # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
@@ -155,7 +154,7 @@ def register():
         if not is_valid:
             msg['message'] = message
             return render_template('register.html', messages=msg, supervisors=supervisors)
-
+        
         # Check if user exists
         user = db_session.query(User).filter_by(email=email).first()
         if user:
@@ -187,12 +186,11 @@ def register():
             
         except Exception as e:
             db_session.rollback()
-            print("Registration error:", str(e))
             msg = 'Registration failed. Please try again.'
             return render_template('register.html', messages=[msg], supervisors=supervisors)
     
-    msg = 'Please fill out the form completely!'
-    return render_template('register.html', messages=[msg], supervisors=supervisors)
+    
+    return render_template('register.html', messages=[], supervisors=supervisors)
 
 
 
@@ -254,17 +252,18 @@ def register_reviewer():
 @app.route('/edit_user/<string:id>', methods=['POST','GET'])
 def edit_user(id):
     user = db_session.query(User).filter_by(user_id=id).first()
+ 
     msg="update the user information"
     if user:
-        full_name = request.form.get('full_name', '').strip()
-        staff_number = request.form.get('staff_number', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '').strip()
-        password2 = request.form.get('password2', '').strip()
-        specialisation = request.form.get('specialisation', '').strip()
-        role = request.form.get('role', '').strip()
+        full_name = request.form.get('full_name').strip()
+        staff_number = request.form.get('staff_number').strip()
+        email = request.form.get('email').strip().lower()
+        password = request.form.get('password').strip() if request.form.get('password') is not None else None
+        password2 = request.form.get('password2').strip()
+        specialisation = request.form.get('specialisation').strip()
+        role = request.form.get('role').strip()
 
-        if request.method=="post":
+        if request.method=="POST":
             if password and password2:
                 if password != password2:
                     msg = 'Passwords do not match'
@@ -282,7 +281,7 @@ def edit_user(id):
                     user.password = password  # Ensure you hash passwords
                     user.specialisation = specialisation
                     user.role = role
-
+                    
                     db_session.commit()
                     return redirect(url_for('reviewer_list'))
 
@@ -299,7 +298,6 @@ def edit_user(id):
                     user.email = email
                     user.specialisation = specialisation
                     user.role = role
-
                     db_session.commit()
                     return redirect(url_for('reviewer_list'))
 
@@ -2710,6 +2708,20 @@ def chair_formc_view(id):
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
 
+@app.route("/send_certificate/<string:id>",methods=['POST'])
+def send_certificate(id):
+    if request.method=='POST':
+        certificate_details = None
+        for model in [FormA, FormB, FormC]:
+            
+            certificate_details = db_session.query(model).filter_by(form_id=id).first()
+            if certificate_details:    
+                certificate_details.certificate_received=True
+                db_session.commit()
+                print("date issue=true")
+        return redirect(url_for('chair_landing'))
+
+
 @app.route('/student_view_feedback/<string:id>', methods=['GET'])
 def student_view_feedback(id):
     form = None
@@ -2789,14 +2801,14 @@ def chair_form_view(id,form_name):
             review_proposal_status=request.form.get('proposal_status')
             review_proposal_comments=request.form.get('proposal_comments')
             review_additional_comments=request.form.get('additional_comments')
-            review_recommendation=request.form.get('recommendation')
+            review_recommendation=request.form.get('status')
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
 
             if request.form.get('recommendation')=='Ready for submission':
-                if not formA.review_date and not formA.review_date1:
+                if not formA.review_date:
                     
                     formA.review_date=review_date
                     formA.status=status
@@ -2886,13 +2898,13 @@ def chair_form_view(id,form_name):
             review_proposal_status=request.form.get('proposal_status')
             review_proposal_comments=request.form.get('proposal_comments')
             review_additional_comments=request.form.get('additional_comments')
-            review_recommendation=request.form.get('recommendation')
+            review_recommendation=request.form.get('status')
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
             if request.form.get('recommendation')=='Ready for submission':
-                if not formB.review_date and not formB.review_date1:
+                if not formB.review_date:
                 
                     formB.review_date=review_date
                     formB.status=status
@@ -2982,14 +2994,14 @@ def chair_form_view(id,form_name):
             review_proposal_status=request.form.get('proposal_status')
             review_proposal_comments=request.form.get('proposal_comments')
             review_additional_comments=request.form.get('additional_comments')
-            review_recommendation=request.form.get('recommendation')
+            review_recommendation=request.form.get('status')
             review_supervisor_signature=request.form.get('supervisor_signature')
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
             if request.form.get('recommendation')=='Ready for submission':
                 
-                if not formC.review_date and not formC.review_date1:
+                if not formC.review_date:
                 
                     formC.review_date=review_date
                     formC.status=status
@@ -3084,11 +3096,9 @@ def ethics_reviewer_committee_form_b():
 @app.route('/ethics_reviewer_committee_form_c', methods=['GET','POST'])
 def ethics_reviewer_committee_form_c():
     
-    
     supervisor_formC = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id).all()
-    
     today = date.today()
     return render_template('ethics_reviewer_committee.html',today=today,submitted_form_c=supervisor_formC)
 
@@ -3221,6 +3231,20 @@ def review_dashboard():
     today = date.today()
     return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
 
+@app.route('/submit_to_rec/<string:id>', methods=['GET'])
+def submit_to_rec(id):
+   
+    form = None
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=id).first()
+        if form:
+            break  # Stop once the form is found
+    
+    if form:
+        form.submitted_to_rec=True
+        db_session.commit()
+    return redirect(url_for('chair_landing'))
+    
 
 
 @app.route('/reviewer_form_a/<string:id>', methods=['GET'])
@@ -3259,24 +3283,89 @@ def reviewer_form_c(id):
     
 
 
-@app.route('/rec_dashboard', methods=['GET','POST'])
+@app.route('/rec_dashboard', methods=['GET', 'POST'])
 def rec_dashboard():
-    user_id=session['id']
-    
-    submitted_form_a = (db_session.query(FormA)
-    .filter(FormA.reviewer_name1 !=user_id,FormA.reviewer_name2 !=user_id, FormA.rejected_or_accepted == True,FormA.review_signature_date!= None,func.lower(FormA.risk_rating) != 'low',FormA.review_status==True,FormA.review_status1==True)
-    .distinct().all())
-    
-    submitted_form_b = (db_session.query(FormB)
-    .filter(FormB.reviewer_name1 != user_id,FormB.reviewer_name2 !=user_id, FormB.rejected_or_accepted == True,FormB.review_signature_date!= None,func.lower(FormB.risk_level) != 'low',FormB.review_status==True,FormB.review_status1==True)
-    .distinct().all())
-    submitted_form_c = (db_session.query(FormC)
-    .filter(FormC.reviewer_name1 !=user_id,FormC.reviewer_name2 !=user_id,FormC.rejected_or_accepted == True,FormC.review_signature_date!= None,func.lower(FormC.risk_level) != 'low',FormC.review_status==True,FormC.review_status1==True)
-    .distinct().all())
-    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
-    today = date.today()
-    return render_template('rec-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
+    user_id = session['id']
 
+    # Form A submissions
+    submitted_form_a = (
+    db_session.query(FormA, FormARequirements, Rec)
+    .join(User, FormA.user_id == User.user_id)
+    .join(FormARequirements, FormA.user_id == FormARequirements.user_id)
+    .outerjoin(Rec, Rec.form_id == FormA.form_id)  # Use LEFT JOIN if some forms might not be reviewed yet
+    .filter(
+        FormA.rejected_or_accepted == True,
+        FormA.review_signature_date != None,
+        ~func.lower(FormA.risk_rating).like('%low%'),
+        FormA.review_status == True,
+        FormA.review_status1 == True,
+        FormA.submitted_to_rec == True,
+        FormA.reviewer_name1 != user_id,
+        FormA.reviewer_name2 != user_id
+    )
+    .distinct()
+    .all()
+)
+    counta = sum(1 for _, _, rec in submitted_form_a if rec is not None)
+
+    # Form B submissions
+    submitted_form_b = (
+    db_session.query(FormB, FormARequirements, Rec)
+    .join(User, FormB.user_id == User.user_id)
+    .join(FormARequirements, FormB.user_id == FormARequirements.user_id)
+    .outerjoin(Rec, Rec.form_id == FormB.form_id)  # Use LEFT JOIN if some forms might not be reviewed yet
+    .filter(
+        FormB.rejected_or_accepted == True,
+        FormB.review_signature_date != None,
+        ~func.lower(FormB.risk_level).like('%low%'),
+        FormB.review_status == True,
+        FormB.review_status1 == True,
+        FormB.submitted_to_rec == True,
+        FormB.reviewer_name1 != user_id,
+        FormB.reviewer_name2 != user_id
+    )
+    .distinct()
+    .all()
+)
+    countb = sum(1 for _, _, rec in submitted_form_b if rec is not None)
+    # Form C submissions
+    submitted_form_c = (
+    db_session.query(FormC, FormARequirements, Rec)
+    .join(User, FormC.user_id == User.user_id)
+    .join(FormARequirements, FormC.user_id == FormARequirements.user_id)
+    .outerjoin(Rec, Rec.form_id == FormC.form_id)  # Use LEFT JOIN if some forms might not be reviewed yet
+    .filter(
+        FormC.rejected_or_accepted == True,
+        FormC.review_signature_date != None,
+        ~func.lower(FormC.risk_level).like('%low%'),
+        FormC.review_status == True,
+        FormC.review_status1 == True,
+        FormC.submitted_to_rec == True,
+        FormC.reviewer_name1 != user_id,
+        FormC.reviewer_name2 != user_id
+    )
+    .distinct()
+    .all()
+)
+    
+    countc = sum(1 for _, _, rec in submitted_form_c if rec is not None)
+        
+    # Requirements submitted by this supervisor
+    supervisor_formA_req = db_session.query(FormARequirements).filter_by(user_id=user_id).all()
+
+    today = date.today()
+
+    return render_template(
+        'rec-dashboard.html',
+        today=today,
+        counta=counta,
+        countb=countb,
+        countc=countc,
+        submitted_form_a=submitted_form_a,
+        submitted_form_b=submitted_form_b,
+        submitted_form_c=submitted_form_c,
+        supervisor_formA_req=supervisor_formA_req
+    )
 
 
 
@@ -3319,23 +3408,26 @@ def rec_form_c(id):
 
 @app.route('/rec_response/<string:id>', methods=['GET', 'POST'])
 def rec_response(id):
+    user_id=session['id']
     if request.method == 'POST':
         status = request.form.get('status')
         comments = request.form.get('rec_comments')  # ✅ corrected from 'additional_comments'
 
         # Loop through models to find the correct form by ID
-        for model in [FormA, FormB, FormC]:
-            form = db_session.query(model).filter_by(form_id=id).first()
-            if form:
-            
-                form.rec_comments = comments
-                form.rec_status = status
-                form.rec_date=datetime.now()
-                db_session.commit()
-                flash("Form updated successfully", "success")
-                break
-        else:
-            flash("Form not found", "danger")
+        
+        user_name=db_session.query(User).filter_by(user_id=user_id).first()
+       
+        form=Rec(
+                rec_id=user_id,
+                form_id=id,
+                full_name=user_name.full_name,
+                rec_comments = comments,
+                rec_status = status,
+                rec_date=datetime.now()
+                )
+        db_session.add(form)
+        db_session.commit()
+        flash("Form updated successfully", "success")
 
         return redirect(url_for('rec_dashboard'))
 
@@ -3378,10 +3470,12 @@ def certificate(id):
     for model in [FormA, FormB, FormC]:
         certificate_details = db_session.query(model).filter_by(form_id=id).first()
         if certificate_details:
-            certificate_details.certificate_code = certification_code
-            certificate_details.certificate_issued = datetime.now()
+            
 
             if request.method == 'POST':
+                certificate_details.certificate_code = certification_code
+                
+                certificate_details.certificate_issued = datetime.now()
                 certificate_details.certificate_valid_years = int(request.form.get('valid_years'))
                 certificate_details.certificate_end_date = request.form.get('end_date')
                 certificate_details.certificate_issuer = request.form.get('certificate_issuer')
@@ -3389,7 +3483,7 @@ def certificate(id):
                 # Overwrite with provided issued date if present
                 issued_date = request.form.get('certificate_issued')
                 if issued_date:
-                    certificate_details.certificate_issued = request.form.get('issued_date')
+                    certificate_details.certificate_issued = datetime.now()
             
             db_session.add(certificate_details)
             db_session.commit()

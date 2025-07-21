@@ -435,7 +435,7 @@ class FormA(Base):
     supervisor_signature_date=Column(DateTime,nullable=True)
     supervisor_form_status=Column(String(255),nullable=True)
     status=Column(String,nullable=True)
-
+    submitted_to_rec=Column(Boolean,default=False)
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -495,6 +495,7 @@ class FormA(Base):
     certificate_end_date=Column(DateTime)
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
+    certificate_received=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def __repr__(self):
@@ -607,7 +608,7 @@ class FormB(Base):
     supervisor_signature_date=Column(DateTime,nullable=True)
     supervisor_form_status=Column(String(255),nullable=True)
     status=Column(String,nullable=True)
-
+    submitted_to_rec=Column(Boolean,default=False)
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -667,6 +668,7 @@ class FormB(Base):
     certificate_end_date=Column(DateTime)
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
+    certificate_received=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
@@ -789,7 +791,7 @@ class FormC(Base):
     supervisor_supervisor_signature=Column(String(255),nullable=True)
     supervisor_signature_date=Column(DateTime,nullable=True)
     status=Column(String,nullable=True)
-
+    submitted_to_rec=Column(Boolean,default=False)
 
     reviewer_name1=Column(String(255),nullable=True)
     reviewer_name2=Column(String(255),nullable=True)
@@ -849,10 +851,25 @@ class FormC(Base):
     certificate_end_date=Column(DateTime)
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
+    certificate_received=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+class Rec(Base):
+    __tablename__ = "rec"
+    id = Column(String(255), primary_key=True, default=generate_uuid)
+    rec_id = Column(String(255), nullable=True)
+    form_id = Column(String(255), nullable=True)
+    full_name = Column(String, nullable=True)
+    rec_comments = Column(String, nullable=True)
+    rec_status = Column(String, nullable=True)
+    rec_date = Column(DateTime, server_default=func.now(), nullable=True)
+
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
 
 class FormD(Base):
     __tablename__ = "form_d"
