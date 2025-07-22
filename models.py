@@ -67,6 +67,7 @@ class User(Base):
     role = Column(Enum(UserRole), nullable=False, default=UserRole.STUDENT)
     reset_token = Column(String, nullable=True)
     reset_token_expiry = Column(DateTime, nullable=True)
+    authenticate_student=Column(String,default=False)
     form_a = relationship("FormA", backref="user", lazy=True)
     form_b = relationship("FormB", backref="user", lazy=True)
     form_c = relationship("FormC", backref="user", lazy=True)

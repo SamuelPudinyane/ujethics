@@ -72,7 +72,15 @@
             <td>{{user.full_name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.role.value}}</td>
-            <td>Active</td>
+            <td>
+              {% if 'student' in user.role.value|lower and  user.authenticate_student%}
+              
+              <span>Student is authenticated</span>
+              
+              {% else %}
+              Active
+              {% endif %}
+            </td>
             <td>
               <a class="btn btn-primary" href="{{url_for('edit_user',id=user.user_id)}}">Edit User</a>
               <form action="{{ url_for('delete_user', id=user.user_id) }}" method="post" style="display:inline;">
@@ -90,6 +98,16 @@
       
                 <button type="submit" class="delete-btn">Delete</button>
               </form>
+              
+              {% if 'student' in user.role.value|lower %}
+              
+              <form action="{{url_for('authenticate_student',id=user.user_id)}}" method="post" style="display:inline;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% if not user.authenticate_student or user.authenticate_student is none %}
+                <button type="submit" class="btn btn-success"> Authenticate Student</button>
+                {% endif %}
+              </form>
+              {% endif %}
             </td>
           </tr>
           {% endfor %}

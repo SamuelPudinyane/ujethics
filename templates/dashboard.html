@@ -173,7 +173,7 @@
             <td>
                 <span style="color:green; font-size:12px;">
     
-                  {% if formC.rec_status=='Approved' or formC.certificate_issued and formc.certificate_received%}
+                  {% if formC.rec_status=='Approved' or formC.certificate_issued and formC.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
