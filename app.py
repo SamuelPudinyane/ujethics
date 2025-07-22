@@ -63,6 +63,7 @@ def student_dashboard():
 def quiz():
     return render_template('quiz.html')
 
+
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
