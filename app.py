@@ -44,7 +44,28 @@ def index():
     }
     return jsonify(response), 200
 
+@app.route('/student_ethics_pack_to_dashboards', methods=['GET','POST'])
 
+def student_ethics_pack_to_dashboards():
+
+    selected_form=request.form.get('selected_form')
+
+    print("selected form -------------------- ",selected_form)
+
+    
+
+    if 'A' in selected_form:
+
+        return render_template('form-a-upload.html')
+
+    elif 'B' in selected_form:
+
+        return render_template('form-b-upload.html')
+
+    elif 'C' in selected_form:
+
+        return render_template('form-c-upload.html')
+    
 @app.route('/student-dashboard', methods=['GET'])
 def student_dashboard():
     user_id=session.get('id')
@@ -228,7 +249,6 @@ def authenticate_student(id):
             flash("no such student on our data")
             return redirect(url_for("all_users"))
     return redirect(url_for('all_users')) 
-
 
 
 @app.route('/register_reviewer', methods=['GET', 'POST'])
