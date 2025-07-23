@@ -25,7 +25,9 @@
       <a href="{{url_for('review_dashboard')}}" class="sidebar-link">
         <i class="fas fa-clipboard-check"></i> My Reviews
       </a>
-
+      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
+        <i class="fas fa-users"></i> Rec Team Dashboard
+      </a>
       <a href="{{url_for('logout')}}" class="sidebar-link">
         <i class="fas fa-sign-out-alt"></i> Logout
       </a>
@@ -66,9 +68,9 @@
               Awaiting for review
               {% elif item.rec_status  or item.form_reviewed_by1 == user_id and item.risk_rating|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
+              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 and not item.certificate_received %}
               Under Review
-              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating |lower =='low' %}
+              {% elif not item.certificate_received and item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating |lower =='low' %}
               Certificate Will be Issued
               {% elif  item.form_reviewed_by != user_id and item.form_reviewed_by1 != user_id and not item.review_status1 and item.review_status%}
               Awaiting for Review
@@ -76,7 +78,7 @@
               Submitted to Ethics Admin
               {% elif item.review_status or item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id and not item.review_status1%}
               Awaiting for Review
-              {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved'%}
+              {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' and not item.certificate_received%}
               Under Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
@@ -155,15 +157,15 @@
               Awaiting for review
               {% elif item.rec_status or item.form_reviewed_by1 == user_id and item.risk_level|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
+              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 and not item.certificate_received %}
               Under Review
-              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
+              {% elif not item.certificate_received and item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
               Certificate Will be Issued
               {% elif  item.form_reviewed_by != user_id and item.form_reviewed_by1 != user_id and not item.review_status1 and item.review_status%}
               Awaiting for Review
               {% elif item.review_status and item.form_reviewed_by1==user_id and item.review_status1%}
               Submitted to Ethics Admin
-              {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' %}
+              {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' and not item.certificate_received %}
               Under Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected
@@ -230,15 +232,15 @@
               Awaiting for review
               {% elif item.rec_status  or item.form_reviewed_by1 == user_id and item.risk_level|lower != 'low' %}
               {{item.rec_status}}
-              {% elif item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 %}
+              {% elif item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower != 'low' and item.review_status and item.review_status1 and not item.certificate_received %}
               Under Review
-              {% elif item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
+              {% elif not item.certificate_received and item.certificate_issued or item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id and item.risk_level|lower == 'low' or item.risk_rating|lower =='low' %}
               Certificate Will be Issued
               {% elif  item.form_reviewed_by != user_id and item.form_reviewed_by1 != user_id and not item.review_status1 and item.review_status%}
               Awaiting for Review
               {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
-              {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved'%}
+              {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' and not item.certificate_received%}
               Under Review
               {% elif not item.review_status or not item.review_status1 %}
               Rejected

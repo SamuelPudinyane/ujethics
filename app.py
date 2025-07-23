@@ -45,8 +45,21 @@ def index():
     return jsonify(response), 200
 
 
-@app.route('/student-dashboard', methods=['GET'])
+
+@app.route('/student_ethics_pack_to_dashboards', methods=['GET','POST'])
+def student_ethics_pack_to_dashboards():
+    selected_form=request.form.get('selected_form')
+   
+    if 'A' in selected_form:
+        return render_template('form-a-upload.html')
+    elif 'B' in selected_form:
+        return render_template('form-b-upload.html')
+    elif 'C' in selected_form:
+        return render_template('form-c-upload.html')
+
+@app.route('/student-dashboard', methods=['GET','POST'])
 def student_dashboard():
+    
     user_id=session.get('id')
 
     if not user_id:
@@ -100,7 +113,11 @@ def login_page():
                    
                     if watched_video:
                         if user.supervisor_id:
-                            print("user authenticated")
+                            student_id=user.user_id
+                            for model in [FormA, FormB, FormC]:
+                                student_details = db_session.query(model).filter_by(user_id=student_id).first()
+                                if student_details:
+                                    return redirect(url_for('student_dashboard'))
                             return render_template('ethics_pack.html', name = session['name'])
                         elif not user.supervisor_id and user.authenticate_student:
                             return redirect(url_for('student_choose_supervisor'))
@@ -154,19 +171,19 @@ def register():
         # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
             msg = "Only University of Johannesburg email allowed"
-            return render_template('register.html', messages=[msg], supervisors=supervisors)
+            return render_template('register.html', messages=[msg])
 
         # Validate password
         is_valid, message = validate_password(password)
         if not is_valid:
             msg['message'] = message
-            return render_template('register.html', messages=msg, supervisors=supervisors)
+            return render_template('register.html', messages=msg)
         
         # Check if user exists
         user = db_session.query(User).filter_by(email=email).first()
         if user:
             msg = 'Email already registered!'
-            return render_template('register.html', messages=[msg], supervisors=supervisors)
+            return render_template('register.html', messages=[msg])
         
         try:
             # Hash the password properly
@@ -235,11 +252,11 @@ def register_reviewer():
     
     messages=''
     if request.method == 'POST':
-        full_name = request.form.get('full_name', '').strip()
-        staff_number = request.form.get('staff_number', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '').strip()
-        password2=request.form.get('password2').strip()
+        full_name = request.form.get('full_name', '')
+        staff_number = request.form.get('staff_number', '')
+        email = request.form.get('email', '').lower()
+        password = request.form.get('password', '')
+        password2=request.form.get('password2')
         specialisation = request.form.get('specialisation')
         role=request.form.get('role')
         if password == password2:
@@ -291,13 +308,13 @@ def edit_user(id):
  
     msg="update the user information"
     if user:
-        full_name = request.form.get('full_name').strip()
-        staff_number = request.form.get('staff_number').strip()
-        email = request.form.get('email').strip().lower()
-        password = request.form.get('password').strip() if request.form.get('password') is not None else None
-        password2 = request.form.get('password2').strip()
-        specialisation = request.form.get('specialisation').strip()
-        role = request.form.get('role').strip()
+        full_name = request.form.get('full_name')
+        staff_number = request.form.get('staff_number')
+        email = request.form.get('email')
+        password = request.form.get('password') if request.form.get('password') is not None else None
+        password2 = request.form.get('password2')
+        specialisation = request.form.get('specialisation')
+        role = request.form.get('role')
 
         if request.method=="POST":
             if password and password2:
@@ -3233,7 +3250,8 @@ def review_dashboard():
         .join(User, FormA.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
         .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)\
-        .distinct()\
+        .order_by(FormA.declaration_date.desc()) \
+        .distinct() \
         .all()
     
     
@@ -3241,14 +3259,16 @@ def review_dashboard():
         .join(User, FormB.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
         .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)\
-        .distinct()\
+        .order_by(FormB.declaration_date.desc()) \
+        .distinct() \
         .all()
 
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
         .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)\
-        .distinct()\
+        .order_by(FormC.submission_date.desc()) \
+        .distinct() \
         .all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()

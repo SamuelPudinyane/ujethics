@@ -161,19 +161,21 @@
 
     
 </div>
-
+{% if not certificate_details.certificate_issued %}
 <button type="submit" 
         style="padding: 10px 20px; background: #004785; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; gap:1.5px;">
         Create Certificate
     </button>
-    
+    {% endif %}
     <a class="btn btn-primary ml-5" href="{{url_for('chair_landing')}}" class="btn btn-primary">Go Back</a>
 </form>
 <br>
+{% if not certificate_details.certificate_received %}
 <form action="{{url_for('send_certificate',id=certificate_details.form_id)}}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <button type="submit" class="btn btn-success">Send certificate</button>
 </form>
+{% endif%}
 <br>
 </body>
 </html>

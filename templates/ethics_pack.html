@@ -133,7 +133,11 @@
 
   </div>
 
-    <a href="{{url_for('student_dashboard')}}" class="approve-btn next-btn">Proceed to Dashboard ➔</a>
+    <form id="proceedForm" method="POST" action="{{ url_for('student_ethics_pack_to_dashboards') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+    <input type="hidden" name="selected_form" id="selectedFormInput">
+    <button type="submit" id="proceedBtn" class="approve-btn next-btn" style="display:none" >Proceed to Dashboard ➔</button>
+    </form>
 
   </main>
 </div>
@@ -148,13 +152,17 @@
   const templateB = document.getElementById('templateB');
   const templateC = document.getElementById('templateC');
   const proceedBtn = document.getElementById('proceedBtn');
+  const selectedFormInput = document.getElementById('selectedFormInput');
 
   formRadios.forEach(radio => {
     radio.addEventListener('change', () => {
-      templateA.style.display = radio.value === 'A' ? 'grid' : 'none';
-      templateB.style.display = radio.value === 'B' ? 'grid' : 'none';
-      templateC.style.display = radio.value === 'C' ? 'grid' : 'none';
+      templateA.style.display = radio.value === 'A' ? 'flex' : 'none';
+      templateB.style.display = radio.value === 'B' ? 'flex' : 'none';
+      
       proceedBtn.style.display = 'block';
+      
+      selectedFormInput.value = radio.value;
+     console.log("radio value ", radio.value)
     });
   });
 </script>

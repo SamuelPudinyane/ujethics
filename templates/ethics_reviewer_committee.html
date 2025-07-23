@@ -99,12 +99,6 @@
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
-              {% elif 'low' in formb.risk_rating|lower 
-      and not forma.certificate_issued and forma.form_review_comment in ['Approved', 'Approved with Minor Changes'] and forma.form_review_comment1 in ['Approved', 'Approved with Minor Changes']
-    %}
-  <a href="{{ url_for('certificate', id=forma.form_id) }}" class="btn btn-sm btn-success text-white">
-    🎓 Issue Certificate
-  </a>
               {% elif forma.certificate_issued and not formb.certificate_received%}
               Certificate issued but not send
               {% elif forma.review_recommendation and not forma.review_recommendation1 %}
@@ -120,9 +114,6 @@
               Rejected
               {% elif forma.certificate_issued and forma.certificate_received %}
             <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
-            {% elif forma.rec_status=='Approved' and not forma.certificate_issued %}
-              <a href="{{ url_for('certificate', id=forma.form_id) }}" class="btn btn-sm btn-success text-white">🎓 Issue Certificate</a>
-         
               {% endif %}
             </span>
             <br>
@@ -203,14 +194,7 @@
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
-              {% elif 'low' in formb.risk_level|lower 
-      and not formb.certificate_issued and formb.form_review_comment in ['Approved'] and formb.form_review_comment1 in ['Approved']
-    and not formc.certificate_received %}
-  <a href="{{ url_for('certificate', id=formb.form_id) }}" class="btn btn-sm btn-success text-white">
-    🎓 Issue Certificate
-  </a>
-
-              {% elif formb.certificate_issued and not formb.certificate_received%}
+             {% elif formb.certificate_issued and not formb.certificate_received%}
               Certificate issued but not send
               {% elif formb.review_recommendation and not formb.review_recommendation1 %}
               Awaiting second reviewer
@@ -228,9 +212,7 @@
             
               {% elif formb.certificate_issued and formb.certificate_received %}
             <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
-            {% elif 'low' not in formb.risk_level|lower and formb.rec_status=='Approved' and not formb.certificate_received%}
-            <a href="{{url_for('certificate',id=formb.form_id)}}">Issue Certificate</a>
-            {% endif %}
+           {% endif %}
             </span>
             
             <br>
@@ -305,14 +287,7 @@
               Awaiting for review
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
-              {% elif 'low' in formc.risk_level|lower 
-      and not formc.certificate_issued and formc.form_review_comment in ['Approved'] and formc.form_review_comment1 in ['Approved'] and not formc.certificate_received
-    %}
-  <a href="{{ url_for('certificate', id=formc.form_id) }}" class="btn btn-sm btn-success text-white">
-    🎓 Issue Certificate
-  </a>
-
-
+              
               {% elif formc.certificate_email%}
               Certificate issued
               {% elif formc.review_recommendation and not formc.review_recommendation1 %}
@@ -330,9 +305,7 @@
               Rejected
               {% elif formc.certificate_issued and formc.certificate_received %}
             <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
-            {% elif formc.rec_status=='Approved' and not formc.certificate_received and not formc.certificate_issued%}
-            <a href="{{url_for('certificate',id=formc.form_id)}}">Issue Certificate</a>
-              {% endif %}
+            {% endif %}
             </span>
             <br>
             
