@@ -124,7 +124,16 @@
                   {% else %}
                   This is the previous version
                   {% endif %}
-            </span></td>
+            </span>
+            <br>
+            {% if form.review_supervisor_signature%}
+             Reviewed by {{form.review_supervisor_signature}}
+             {% endif %}
+             <br>
+            {% if form.review_supervisor_signature1%}
+            Reviewed by {{form.review_supervisor_signature1}}
+            {% endif %}
+          </td>
             <td>{% if form.risk_level %}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}}{% endif%}</td>
             <td>
               
