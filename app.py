@@ -44,20 +44,29 @@ def index():
     }
     return jsonify(response), 200
 
-
-
 @app.route('/student_ethics_pack_to_dashboards', methods=['GET','POST'])
-def student_ethics_pack_to_dashboards():
-    selected_form=request.form.get('selected_form')
-   
-    if 'A' in selected_form:
-        return render_template('form-a-upload.html')
-    elif 'B' in selected_form:
-        return render_template('form-b-upload.html')
-    elif 'C' in selected_form:
-        return render_template('form-c-upload.html')
 
-@app.route('/student-dashboard', methods=['GET','POST'])
+def student_ethics_pack_to_dashboards():
+
+    selected_form=request.form.get('selected_form')
+
+    print("selected form -------------------- ",selected_form)
+
+    
+
+    if 'A' in selected_form:
+
+        return render_template('form-a-upload.html')
+
+    elif 'B' in selected_form:
+
+        return render_template('form-b-upload.html')
+
+    elif 'C' in selected_form:
+
+        return render_template('form-c-upload.html')
+    
+@app.route('/student-dashboard', methods=['GET'])
 def student_dashboard():
     
     user_id=session.get('id')
@@ -75,6 +84,7 @@ def student_dashboard():
 @app.route('/quiz', methods=['GET'])
 def quiz():
     return render_template('quiz.html')
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -244,7 +254,6 @@ def authenticate_student(id):
             flash("no such student on our data")
             return redirect(url_for("all_users"))
     return redirect(url_for('all_users')) 
-
 
 
 @app.route('/register_reviewer', methods=['GET', 'POST'])
@@ -3245,13 +3254,13 @@ def chair_landing():
 @app.route('/review_dashboard', methods=['GET','POST'])
 def review_dashboard():
     user_id=session['id']
-  
-    submitted_form_a = db_session.query(FormA, FormARequirements) \
-        .join(User, FormA.user_id == User.user_id) \
+   
+    # Form A
+    submitted_form_a = db_session.query(FormA, FormARequirements)\
+        .join(User, FormA.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
         .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)\
-        .order_by(FormA.declaration_date.desc()) \
-        .distinct() \
+        .distinct()\
         .all()
     
     
@@ -3259,16 +3268,15 @@ def review_dashboard():
         .join(User, FormB.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
         .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)\
-        .order_by(FormB.declaration_date.desc()) \
-        .distinct() \
+        .distinct()\
         .all()
 
+    # Form C
     submitted_form_c = db_session.query(FormC, FormARequirements) \
-        .join(User, FormC.user_id == User.user_id) \
+        .join(User, FormC.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
         .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)\
-        .order_by(FormC.submission_date.desc()) \
-        .distinct() \
+        .distinct()\
         .all()
     supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
     today = date.today()

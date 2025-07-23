@@ -133,10 +133,17 @@
 
   </div>
 
+<<<<<<< HEAD
     <form id="proceedForm" method="POST" action="{{ url_for('student_ethics_pack_to_dashboards') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
     <input type="hidden" name="selected_form" id="selectedFormInput">
     <button type="submit" id="proceedBtn" class="approve-btn next-btn" style="display:none" >Proceed to Dashboard ➔</button>
+=======
+    <form id="proceedForm" method="POST" action="{{ url_for('student_ethics_pack_to_dashboards') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+    <input type="hidden" name="selected_form" id="selectedFormInput">
+    <button type="submit" id="proceedBtn" class="approve-btn next-btn" style="display:none" >Next ➔</button>
+>>>>>>> 42b2650fde628363ac47954973bceea260df4d2f
     </form>
 
   </main>
@@ -164,7 +171,7 @@
       selectedFormInput.value = radio.value;
      console.log("radio value ", radio.value)
     });
-  });
+  });
 </script>
 </body>
 </html>

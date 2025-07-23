@@ -30,7 +30,7 @@
     
     <!-- Top Bar -->
     <div class="form-header">
-      <button class="approve-btn">💾 Save Draft</button>
+      <button class="approve-btn">Save Draft</button>
       <strong>Step 6 of 7</strong>
     </div>
 
@@ -55,15 +55,15 @@
   
     <div class="question-block">
       <label for="informed-consent">6.1 Will informed consent be obtained? Explain the process:</label>
-      <textarea id="informed-consent" name="informed_consent" rows="4" required></textarea>
+      <textarea id="informed-consent" name="informed_consent" rows="4" required placeholder="Describe how informed consent will be obtained from participants, including any documentation or verbal explanations provided."></textarea>
     </div>
   
     <div class="question-block">
       <label>6.2 Data storage and access to data</label><br>
-      <input type="checkbox" name="secure_location[]" value="secure_location"> Paper-based records must be kept in a secure location<br>
-      <input type="checkbox" name="password_protected[]" value="password_protected"> Computer-based records must only be available to personnel involved in the study through access privileges<br>
-      <input type="checkbox" name="protected_place[]" value="protected_place"> Electronic data will be kept in a protected place<br>
-      <input type="checkbox" name="retention[]" value="retention"> Paper-based data will be kept for 5 years and then destroyed<br>
+      <input type="radio" name="secure_location[]" value="secure_location"> Paper-based records must be kept in a secure location<br>
+      <input type="radio" name="password_protected[]" value="password_protected"> Computer-based records must only be available to personnel involved in the study through access privileges<br>
+      <input type="radio" name="protected_place[]" value="protected_place"> Electronic data will be kept in a protected place<br>
+      <input type="radio" name="retention[]" value="retention"> Paper-based data will be kept for 5 years and then destroyed<br>
     </div>
   
     <div class="question-block">
@@ -93,10 +93,10 @@
   
     <div class="question-block">
       <label>6.8 Select all data privacy practices applied:</label><br>
-      <input type="checkbox" name="remove_identifiers[]" value="remove_identifiers"> Personal identifiers will be removed<br>
-      <input type="checkbox" name="encryption[]" value="encryption"> Encryption<br>
-      <input type="checkbox" name="pseudonyms[]" value="pseudonyms"> Use of pseudonyms<br>
-      <input type="checkbox" name="focus_group_warning[]" value="focus_group_warning"> Participants in focus groups will be advised confidentiality cannot be assured<br>
+      <input type="radio" name="remove_identifiers[]" value="remove_identifiers"> Personal identifiers will be removed<br>
+      <input type="radio" name="encryption[]" value="encryption"> Encryption<br>
+      <input type="radio" name="pseudonyms[]" value="pseudonyms"> Use of pseudonyms<br>
+      <input type="radio" name="focus_group_warning[]" value="focus_group_warning"> Participants in focus groups will be advised confidentiality cannot be assured<br>
     </div>
   
     <div class="question-block">
@@ -110,25 +110,25 @@
     </tr>
   </thead>
   <tbody>
-    <tr><td>a) Identity and position of the researcher(s)?</td><td><input type="checkbox" name="q6_9a" value="yes"> </td></tr>
-    <tr><td>b) Purpose of the information collection?</td><td><input type="checkbox" name="q6_9b" value="yes"> </td></tr>
-    <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><input type="checkbox" name="q6_9c" value="yes">  </td></tr>
-    <tr><td>d) Participant’s role in the study?</td><td><input type="checkbox" name="q6_9d" value="yes"> </td></tr>
-    <tr><td>e) Expected duration of participation?</td><td><input type="checkbox" name="q6_9e" value="yes"></td></tr>
-    <tr><td>f) Statement of voluntary participation and no penalty?</td><td><input type="checkbox" name="q6_9f" value="yes"></td></tr>
-    <tr><td>g) Benefits to the participant and others?</td><td><input type="checkbox" name="q6_9g" value="yes"></td></tr>
-    <tr><td>h) Risks and steps for harm/injury?</td><td><input type="checkbox" name="q6_9h" value="yes"></td></tr>
-    <tr><td>i) Statement of right to withdraw?</td><td><input type="checkbox" name="q6_9i" value="yes"></td></tr>
-    <tr><td>j) Compensation/gifts/services?</td><td><input type="checkbox" name="q6_9j" value="yes"></td></tr>
-    <tr><td>k) Reimbursement for costs?</td><td><input type="checkbox" name="q6_9k" value="yes"></td></tr>
-    <tr><td>l) Indemnity if applicable?</td><td><input type="checkbox" name="q6_9l" value="yes"></td></tr>
-    <tr><td>m) Period for which records will be kept?</td><td><input type="checkbox" name="q6_9m" value="yes"></td></tr>
-    <tr><td>n) Steps for confidentiality and secure storage?</td><td><input type="checkbox" name="q6_9n" value="yes"></td></tr>
-    <tr><td>o) Disclosure of information to third parties?</td><td><input type="checkbox" name="q6_9o" value="yes"></td></tr>
-    <tr><td>p) Privacy protection in publications?</td><td><input type="checkbox" name="q6_9p" value="yes"></td></tr>
-    <tr><td>q) Feedback to participants?</td><td><input type="checkbox" name="q6_9q" value="yes"></td></tr>
-    <tr><td>r) Exclusions to confidentiality disclosed?</td><td><input type="checkbox" name="q6_9r" value="yes"></td></tr>
-    <tr><td>s) Consent for audio/video recording?</td><td><input type="checkbox" name="q6_9s" value="yes"></td></tr>
+    <tr><td>a) Identity and position of the researcher(s)?</td><td><input type="radio" name="q6_9a" value="yes"> </td></tr>
+    <tr><td>b) Purpose of the information collection?</td><td><input type="radio" name="q6_9b" value="yes"> </td></tr>
+    <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><input type="radio" name="q6_9c" value="yes">  </td></tr>
+    <tr><td>d) Participant’s role in the study?</td><td><input type="radio" name="q6_9d" value="yes"> </td></tr>
+    <tr><td>e) Expected duration of participation?</td><td><input type="radio" name="q6_9e" value="yes"></td></tr>
+    <tr><td>f) Statement of voluntary participation and no penalty?</td><td><input type="radio" name="q6_9f" value="yes"></td></tr>
+    <tr><td>g) Benefits to the participant and others?</td><td><input type="radio" name="q6_9g" value="yes"></td></tr>
+    <tr><td>h) Risks and steps for harm/injury?</td><td><input type="radio" name="q6_9h" value="yes"></td></tr>
+    <tr><td>i) Statement of right to withdraw?</td><td><input type="radio" name="q6_9i" value="yes"></td></tr>
+    <tr><td>j) Compensation/gifts/services?</td><td><input type="radio" name="q6_9j" value="yes"></td></tr>
+    <tr><td>k) Reimbursement for costs?</td><td><input type="radio" name="q6_9k" value="yes"></td></tr>
+    <tr><td>l) Indemnity if applicable?</td><td><input type="radio" name="q6_9l" value="yes"></td></tr>
+    <tr><td>m) Period for which records will be kept?</td><td><input type="radio" name="q6_9m" value="yes"></td></tr>
+    <tr><td>n) Steps for confidentiality and secure storage?</td><td><input type="radio" name="q6_9n" value="yes"></td></tr>
+    <tr><td>o) Disclosure of information to third parties?</td><td><input type="radio" name="q6_9o" value="yes"></td></tr>
+    <tr><td>p) Privacy protection in publications?</td><td><input type="radio" name="q6_9p" value="yes"></td></tr>
+    <tr><td>q) Feedback to participants?</td><td><input type="radio" name="q6_9q" value="yes"></td></tr>
+    <tr><td>r) Exclusions to confidentiality disclosed?</td><td><input type="radio" name="q6_9r" value="yes"></td></tr>
+    <tr><td>s) Consent for audio/video recording?</td><td><input type="radio" name="q6_9s" value="yes"></td></tr>
   </tbody>
 </table>
 

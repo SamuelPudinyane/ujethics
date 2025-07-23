@@ -41,7 +41,7 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <!-- Top Bar -->
     <div class="form-header">
-      <button class="approve-btn">💾 Save Draft</button>
+      <button class="approve-btn">Save Draft</button>
       <strong>Step 5 of 7</strong>
     </div>
 
@@ -66,9 +66,9 @@
       </thead>
       <tbody>
         <tr>
-          <td class="text-center"><input type="checkbox" name="quantitative[]" value="Yes"></td>
-          <td class="text-center"><input type="checkbox" name="qualitative[]" value="Yes"></td>
-          <td class="text-center"><input type="checkbox" name="mixed_methods[]" value="Yes"></td>
+          <td class="text-center"><input type="radio" name="quantitative[]" value="Yes"></td>
+          <td class="text-center"><input type="radio" name="qualitative[]" value="Yes"></td>
+          <td class="text-center"><input type="radio" name="mixed_methods[]" value="Yes"></td>
         </tr>
       </tbody>
     </table>
@@ -123,12 +123,12 @@
     <label>5.4 Research Instruments for Data Collection</label>
     <label>5.4.1 Indicate which data collection methods will be used</label>
     <div id="data-methods">
-            <label><input type="checkbox" value="questionnaire" class="method-check"> Questionnaire</label><br>
-            <label><input type="checkbox" value="interview" class="method-check"> Interview</label><br>
-            <label><input type="checkbox" value="focus" class="method-check"> Focus Group</label><br>
-            <label><input type="checkbox" value="observation" class="method-check"> Observation</label><br>
-            <label><input type="checkbox" value="documents" class="method-check"> Documents</label><br>
-            <label><input type="checkbox" value="other" class="method-check"> Other</label><br>
+            <label><input type="radio" value="questionnaire" class="method-check"> Questionnaire</label><br>
+            <label><input type="radio" value="interview" class="method-check"> Interview</label><br>
+            <label><input type="radio" value="focus" class="method-check"> Focus Group</label><br>
+            <label><input type="radio" value="observation" class="method-check"> Observation</label><br>
+            <label><input type="radio" value="documents" class="method-check"> Documents</label><br>
+            <label><input type="radio" value="other" class="method-check"> Other</label><br>
     </div>
     <br>
     
@@ -138,8 +138,8 @@
             <input type="radio" name="questionnaire_type" value="Self-designed"> Self-designed<br>
             <input type="radio" name="questionnaire_type" value="Existing"> Existing<br>
             <label>If existing, permission obtained?</label><br>
-            <input type="checkbox" name="permission_obtained"> Yes
-            <input type="checkbox" name="open_source"> Open Source<br>
+            <input type="radio" name="permission_obtained"> Yes
+            <input type="radio" name="open_source"> Open Source<br>
             <textarea name="instrument_attachment_reason" rows="2" placeholder="Attach or justify"></textarea>
           </div>
     <!-- Interview -->
@@ -159,8 +159,8 @@
             <input type="radio" name="use_focus_groups" value="Yes"> Yes
             <input type="radio" name="use_focus_groups" value="No"> No<br>
             <label>Will focus groups be recorded?</label><br>
-            <input type="checkbox" name="focus_recording" value="Audio"> Audio
-            <input type="checkbox" name="focus_recording" value="Video"> Video
+            <input type="radio" name="focus_recording" value="Audio"> Audio
+            <input type="radio" name="focus_recording" value="Video"> Video
           </div>
 
           <!-- Observation -->
@@ -358,8 +358,8 @@
       'other': 'other_fields',
     };
 
-    document.querySelectorAll('.method-check').forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
+    document.querySelectorAll('.method-check').forEach(radio => {
+      radio.addEventListener('change', function () {
         const targetId = methodMap[this.value];
         if (targetId) {
           const target = document.getElementById(targetId);

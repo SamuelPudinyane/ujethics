@@ -119,14 +119,14 @@
         </div>
         <div class="col-md-6">
           <label for="searchInput">Search Input</label>
-          <input type="text" id="searchInput" class="form-control" placeholder="Enter Year or Specialization">
+          <input type="text" id="searchInput" class="form-control" placeholder="Enter Year or Qualification">
           <select id="specializationDropdown" class="form-select d-none mt-2">
             <option value="">-- Select Specialization --</option>
             {% for spec in results %}<option value="{{ spec|lower }}">{{ spec }}</option>{% endfor %}
           </select>
         </div>
         <div class="col-md-3 d-flex align-items-end">
-          <button class="btn btn-primary w-100" onclick="applyFilters()">Search</button>
+          <button class="btn-search w-100" onclick="applyFilters()">Search</button>
         </div>
       </div>
     </section>
