@@ -100,7 +100,14 @@ def login_page():
                     watched_video = db_session.query(Watched).filter_by(user_id=user_id).first()
                    
                     if watched_video:
-                        return render_template('ethics_pack.html', name = session['name'])
+                        if user.supervisor_id:
+                            print("user authenticated")
+                            return render_template('ethics_pack.html', name = session['name'])
+                        elif not user.supervisor_id and user.authenticate_student:
+                            return redirect(url_for('student_choose_supervisor'))
+                        else:
+                            flash("You are not yet Authenticated","danger")
+                            return redirect(url_for('login_page'))
                     else:
                         
                         return render_template('video.html')
@@ -133,7 +140,7 @@ def login_page():
 
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
-    supervisors = db_session.query(User).filter(User.role == UserRole.SUPERVISOR).all()
+    
     msg = {}
     
     if request.method == 'POST':
@@ -141,9 +148,9 @@ def register():
         student_number = request.form.get('student_number', '').strip()
         email = request.form.get('email', '').strip().lower()
         password = request.form.get('password', '').strip()
-        supervisor_id = request.form.get('supervisors')
         
-        print("name ----------",request.method)
+        
+        
        
         # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
@@ -172,7 +179,6 @@ def register():
                 student_number=student_number,
                 email=email,
                 password=password,  # Make sure this is the hashed version
-                supervisor_id=supervisor_id,
                 role=UserRole.STUDENT
             )
             
@@ -188,10 +194,40 @@ def register():
         except Exception as e:
             db_session.rollback()
             msg = 'Registration failed. Please try again.'
-            return render_template('register.html', messages=[msg], supervisors=supervisors)
+            return render_template('register.html', messages=[msg])
     
     
-    return render_template('register.html', messages=[], supervisors=supervisors)
+    return render_template('register.html', messages=[])
+
+@app.route("/student_choose_supervisor",methods=['POST','GET'])
+def student_choose_supervisor():
+    user_id=session['id']
+    supervisors = db_session.query(User).filter(User.role == UserRole.SUPERVISOR).all()
+
+    supervisor_id = request.form.get('supervisors')
+    user=db_session.query(User).filter_by(user_id=user_id).first()
+
+    if request.method=='POST':
+        user.supervisor_id=supervisor_id
+        db_session.commit()
+        if user.supervisor_id:
+            return render_template('ethics_pack.html', name = session['name'])
+    return render_template('student_choose_supervisor.html',supervisors=supervisors)
+
+
+@app.route("/authenticate_student/<string:id>",methods=['POST','GET'])
+def authenticate_student(id):
+    if request.method=='POST':
+       
+        form=db_session.query(User).filter_by(user_id=id).first()
+        if form:
+            form.authenticate_student=True
+            db_session.commit()
+            return redirect(url_for('all_users'))
+        else:
+            flash("no such student on our data")
+            return redirect(url_for("all_users"))
+    return redirect(url_for('all_users')) 
 
 
 

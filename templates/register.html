@@ -48,17 +48,7 @@
       <input id="email" name="email" type="email" placeholder="Enter UJ Email" required>
       <input id="password" name="password" type="password" placeholder="Create password" required>
 
-      <h4 class="centered-text mt-4">Supervisor Details</h4>
-      <label for="supervisors">Choose supervisor from list:</label>
-      <select id="supervisors" name="supervisors" required>
-        <option value="" disabled selected>-- Click to select --</option>
-        {% for supervisor in supervisors %}
-          <option value="{{supervisor.user_id}}" data-email="{{ supervisor.email }}">{{supervisor.full_name}}</option>
-        {% endfor %}
-      </select>
-
-      <input id="sup-email" type="email" name="sub_email" placeholder="Supervisor Email" required disabled>
-
+      
       <button type="submit" class="btn btn-primary w-100 mt-3">Register</button>
     </form>
 
