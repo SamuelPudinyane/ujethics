@@ -6,22 +6,25 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
-  color: #022169;
-  /* line-height: 1.6; */
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  color: #474b56;
   min-height: 100vh;
 }
 
+h2, label, input, select, textarea {
+    color: black;
+}
+  
+
 /* === NAVBAR === */
 .navbar {
-  background-color: #000000;
-  padding: 1rem;
+  background-color: #d95900;
   color: white;
 }
 
 .nav-content {
-  max-width: 1100px;
+  max-width: 500px;
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
@@ -44,7 +47,7 @@ body {
 .main-content,
 .auth-container,
 .container {
-  max-width: 1500px;
+  max-width: 1800px;
   margin: 1rem auto;
   background: white;
   padding: 2rem;
@@ -55,8 +58,7 @@ body {
 /* === HEADINGS === */
 h2,
 h4 {
-  color: #022169;
-  /* JBS Navy */
+  color: #000000;
   margin-bottom: 1rem;
 }
 
@@ -77,7 +79,6 @@ form textarea {
   padding: 12px;
   margin-bottom: 1rem;
   border: 1px solid #DCDDDE;
-  /* Light Grey */
   border-radius: 8px;
   background-color: #fdfdfd;
   transition: border 0.3s ease;
@@ -87,16 +88,14 @@ form input:focus,
 form select:focus,
 form textarea:focus {
   border-color: #00B6B5;
-  /* Teal */
   outline: none;
 }
 
 /* === BUTTONS === */
 button {
-  width: 100%;
+  width: 15%;
   padding: 12px;
-  background-color: #F26522;
-  /* JBS Orange */
+  background-color: #d95900;
   color: white;
   font-weight: bold;
   border: none;
@@ -113,7 +112,6 @@ button:hover {
 
 button:disabled {
   background-color: #939598;
-  /* Grey */
   cursor: not-allowed;
 }
 
@@ -125,7 +123,6 @@ button:disabled {
 .confirm-check {
   display: inline-flex;
   align-items: center;
-  /* gap: 0.5rem; */
   font-weight: 500;
   margin: 1rem 0;
   /* padding-left: 0.1rem; */
@@ -142,7 +139,6 @@ button:disabled {
 
 .switch-link a {
   color: #4F2365;
-  /* JBS Purple */
   text-decoration: none;
 }
 
@@ -152,7 +148,7 @@ button:disabled {
 
 /* === FOOTER === */
 .footer {
-  background-color: #939598;
+  background-color: #d95900;
   color: white;
   text-align: center;
   padding: 1rem;
@@ -226,6 +222,15 @@ button:disabled {
   color: #022169;
 }
 
+.status-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* light grey */
+}
+
+.status-table tr:nth-child(odd) {
+  background-color: #ffffff; /* white */
+}
+
+
 /* === NOTIFICATIONS === */
 .notification-box {
   margin-top: 2rem;
@@ -248,17 +253,14 @@ button:disabled {
 .btn-logout {
   display: inline-block;
   padding: 12px 24px;
-  background-color: #e85f1b;
+  background-color: #000000;
   color: white;
   text-decoration: none;
   font-weight: bold;
   border-radius: 8px;
-  margin-left: 1200px;
+  /* margin-left: 1200px; */
 }
 
-.btn-logout:hover {
-  background-color: #a50c38;
-}
 
 @media (max-width: 768px) {
 
@@ -283,7 +285,6 @@ button:disabled {
   width: 100%;
   height: 100%;
   background: rgba(214, 222, 242, 0.85);
-  /* JBS Navy with transparency */
   display: none;
   justify-content: center;
   align-items: center;
@@ -309,7 +310,6 @@ button:disabled {
   margin-top: 1.5rem;
   padding: 10px 20px;
   background-color: #F26522;
-  /* JBS Orange */
   color: white;
   border: none;
   border-radius: 8px;
@@ -331,8 +331,8 @@ button:disabled {
 }
 
 .main-content label {
-  font-weight: 600;
-  color: #022169;
+  font-weight: 700;
+  color: #000000;
   margin-top: 1rem;
   display: block;
 }
@@ -354,24 +354,22 @@ button:disabled {
 }
 
 .approve-btn {
-  background-color: #27ae60;
+  background-color: #000000;
   color: white;
 }
 
 .approve-btn:hover {
-  background-color: #1e874b;
+  background-color: #282828;
 }
 
 .revise-btn {
-  background-color: #1911ff;
-  color: #ffffff;
+  background-color: #d95900;
+  color: #d95900;
 }
 
 .revise-btn:hover {
   background-color: #a5adec;
 }
-
-
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
@@ -486,10 +484,10 @@ button:disabled {
 }
 
 form label {
-  font-weight: 600;
+  font-weight: 800;
   margin-top: 1rem;
   display: block;
-  color: #022169;
+  color: #020202;
 }
 
 .form-wrapper {
@@ -509,7 +507,7 @@ form label {
   display: block;
   margin-top: 1.2rem;
   font-weight: bold;
-  color: #022169;
+  color: #000000;
 }
 
 .main-content form input, 

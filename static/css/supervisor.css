@@ -1,12 +1,11 @@
 /* Supervisor Dashboard Styles */
 
 :root {
-  --jbs-navy: #000000;
+  --jbs-orange: #d95900;
   --jbs-teal: #022169;
   --jbs-purple: #4F2365;
   --jbs-yellow: #FFCB05;
   --jbs-grey: #939598;
-  --jbs-lightgrey: #DCDDDE;
   --white: #ffffff;
   --black: #000000;
   --accent: #F26522;
@@ -18,13 +17,18 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 body {
-  background-color: #f8f9fc;
-  color: #333;
+  background-color: #ffffff;
+  color: #000000;
 }
+
+h2, label, input, select, textarea {
+    color: black;
+}
+  
 
 .admin-wrapper {
   display: flex;
@@ -34,11 +38,12 @@ body {
 /* Sidebar */
 .sidebar {
   width: 250px;
-  background-color: var(--jbs-grey);
+  background-color: var(--jbs-orange);
   color: white;
   padding: 2rem 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
 }
 
 /* Header Section */
@@ -71,16 +76,11 @@ body {
 
 /* Hover Effect */
 .sidebar-nav a:hover {
-  background-color: #022169;
+  background-color: #c2bfbf;
   border: 1px solid #ffffff30;
   text-decoration: none;
 }
 
-/* Active Tab */
-.sidebar-nav a.active {
-  background-color: #021646;
-  border: 1px solid #ffffff40;
-}
 
 .sidebar-link {
   display: flex;
@@ -99,11 +99,6 @@ body {
   font-size: 1.1rem;
 }
 
-/* Hover Effect */
-.sidebar-link:hover {
-  background-color: #022169;
-  border: 1px solid #ffffff30;
-}
 
 /* Main Area */
 .admin-main {
@@ -113,17 +108,16 @@ body {
 
 .topbar {
   background-color: #f1f4f9;
-  border-left: 4px solid #063ab4;
+  border-left: 4px solid #d95900;
   border-radius: 8px;
   padding: 1.5rem;
-  /* margin: 1.5rem 2rem 1rem 2rem; */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .topbar h2 {
   font-size: 1.6rem;
   margin-bottom: 0.5rem;
-  color: #022169;
+  color: #000000;
 }
 
 .topbar p {
@@ -159,7 +153,7 @@ body {
 
   /* Table Head */
   .status-table thead th {
-    background-color: #022169;
+    background-color: #000000;
     color: #ffffff;
     padding: 1rem;
     text-align: left;
@@ -173,7 +167,6 @@ body {
   .status-table td {
     padding: 1rem;
     border-bottom: 1px solid #e0e0e0;
-    background-color: #ffffff;
     vertical-align: top;
   }
 
@@ -181,6 +174,7 @@ body {
   .status-table tbody tr:hover {
     background-color: #f1f5ff;
   }
+
 
   /* Status Badges */
   .badge {
@@ -209,7 +203,7 @@ body {
 
   /* Buttons */
   .view-btn {
-    background-color: #022169;
+    background-color: #d95900;
     color: white;
     padding: 0.4rem 0.9rem;
     text-decoration: none;
@@ -219,7 +213,7 @@ body {
   }
 
   .view-btn:hover {
-    background-color: #011d5a;
+    background-color: #d95900;
   }
 
   /* Document Links */
@@ -236,7 +230,7 @@ body {
   .doc-link a {
     color: #022169;
     font-weight: 500;
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   /* Heading */
@@ -250,7 +244,7 @@ body {
   text-align: center;
   margin-top: 2rem;
   padding: 1rem;
-  background-color: var(--jbs-lightgrey);
+  background-color: var(--jbs-orange);
   color: var(--white);
 }
 
@@ -273,6 +267,22 @@ body {
     background-color: #f9fafb;
     font-weight: bold;
   }
+
+.student-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* light grey */
+}
+
+.student-table tr:nth-child(odd) {
+  background-color: #ffffff; /* white */
+}
+
+.status-table tr:nth-child(even) {
+  background-color: #d8d8d8; /* light grey */
+}
+
+.status-table tr:nth-child(odd) {
+  background-color: #ffffff; /* white */
+}
 
   .badge {
     padding: 0.3rem 0.6rem;
@@ -389,6 +399,16 @@ body {
   /* Show modal */
   .modal-overlay.active {
     display: flex;
+  }
+
+  .btn-search {
+    background-color: #d95900;
+    color: white;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
 
   /* Optional utility class for button look consistency */

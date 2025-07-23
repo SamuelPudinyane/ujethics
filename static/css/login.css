@@ -1,5 +1,5 @@
 :root {
-  --jbs-navy: #000000;
+  --jbs-orange: #d95900;
   --jbs-teal: #022169;
   --jbs-purple: #4F2365;
   --jbs-yellow: #FFCB05;
@@ -10,37 +10,27 @@
   --accent: #F26522;
 }
 
-/* html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--jbs-lightgrey);
-    margin: 0;
-    padding: 0;
-    color: var(--jbs-navy);
-  } */
+
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--jbs-lightgrey);
+  font-family: 'Arial', sans-serif;
+  background-color: var(--white);
   margin: 0;
   padding: 0;
-  color: var(--jbs-navy);
+  color: var(--jbs-orange);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+  h2, label, input, select, textarea {
+    color: black;
+  }
+  
 
 .navbar {
-  background-color: var(--jbs-navy);
+  background-color: var(--jbs-orange);
   color: var(--white);
   padding: 1rem;
 }
@@ -69,6 +59,7 @@ body {
   box-shadow: 0 0 10px rgba(2, 33, 105, 0.15);
   flex: 0;
 }
+
 
 
 input,
@@ -102,7 +93,7 @@ button:hover {
   text-align: center;
   margin-top: 2rem;
   padding: 1rem;
-  background-color: var(--jbs-grey);
+  background-color: var(--jbs-orange);
   color: var(--white);
 }
 
