@@ -84,34 +84,34 @@
    
       <h2>SECTION 1: Researcher's Details</h2>
       <label>Applicant Name
-        <br><span>{{formc.applicant_name}}</span>
+        <br><span class="form-answer">{{formc.applicant_name}}</span>
       </label>
       <label>Student/Staff Number
-        <br><span>{{formc.student_number}}</span>
+        <br><span class="form-answer">{{formc.student_number}}</span>
       </label>
       <label>Institution
-        <br><span>{{formc.institution}}</span>
+        <br><span class="form-answer">{{formc.institution}}</span>
       </label>
       <label>UJ Department and School
-        <br><span>{{formc.department}}</span>
+        <br><span class="form-answer">{{formc.department}}</span>
       </label>
       <label>Degree Registered For
-        <br><span>{{formc.degree}}</span>
+        <br><span class="form-answer">{{formc.degree}}</span>
       </label>
       <label>Title/Working Title of Study
-        <br><span>{{formc.project_title}}</span>
+        <br><span class="form-answer">{{formc.project_title}}</span>
       </label>
       <label>Mobile Number
-        <br><span>{{formc.mobile_number}}</span>
+        <br><span class="form-answer">{{formc.mobile_number}}</span>
       </label>
       <label>Email Address (Applicant)
-        <br><span>{{formc.email_address}}</span>
+        <br><span class="form-answer">{{formc.email_address}}</span>
       </label>
       <label>Supervisor(s)
-        <br><span>{{formc.supervisor_name}}</span>
+        <br><span class="form-answer">{{formc.supervisor_name}}</span>
       </label>
       <label>Supervisor Email(s)
-        <br><span>{{formc.supervisor_email}}</span>
+        <br><span class="form-answer">{{formc.supervisor_email}}</span>
       </label>
 
       
@@ -268,21 +268,21 @@
       <h5>Risk Assessment</h5>
       
       <label><strong>Rate your project risk level:</strong>
-      <br><span>{{formc.risk_level}}</span></label>
+      <br><span class="form-answer">{{formc.risk_level}}</span></label>
     
       
       <br>
       <label><strong>Justify the Risk Level</strong>
-      <br><span>{{formc.risk_justification}}</span></label>
+      <br><span class="form-answer">{{formc.risk_justification}}</span></label>
 
       
       <label><strong>If Medium or High Risk, describe potential benefits:</strong>
-      <br><span>{{formc.risk_benefits}}</span>
+      <br><span class="form-answer">{{formc.risk_benefits}}</span>
     </label>
      
       
       <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong>
-      <br><span>{{formc.risk_mitigation}}</span></label>
+      <br><span class="form-answer">{{formc.risk_mitigation}}</span></label>
   
 
   </main>
@@ -298,42 +298,42 @@
 
       <div class="form-group">
         <label for="project_title">3.1 Title or Provisional Title of the Research Project
-          <br><span>{{formc.summary_title}}</span>
+          <br><span class="form-answer">{{formc.summary_title}}</span>
         </label>
        
       </div>
 
       <div class="form-group">
         <label for="executive_summary">3.2 Executive Summary of the Study
-          <br><span>{{formc.executive_summary}}</span>
+          <br><span class="form-answer">{{formc.executive_summary}}</span>
         </label>
       
       </div>
 
       <div class="form-group">
         <label for="research_questions">3.3 Research Questions / Hypotheses
-          <br><span>{{formc.research_questions}}</span>
+          <br><span class="form-answer">{{formc.research_questions}}</span>
         </label>
 
       </div>
 
       <div class="form-group">
         <label for="research_purpose">3.4 Research Purpose and Objectives / Anticipated Outcomes
-          <br><span>{{formc.research_purpose}}</span>
+          <br><span class="form-answer">{{formc.research_purpose}}</span>
         </label>
         
       </div>
 
       <div class="form-group">
         <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?
-          <br><span>{{formc.secondary_data_info}}</span>
+          <br><span class="form-answer">{{formc.secondary_data_info}}</span>
         </label>
 
       </div>
 
       <div class="form-group">
         <label for="exemption_reason">3.6 Why does your study meet exemption requirements?
-          <br><span>{{formc.exemption_reason}}</span>
+          <br><span class="form-answer">{{formc.exemption_reason}}</span>
         </label>
      
       </div>
@@ -362,26 +362,26 @@
       </div>
 
       <div class="form-group">
-        <label for="submission_date"><span>{{formc.submission_date.strftime('%d/%m/%Y')}}</span></label>
+        <label for="submission_date"><span class="form-answer">{{formc.submission_date.strftime('%d/%m/%Y')}}</span></label>
       </div>
 <hr>
 <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
     <label>Student Name:</label>
-    <span>{{formc.declaration_name}}</span>
+    <span class="form-answer">{{formc.declaration_name}}</span>
 
     <label>Date of Submission:</label>
-    <span>{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+    <span class="form-answer">{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Date of Re-submission:</label>
-    <span>{% if formc.signature_date %}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+    <span class="form-answer">{% if formc.signature_date %}{{formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</span>
 
     <label>Supervisor:</label>
-    <span>{{formc.supervisor_name}}</span>
+    <span class="form-answer">{{formc.supervisor_name}}</span>
 
     <label>Title of Research:</label>
-    <span>{{formc.project_title}}</span>
+    <span class="form-answer">{{formc.project_title}}</span>
 
     <label>Date of Review:</label>
     <input type="date" name="review_date">

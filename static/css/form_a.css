@@ -304,3 +304,15 @@
     tr:nth-child(odd) {
       background-color: #ffffff; /* white */
     }
+
+.form-answer {
+  display: inline-block;
+  font-size: 18px;
+  background-color: #f8f9fa; /* light grey background */
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 4px;
+  font-weight: 500;
+  color: #333;
+  width: 100%;
+}
