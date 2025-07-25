@@ -22,6 +22,7 @@
       <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
+<<<<<<< HEAD
       
       {% if 'admin' in role|lower%}
       <a href="{{url_for('chair_landing')}}" class="sidebar-link">
@@ -40,6 +41,12 @@
         <i class="fas fa-clipboard-check"></i> My Reviews
       </a>
       {% endif %}
+=======
+      <a href="{{url_for('review_dashboard')}}" class="sidebar-link">
+        <i class="fas fa-clipboard-check"></i> My Reviews
+      </a>
+      
+>>>>>>> 41079cdc6fc343a084284a9b552af33fdd88504c
       <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
         <i class="fas fa-users"></i> Rec Team Dashboard
       </a>

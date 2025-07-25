@@ -36,20 +36,22 @@
   <div class="form-wrapper">
 
   <!-- Navbar -->
-  <header class="navbar">
-    <div class="nav-content">
-      
-      <div>
-        <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
-        <span class="nav-title">Ethics Application System</span>
-      </div>
-      <!-- Logout -->
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <h5>Welcome, {{name}}</h5>
-        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
-      </div>
+<header class="navbar">
+  <div class="nav-content">
+    
+    <div class="nav-left">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Ethics Application System</span>
     </div>
-  </header>
+
+    <div class="nav-right">
+      <h5>Welcome, {{full_name}}</h5>
+      <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+    </div>
+
+  </div>
+</header>
+
 
   <!-- Main Content -->
   <main class="main-content">

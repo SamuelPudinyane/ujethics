@@ -1,5 +1,5 @@
 :root {
-    --jbs-orange: #d95900;
+    --jbs-orange: #ef820d;
     --jbs-teal: #022169;
     --jbs-purple: #4F2365;
     --jbs-yellow: #FFCB05;
@@ -174,7 +174,7 @@
   }
 
 .table tr:nth-child(even) {
-    background-color: #b6b4b4; /* light grey */
+    background-color: #f3eded; /* light grey */
 }
 
 .table tr:nth-child(odd) {
@@ -220,35 +220,29 @@
   border-radius: 8px;
 }
 
+/* Approve Button */
+.btn-approve {
+  background-color: #27ae60; /* Bootstrap green */
+  color: white;
+}
+
 /* Minor Changes */
 .btn-minor {
   background-color: #caa228; /* Bootstrap yellow */
   color: #212529;
 }
 
-.btn-minor:hover {
-  background-color: #b79b48;
-  color: white;
-}
 
 /* Resubmission */
 .btn-resubmit {
   background-color: #0d6efd; /* Bootstrap blue */
 }
 
-.btn-resubmit:hover {
-  background-color: #0b5ed7;
-}
 
 /* Reject */
 .btn-reject {
   background-color: #dc3545; /* Bootstrap red */
 }
-
-.btn-reject:hover {
-  background-color: #bb2d3b;
-}
-
   
   /* Footer */
   .footer {
@@ -304,7 +298,7 @@
     }
   
     tr:nth-child(even) {
-    background-color: #d6d4d4; /* light grey */
+    background-color: #f3eded; /* light grey */
     }
 
     tr:nth-child(odd) {

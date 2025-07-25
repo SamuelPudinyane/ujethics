@@ -190,10 +190,10 @@
         <textarea rows="5" name="additional_comments" style="width:100%;" placeholder="Add general comments or recommendation..."></textarea>
 
         <div class="submit-row">
-            <button type="button" class="approve-btn" onclick="decision('Approved')">✅ Approve</button>
+            <button type="button" class="approve-btn" onclick="decision('Approved')">✔ Approve</button>
             <button type="button" class="revise-btn" onclick="decision('Minor')">⚠️ Approved with Minor Changes</button>
             <button type="button" class="btn-logout" onclick="decision('Resubmit')">🔁 Resubmission Required</button>
-            <button type="button" class="reject-btn" onclick="decision('Rejected')">❌ Reject</button>
+            <button type="button" class="reject-btn" onclick="decision('Rejected')">✖ Reject</button>
         
           </div>
           
@@ -219,7 +219,7 @@
     let message = "";
     switch (type) {
       case "Approved":
-        message = "✅ Study approved. Checklist and comments sent to Ethics Admin.";
+        message = "✔ Study approved. Checklist and comments sent to Ethics Admin.";
         break;
       case "Minor":
         message = "⚠️ Approved with minor changes. Comments have been noted.";
@@ -228,7 +228,7 @@
         message = "🔁 Resubmission required. Student and supervisor will be notified.";
         break;
       case "Rejected":
-        message = "❌ Study has been rejected and returned to the applicant.";
+        message = "✖ Study has been rejected and returned to the applicant.";
         break;
     }
 
