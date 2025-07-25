@@ -3254,12 +3254,16 @@ def chair_landing():
 @app.route('/review_dashboard', methods=['GET','POST'])
 def review_dashboard():
     user_id=session['id']
-   
+    
     # Form A
     submitted_form_a = db_session.query(FormA, FormARequirements)\
         .join(User, FormA.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
-        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True)\
+        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True,
+                or_(
+            FormA.reviewer_name1 == user_id,
+            FormA.reviewer_name2 == user_id
+        ))\
         .distinct()\
         .all()
     
@@ -3267,7 +3271,11 @@ def review_dashboard():
     submitted_form_b = db_session.query(FormB, FormARequirements) \
         .join(User, FormB.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
-        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True)\
+        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True,
+                or_(
+            FormB.reviewer_name1 == user_id,
+            FormB.reviewer_name2 == user_id
+        ))\
         .distinct()\
         .all()
 
@@ -3275,12 +3283,16 @@ def review_dashboard():
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
-        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True)\
+        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True,
+                or_(
+            FormC.reviewer_name1 == user_id,
+            FormC.reviewer_name2 == user_id
+        ))\
         .distinct()\
         .all()
-    supervisor_formA_req=db_session.query(FormARequirements).filter(FormARequirements.user_id == User.user_id).all()
+
     today = date.today()
-    return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c,supervisor_formA_req=supervisor_formA_req)
+    return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
 @app.route('/submit_to_rec/<string:id>', methods=['GET'])
 def submit_to_rec(id):
@@ -3337,89 +3349,105 @@ def reviewer_form_c(id):
 @app.route('/rec_dashboard', methods=['GET', 'POST'])
 def rec_dashboard():
     user_id = session['id']
-
-    # Form A submissions
-    submitted_form_a = (
-    db_session.query(FormA, FormARequirements, Rec)
-    .join(User, FormA.user_id == User.user_id)
-    .join(FormARequirements, FormA.user_id == FormARequirements.user_id)
-    .outerjoin(Rec, Rec.form_id == FormA.form_id)  # Use LEFT JOIN if some forms might not be reviewed yet
-    .filter(
-        FormA.rejected_or_accepted == True,
-        FormA.review_signature_date != None,
-        ~func.lower(FormA.risk_rating).like('%low%'),
-        FormA.review_status == True,
-        FormA.review_status1 == True,
-        FormA.submitted_to_rec == True,
-        FormA.reviewer_name1 != user_id,
-        FormA.reviewer_name2 != user_id
+    user=db_session.query(User).filter(User.user_id==user_id).first()
+    # Count how many reviews exist per form_id
+    form_review_counts = dict(
+        db_session.query(Rec.form_id, func.count(Rec.rec_id))
+        .group_by(Rec.form_id)
+        .all()
     )
-    .distinct()
-    .all()
-)
-    counta = sum(1 for _, _, rec in submitted_form_a if rec is not None)
+    # Form A submissions
+    submitted_form_a = [
+    (form, req, form_review_counts.get(form.form_id, 0))
+    for form, req, _ in db_session.query(FormA, FormARequirements, Rec)
+        .join(User, FormA.user_id == User.user_id)
+        .join(FormARequirements, FormA.user_id == FormARequirements.user_id)
+        .outerjoin(Rec, Rec.form_id == FormA.form_id)
+        .filter(
+            FormA.rejected_or_accepted == True,
+            FormA.review_signature_date != None,
+            ~func.lower(FormA.risk_rating).like('%low%'),
+            FormA.review_status == True,
+            FormA.review_status1 == True,
+            FormA.submitted_to_rec == True,
+            FormA.reviewer_name1 != user_id,
+            FormA.reviewer_name2 != user_id
+        )
+]
 
     # Form B submissions
-    submitted_form_b = (
-    db_session.query(FormB, FormARequirements, Rec)
-    .join(User, FormB.user_id == User.user_id)
-    .join(FormARequirements, FormB.user_id == FormARequirements.user_id)
-    .outerjoin(Rec, Rec.form_id == FormB.form_id)  # Use LEFT JOIN if some forms might not be reviewed yet
-    .filter(
-        FormB.rejected_or_accepted == True,
-        FormB.review_signature_date != None,
-        ~func.lower(FormB.risk_level).like('%low%'),
-        FormB.review_status == True,
-        FormB.review_status1 == True,
-        FormB.submitted_to_rec == True,
-        FormB.reviewer_name1 != user_id,
-        FormB.reviewer_name2 != user_id
-    )
-    .distinct()
-    .all()
-)
-    countb = sum(1 for _, _, rec in submitted_form_b if rec is not None)
+    submitted_form_b = [
+    (form, req, form_review_counts.get(form.form_id, 0))
+    for form, req, _ in db_session.query(FormB, FormARequirements, Rec)
+        .join(User, FormB.user_id == User.user_id)
+        .join(FormARequirements, FormB.user_id == FormARequirements.user_id)
+        .outerjoin(Rec, Rec.form_id == FormB.form_id)
+        .filter(
+            FormB.rejected_or_accepted == True,
+            FormB.review_signature_date != None,
+            ~func.lower(FormB.risk_level).like('%low%'),
+            FormB.review_status == True,
+            FormB.review_status1 == True,
+            FormB.submitted_to_rec == True,
+            FormB.reviewer_name1 != user_id,
+            FormB.reviewer_name2 != user_id
+        )
+]
     # Form C submissions
-    submitted_form_c = (
-    db_session.query(FormC, FormARequirements, Rec)
-    .join(User, FormC.user_id == User.user_id)
-    .join(FormARequirements, FormC.user_id == FormARequirements.user_id)
-    .outerjoin(Rec, Rec.form_id == FormC.form_id)  # Use LEFT JOIN if some forms might not be reviewed yet
-    .filter(
-        FormC.rejected_or_accepted == True,
-        FormC.review_signature_date != None,
-        ~func.lower(FormC.risk_level).like('%low%'),
-        FormC.review_status == True,
-        FormC.review_status1 == True,
-        FormC.submitted_to_rec == True,
-        FormC.reviewer_name1 != user_id,
-        FormC.reviewer_name2 != user_id
-    )
-    .distinct()
-    .all()
-)
+    submitted_form_c = [
+    (form, req, form_review_counts.get(form.form_id, 0))
+    for form, req, _ in db_session.query(FormC, FormARequirements, Rec)
+        .join(User, FormC.user_id == User.user_id)
+        .join(FormARequirements, FormC.user_id == FormARequirements.user_id)
+        .outerjoin(Rec, Rec.form_id == FormC.form_id)
+        .filter(
+            FormC.rejected_or_accepted == True,
+            FormC.review_signature_date != None,
+            ~func.lower(FormC.risk_level).like('%low%'),
+            FormC.review_status == True,
+            FormC.review_status1 == True,
+            FormC.submitted_to_rec == True,
+            FormC.reviewer_name1 != user_id,
+            FormC.reviewer_name2 != user_id
+        )
+]
+
     
-    countc = sum(1 for _, _, rec in submitted_form_c if rec is not None)
-        
+    all_Reviewers_counter=db_session.query(User).filter(User.role=='REVIEWER').count()
+    
     # Requirements submitted by this supervisor
     supervisor_formA_req = db_session.query(FormARequirements).filter_by(user_id=user_id).all()
-
+    role=user.role.value
     today = date.today()
-
+    
     return render_template(
         'rec-dashboard.html',
         today=today,
-        counta=counta,
-        countb=countb,
-        countc=countc,
+        role=role,
+        all_Reviewers_counter=all_Reviewers_counter,
         submitted_form_a=submitted_form_a,
         submitted_form_b=submitted_form_b,
         submitted_form_c=submitted_form_c,
         supervisor_formA_req=supervisor_formA_req
     )
 
-
-
+@app.route('/admin_rec_form/<string:form_id>',methods=['GET','POST'])
+def admin_rec_form(form_id):
+  
+    user_id = session['id']
+    user=db_session.query(User).filter(User.user_id==user_id).first()
+    print("id ------------- ",form_id)
+    Rec_team=db_session.query(Rec).filter(Rec.form_id==form_id).first()
+    print("--------- ", Rec_team)
+    role=user.role.value
+    rec=[]
+    rec.append(Rec_team)
+    print(role)
+    return render_template(
+        'chair_rec_form.html',
+        Rec_team=rec,
+        role=role
+    )
 @app.route('/rec_form_a/<string:id>', methods=['GET'])
 def rec_form_a(id):
     
