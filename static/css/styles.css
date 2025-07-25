@@ -19,7 +19,7 @@ h2, label, input, select, textarea {
 
 /* === NAVBAR === */
 .navbar {
-  background-color: #d95900;
+  background-color: #ef820d;
   color: white;
 }
 
@@ -95,7 +95,7 @@ form textarea:focus {
 button {
   width: 15%;
   padding: 12px;
-  background-color: #d95900;
+  background-color: #ef820d;
   color: white;
   font-weight: bold;
   border: none;
@@ -148,7 +148,7 @@ button:disabled {
 
 /* === FOOTER === */
 .footer {
-  background-color: #d95900;
+  background-color: #ef820d;
   color: white;
   text-align: center;
   padding: 1rem;
@@ -223,7 +223,7 @@ button:disabled {
 }
 
 .status-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* light grey */
+  background-color: #f3eded; /* light grey */
 }
 
 .status-table tr:nth-child(odd) {
@@ -363,8 +363,8 @@ button:disabled {
 }
 
 .revise-btn {
-  background-color: #d95900;
-  color: #d95900;
+  background-color: #ef820d;
+  color: #ef820d;
 }
 
 .revise-btn:hover {

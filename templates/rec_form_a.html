@@ -161,7 +161,7 @@
     <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
 
     <h3>1. Ethical Clearance Aspects</h3>
-    <table>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>Aspect</th>
@@ -206,7 +206,7 @@
     </table>
 
     <h3>2. Risk Assessment </h3>
-    <table>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>2.1 Does your research include the direct involvement of any of the following groups of participants?</th>
@@ -268,7 +268,7 @@
 
     <hr>
 
-    <table>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>2.2 Does your research involve any of the following types of activity?</th>
@@ -345,7 +345,7 @@
    <label>Comments: <span>{{form.vulnerable_comments}}</span></label>
     <hr>
 
-    <table>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>2.3 Do any of the following apply to your research project?</th>
@@ -403,10 +403,10 @@
     </table>
    <label>Comments: <span>{{form.apply_comments}}</span></label>
     <div class="mb-3">
-      <label><strong>Rate your project (Negligible, Low, Medium, High Risk):
+      <label><strong>Rate your project (Low, Medium, High Risk):
         <br><span>{{form.risk_rating}}</span>
       </strong>
-      <label for="risk_justification"> Please justify your risk level (Mandatory): <span>{{form.risk_justification}}</span></label>
+      <label for="risk_justification"> Please justify your risk level: <span>{{form.risk_justification}}</span></label>
       <label for="benefits_description"> For medium and high risk, describe the potential benefits of the study: <span>{{form.benefits_description}}</span></label>
       <label for="risk_mitigation"> For medium and high risk, describe how potential risks will be mitigated against: <span>{{form.risk_mitigation}}</span></label>
     </div>
@@ -448,7 +448,7 @@
       <label>4.1 Does your project involve organisations or institutions that need to grant permission for research activities?</label>
       <span>{{form.grant_permission}}<span>
         <br>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Name of Organisation</th>
@@ -479,7 +479,7 @@
         <br><span>{{'Yes' if form.is_funded else 'No'}}</span>
       </label>
       
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Organisation Name</th>
@@ -881,7 +881,7 @@
     <hr>
 <div id="supervisorDeclaration" >
     
-      <h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+      <h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
     <label>Student Name:</label>
@@ -911,16 +911,16 @@
     {% endif %}
 
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label class="form-label">REC Comments (Mandatory)</label>
+    <label class="form-label">REC Comments</label>
     <textarea rows="5" name="rec_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
 
     <input type="hidden" name="status" id="status" value="" />
 
     <div class="submit-row">
-        <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
-        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
-        <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
-        <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
+        <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button><br>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button><br>
+        <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button><br>
+        <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
     </div>
 </form>
 

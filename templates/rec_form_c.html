@@ -321,7 +321,7 @@
         <label for="submission_date"><span>{{form.submission_date.strftime('%d/%m/%Y')}}</span></label>
       </div>
 <hr>
-<h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+<h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
     <label>Student Name:</label>
@@ -355,16 +355,16 @@
     {% endif %}
 
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label class="form-label">Rec Comments (Mandatory)</label>
+    <label class="form-label">Rec Comments</label>
     <textarea rows="5" name="rec_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
 
     <input type="hidden" name="status" id="status" value="" />
 
     <div class="submit-row">
-        <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✅ Approve</button><br>
-        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠️ Approved with Minor Changes</button><br>
-        <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button><br>
-        <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
+        <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button><br>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button><br>
+        <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button><br>
+        <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
     </div>
 </form>
 

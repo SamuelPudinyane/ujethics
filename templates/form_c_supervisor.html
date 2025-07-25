@@ -44,6 +44,14 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
+    .table tr:nth-child(even) {
+    background-color: #f3eded; /* light grey */
+    }
+
+    .table tr:nth-child(odd) {
+      background-color: #ffffff; /* white */
+    }
   </style>
 </head>
 <body>
@@ -132,21 +140,21 @@
         </thead>
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td>
-            <td>{{'YES' if formc.vulnerable else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.vulnerable else 'No'}}</td></tr>
           <tr><td>People under the age of 18 or over 65</td>
-            <td>{{'YES' if formc.age_under_18_or_over_65 else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.age_under_18_or_over_65 else 'No'}}</td></tr>
           <tr><td>UJ employees or students</td>
-            <td>{{'YES' if formc.uj_employees else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.uj_employees else 'No'}}</td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td>
-            <td>{{'YES' if formc.non_vulnerable_context else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.non_vulnerable_context else 'No'}}</td></tr>
           <tr><td>Non-English-speaking participants</td>
-            <td>{{'YES' if formc.non_english else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.non_english else 'No'}}</td></tr>
           <tr><td>A researcher’s own students</td>
-            <td>{{'YES' if formc.own_students else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.own_students else 'No'}}</td></tr>
           <tr><td>People living in poverty</td>
-            <td>{{'YES' if formc.poverty else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.poverty else 'No'}}</td></tr>
           <tr><td>People with little or no education</td>
-            <td>{{'YES' if formc.no_education else 'NO'}}</td></tr>
+            <td>{{'Yes' if formc.no_education else 'No'}}</td></tr>
           <tr><td>Other: Please describe.</td>
             <td>{{formc.vulnerable_other_description}}</td></tr>
         </tbody>
@@ -167,27 +175,27 @@
   </thead>
   <tbody>
   <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
-    <td>{{'YES' if formc.consent_violation else 'NO'}}</td></tr>
+    <td>{{'Yes' if formc.consent_violation else 'No'}}</td></tr>
 <tr><td>Causing discomfiture beyond normal inconvenience</td>
-  <td>{{'YES' if formc.discomfiture else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.discomfiture else 'No'}}</td></tr>
 <tr><td>Deception of participants or covert observation</td>
-  <td>{{'YES' if formc.deception else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.deception else 'No'}}</td></tr>
 <tr><td>Examining sensitive or contentious issues</td>
-  <td>{{'YES' if formc.sensitive_issues else 'YES'}}</td></tr>
+  <td>{{'Yes' if formc.sensitive_issues else 'Yes'}}</td></tr>
 <tr><td>Seeking prejudicial information about participants</td>
-  <td>{{'YES' if formc.prejudicial_info else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.prejudicial_info else 'No'}}</td></tr>
 <tr><td>Using intrusive techniques</td>
-  <td>{{'YES' if formc.intrusive else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.intrusive else 'No'}}</td></tr>
 <tr><td>Study/participation in illegal activities</td>
-  <td>{{'YES' if formc.illegal else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.illegal else 'No'}}</td></tr>
 <tr><td>Collecting personal/social info directly from participants</td>
-  <td>{{'YES' if formc.direct_social_info else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.direct_social_info else 'No'}}</td></tr>
 <tr><td>Identifiable info collected from available records (staff/student records)</td>
-  <td>{{'YES' if formc.identifiable_records else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.identifiable_records else 'No'}}</td></tr>
 <tr><td>Psychology inventories / scales / tests</td>
-  <td>{{'YES' if formc.psychology_tests else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.psychology_tests else 'No'}}</td></tr>
 <tr><td>Activities putting researcher/data collector at risk</td>
-  <td>{{'YES' if formc.researcher_risk else 'NO'}}</td></tr>
+  <td>{{'Yes' if formc.researcher_risk else 'No'}}</td></tr>
     <tr><td>Other:  Please describe.</td>
       <td>{{formc.activity_other_description}}</td></tr>
   </tbody>
@@ -207,19 +215,19 @@
         </thead>
         <tbody>
        <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{{'YES' if formc.incentives else 'NO'}}</td></tr>
+        <td>{{'Yes' if formc.incentives else 'No'}}</td></tr>
         <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{{'YES' if formc.participant_costs else 'NO'}}</td></tr>
+          <td>{{'Yes' if formc.participant_costs else 'No'}}</td></tr>
         <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{{'YES' if formc.researcher_interest else 'NO'}}</td></tr>
+          <td>{{'Yes' if formc.researcher_interest else 'No'}}</td></tr>
         <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{{'YES' if formc.conflict_of_interest else 'NO'}}</td></tr>
+          <td>{{'Yes' if formc.conflict_of_interest else 'No'}}</td></tr>
         <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{{'YES' if formc.uj_premises else 'NO'}}</td></tr>
+          <td>{{'Yes' if formc.uj_premises else 'No'}}</td></tr>
         <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{{'YES' if formc.uj_facilities else 'NO'}}</td></tr>
+          <td>{{'Yes' if formc.uj_facilities else 'No'}}</td></tr>
         <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{{'YES' if formc.uj_funding else 'NO'}}</td></tr>
+          <td>{{'Yes' if formc.uj_funding else 'No'}}</td></tr>
         
         </tbody>
       </table>
@@ -407,14 +415,14 @@
   <div class="form-check">
     <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
     <label class="form-check-label" for="ready">
-      ✅ Ready for submission to JBS ETHICS ADMIN
+      ✔ Ready for submission to JBS Ethics Admin
     </label>
   </div>
 
   <div class="form-check mb-3">
     <input class="form-check-input" type="radio" name="recommendation" id="revisions" value="Revisions required" onchange="toggleFields()">
     <label class="form-check-label" for="revisions">
-      ✏️ Revisions required before submission
+      ↻ Revisions required before submission
     </label>
   </div>
 

@@ -1,7 +1,7 @@
 /* Supervisor Dashboard Styles */
 
 :root {
-  --jbs-orange: #d95900;
+  --jbs-orange: #ef820d;
   --jbs-teal: #022169;
   --jbs-purple: #4F2365;
   --jbs-yellow: #FFCB05;
@@ -108,7 +108,7 @@ h2, label, input, select, textarea {
 
 .topbar {
   background-color: #f1f4f9;
-  border-left: 4px solid #d95900;
+  border-left: 4px solid #ef820d;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -203,7 +203,7 @@ h2, label, input, select, textarea {
 
   /* Buttons */
   .view-btn {
-    background-color: #d95900;
+    background-color: #ef820d;
     color: white;
     padding: 0.4rem 0.9rem;
     text-decoration: none;
@@ -213,7 +213,7 @@ h2, label, input, select, textarea {
   }
 
   .view-btn:hover {
-    background-color: #d95900;
+    background-color: #ef820d;
   }
 
   /* Document Links */
@@ -269,7 +269,7 @@ h2, label, input, select, textarea {
   }
 
 .student-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* light grey */
+  background-color: #f3eded; /* light grey */
 }
 
 .student-table tr:nth-child(odd) {
@@ -277,7 +277,7 @@ h2, label, input, select, textarea {
 }
 
 .status-table tr:nth-child(even) {
-  background-color: #d8d8d8; /* light grey */
+  background-color: #f3eded; /* light grey */
 }
 
 .status-table tr:nth-child(odd) {
@@ -402,7 +402,7 @@ h2, label, input, select, textarea {
   }
 
   .btn-search {
-    background-color: #d95900;
+    background-color: #ef820d;
     color: white;
     padding: 0.6rem 1rem;
     border: none;
@@ -440,3 +440,47 @@ h2, label, input, select, textarea {
   .delete-btn:hover {
     background-color: #c0392b;
   }
+
+    /* Table Styling for comments */
+  .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #f9fafb;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.95rem;
+  }
+
+  /* Table Head */
+  .table thead th {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  /* Table Cells */
+  .table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+
+  /* Table Row Hover */
+  .table tbody tr:hover {
+    background-color: #f1f5ff;
+  }
+
+
+.table tr:nth-child(even) {
+  background-color: #f3eded; /* light grey */
+}
+
+.table tr:nth-child(odd) {
+  background-color: #ffffff; /* white */
+}
