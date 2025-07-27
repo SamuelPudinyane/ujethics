@@ -57,7 +57,7 @@
   <main class="main-content">
 
     <!-- Form Selection -->
-    <section>
+    <!-- <section>
       <h3>Select a Form to Start</h3>
       <div class="form-card-grid">
         <div class="form-card" onclick="location.href='{{url_for('form_a_upload')}}'">
@@ -80,7 +80,7 @@
         </div>
 
       </div>
-    </section>
+    </section> -->
 
     <!-- Submission Status Table -->
     <section style="margin-top: 2rem;">
@@ -149,7 +149,7 @@
                 {% endif %}</em>
                 
                 <span style="color:green; font-size:12px;">
-                  {% if formB.rec_status=='Approved'  or formB.certificate_issued and formb.certificate_received%}
+                  {% if formB.rec_status=='Approved'  or formB.certificate_issued and formB.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>

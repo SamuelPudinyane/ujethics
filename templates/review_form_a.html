@@ -682,32 +682,108 @@
     <br>
     <br><span>{{form.translator_procedure}}</span>
 
-    <h3>5.5 Secondary Data Usage</h3>
+<h3>5.5 Secondary Data Usage</h3>
 
-    <label>Will secondary data be used?
-       <br><span>{{'Yes' if form.uses_secondary_data else 'No'}}</span>
-    </label><br>
+<!-- 5.5.1 -->
+<label>Will secondary data be used?</label><br>
+<span class="form-answer">{{ 'Yes' if form.uses_secondary_data else 'No' }}</span>
+
+<br><br>
+
+<!-- 5.5.2 -->
+<label>Is the data Public or Private?</label><br>
+<span class="form-answer">{{ form.data_type or 'Not specified' }}</span>
+
+<br><br>
+
+<!-- 5.5.3 -->
+<h5>Details of the Secondary Data</h5>
+
+<label>Nature of the Data</label><br>
+<span class="form-answer">{{ form.data_nature or 'Not provided' }}</span>
+
+<br><br>
+
+<label>Origin/Source of Research Data</label><br>
+<span class="form-answer">{{ form.data_origin or 'Not provided' }}</span>
+
+<br><br>
+
+<label>Are the sources of the research data in the public domain?</label><br>
+<span class="form-answer">{{ form.data_public or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Provide evidence or explanation:</label><br>
+<span class="form-answer">{{ form.public_evidence or 'None provided' }}</span>
+
+<br><br>
+
+<label>What are the access conditions?</label><br>
+<span class="form-answer">{{ form.access_conditions or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Does the database contain personal information/identifiers?</label><br>
+<span class="form-answer">{{ form.personal_info or 'Not specified' }}</span>
+
+<br><br>
+
+<label>If yes, specify the personal info/identifiers:</label><br>
+<span class="form-answer">{{ form.personal_info_comment or 'None provided' }}</span>
+
+<br><br>
+
+<label>Has the data been anonymized?</label><br>
+<span class="form-answer">{{ form.data_anonymized or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Comment / Justification:</label><br>
+<span class="form-answer">{{ form.anonymization_comment or 'None provided' }}</span>
+
+<br><br>
+
+<!-- 🔐 Private Data Section -->
+<label>Is the data from a company that has provided permission?</label><br>
+<span class="form-answer">{{ form.org_permision or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Uploaded permission document:</label><br>
+{% if form.private_permission_file %}
+  <a href="{{ url_for('static', filename=form.private_permission_file) }}" target="_blank">View Document</a>
+{% else %}
+  <span class="form-answer">No file uploaded</span>
+{% endif %}
+
+<br><br>
+
+<!-- 🌐 Public Data Section -->
+<label>What type of public data is going to be used?</label><br>
+<span class="form-answer">{{ form.public_data_description or 'None specified' }}</span>
+
+<br><br>
+
+<!-- 📋 Additional Considerations -->
+<label>Will data shortcomings/incompleteness be reported?</label><br>
+<span class="form-answer">{{ form.shortcomings_reported or 'Not specified' }}</span>
+
+<br><br>
+
+<label>How will data limitations be reported?</label><br>
+<span class="form-answer">{{ form.limitations_reporting or 'Not provided' }}</span>
+
+<br><br>
+
+<label>Are the methodology and design aligned with secondary data use?</label><br>
+<span class="form-answer">{{ form.methodology_alignment or 'Not specified' }}</span>
+
+<br><br>
+
+<label>How will the original owners of the data be acknowledged?</label><br>
+<span class="form-answer">{{ form.data_acknowledgment or 'Not provided' }}</span>
    
-    
-      <label>Is the data Public or Private?
-        <br><span>{{form.data_type}}
-      </label><br>
-   
-    
-      <!-- Private Data Section -->
-        <label>Is the data from a company that has provided permission?
-          <br><span>{{form.org_permision}}</span>
-        </label>
-    
-          <label>Please upload the permission for use of private data:</label>
-          <br>
-          {% if form.private_permission_file %}
-          <a href="{{url_for('static',filename=form.private_permission_file)}}" target="_blank">View Document</a>
-        {% endif %}
-      <!-- Public Data Section -->
-        <label>What type of public data is going to be used?</label>
-              <br><span>{{form.public_data_description}}</span>
-      
    
   </section>
 
@@ -1033,15 +1109,9 @@
     </div>
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
   </div>
-<<<<<<< HEAD
-  <div class="submit-row" >
-    <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
-    <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
-=======
-  <div class="submit-row" id="rejectBtn" style="display: none;">
+  <div class="submit-row" id="rejectBtn">
     <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button>
     <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
->>>>>>> 41079cdc6fc343a084284a9b552af33fdd88504c
   </div>
   
 </main>

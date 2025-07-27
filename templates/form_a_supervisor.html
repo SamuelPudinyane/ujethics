@@ -634,29 +634,35 @@
 
     <h3>5.5 Secondary Data Usage</h3>
 
-    <label>Will secondary data be used?
-       <br><span class="form-answer">{{'Yes' if formA.uses_secondary_data else 'No'}}</span>
-    </label><br>
-   
-    
-      <label>Is the data Public or Private?
-        <br><span class="form-answer">{{formA.data_type}}
-      </label><br>
-   
-    
-      <!-- Private Data Section -->
-        <label>Is the data from a company that has provided permission?
-          <br><span class="form-answer">{{formA.org_permision}}</span>
-        </label>
-    
-          <label>Please upload the permission for use of private data:</label>
-          <br>
-          {% if formA.private_permission_file%}
-          <a href="{{url_for('static',filename=formA.private_permission_file)}}" target="_blank">View Document</a>
-          {% endif %}
-      <!-- Public Data Section -->
-        <label>What type of public data is going to be used?</label>
-              <br><span class="form-answer">{{formA.public_data_description}}</span>
+<label>Will secondary data be used?</label><br>
+<span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
+
+<br><br>
+
+<label>Is the data Public or Private?</label><br>
+<span class="form-answer">{{ formA.data_type or 'Not specified' }}</span>
+
+<br><br>
+
+<!-- 🔐 Private Data Section -->
+<label>Is the data from a company that has provided permission?</label><br>
+<span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Uploaded permission document:</label><br>
+{% if formA.private_permission_file %}
+  <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
+{% else %}
+  <span class="form-answer">No file uploaded</span>
+{% endif %}
+
+<br><br>
+
+<!-- 🌐 Public Data Section -->
+<label>What type of public data is going to be used?</label><br>
+<span class="form-answer">{{ formA.public_data_description or 'Not specified' }}</span>
+
       
    
   </section>

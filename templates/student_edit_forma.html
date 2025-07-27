@@ -695,48 +695,119 @@
                     </div>
 
                   
-                    <h3>5.5 Secondary Data Usage</h3>
+                 <h3>5.5 Secondary Data Usage</h3>
 
-                    <label>Will secondary data be used?
-                    </label>
-                    <select id="secondaryData" name="secondary_data" required class="form-select" onchange="handleSecondaryData()">
-                      <option value="">-- Select --</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                    </select>
-                  
-                    
-                    <div id="secondaryDetails" style="margin-top: 1rem;">
-                    
-                      <label>Is the data Public or Private?</label><br>
-                      <select id="dataType" name="data_type"  class="form-select" onchange="handleDataType()">
-                        <option value="">-- Select --</option>
-                        <option value="private">Private</option>
-                        <option value="public">Public</option>
-                        <option value="both">Both</option>
-                      </select>
-                    
-                      <!-- Private Data Section -->
-                      <div id="privateDataSection" style="margin-top: 1rem;">
-                        <label>Is the data from a company that has provided permission?</label><br>
-                        <select id="privatePermission" name="org_permision"  class="form-select" onchange="handlePrivatePermission()">
-                          <option value="">-- Select --</option>
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                    
-                        <div id="uploadPrivatePermission" style="margin-top: 1rem;">
-                          <label>Please upload the permission for use of private data:</label>
-                          <input type="file" value="{{formA.private_permission_file}}" name="private_permission_file" class="form-control">
-                        </div>
-                      </div>
-                    
-                      <!-- Public Data Section -->
-                      <div id="publicDataSection" style="margin-top: 1rem;">
-                        <label>What type of public data is going to be used?</label>
-                        <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports">{{formA.public_data_description}}</textarea>
-                      </div>
-                    </div>
+<label>Will secondary data be used?</label>
+<select id="secondaryData" name="secondary_data" required class="form-select" onchange="handleSecondaryData()">
+  <option value="">-- Select --</option>
+  <option value="Yes" {% if formA.secondary_data == 'Yes' %}selected{% endif %}>Yes</option>
+  <option value="No" {% if formA.secondary_data == 'No' %}selected{% endif %}>No</option>
+</select>
+
+<div id="secondaryDetails" style="margin-top: 1rem;">
+  <label>Is the data Public or Private?</label>
+  <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
+    <option value="">-- Select --</option>
+    <option value="private" {% if formA.data_type == 'private' %}selected{% endif %}>Private</option>
+    <option value="public" {% if formA.data_type == 'public' %}selected{% endif %}>Public</option>
+    <option value="both" {% if formA.data_type == 'both' %}selected{% endif %}>Both</option>
+  </select>
+
+  <br>
+
+  <label>Nature of the Data</label>
+  <input type="text" name="data_nature" class="form-control" value="{{ formA.data_nature }}" placeholder="e.g., survey, interviews, secondary data">
+
+  <br>
+
+  <label>Origin/Source of Research Data</label>
+  <input type="text" name="data_origin" class="form-control" value="{{ formA.data_origin }}" placeholder="e.g., existing database, public record, institution">
+
+  <br>
+
+  <label>Are the sources of the research data in the public domain?</label><br>
+  <input type="radio" name="data_public" value="Yes" {% if formA.data_public == 'Yes' %}checked{% endif %} onchange="togglePublicData()"> Yes
+  <input type="radio" name="data_public" value="No" {% if formA.data_public == 'No' %}checked{% endif %} onchange="togglePublicData()"> No
+
+  <br><br>
+
+  <div id="public_data_fields">
+    <label>Provide evidence or explanation (if applicable)</label>
+    <textarea name="public_evidence" rows="3" class="form-control">{{ formA.public_evidence }}</textarea>
+
+    <label>If data is not public, what are the access conditions?</label>
+    <textarea name="access_conditions" rows="3" class="form-control">{{ formA.access_conditions }}</textarea>
+  </div>
+
+  <br>
+
+  <label>Does the database contain personal information/identifiers?</label><br>
+  <input type="radio" name="personal_info" value="Yes" {% if formA.personal_info == 'Yes' %}checked{% endif %} onchange="togglePersonalInfo()"> Yes
+  <input type="radio" name="personal_info" value="No" {% if formA.personal_info == 'No' %}checked{% endif %} onchange="togglePersonalInfo()"> No
+
+  <div id="personalInfoComment" style="margin-top: 1rem;">
+    <label>If yes, specify what kind of personal information/identifiers:</label>
+    <textarea name="personal_info_comment" rows="3" class="form-control">{{ formA.personal_info_comment }}</textarea>
+  </div>
+
+  <br>
+
+  <label>Has the data been anonymized?</label><br>
+  <input type="radio" name="data_anonymized" value="Yes" {% if formA.data_anonymized == 'Yes' %}checked{% endif %}> Yes
+  <input type="radio" name="data_anonymized" value="No" {% if formA.data_anonymized == 'No' %}checked{% endif %}> No
+  <input type="radio" name="data_anonymized" value="Not Applicable" {% if formA.data_anonymized == 'Not Applicable' %}checked{% endif %}> Not Applicable
+
+  <br><br>
+
+  <label>Comment / Justification</label>
+  <textarea name="anonymization_comment" rows="3" class="form-control">{{ formA.anonymization_comment }}</textarea>
+
+  <br>
+
+  <!-- Private Data Section -->
+  <div id="privateDataSection">
+    <label>Is the data from a company that has provided permission?</label>
+    <select id="privatePermission" name="org_permision" class="form-select" onchange="handlePrivatePermission()">
+      <option value="">-- Select --</option>
+      <option value="Yes" {% if formA.org_permision == 'Yes' %}selected{% endif %}>Yes</option>
+      <option value="No" {% if formA.org_permision == 'No' %}selected{% endif %}>No</option>
+    </select>
+
+    <div id="uploadPrivatePermission" style="margin-top: 1rem;">
+      <label>Please upload the permission for use of private data:</label>
+      <input type="file" name="private_permission_file" class="form-control">
+    </div>
+  </div>
+
+  <!-- Public Data Section -->
+  <div id="publicDataSection" style="margin-top: 1rem;">
+    <label>What type of public data is going to be used?</label>
+    <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports">{{ formA.public_data_description }}</textarea>
+  </div>
+
+  <br>
+
+  <label>Will data shortcomings/incompleteness be reported?</label><br>
+  <input type="radio" name="shortcomings_reported" value="Yes" {% if formA.shortcomings_reported == 'Yes' %}checked{% endif %}> Yes
+  <input type="radio" name="shortcomings_reported" value="No" {% if formA.shortcomings_reported == 'No' %}checked{% endif %}> No
+
+  <br><br>
+
+  <label>How will data limitations be reported?</label>
+  <textarea name="limitations_reporting" rows="3" class="form-control">{{ formA.limitations_reporting }}</textarea>
+
+  <br>
+
+  <label>Are the research methodology and design aligned with secondary data use?</label><br>
+  <input type="radio" name="methodology_alignment" value="Yes" {% if formA.methodology_alignment == 'Yes' %}checked{% endif %}> Yes
+  <input type="radio" name="methodology_alignment" value="No" {% if formA.methodology_alignment == 'No' %}checked{% endif %}> No
+
+  <br><br>
+
+  <label>How will original owners of the data be acknowledged?</label>
+  <textarea name="data_acknowledgment" rows="3" class="form-control">{{ formA.data_acknowledgment }}</textarea>
+</div>
+
 
               </main>
 
@@ -976,6 +1047,37 @@
       const val = document.getElementById("privatePermission").value;
       document.getElementById("uploadPrivatePermission").style.display = val === "yes" ? "block" : "none";
     }
+
+    function togglePublicData() {
+    const radios = document.getElementsByName("data_public");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "No") {
+        document.getElementById("public_data_fields").style.display = "block";
+        return;
+      }
+    }
+    document.getElementById("public_data_fields").style.display = "none";
+  }
+
+  function togglePersonalInfo() {
+    const radios = document.getElementsByName("personal_info");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "Yes") {
+        document.getElementById("personalInfoComment").style.display = "block";
+        return;
+      }
+    }
+    document.getElementById("personalInfoComment").style.display = "none";
+  }
+
+  // Ensure proper toggling if user reloads page with pre-filled data
+  window.onload = function () {
+    handleSecondaryData();
+    handleDataType();
+    handlePrivatePermission();
+    togglePublicData();
+    togglePersonalInfo();
+  }
 
     function resetFields() {
       document.getElementById('dataType').value = "";

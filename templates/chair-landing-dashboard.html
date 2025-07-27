@@ -121,7 +121,7 @@
           <label for="searchInput">Search Input</label>
           <input type="text" id="searchInput" class="form-control" placeholder="Enter Year or Qualification">
           <select id="specializationDropdown" class="form-select d-none mt-2">
-            <option value="">-- Select Specialization --</option>
+            <option value="">-- Select Qualification--</option>
             {% for spec in results %}<option value="{{ spec|lower }}">{{ spec }}</option>{% endfor %}
           </select>
         </div>

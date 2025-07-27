@@ -30,14 +30,14 @@
   <main class="main-content">
     <form action="{{url_for('form_a_sec4')}}" method="post">
   <!-- Error Messages -->
-            {% if messages %}
+            <!-- {% if messages %}
                 <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            {% endif %}
+            {% endif %} -->
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <!-- Top Bar -->
     <div class="form-header">
@@ -210,46 +210,120 @@
     </div>
     <br>
 
-    <label>5.5 Secondary Data Usage</label>
+<label>5.5 Secondary Data Usage</label>
 
-    <label>Will secondary data be used?</label><br>
-    <select id="secondaryData" name="secondary_data" class="form-select" onchange="handleSecondaryData()">
+<label>Will secondary data be used?</label><br>
+<select id="secondaryData" name="secondary_data" class="form-select" onchange="handleSecondaryData()">
+  <option value="">-- Select --</option>
+  <option value="Yes">Yes</option>
+  <option value="No">No</option>
+</select>
+
+<div id="secondaryDetails" style="display: none; margin-top: 1rem;">
+
+  <!-- 5.5.1 Data Type -->
+  <label>Is the data Public or Private?</label><br>
+  <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
+    <option value="">-- Select --</option>
+    <option value="private">Private</option>
+    <option value="public">Public</option>
+    <option value="both">Both</option>
+  </select>
+
+  <!-- Common Information for Public or Private Data -->
+  <div style="margin-top: 1rem;">
+    <h5>Details of the Secondary Data</h5>
+
+    <label>Nature of the Data</label>
+    <input type="text" name="data_nature" class="form-control" required placeholder="e.g., survey, interviews, secondary data">
+
+    <label>Origin/Source of Research Data</label>
+    <input type="text" name="data_origin" class="form-control" required placeholder="e.g., public reports, private datasets, archives">
+
+    <label>Are the sources of the research data in the public domain?</label><br>
+    <div class="yes-no">
+      <input type="radio" name="data_public" value="Yes" onchange="togglePublicData()"> Yes
+      <input type="radio" name="data_public" value="No" onchange="togglePublicData()"> No
+    </div>
+
+    <!-- If data is not public -->
+    <div id="public_data_fields" style="display: none; margin-top: 1rem;">
+      <label>Provide evidence or explanation (if applicable):</label>
+      <textarea name="public_evidence" class="form-control" rows="3" placeholder="Explain why the data is not publicly accessible."></textarea>
+
+      <label>If data is not public, what are the access conditions?</label>
+      <textarea name="access_conditions" class="form-control" rows="3" placeholder="Mention access terms, restrictions, or agreements."></textarea>
+    </div>
+
+    <label>Does the database contain personal information/identifiers?</label><br>
+    <div class="yes-no">
+      <input type="radio" name="personal_info" value="Yes" onchange="togglePersonalInfo()"> Yes
+      <input type="radio" name="personal_info" value="No" onchange="togglePersonalInfo()"> No
+    </div>
+
+    <div id="personalInfoComment" style="display: none; margin-top: 1rem;">
+      <textarea name="personal_info_comment" class="form-control" rows="3" placeholder="Specify personal data to be collected, if any."></textarea>
+    </div>
+
+    <label>If yes, has the data been anonymized?</label><br>
+    <div class="yes-no">
+      <input type="radio" name="data_anonymized" value="Yes"> Yes
+      <input type="radio" name="data_anonymized" value="No"> No
+      <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
+    </div>
+
+    <label>Comment / Justification:</label>
+    <textarea name="anonymization_comment" class="form-control" rows="3" placeholder="Justify anonymization approach."></textarea>
+  </div>
+
+  <!-- Private Data Section -->
+  <div id="privateDataSection" style="display: none; margin-top: 1rem;">
+    <label>Is the data from a company that has provided permission?</label><br>
+    <select id="privatePermission" name="org_permission" class="form-select" onchange="handlePrivatePermission()">
       <option value="">-- Select --</option>
       <option value="Yes">Yes</option>
       <option value="No">No</option>
     </select>
-    
-    <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
-    
-      <label>Is the data Public or Private?</label><br>
-      <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
-        <option value="">-- Select --</option>
-        <option value="private">Private</option>
-        <option value="public">Public</option>
-        <option value="both">Both</option>
-      </select>
-    
-      <!-- Private Data Section -->
-      <div id="privateDataSection" style="display: none; margin-top: 1rem;">
-        <label>Is the data from a company that has provided permission?</label><br>
-        <select id="privatePermission" name="org_permision" class="form-select" onchange="handlePrivatePermission()">
-          <option value="">-- Select --</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-    
-        <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
-          <label>Please upload the permission for use of private data:</label>
-          <input type="file" name="private_permission_file" class="form-control">
-        </div>
-      </div>
-    
-      <!-- Public Data Section -->
-      <div id="publicDataSection" style="display: none; margin-top: 1rem;">
-        <label>What type of public data is going to be used?</label>
-        <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports"></textarea>
-      </div>
+
+    <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
+      <label>Upload the permission document from the organization:</label>
+      <input type="file" name="private_permission_file" class="form-control">
+
+      <label>Provide permission details (if any):</label>
+      <textarea name="permission_details" class="form-control" rows="3"
+        placeholder="Describe the permission granted or attach documentation."></textarea>
     </div>
+  </div>
+
+  <!-- Public Data Section -->
+  <div id="publicDataSection" style="display: none; margin-top: 1rem;">
+    <label>What type of public data will be used?</label>
+    <textarea name="public_data_description" class="form-control" rows="3" placeholder="e.g., Annual reports; Open data portals; Statistics SA"></textarea>
+  </div>
+
+  <!-- Additional Data Considerations -->
+  <div style="margin-top: 1rem;">
+    <label>Will data shortcomings/incompleteness be reported?</label><br>
+    <div class="yes-no">
+      <input type="radio" name="shortcomings_reported" value="Yes"> Yes
+      <input type="radio" name="shortcomings_reported" value="No"> No
+    </div>
+
+    <label>How will data limitations be reported?</label>
+    <textarea name="limitations_reporting" class="form-control" rows="3" placeholder="Describe how gaps or missing data will be handled."></textarea>
+
+    <label>Are the research methodology and design aligned with secondary data use?</label><br>
+    <div class="yes-no">
+      <input type="radio" name="methodology_alignment" value="Yes"> Yes
+      <input type="radio" name="methodology_alignment" value="No"> No
+    </div>
+
+    <label>How will original owners of the data be acknowledged?</label>
+    <textarea name="data_acknowledgment" class="form-control" rows="3" placeholder="e.g., citations, attribution, formal agreements."></textarea>
+  </div>
+
+</div>
+
   </section>
 
         <!-- Navigation Buttons -->
@@ -367,6 +441,44 @@
         }
       });
     });
+
+    // Initial setup for secondary data and data type
+  function togglePublicData() {
+    const radios = document.getElementsByName("data_public");
+    const field = document.getElementById("public_data_fields");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "No") {
+        field.style.display = "block";
+        return;
+      }
+    }
+    field.style.display = "none";
+  }
+
+  function togglePersonalInfo() {
+    const radios = document.getElementsByName("personal_info");
+    const commentBox = document.getElementById("personalInfoComment");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "Yes") {
+        commentBox.style.display = "block";
+        return;
+      }
+    }
+    commentBox.style.display = "none";
+  }
+
+  function togglePrivatePermission() {
+    const radios = document.getElementsByName("private_permission");
+    const permissionBox = document.getElementById("permission_details_box");
+    for (const radio of radios) {
+      if (radio.checked && radio.value === "Yes") {
+        permissionBox.style.display = "block";
+        return;
+      }
+    }
+    permissionBox.style.display = "none";
+  }
+
 </script>
 
 

@@ -85,7 +85,7 @@
             </span></td>
             <td>
               {% if forma.supervisor_feedback and not forma.ethics_commettee_comments%}
-              <strong>Supervisors comments</strong>
+              <!-- <strong>Supervisors comments</strong> -->
 
               <a href="{{url_for('supervisor_view_feedback',id=forma.form_id)}}">View Feedback</a>
               <br>
@@ -170,7 +170,7 @@
             </span></td>
             <td>
               {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
-              <strong>Supervisors comments</strong>
+              <!-- <strong>Supervisors comments</strong> -->
               <a href="{{url_for('supervisor_view_feedback',id=formb.form_id)}}">View Feedback</a>
               <br>
               {% elif formb.ethics_commettee_comments %}
@@ -243,7 +243,7 @@
 <td>
               {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}
             
-              <strong>Supervisors comments</strong>
+              <!-- <strong>Supervisors comments</strong> -->
               <a href="{{url_for('supervisor_view_feedback',id=formc.form_id)}}">View Feedback</a>
               <br>
               {% elif formc.ethics_commettee_comments %}
