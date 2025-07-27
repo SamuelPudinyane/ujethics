@@ -632,7 +632,7 @@
     <br>
     <br><span class="form-answer">{{formA.translator_procedure}}</span>
 
-    <h3>5.5 Secondary Data Usage</h3>
+<h3>5.5 Secondary Data Usage</h3>
 
 <label>Will secondary data be used?</label><br>
 <span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
@@ -644,7 +644,53 @@
 
 <br><br>
 
-<!-- 🔐 Private Data Section -->
+<!-- Nature and Origin -->
+<label>Nature of the Data</label><br>
+<span class="form-answer">{{ formA.data_nature or 'Not provided' }}</span>
+
+<br><br>
+
+<label>Origin/Source of Research Data</label><br>
+<span class="form-answer">{{ formA.data_origin or 'Not provided' }}</span>
+
+<br><br>
+
+<label>Are the sources of the research data in the public domain?</label><br>
+<span class="form-answer">{{ formA.data_public or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Provide evidence or explanation:</label><br>
+<span class="form-answer">{{ formA.public_evidence or 'None provided' }}</span>
+
+<br><br>
+
+<label>What are the access conditions?</label><br>
+<span class="form-answer">{{ formA.access_conditions or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Does the database contain personal information/identifiers?</label><br>
+<span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
+
+<br><br>
+
+<label>If yes, specify the personal info/identifiers:</label><br>
+<span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
+
+<br><br>
+
+<label>Has the data been anonymized?</label><br>
+<span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
+
+<br><br>
+
+<label>Comment / Justification:</label><br>
+<span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
+
+<br><br>
+
+<!-- Private Data Section -->
 <label>Is the data from a company that has provided permission?</label><br>
 <span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
 
@@ -659,10 +705,30 @@
 
 <br><br>
 
-<!-- 🌐 Public Data Section -->
+<!-- Public Data Section -->
 <label>What type of public data is going to be used?</label><br>
 <span class="form-answer">{{ formA.public_data_description or 'Not specified' }}</span>
 
+<br><br>
+
+<!-- Additional Considerations -->
+<label>Will data shortcomings/incompleteness be reported?</label><br>
+<span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
+
+<br><br>
+
+<label>How will data limitations be reported?</label><br>
+<span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
+
+<br><br>
+
+<label>Are the methodology and design aligned with secondary data use?</label><br>
+<span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
+
+<br><br>
+
+<label>How will the original owners of the data be acknowledged?</label><br>
+<span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
       
    
   </section>
