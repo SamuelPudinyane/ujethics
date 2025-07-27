@@ -609,41 +609,41 @@
                     <h3>5.4 Research Instruments for Data Collection</h3>
                     <label>5.4.1 Indicate which data collection methods will be used</label><br>
                     <div id="data-methods">
-                            <label><input type="radio" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> Questionnaire</label><br>
-                            <label><input type="radio" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> Interview</label><br>
-                            <label><input type="radio" {% if formA.focus_groups %}checked{% endif %} value="focus" class="method-check"> Focus Group</label><br>
-                            <label><input type="radio" {% if formA.observations %}checked{% endif %} value="observation" class="method-check"> Observation</label><br>
-                            <label><input type="radio" {% if formA.documents %}checked{% endif %} value="documents" class="method-check"> Documents</label><br>
-                            <label><input type="radio" {% if formA.other %}checked{% endif %} value="other" class="method-check"> Other</label><br>
+                            <label><input type="radio" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> (a) Questionnaire</label><br>
+                            <label><input type="radio" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> (b) Interview</label><br>
+                            <label><input type="radio" {% if formA.focus_groups %}checked{% endif %} value="focus" class="method-check"> (c) Focus Group</label><br>
+                            <label><input type="radio" {% if formA.observations %}checked{% endif %} value="observation" class="method-check"> (d) Observation</label><br>
+                            <label><input type="radio" {% if formA.documents %}checked{% endif %} value="documents" class="method-check"> (e) Documents</label><br>
+                            <label><input type="radio" {% if formA.other %}checked{% endif %} value="other" class="method-check"> (f) Other</label><br>
                     </div>
                     <!-- Questionnaire -->
                           <div id="questionnaire_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.1 Questionnaire(s):</label><br>
-                            <input type="radio" {% if formA.questionnaire_type=='Self-designed'%}checked{% endif%} name="questionnaire_type" value="Self-designed"> Self-designed<br>
-                            <input type="radio" {% if formA.questionnaire_type=='Existing'%}checked{% endif%} name="questionnaire_type" value="Existing"> Existing<br>
-                            <label>If existing, permission obtained?</label><br>
-                            <input type="radio" {% if formA.permission%}checked{% endif %} name="permission_obtained"> Yes
-                            <input type="radio" {% if formA.open_source%}checked{% endif %} name="open_source"> Open Source<br>
+                            <input type="radio" {% if formA.questionnaire_type=='Self-designed'%}checked{% endif%} name="questionnaire_type" value="Self-designed"> (a) Self-designed<br>
+                            <input type="radio" {% if formA.questionnaire_type=='Existing'%}checked{% endif%} name="questionnaire_type" value="Existing"> (b) Existing<br>
+                            <label>5.4.1.1.1 If existing, permission obtained?</label><br>
+                            <input type="radio" {% if formA.permission%}checked{% endif %} name="permission_obtained"> (a) Yes
+                            <input type="radio" {% if formA.open_source%}checked{% endif %} name="open_source"> (b) Open Source<br>
                             <textarea name="instrument_attachment_reason"  rows="2" placeholder="Attach or justify">{{formA.instrument_attrachment_reason}}</textarea>
                           </div>
                     <!-- Interview -->
                           <div id="interview_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.2 Interviews</label><br>
-                            <input type="radio" {% if formA.interview_type=='In-depth' %}checked{% endif%} name="interview_type" value="In-depth"> In-depth
-                            <input type="radio" {% if formA.interview_type=='Semi-structured'%}checked{% endif %} name="interview_type" value="Semi-structured"> Semi-structured
-                            <input type="radio" {% if formA.interview_type=='Unstructured'%}checked{% endif%} name="interview_type" value="Unstructured"> Unstructured<br>
-                            <label>Will interviews be recorded?</label><br>
-                            <input type="radio" {% if formA.interview_recording=='Audio'%}checked{% endif%} name="interview_recording" value="Audio"> Audio
-                            <input type="radio" {% if formA.interview_recording=='Video'%}checked{% endif %} name="interview_recording" value="Video"> Video
+                            <input type="radio" {% if formA.interview_type=='In-depth' %}checked{% endif%} name="interview_type" value="In-depth"> (a) In-depth
+                            <input type="radio" {% if formA.interview_type=='Semi-structured'%}checked{% endif %} name="interview_type" value="Semi-structured"> (b) Semi-structured
+                            <input type="radio" {% if formA.interview_type=='Unstructured'%}checked{% endif%} name="interview_type" value="Unstructured"> (c) Unstructured<br>
+                            <label>5.4.1.2.1 Will interviews be recorded?</label><br>
+                            <input type="radio" {% if formA.interview_recording=='Audio'%}checked{% endif%} name="interview_recording" value="Audio"> (a) Audio
+                            <input type="radio" {% if formA.interview_recording=='Video'%}checked{% endif %} name="interview_recording" value="Video"> (b) Video
                           </div>
                     <!-- Focus Group -->
                           <div id="focus_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.3 Focus Groups</label><br>
-                            <input type="radio" {% if formA.use_focus_groups%}checked{% endif%} name="use_focus_groups" value="Yes"> Yes
-                            <input type="radio" {% if not formA.use_focus_groups=='Audio'%}checked{% endif%} name="use_focus_groups" value="No"> No<br>
-                            <label>Will focus groups be recorded?</label><br>
-                            <input type="radio" {% if formA.focus_recording=='Audio'%}checked{% endif%} name="focus_recording" value="Audio"> Audio
-                            <input type="radio" {% if formA.focus_recording=='Video'%}checked{% endif%} name="focus_recording" value="Video"> Video
+                            <input type="radio" {% if formA.use_focus_groups%}checked{% endif%} name="use_focus_groups" value="Yes"> (a) Yes
+                            <input type="radio" {% if not formA.use_focus_groups=='Audio'%}checked{% endif%} name="use_focus_groups" value="No"> (b) No<br>
+                            <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
+                            <input type="radio" {% if formA.focus_recording=='Audio'%}checked{% endif%} name="focus_recording" value="Audio"> (a) Audio
+                            <input type="radio" {% if formA.focus_recording=='Video'%}checked{% endif%} name="focus_recording" value="Video"> (b) Video
                           </div>
                 <!-- Observation -->
                           <div id="observation_fields" style="display:none; margin-top: 1rem;">

@@ -559,12 +559,12 @@
     <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
-            <label>Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
-            <label>Interview: <span class="form-answer">{{formA.interview}}</span></label><br>
-            <label>Focus Group: <span class="form-answer">{{formA.focus}}</span></label><br>
-            <label>Observation: <span class="form-answer">{{formA.observation}}</span></label><br>
-            <label>Documents: <span class="form-answer">{{formA.documents}}</span></label><br>
-            <label>Other: <span class="form-answer">{{formA.other}}</span></label><br>
+            <label>(a) Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
+            <label>(b) Interview: <span class="form-answer">{{formA.interview}}</span></label><br>
+            <label>(c) Focus Group: <span class="form-answer">{{formA.focus}}</span></label><br>
+            <label>(d) Observation: <span class="form-answer">{{formA.observation}}</span></label><br>
+            <label>(e) Documents: <span class="form-answer">{{formA.documents}}</span></label><br>
+            <label>(f) Other: <span class="form-answer">{{formA.other}}</span></label><br>
     </div>
       
     <!-- Questionnaire -->
@@ -572,38 +572,36 @@
       <br>
       {% if formA.questionnaire%}<span class="form-answer">Questionnaire Type: {{formA.questionnaire_type}}</span>{% endif %}
     <br>
-    {% if formA.questionnaire_type=='Existing'%}<label>Permisson obtained? </label>
+    {% if formA.questionnaire_type=='Existing'%}<label>5.4.1.1.1 Permission obtained? </label>
     <br><span class="form-answer">{% if formA.permission%}{{formA.permission}}{% endif %} </span>
     <br><span class="form-answer">{% if formA.open_source%}{{formA.open_source}}{% endif %} </span>{% endif %}
     <br>
-    <label>Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span>
-    
+    <label>5.4.1.1.2 Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span>
+
     <!-- Interview -->
-    <label>5.4.2.1 Interviews</label><br>
+    <label>5.4.1.2 Interviews</label><br>
     <span class="form-answer">{{formA.interview_type}}</span>
-    <label>Will interviews be recorded?</label><br>
+    <label>5.4.1.2.1 Will interviews be recorded?</label><br>
     <span class="form-answer">{% if formA.interview_recording=='Audio'%}{{formA.interview_recording}}{% endif%}</span>
     <br>
     <span class="form-answer">{% if formA.interview_recording=='Video'%}{{formA.interview_recording}}{% endif%}</span>
     
     <!-- Focus Group -->
-    <label>5.4.2.2 Focus Groups: </label>
+    <label>5.4.1.3 Focus Groups: </label>
     <br><span class="form-answer">{% if formA.use_focus_groups%}{{formA.use_focus_groups}}{% endif%}</span>
-   <label>Will focus groups be recorded?</label><br>
+   <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
    <span class="form-answer">{% if formA.focus_recording=='Audio'%}{{formA.focus_recording}}{% endif%}</span>
    <span class="form-answer">{% if formA.focus_recording=='Video'%}{{formA.focus_recording}}{% endif%}</span>
    <br>
    <!-- Observation -->
-    <label>Please describe your observation protocol:</label>
+    <label>5.4.1.4 Please describe your observation protocol:</label>
     <br><span class="form-answer">{{formA.observation_details}}</span>
     <br>
-    <label>What type of documents will be analyzed?</label><br>
+    <label>5.4.1.5 What type of documents will be analyzed?</label><br>
     <span class="form-answer">{{formA.documents_details}}</span>
-    <label>5.4.2.1 Interviews
-      <br><span class="form-answer">{{formA.interview_type}}</span>
-    </label><br>
+   
   <!-- Other -->
-  <label>Please describe other data collection method(s):</label>
+  <label>5.4.1.6 Please describe other data collection method(s):</label>
   <br>
   <span class="form-answer">{{formA.other_details}}</span>
     <!-- General Data Collection Procedure -->
@@ -634,69 +632,69 @@
 
 <h3>5.5 Secondary Data Usage</h3>
 
-<label>Will secondary data be used?</label><br>
+<label>5.5.1 Will secondary data be used?</label><br>
 <span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
 
 <br><br>
 
-<label>Is the data Public or Private?</label><br>
+<label>5.5.2 Is the data Public or Private?</label><br>
 <span class="form-answer">{{ formA.data_type or 'Not specified' }}</span>
 
 <br><br>
 
 <!-- Nature and Origin -->
-<label>Nature of the Data</label><br>
+<label>5.5.3 Nature of the Data</label><br>
 <span class="form-answer">{{ formA.data_nature or 'Not provided' }}</span>
 
 <br><br>
 
-<label>Origin/Source of Research Data</label><br>
+<label>5.5.4 Origin/Source of Research Data</label><br>
 <span class="form-answer">{{ formA.data_origin or 'Not provided' }}</span>
 
 <br><br>
 
-<label>Are the sources of the research data in the public domain?</label><br>
+<label>5.5.5 Are the sources of the research data in the public domain?</label><br>
 <span class="form-answer">{{ formA.data_public or 'Not specified' }}</span>
 
 <br><br>
 
-<label>Provide evidence or explanation:</label><br>
+<label>5.5.6 Provide evidence or explanation:</label><br>
 <span class="form-answer">{{ formA.public_evidence or 'None provided' }}</span>
 
 <br><br>
 
-<label>What are the access conditions?</label><br>
+<label>5.5.7 What are the access conditions?</label><br>
 <span class="form-answer">{{ formA.access_conditions or 'Not specified' }}</span>
 
 <br><br>
 
-<label>Does the database contain personal information/identifiers?</label><br>
+<label>5.5.8 Does the database contain personal information/identifiers?</label><br>
 <span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
 
 <br><br>
 
-<label>If yes, specify the personal info/identifiers:</label><br>
+<label>5.5.8.1 If yes, specify the personal info/identifiers:</label><br>
 <span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
 
 <br><br>
 
-<label>Has the data been anonymized?</label><br>
+<label>5.5.8.2 Has the data been anonymized?</label><br>
 <span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
 
 <br><br>
 
-<label>Comment / Justification:</label><br>
+<label>5.5.8.3 Comment / Justification:</label><br>
 <span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
 
 <br><br>
 
 <!-- Private Data Section -->
-<label>Is the data from a company that has provided permission?</label><br>
+<label>5.5.9 Is the data from a company that has provided permission?</label><br>
 <span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
 
 <br><br>
 
-<label>Uploaded permission document:</label><br>
+<label>5.5.9.1 Uploaded permission document:</label><br>
 {% if formA.private_permission_file %}
   <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
 {% else %}
@@ -706,37 +704,33 @@
 <br><br>
 
 <!-- Public Data Section -->
-<label>What type of public data is going to be used?</label><br>
+<label>5.5.10 What type of public data is going to be used?</label><br>
 <span class="form-answer">{{ formA.public_data_description or 'Not specified' }}</span>
 
 <br><br>
 
 <!-- Additional Considerations -->
-<label>Will data shortcomings/incompleteness be reported?</label><br>
+<label>5.5.11 Will data shortcomings/incompleteness be reported?</label><br>
 <span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
 
 <br><br>
 
-<label>How will data limitations be reported?</label><br>
+<label>5.5.12 How will data limitations be reported?</label><br>
 <span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
 
 <br><br>
 
-<label>Are the methodology and design aligned with secondary data use?</label><br>
+<label>5.5.13 Is the methodology and design aligned with secondary data use?</label><br>
 <span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
 
 <br><br>
 
-<label>How will the original owners of the data be acknowledged?</label><br>
+<label>5.5.14 How will the original owners of the data be acknowledged?</label><br>
 <span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
-      
-   
-  </section>
 
+</section>
 
-   
-  
-    </main>
+</main>
 
     <!-- Section 5 -->
 

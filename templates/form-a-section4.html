@@ -123,44 +123,44 @@
     <label>5.4 Research Instruments for Data Collection</label>
     <label>5.4.1 Indicate which data collection methods will be used</label>
     <div id="data-methods">
-            <label><input type="radio" value="questionnaire" class="method-check"> Questionnaire</label><br>
-            <label><input type="radio" value="interview" class="method-check"> Interview</label><br>
-            <label><input type="radio" value="focus" class="method-check"> Focus Group</label><br>
-            <label><input type="radio" value="observation" class="method-check"> Observation</label><br>
-            <label><input type="radio" value="documents" class="method-check"> Documents</label><br>
-            <label><input type="radio" value="other" class="method-check"> Other</label><br>
+            <label><input type="radio" value="questionnaire" class="method-check"> (a) Questionnaire</label><br>
+            <label><input type="radio" value="interview" class="method-check"> (b) Interview</label><br>
+            <label><input type="radio" value="focus" class="method-check"> (c) Focus Group</label><br>
+            <label><input type="radio" value="observation" class="method-check"> (d) Observation</label><br>
+            <label><input type="radio" value="documents" class="method-check"> (e) Documents</label><br>
+            <label><input type="radio" value="other" class="method-check"> (f) Other</label><br>
     </div>
     <br>
     
     <!-- Questionnaire -->
           <div id="questionnaire_fields" style="display:none; margin-top: 1rem;">
             <label>5.4.1.1 Questionnaire(s):</label><br>
-            <input type="radio" name="questionnaire_type" value="Self-designed"> Self-designed<br>
-            <input type="radio" name="questionnaire_type" value="Existing"> Existing<br>
-            <label>If existing, permission obtained?</label><br>
-            <input type="radio" name="permission_obtained"> Yes
-            <input type="radio" name="open_source"> Open Source<br>
+            <input type="radio" name="questionnaire_type" value="Self-designed"> (a) Self-designed<br>
+            <input type="radio" name="questionnaire_type" value="Existing"> (b) Existing<br>
+            <label>5.4.1.1.1 If existing, permission obtained?</label><br>
+            <input type="radio" name="permission_obtained"> (a) Yes
+            <input type="radio" name="open_source"> (b) Open Source<br>
             <textarea name="instrument_attachment_reason" rows="2" placeholder="Attach or justify"></textarea>
           </div>
     <!-- Interview -->
           <div id="interview_fields" style="display:none; margin-top: 1rem;">
             <label>5.4.1.2 Interviews</label><br>
-            <input type="radio" name="interview_type" value="In-depth"> In-depth
-            <input type="radio" name="interview_type" value="Semi-structured"> Semi-structured
-            <input type="radio" name="interview_type" value="Unstructured"> Unstructured<br>
-            <label>Will interviews be recorded?</label><br>
-            <input type="radio" name="interview_recording" value="Audio"> Audio
-            <input type="radio" name="interview_recording" value="Video"> Video
+            <input type="radio" name="interview_type" value="In-depth"> (a) In-depth
+            <input type="radio" name="interview_type" value="Semi-structured"> (b) Semi-structured
+            <input type="radio" name="interview_type" value="Unstructured"> (c) Unstructured<br>
+            <label>5.4.1.2.1 Will interviews be recorded?</label><br>
+            <input type="radio" name="interview_recording" value="Audio"> (a) Audio
+            <input type="radio" name="interview_recording" value="Video"> (b) Video
           </div>
 
           <!-- Focus Group -->
           <div id="focus_fields" style="display:none; margin-top: 1rem;">
             <label>5.4.1.3 Focus Groups</label><br>
-            <input type="radio" name="use_focus_groups" value="Yes"> Yes
-            <input type="radio" name="use_focus_groups" value="No"> No<br>
-            <label>Will focus groups be recorded?</label><br>
-            <input type="radio" name="focus_recording" value="Audio"> Audio
-            <input type="radio" name="focus_recording" value="Video"> Video
+            <input type="radio" name="use_focus_groups" value="Yes"> (a) Yes
+            <input type="radio" name="use_focus_groups" value="No"> (b) No<br>
+            <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
+            <input type="radio" name="focus_recording" value="Audio"> (a) Audio
+            <input type="radio" name="focus_recording" value="Video"> (b) Video
           </div>
 
           <!-- Observation -->
@@ -212,7 +212,7 @@
 
 <label>5.5 Secondary Data Usage</label>
 
-<label>Will secondary data be used?</label><br>
+<label>5.5.1 Will secondary data be used?</label><br>
 <select id="secondaryData" name="secondary_data" class="form-select" onchange="handleSecondaryData()">
   <option value="">-- Select --</option>
   <option value="Yes">Yes</option>
@@ -222,7 +222,7 @@
 <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
 
   <!-- 5.5.1 Data Type -->
-  <label>Is the data Public or Private?</label><br>
+  <label>5.5.2 Is the data Public or Private?</label><br>
   <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
     <option value="">-- Select --</option>
     <option value="private">Private</option>
@@ -232,30 +232,20 @@
 
   <!-- Common Information for Public or Private Data -->
   <div style="margin-top: 1rem;">
-    <h5>Details of the Secondary Data</h5>
+    <h5>5.5.3 Details of the Secondary Data</h5>
 
-    <label>Nature of the Data</label>
+    <label>5.5.3.1 Nature of the Data</label>
     <input type="text" name="data_nature" class="form-control" required placeholder="e.g., survey, interviews, secondary data">
 
-    <label>Origin/Source of Research Data</label>
+    <label>5.5.3.2 Origin/Source of Research Data</label>
     <input type="text" name="data_origin" class="form-control" required placeholder="e.g., public reports, private datasets, archives">
 
-    <label>Are the sources of the research data in the public domain?</label><br>
-    <div class="yes-no">
-      <input type="radio" name="data_public" value="Yes" onchange="togglePublicData()"> Yes
-      <input type="radio" name="data_public" value="No" onchange="togglePublicData()"> No
-    </div>
 
-    <!-- If data is not public -->
-    <div id="public_data_fields" style="display: none; margin-top: 1rem;">
-      <label>Provide evidence or explanation (if applicable):</label>
-      <textarea name="public_evidence" class="form-control" rows="3" placeholder="Explain why the data is not publicly accessible."></textarea>
-
-      <label>If data is not public, what are the access conditions?</label>
+      <label>5.5.3.3 If data is not public, what are the access conditions?</label>
       <textarea name="access_conditions" class="form-control" rows="3" placeholder="Mention access terms, restrictions, or agreements."></textarea>
     </div>
 
-    <label>Does the database contain personal information/identifiers?</label><br>
+    <label>5.5.4 Does the database contain personal information/identifiers?</label><br>
     <div class="yes-no">
       <input type="radio" name="personal_info" value="Yes" onchange="togglePersonalInfo()"> Yes
       <input type="radio" name="personal_info" value="No" onchange="togglePersonalInfo()"> No
@@ -265,20 +255,20 @@
       <textarea name="personal_info_comment" class="form-control" rows="3" placeholder="Specify personal data to be collected, if any."></textarea>
     </div>
 
-    <label>If yes, has the data been anonymized?</label><br>
+    <label>5.5.4.1 If yes, has the data been anonymized?</label><br>
     <div class="yes-no">
       <input type="radio" name="data_anonymized" value="Yes"> Yes
       <input type="radio" name="data_anonymized" value="No"> No
       <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
     </div>
 
-    <label>Comment / Justification:</label>
+    <label>5.5.4.2Comment / Justification:</label>
     <textarea name="anonymization_comment" class="form-control" rows="3" placeholder="Justify anonymization approach."></textarea>
   </div>
 
   <!-- Private Data Section -->
   <div id="privateDataSection" style="display: none; margin-top: 1rem;">
-    <label>Is the data from a company that has provided permission?</label><br>
+    <label>5.5.5 Is the data from a company that has provided permission?</label><br>
     <select id="privatePermission" name="org_permission" class="form-select" onchange="handlePrivatePermission()">
       <option value="">-- Select --</option>
       <option value="Yes">Yes</option>
@@ -286,10 +276,10 @@
     </select>
 
     <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
-      <label>Upload the permission document from the organization:</label>
+      <label>5.5.5.1Upload the permission document from the organization:</label>
       <input type="file" name="private_permission_file" class="form-control">
 
-      <label>Provide permission details (if any):</label>
+      <label>5.5.5.2 Provide permission details (if any):</label>
       <textarea name="permission_details" class="form-control" rows="3"
         placeholder="Describe the permission granted or attach documentation."></textarea>
     </div>
@@ -297,28 +287,28 @@
 
   <!-- Public Data Section -->
   <div id="publicDataSection" style="display: none; margin-top: 1rem;">
-    <label>What type of public data will be used?</label>
+    <label>5.5.6 What type of public data will be used?</label>
     <textarea name="public_data_description" class="form-control" rows="3" placeholder="e.g., Annual reports; Open data portals; Statistics SA"></textarea>
   </div>
 
   <!-- Additional Data Considerations -->
   <div style="margin-top: 1rem;">
-    <label>Will data shortcomings/incompleteness be reported?</label><br>
+    <label>5.5.7 Will data shortcomings/incompleteness be reported?</label><br>
     <div class="yes-no">
       <input type="radio" name="shortcomings_reported" value="Yes"> Yes
       <input type="radio" name="shortcomings_reported" value="No"> No
     </div>
 
-    <label>How will data limitations be reported?</label>
+    <label>5.5.8 How will data limitations be reported?</label>
     <textarea name="limitations_reporting" class="form-control" rows="3" placeholder="Describe how gaps or missing data will be handled."></textarea>
 
-    <label>Are the research methodology and design aligned with secondary data use?</label><br>
+    <label>5.5.9 Are the research methodology and design aligned with secondary data use?</label><br>
     <div class="yes-no">
       <input type="radio" name="methodology_alignment" value="Yes"> Yes
       <input type="radio" name="methodology_alignment" value="No"> No
     </div>
 
-    <label>How will original owners of the data be acknowledged?</label>
+    <label>5.5.10 How will original owners of the data be acknowledged?</label>
     <textarea name="data_acknowledgment" class="form-control" rows="3" placeholder="e.g., citations, attribution, formal agreements."></textarea>
   </div>
 
