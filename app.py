@@ -3436,13 +3436,13 @@ def admin_rec_form(form_id):
   
     user_id = session['id']
     user=db_session.query(User).filter(User.user_id==user_id).first()
-    print("id ------------- ",form_id)
+   
     Rec_team=db_session.query(Rec).filter(Rec.form_id==form_id).first()
-    print("--------- ", Rec_team)
+   
     role=user.role.value
     rec=[]
     rec.append(Rec_team)
-    print(role)
+   
     return render_template(
         'chair_rec_form.html',
         Rec_team=rec,
