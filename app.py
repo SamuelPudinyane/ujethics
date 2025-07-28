@@ -176,8 +176,6 @@ def register():
         password = request.form.get('password', '').strip()
         
         
-        
-       
         # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
             msg = "Only University of Johannesburg email allowed"
@@ -2355,7 +2353,7 @@ def student_edit_forma():
             org_name = request.form.get('org_name[]'),
             org_contact = request.form.get('org_contact[]'),
             org_role = request.form.get('org_role[]'),
-            org_permission = request.form.get('org_permission'),
+            # org_permission = request.form.get('org_permission'),
             
             researcher_affiliation = researcher_affiliation,
             affiliation_details = request.form.get('affiliation_details'),
