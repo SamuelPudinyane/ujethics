@@ -110,6 +110,9 @@
               Aproved by both Reviewers
               {% elif forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_feedback%}
               Submitted to Reviewers
+              {% elif not forma.review_status or not forma.review_status1%}
+              {{forma.review_recommendation}}
+              {{forma.review_recommendation1}}
               {% elif not forma.review_status and not forma.review_status%}
               Rejected
               {% elif forma.certificate_issued and forma.certificate_received %}
@@ -205,6 +208,9 @@
               Aproved by both Reviewers
               {% elif formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_feedback%}
               Submitted to Reviewers
+              {% elif not formb.review_status or not formb.review_status1%}
+              {{formb.review_recommendation}}
+              {{formb.review_recommendation1}}
               {% elif not formb.review_status and not formb.review_status%}
               Rejected
               {% elif formb.certificate_issued and formb.certificate_received %}
@@ -301,6 +307,9 @@
               Aproved by both Reviewers
               {% elif formc.rejected_or_accepted and formc.reviewer_name1 and formc.supervisor_feedback and not formc.certificate_received%}
               Submitted to Reviewers
+              {% elif not formc.review_status or not formc.review_status1%}
+              {{formc.review_recommendation}}
+              {{formc.review_recommendation1}}
               {% elif not formc.review_status and not formc.review_status %}
               Rejected
               {% elif formc.certificate_issued and formc.certificate_received %}

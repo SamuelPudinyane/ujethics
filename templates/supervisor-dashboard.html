@@ -77,7 +77,9 @@
               Awaiting for review
               {% elif not forma.rejected_or_accepted and not forma.recommendation=='Ready for submission'%}
                 Submitted to ethics
-              
+              {% elif not forma.review_status or not forma.review_status1%}
+              {{forma.review_recommendation}}
+              {{forma.review_recommendation1}}
               {% elif not forma.rejected_or_accepted and not forma.supervisor_comment %}
               Rejected
               
@@ -85,7 +87,7 @@
             </span></td>
             <td>
               {% if forma.supervisor_feedback and not forma.ethics_commettee_comments%}
-              <strong>Supervisors comments</strong>
+              <!-- <strong>Supervisors comments</strong> -->
 
               <a href="{{url_for('supervisor_view_feedback',id=forma.form_id)}}">View Feedback</a>
               <br>
@@ -162,7 +164,9 @@
               Awaiting for review
               {% elif not formb.rejected_or_accepted and not formb.recommendation=='Ready for submission'%}
               Submitted to ethics
-              
+              {% elif not formb.review_status or not formb.review_status1%}
+              {{formb.review_recommendation}}
+              {{formb.review_recommendation1}}
               {% elif not formb.rejected_or_accepted and not formb.supervisor_comment %}
               Rejected
               
@@ -170,7 +174,7 @@
             </span></td>
             <td>
               {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
-              <strong>Supervisors comments</strong>
+              <!-- <strong>Supervisors comments</strong> -->
               <a href="{{url_for('supervisor_view_feedback',id=formb.form_id)}}">View Feedback</a>
               <br>
               {% elif formb.ethics_commettee_comments %}
@@ -234,7 +238,10 @@
               Awaiting for review
               {% elif not formc.rejected_or_accepted and not formc.recommendation=='Ready for submission'%}
               Submitted to ethics
-              
+              {% elif not formc.review_status or not formc.review_status1%}
+              1st Reviewer: {{formc.review_recommendation}}
+              <br>
+              2nd Reviewer: {{formc.review_recommendation1}}
               {% elif not formc.rejected_or_accepted and not formc.supervisor_comment %}
               Rejected
               
@@ -243,7 +250,7 @@
 <td>
               {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}
             
-              <strong>Supervisors comments</strong>
+              <!-- <strong>Supervisors comments</strong> -->
               <a href="{{url_for('supervisor_view_feedback',id=formc.form_id)}}">View Feedback</a>
               <br>
               {% elif formc.ethics_commettee_comments %}

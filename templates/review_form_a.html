@@ -609,12 +609,12 @@
     <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
-            <label>Questionnaire: <span>{{form.questionnaire}}</span></label><br>
-            <label>Interview: <span>{{form.interview}}</span></label><br>
-            <label>Focus Group: <span>{{form.focus}}</span></label><br>
-            <label>Observation: <span>{{form.observation}}</span></label><br>
-            <label>Documents: <span>{{form.documents}}</span></label><br>
-            <label>Other: <span>{{form.other}}</span></label><br>
+            <label>(a) Questionnaire: <span>{{form.questionnaire}}</span></label><br>
+            <label>(b) Interview: <span>{{form.interview}}</span></label><br>
+            <label>(c) Focus Group: <span>{{form.focus}}</span></label><br>
+            <label>(d) Observation: <span>{{form.observation}}</span></label><br>
+            <label>(e) Documents: <span>{{form.documents}}</span></label><br>
+            <label>(f) Other: <span>{{form.other}}</span></label><br>
     </div>
       
     <!-- Questionnaire -->
@@ -622,38 +622,36 @@
       <br>
       {% if form.questionnaire%}<span>Questionnaire Type: {{form.questionnaire_type}}</span>{% endif %}
     <br>
-    {% if form.questionnaire_type=='Existing'%}<label>Permisson obtained? </label>
+    {% if form.questionnaire_type=='Existing'%}<label>5.4.1.1.1 Permission obtained? </label>
     <br><span>{% if form.permission%}{{form.permission}}{% endif %} </span>
     <br><span>{% if form.open_source%}{{form.open_source}}{% endif %} </span>{% endif %}
     <br>
-    <label>Justification: </label><span>{{form.instrument_attrachment_reason}}</span>
-    
+    <label>5.4.1.1.2 Justification: </label><span>{{form.instrument_attrachment_reason}}</span>
+
     <!-- Interview -->
-    <label>5.4.2.1 Interviews</label><br>
+    <label>5.4.1.2 Interviews</label><br>
     <span>{{form.interview_type}}</span>
-    <label>Will interviews be recorded?</label><br>
+    <label>5.4.1.2.1 Will interviews be recorded?</label><br>
     <span>{% if form.interview_recording=='Audio'%}{{form.interview_recording}}{% endif%}</span>
     <br>
     <span>{% if form.interview_recording=='Video'%}{{form.interview_recording}}{% endif%}</span>
     
     <!-- Focus Group -->
-    <label>5.4.2.2 Focus Groups: </label>
+    <label>5.4.1.3 Focus Groups: </label>
     <br><span>{{form.use_focus_groups}}</span>
-   <label>Will focus groups be recorded?</label><br>
+   <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
    <span>{% if form.focus_recording=='Audio'%}{{form.focus_recording}}{% endif%}</span>
    <span>{% if form.focus_recording=='Video'%}{{form.focus_recording}}{% endif%}</span>
    <br>
    <!-- Observation -->
-    <label>Please describe your observation protocol:</label>
+    <label>5.4.1.4 Please describe your observation protocol:</label>
     <br><span>{{form.observation_details}}</span>
     <br>
-    <label>What type of documents will be analyzed?</label><br>
+    <label>5.4.1.5 What type of documents will be analyzed?</label><br>
     <span>{{form.documents_details}}</span>
-    <label>5.4.2.1 Interviews
-      <br><span>{{form.interview_type}}</span>
-    </label><br>
+    <br>
   <!-- Other -->
-  <label>Please describe other data collection method(s):</label>
+  <label>5.4.1.6 Please describe other data collection method(s):</label>
   <br>
   <span>{{form.other_details}}</span>
     <!-- General Data Collection Procedure -->
@@ -682,39 +680,102 @@
     <br>
     <br><span>{{form.translator_procedure}}</span>
 
-    <h3>5.5 Secondary Data Usage</h3>
+<h3>5.5 Secondary Data Usage</h3>
 
-    <label>Will secondary data be used?
-       <br><span>{{'Yes' if form.uses_secondary_data else 'No'}}</span>
-    </label><br>
+<!-- 5.5.1 -->
+<label>5.5.1 Will secondary data be used?</label><br>
+<span class="form-answer">{{ 'Yes' if form.uses_secondary_data else 'No' }}</span>
+
+<br><br>
+
+<!-- 5.5.2 -->
+<label>5.5.2 Is the data Public or Private?</label><br>
+<span class="form-answer">{{ form.data_type or 'Not specified' }}</span>
+
+<br><br>
+
+<!-- 5.5.3 -->
+<h5>5.5.3 Details of the Secondary Data</h5>
+
+<label>5.5.3.1 Nature of the Data</label><br>
+<span class="form-answer">{{ form.data_nature or 'Not provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.2 Origin/Source of Research Data</label><br>
+<span class="form-answer">{{ form.data_origin or 'Not provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.3 What are the access conditions?</label><br>
+<span class="form-answer">{{ form.access_conditions or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.4 Does the database contain personal information/identifiers?</label><br>
+<span class="form-answer">{{ form.personal_info or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.4.1 If yes, specify the personal info/identifiers:</label><br>
+<span class="form-answer">{{ form.personal_info_comment or 'None provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.5 Has the data been anonymized?</label><br>
+<span class="form-answer">{{ form.data_anonymized or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.6 Comment / Justification:</label><br>
+<span class="form-answer">{{ form.anonymization_comment or 'None provided' }}</span>
+
+<br><br>
+
+<!-- Private Data Section -->
+<label>5.5.3.7 Is the data from a company that has provided permission?</label><br>
+<span class="form-answer">{{ form.org_permision or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.7.1 Uploaded permission document:</label><br>
+{% if form.private_permission_file %}
+  <a href="{{ url_for('static', filename=form.private_permission_file) }}" target="_blank">View Document</a>
+{% else %}
+  <span class="form-answer">No file uploaded</span>
+{% endif %}
+
+<br><br>
+
+<!-- Public Data Section -->
+<label>5.5.4 What type of public data is going to be used?</label><br>
+<span class="form-answer">{{ form.public_data_description or 'None specified' }}</span>
+
+<br><br>
+
+<!--Additional Considerations -->
+<label>5.5.5 Will data shortcomings/incompleteness be reported?</label><br>
+<span class="form-answer">{{ form.shortcomings_reported or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.6 How will data limitations be reported?</label><br>
+<span class="form-answer">{{ form.limitations_reporting or 'Not provided' }}</span>
+
+<br><br>
+
+<label>5.5.7 Is the methodology and design aligned with secondary data use?</label><br>
+<span class="form-answer">{{ form.methodology_alignment or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.8How will the original owners of the data be acknowledged?</label><br>
+<span class="form-answer">{{ form.data_acknowledgment or 'Not provided' }}</span>
    
-    
-      <label>Is the data Public or Private?
-        <br><span>{{form.data_type}}
-      </label><br>
-   
-    
-      <!-- Private Data Section -->
-        <label>Is the data from a company that has provided permission?
-          <br><span>{{form.org_permision}}</span>
-        </label>
-    
-          <label>Please upload the permission for use of private data:</label>
-          <br>
-          {% if form.private_permission_file %}
-          <a href="{{url_for('static',filename=form.private_permission_file)}}" target="_blank">View Document</a>
-        {% endif %}
-      <!-- Public Data Section -->
-        <label>What type of public data is going to be used?</label>
-              <br><span>{{form.public_data_description}}</span>
-      
    
   </section>
 
-
-    
-  
-    </main>
+</main>
 
     <!-- Section 5 -->
 
@@ -999,21 +1060,6 @@
   </div>
     <input type="hidden" name="status" id="status" value="" />
 
-  <!-- Radio Buttons -->
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
-    <label class="form-check-label" for="ready">
-      ✔ Ready for submission to Ethics Committee
-    </label>
-  </div>
-  
-
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" name="recommendation" id="revisions" value="Revisions required" onchange="toggleFields()">
-    <label class="form-check-label" for="revisions">
-      ↻ Revisions required before submission
-    </label>
-  </div>
   <!-- Accept Fields (initially hidden) -->
   <div >
   
@@ -1033,15 +1079,9 @@
     </div>
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
   </div>
-<<<<<<< HEAD
-  <div class="submit-row" >
-    <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">🔁 Resubmission Required</button>
-    <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">❌ Reject</button>
-=======
-  <div class="submit-row" id="rejectBtn" style="display: none;">
+  <div class="submit-row" id="rejectBtn">
     <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button>
     <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
->>>>>>> 41079cdc6fc343a084284a9b552af33fdd88504c
   </div>
   
 </main>

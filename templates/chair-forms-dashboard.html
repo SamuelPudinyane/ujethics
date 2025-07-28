@@ -105,7 +105,7 @@
                   Awaiting for second reviewers feedback
                   {% elif form.reviewer_name1 is none and form.reviewer_name2 is none %}
                   Assign reviewers
-                  {% elif not form.review_supervisor_signature and form.review_date %}
+                  {% elif not form.supervisor_signature and form.review_date %}
                   Rejected by Ethics Committee
                   {% elif form.certificate_issued and form.certificate_received %}
                   Certificate Issued
@@ -119,8 +119,13 @@
                   Approved by Ethics Committee
                   {% elif form.reviewer_name1 and form.reviewer_name2 and not form.supervisor_feedback%}
                   Awaiting for Review
-                  {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_feedback %}
+                  {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_feedback and not form.review_status%}
                   Submitted to Reviewers
+                  {% elif form.review_status %}
+                  Form was Aproved by First Reviewer
+                  {% elif form.review_status1 %}
+                  Form was Aproved by both reviewers
+                  
                   {% else %}
                   This is the previous version
                   {% endif %}

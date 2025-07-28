@@ -348,6 +348,19 @@ class FormA(Base):
     private_permission = Column(String(10))   # yes/no
     public_data_description = Column(Text)
     private_permission_file = Column(String(256))  # file path
+    
+    data_nature=Column(String(256))
+    data_origin=Column(String(256))
+    access_conditions=Column(String(256))
+    personal_info=Column(String(256))
+    personal_info_comment=Column(String(256))
+    data_anonymized=Column(String(256))
+    anonymization_comment=Column(String(256))
+    permission_details=Column(String(256))
+    shortcomings_reported=Column(String(256))
+    limitations_reporting=Column(String(256))
+    methodology_alignment=Column(String(256))
+    data_acknowledgment=Column(String(256))
     ###
     secure_location=Column(String,nullable=True)
     password_protected=Column(String,nullable=True)
@@ -366,7 +379,8 @@ class FormA(Base):
     encryption=Column(String,nullable=True)
     pseudonyms=Column(String,nullable=True)
     focus_group_warning=Column(String,nullable=True)
-     
+    
+
     # 6.9 checklist items
     # Questions 6.9a to 6.9s — stored as a dictionary
     q6_9a = Column(Boolean,nullable=True,default=True)

@@ -75,14 +75,14 @@
 <main class="main-content">
   <form id="formA" action="{{url_for('form_a_sec6')}}" method="post">
 <!-- Error Messages -->
-            {% if messages %}
+            <!-- {% if messages %}
                 <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            {% endif %}
+            {% endif %} -->
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <!-- Top Bar -->

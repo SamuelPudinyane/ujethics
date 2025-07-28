@@ -82,26 +82,26 @@
     <main class="main-content">
       <h2>Researcher's Details</h2>
       <label>Applicant Name <br>
-        <span>{{formB.applicant_name}}</span>
+        <span class="form-answer">{{formB.applicant_name}}</span>
     </label>
       <label>Student/Staff Number <br>
-        <span>{{formB.student_number}}</span></label>
+        <span class="form-answer">{{formB.student_number}}</span></label>
       <label>Institution <br>
-        <span>{{formB.institution}}</span></label>
+        <span class="form-answer">{{formB.institution}}</span></label>
       <label>UJ Department and School <br>
-        <span>{{formB.department}}</span></label>
+        <span class="form-answer">{{formB.department}}</span></label>
       <label>Degree Registered For <br>
-        <span>{{formB.dregree}}</span></label>
+        <span class="form-answer">{{formB.dregree}}</span></label>
       <label>Title/Working Title of Project or Study <br>
-        <span>{{formB.study_title}}</span></label>
+        <span class="form-answer">{{formB.study_title}}</span></label>
       <label>Mobile Number <br>
-        <span>{{formB.mobile}}</span></label>
+        <span class="form-answer">{{formB.mobile}}</span></label>
       <label>Email Address <br>
-        <span>{{formB.email}}</span></label>
+        <span class="form-answer">{{formB.email}}</span></label>
       <label>Supervisor(s) <br>
-        <span>{{formB.supervisor}}</span></label>
+        <span class="form-answer">{{formB.supervisor}}</span></label>
       <label>Supervisor Email Address <br>
-        <span>{{formB.supervisor_email}}</span></label>
+        <span class="form-answer">{{formB.supervisor_email}}</span></label>
    
 
   
@@ -118,7 +118,7 @@
 
       <label>1. Short Description of the Research Project (±200 words)
         <br>
-        <span>{{formB.project_description}}</span>
+        <span class="form-answer">{{formB.project_description}}</span>
       </label>
 
 
@@ -127,35 +127,35 @@
       <h3>2. Details of the Data</h3>
 
       <label>2.1 Nature of the Data <br>
-    <span>{{formB.data_nature}}</span>
+    <span class="form-answer">{{formB.data_nature}}</span>
 </label>
  
 
       <label>2.2 Origin/Source of Research Data
-        <br><span>{{formB.data_origin}}</span>
+        <br><span class="form-answer">{{formB.data_origin}}</span>
       </label>
  
 
       <div class="question-block">
         <label>2.3 Are the sources of the research data in the public domain?
-            <br><span>{{'Yes' if formB.data_public else 'No'}}</span>
+            <br><span class="form-answer">{{'Yes' if formB.data_public else 'No'}}</span>
         </label>
         
       </div>
 
       <label>Provide evidence or explanation (if applicable)
-        <br><span>{{formB.public_evidence}}</span>
+        <br><span class="form-answer">{{formB.public_evidence}}</span>
       </label>
    
 
       <label>2.4 If data is not public, what are the access conditions?
-        <br><span>{{formB.access_conditions}}</span>
+        <br><span class="form-answer">{{formB.access_conditions}}</span>
       </label>
     
 
       <div class="question-block">
         <label>2.5 Does the database contain personal information/identifiers?
-            <br><span>{{'Yes' if formB.data_public else 'No'}}</span>
+            <br><span class="form-answer">{{'Yes' if formB.data_public else 'No'}}</span>
         </label>
         
       
@@ -163,47 +163,47 @@
 
       <div class="question-block">
         <label>2.6 If yes, has the data been anonymized?
-            <br><span>{{formB.data_anonymized}}</span>
+            <br><span class="form-answer">{{formB.data_anonymized}}</span>
         </label>
        
       </div>
 
       <label>Comment / Justification:<br>
-    <span>{{formB.anonymization_comment}}</span></label>
+    <span class="form-answer">{{formB.anonymization_comment}}</span></label>
 
      
       <div class="question-block">
         <label>2.7 Private database: does it contain confidential private company data requiring permission?
-            <br><span>{{'Yes' if formB.private_permission else 'No'}}<span>
+            <br><span class="form-answer">{{'Yes' if formB.private_permission else 'No'}}<span class="form-answer">
         </label>
       </div>
 
       <label>Provide permission details (or attach separately):
-        <br><span>{{formB.permission_details}}</span>
+        <br><span class="form-answer">{{formB.permission_details}}</span>
       </label>
      
 
       <div class="question-block">
         <label>2.8 Will data shortcomings/incompleteness be reported?
-            <br><span>{{'Yes' if formB.shortcommings_report else 'No'}}</span>
+            <br><span class="form-answer">{{'Yes' if formB.shortcommings_report else 'No'}}</span>
         </label>
        
       </div>
 
       <label>2.9 How will data limitations be reported?
-        <br><span>{{formB.limitations_reporting}}</span>
+        <br><span class="form-answer">{{formB.limitations_reporting}}</span>
       </label>
     
 
       <div class="question-block">
         <label>2.10 Are the research methodology and design aligned with secondary data use?
-            <br><span>{{'Yes' if formB.methodology_alighnment else 'No'}}</span>
+            <br><span class="form-answer">{{'Yes' if formB.methodology_alighnment else 'No'}}</span>
         </label>
        
       </div>
 
       <label>2.11 How will original owners of the data be acknowledged?
-        <br><span>{{formB.data_acknowledgment}}</span>
+        <br><span class="form-answer">{{formB.data_acknowledgment}}</span>
       </label>
     
    
@@ -218,20 +218,20 @@
 
       <div class="question-block">
         <label>3.1 Was ethical clearance granted for the original data gathering phase?
-            <br><span>{{formB.original_clearance}}</span>
+            <br><span class="form-answer">{{formB.original_clearance}}</span>
         </label>
         
       </div>
 
       <div class="question-block">
         <label>3.2 Did participants in the original study grant permission for future use of the data?
-            <br><span>{{formB.participant_permission}}</span>
+            <br><span class="form-answer">{{formB.participant_permission}}</span>
         </label>
        
       </div>
 
       <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:
-        <br><span>{{formB.data_safekeeping}}</span>
+        <br><span class="form-answer">{{formB.data_safekeeping}}</span>
       </label>
  
 
@@ -241,13 +241,13 @@
 
       <div class="question-block">
         <label>The study presents:
-            <br><span>{{formB.risk_level}}</span>
+            <br><span class="form-answer">{{formB.risk_level}}</span>
         </label>
         
       </div>
 
       <label>Comments:
-        <br><span>{{formB.risk_comments}}</span>
+        <br><span class="form-answer">{{formB.risk_comments}}</span>
       </label>
     
 
@@ -265,7 +265,7 @@
       </label>
 
       <label>Date
-        <br><span>{% if formB.declaration_date%}{{formB.declaration_date.strftime('%d/%m/%Y')}}{% endif %}</span>
+        <br><span class="form-answer">{% if formB.declaration_date%}{{formB.declaration_date.strftime('%d/%m/%Y')}}{% endif %}</span>
       </label>
 
       <hr>

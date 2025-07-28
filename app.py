@@ -1238,11 +1238,38 @@ def form_a_sec4():
                 form.public_data_description = request.form.get('public_data_description')
             else:
                 form.secondary_data_type=='both'
+            form.data_nature=request.form.get('data_nature')
+            form.data_origin=request.form.get('data_origin')
+            form.access_conditions=request.form.get('access_conditions')
+            form.personal_info=request.form.get('personal_info')
+            form.personal_info_comment=request.form.get('personal_info_comment')
+            form.data_anonymized=request.form.get('data_anonymized')
+            form.anonymization_comment=request.form.get('anonymization_comment')
+            form.org_permission=request.form.get('org_permission')
+            form.permission_details=request.form.get('permission_details')
+            form.public_data_description=request.form.get('public_data_description')
+            form.shortcomings_reported=request.form.get('shortcomings_reported')
+            form.limitations_reporting=request.form.get('limitations_reporting')
+            form.methodology_alignment=request.form.get('methodology_alignment')
+            form.data_acknowledgment=request.form.get('data_acknowledgment')
         else:
             form.uses_secondary_data = False
-        
+            form.data_nature=request.form.get('data_nature')
+            form.data_origin=request.form.get('data_origin')
+            form.access_conditions=request.form.get('access_conditions')
+            form.personal_info=request.form.get('personal_info')
+            form.personal_info_comment=request.form.get('personal_info_comment')
+            form.data_anonymized=request.form.get('data_anonymized')
+            form.anonymization_comment=request.form.get('anonymization_comment')
+            form.org_permission=request.form.get('org_permission')
+            form.permission_details=request.form.get('permission_details')
+            form.public_data_description=request.form.get('public_data_description')
+            form.shortcomings_reported=request.form.get('shortcomings_reported')
+            form.limitations_reporting=request.form.get('limitations_reporting')
+            form.methodology_alignment=request.form.get('methodology_alignment')
+            form.data_acknowledgment=request.form.get('data_acknowledgment')
         # Handle file upload
-        file = request.files.get('private_permission')
+        file = request.files.get('private_permission_file')
         if file and file.filename:
             upload_folder = app.config.get('UPLOAD_FOLDER', 'static/uploads')
             os.makedirs(upload_folder, exist_ok=True)
@@ -2232,10 +2259,23 @@ def student_edit_forma():
             conflict_interest=False
 
         
-
+        data_nature=request.form.get('data_nature')
+        data_origin=request.form.get('data_origin')
+        access_conditions=request.form.get('access_conditions')
+        personal_info=request.form.get('personal_info')
+        personal_info_comment=request.form.get('personal_info_comment')
+        data_anonymized=request.form.get('data_anonymized')
+        anonymization_comment=request.form.get('anonymization_comment')
+        org_permission=request.form.get('org_permission')
+        permission_details=request.form.get('permission_details')
+        public_data_description=request.form.get('public_data_description')
+        shortcomings_reported=request.form.get('shortcomings_reported')
+        limitations_reporting=request.form.get('limitations_reporting')
+        methodology_alignment=request.form.get('methodology_alignment')
+        data_acknowledgment=request.form.get('data_acknowledgment')
 
             # Handle file upload
-        file = request.files.get('private_permission')
+        file = request.files.get('private_permission_file')
         if file and file.filename:
             upload_folder = app.config.get('UPLOAD_FOLDER', 'static/uploads')
             os.makedirs(upload_folder, exist_ok=True)
@@ -2375,7 +2415,19 @@ def student_edit_forma():
             translator_procedure = request.form.get('translator_procedure'),
 
             # 5.5 Secondary Data Usage
-            
+            data_nature=data_nature,
+            data_origin=data_origin,
+            access_conditions=access_conditions,
+            personal_info=personal_info,
+            personal_info_comment=personal_info_comment,
+            data_anonymized=data_anonymized,
+            anonymization_comment=anonymization_comment,
+            org_permission=org_permission,
+            permission_details=permission_details,
+            shortcomings_reported=shortcomings_reported,
+            limitations_reporting=limitations_reporting,
+            methodology_alignment=methodology_alignment,
+            data_acknowledgment=data_acknowledgment,
             private_permission= request.form.get('privatePermission'),
             public_data_description=public_data_description,
             private_permission_file=private_permission_file,
@@ -2841,6 +2893,7 @@ def reviewer_list():
 @app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])
 def chair_form_view(id,form_name):
     user_id=session['id']
+    user_name=db_session.query(User).filter_by(user_id=user_id).first()
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
 
     if form_name=="FORM A":
@@ -2869,7 +2922,7 @@ def chair_form_view(id,form_name):
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
 
-            if request.form.get('recommendation')=='Ready for submission':
+            if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
                 if not formA.review_date:
                     
                     formA.review_date=review_date
@@ -2893,6 +2946,19 @@ def chair_form_view(id,form_name):
                     formA.form_review_comment=form_review_comment
                     formA.form_reviewed_by=form_reviewed_by
                     formA.review_status=True
+
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                    
                 else:
                     formA.review_date1=review_date
                     formA.status=status
@@ -2915,7 +2981,19 @@ def chair_form_view(id,form_name):
                     formA.form_review_comment1=form_review_comment
                     formA.form_reviewed_by1=form_reviewed_by
                     formA.review_status1=True
-                
+
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                    
             else:
                 formA.review_date=review_date
                 formA.status=status
@@ -2937,7 +3015,19 @@ def chair_form_view(id,form_name):
                 formA.form_reviewed_by=form_reviewed_by
                 formA.review_status=False
                 formA.rejected_or_accepted=False
-                
+
+                #add coments to Rec table
+                if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+            db_session.add(form)
             db_session.add(formA)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -2965,7 +3055,7 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-            if request.form.get('recommendation')=='Ready for submission':
+            if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
                 if not formB.review_date:
                 
                     formB.review_date=review_date
@@ -2989,6 +3079,19 @@ def chair_form_view(id,form_name):
                     formB.form_review_comment=form_review_comment
                     formB.form_reviewed_by=form_reviewed_by
                     formB.review_status=True
+
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                    
                 else:
                     formB.review_date1=review_date
                     formB.status=status
@@ -3011,6 +3114,19 @@ def chair_form_view(id,form_name):
                     formB.form_review_comment1=form_review_comment
                     formB.form_reviewed_by=form_reviewed_by
                     formB.review_status1=True
+
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                    
             else:
                 formB.review_date=review_date
                 formB.status=status
@@ -3032,6 +3148,19 @@ def chair_form_view(id,form_name):
                 formB.form_reviewed_by=form_reviewed_by
                 formB.review_status=False
                 formB.rejected_or_accepted=False
+
+                #add coments to Rec table
+                if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+            db_session.add(form)
             db_session.add(formB)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -3058,10 +3187,11 @@ def chair_form_view(id,form_name):
             review_additional_comments=request.form.get('additional_comments')
             review_recommendation=request.form.get('status')
             review_supervisor_signature=request.form.get('supervisor_signature')
+           
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-            if request.form.get('recommendation')=='Ready for submission':
+            if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
                 
                 if not formC.review_date:
                 
@@ -3086,6 +3216,19 @@ def chair_form_view(id,form_name):
                     formC.form_review_comment=form_review_comment
                     formC.form_reviewed_by=form_reviewed_by
                     formC.review_status=True
+
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                    
                 else:
                     formC.review_date1=review_date
                     formC.status=status
@@ -3108,6 +3251,20 @@ def chair_form_view(id,form_name):
                     formC.form_review_comment1=form_review_comment
                     formC.form_reviewed_by=form_reviewed_by
                     formC.review_status1=True
+
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        print("------------ ",user_name.role.value)
+                        form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                    
+                    
             else:
                 formC.review_date=review_date
                 formC.status=status
@@ -3129,6 +3286,19 @@ def chair_form_view(id,form_name):
                 formC.form_reviewed_by=form_reviewed_by
                 formC.review_status=False
                 formC.rejected_or_accepted=False
+
+                #add coments to Rec table
+                if user_name.role.value=='REVIEWER':
+                       form=Rec(
+                        rec_id=user_id,
+                        form_id=id,
+                        full_name=user_name.full_name,
+                        rec_comments = review_additional_comments,
+                        rec_status = status,
+                        rec_date=datetime.now()
+                        )
+                
+            db_session.add(form)
             db_session.add(formC)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -3165,91 +3335,127 @@ def ethics_reviewer_committee_form_c():
     return render_template('ethics_reviewer_committee.html',today=today,submitted_form_c=supervisor_formC)
 
 
+@app.route('/student_form_pdf/<string:form_id>/<string:form_type>', methods=['GET','POST'])
+def student_form_pdf(form_id,form_type):
+    form = None
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=form_id).first()
+        if form:
+            break  # Stop once the form is found
 
-@app.route('/chair_landing',methods=['POST','GET'])
+    if form_type=='A':
+        return render_template('student_form_a_answer_pdf.html',formA=form)
+    elif form_type=='B':
+        return render_template('student_form_b_answer_pdf.html',formB=form)
+    elif form_type=='C':
+        return render_template('student_form_c_answer_pdf.html',formc=form)
+
+
+
+@app.route('/chair_landing', methods=['POST', 'GET'])
 def chair_landing():
-    ### get all degrees in all forms to allow filetring
-    # Query FormA + User
-    form_a_query = db_session.query(
-        FormA.degree.label('degree')
+    # Fetch all degrees from all forms for filtering
+    combined_query = db_session.query(FormA.degree).union_all(
+        db_session.query(FormB.degree),
+        db_session.query(FormC.degree)
     )
-
-    # Query FormB + User
-    form_b_query = db_session.query(
-        FormB.degree.label('degree')
-    )
-
-    # Query FormC + User
-    form_c_query = db_session.query(
-        FormC.degree.label('degree')
-    )
-
-    # Combine all forms using UNION ALL
-    combined_query = form_a_query.union_all(form_b_query, form_c_query)
     results = combined_query.all()
 
-    # Execute the query
+    # Flatten and deduplicate degrees
     specializations = []
     for row in results:
         if isinstance(row.degree, list):
             specializations.extend(row.degree)
         elif row.degree:
             specializations.append(row.degree)
-
-    # Remove duplicates and sort
     unique_specializations = sorted(set(specializations))
-    
 
-    ##form A retrival
-    formAs = (db_session.query(FormA)
-    .filter(FormA.submitted_at != None)
-    .distinct(FormA.user_id)
-    .all())
+    # --------- FORM A ----------
+    formA_subquery = (
+        db_session.query(
+            FormA.user_id,
+            func.max(FormA.submitted_at).label('latest')
+        )
+        .filter(FormA.submitted_at != None)
+        .group_by(FormA.user_id)
+        .subquery()
+    )
 
-    forms_by_yearA = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
-   
+    formAs = (
+        db_session.query(FormA)
+        .join(formA_subquery, (FormA.user_id == formA_subquery.c.user_id) & (FormA.submitted_at == formA_subquery.c.latest))
+        .all()
+    )
+
+    forms_by_yearA = defaultdict(lambda: defaultdict(list))
     for form in formAs:
         if form.submitted_at:
             year = form.submitted_at.year
             month = form.submitted_at.strftime("%Y-%m")
             forms_by_yearA[year][month].append(form)
-
     sorted_yearsA = sorted(forms_by_yearA.keys(), reverse=True)
 
-    ## form B retrival
-    formBs = (db_session.query(FormB)
-    .filter(FormB.submitted_at != None)
-    .distinct(FormB.user_id)
-    .all())
+    # --------- FORM B ----------
+    formB_subquery = (
+        db_session.query(
+            FormB.user_id,
+            func.max(FormB.submitted_at).label('latest')
+        )
+        .filter(FormB.submitted_at != None)
+        .group_by(FormB.user_id)
+        .subquery()
+    )
 
-    forms_by_yearB = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
+    formBs = (
+        db_session.query(FormB)
+        .join(formB_subquery, (FormB.user_id == formB_subquery.c.user_id) & (FormB.submitted_at == formB_subquery.c.latest))
+        .all()
+    )
 
+    forms_by_yearB = defaultdict(lambda: defaultdict(list))
     for form in formBs:
         if form.submitted_at:
             year = form.submitted_at.year
             month = form.submitted_at.strftime("%Y-%m")
             forms_by_yearB[year][month].append(form)
-
     sorted_yearsB = sorted(forms_by_yearB.keys(), reverse=True)
 
-    ## form c retrival
-    formCs = (db_session.query(FormC)
-    .filter(FormC.submission_date != None)
-    .distinct(FormC.user_id)
-    .all())
+    # --------- FORM C ----------
+    formC_subquery = (
+        db_session.query(
+            FormC.user_id,
+            func.max(FormC.submission_date).label('latest')
+        )
+        .filter(FormC.submission_date != None)
+        .group_by(FormC.user_id)
+        .subquery()
+    )
 
-    forms_by_yearC = defaultdict(lambda: defaultdict(list))  # {2025: {2025-06: [form1, form2]}}
+    formCs = (
+        db_session.query(FormC)
+        .join(formC_subquery, (FormC.user_id == formC_subquery.c.user_id) & (FormC.submission_date == formC_subquery.c.latest))
+        .all()
+    )
 
+    forms_by_yearC = defaultdict(lambda: defaultdict(list))
     for form in formCs:
         if form.submission_date:
             year = form.submission_date.year
             month = form.submission_date.strftime("%Y-%m")
             forms_by_yearC[year][month].append(form)
-
     sorted_yearsC = sorted(forms_by_yearC.keys(), reverse=True)
- 
-    return render_template("chair-landing-dashboard.html",results=unique_specializations, forms_by_yearA=forms_by_yearA, sorted_yearsA=sorted_yearsA,sorted_yearsB=sorted_yearsB,forms_by_yearB=forms_by_yearB,sorted_yearsC=sorted_yearsC,forms_by_yearC=forms_by_yearC)
 
+    # Render the page
+    return render_template(
+        "chair-landing-dashboard.html",
+        results=unique_specializations,
+        forms_by_yearA=forms_by_yearA,
+        sorted_yearsA=sorted_yearsA,
+        forms_by_yearB=forms_by_yearB,
+        sorted_yearsB=sorted_yearsB,
+        forms_by_yearC=forms_by_yearC,
+        sorted_yearsC=sorted_yearsC
+    )
 
 @app.route('/review_dashboard', methods=['GET','POST'])
 def review_dashboard():
@@ -3278,7 +3484,7 @@ def review_dashboard():
         ))\
         .distinct()\
         .all()
-
+    print("user ",user_id)
     # Form C
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id)\
@@ -3290,7 +3496,6 @@ def review_dashboard():
         ))\
         .distinct()\
         .all()
-
     today = date.today()
     return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
@@ -3349,87 +3554,80 @@ def reviewer_form_c(id):
 @app.route('/rec_dashboard', methods=['GET', 'POST'])
 def rec_dashboard():
     user_id = session['id']
-    user=db_session.query(User).filter(User.user_id==user_id).first()
-    # Count how many reviews exist per form_id
+    user = db_session.query(User).filter(User.user_id == user_id).first()
+    role = user.role.value
+    today = date.today()
+
+    # Count reviews per form_id
     form_review_counts = dict(
         db_session.query(Rec.form_id, func.count(Rec.rec_id))
         .group_by(Rec.form_id)
         .all()
     )
-    # Form A submissions
+
+    # Shared filter conditions
+    def get_common_filters(FormModel):
+        return [
+            FormModel.rejected_or_accepted == True,
+            FormModel.review_signature_date != None,
+            ~func.lower(FormModel.risk_level if hasattr(FormModel, 'risk_level') else FormModel.risk_rating).like('%low%'),
+            FormModel.review_status == True,
+            FormModel.review_status1 == True,
+            FormModel.submitted_to_rec == True,
+            FormModel.reviewer_name1 != user_id,
+            FormModel.reviewer_name2 != user_id,
+        ]
+
+    # Form A
     submitted_form_a = [
-    (form, req, form_review_counts.get(form.form_id, 0))
-    for form, req, _ in db_session.query(FormA, FormARequirements, Rec)
-        .join(User, FormA.user_id == User.user_id)
-        .join(FormARequirements, FormA.user_id == FormARequirements.user_id)
-        .outerjoin(Rec, Rec.form_id == FormA.form_id)
-        .filter(
-            FormA.rejected_or_accepted == True,
-            FormA.review_signature_date != None,
-            ~func.lower(FormA.risk_rating).like('%low%'),
-            FormA.review_status == True,
-            FormA.review_status1 == True,
-            FormA.submitted_to_rec == True,
-            FormA.reviewer_name1 != user_id,
-            FormA.reviewer_name2 != user_id
-        )
-]
+        (form, req, form_review_counts.get(form.form_id, 0))
+        for form, req in db_session.query(FormA, FormARequirements)
+            .join(FormARequirements, FormA.user_id == FormARequirements.user_id)
+            .outerjoin(Rec, Rec.form_id == FormA.form_id)
+            .filter(*get_common_filters(FormA))
+            .distinct(FormA.form_id)
+            .all()
+    ]
 
-    # Form B submissions
+    # Form B
     submitted_form_b = [
-    (form, req, form_review_counts.get(form.form_id, 0))
-    for form, req, _ in db_session.query(FormB, FormARequirements, Rec)
-        .join(User, FormB.user_id == User.user_id)
-        .join(FormARequirements, FormB.user_id == FormARequirements.user_id)
-        .outerjoin(Rec, Rec.form_id == FormB.form_id)
-        .filter(
-            FormB.rejected_or_accepted == True,
-            FormB.review_signature_date != None,
-            ~func.lower(FormB.risk_level).like('%low%'),
-            FormB.review_status == True,
-            FormB.review_status1 == True,
-            FormB.submitted_to_rec == True,
-            FormB.reviewer_name1 != user_id,
-            FormB.reviewer_name2 != user_id
-        )
-]
-    # Form C submissions
-    submitted_form_c = [
-    (form, req, form_review_counts.get(form.form_id, 0))
-    for form, req, _ in db_session.query(FormC, FormARequirements, Rec)
-        .join(User, FormC.user_id == User.user_id)
-        .join(FormARequirements, FormC.user_id == FormARequirements.user_id)
-        .outerjoin(Rec, Rec.form_id == FormC.form_id)
-        .filter(
-            FormC.rejected_or_accepted == True,
-            FormC.review_signature_date != None,
-            ~func.lower(FormC.risk_level).like('%low%'),
-            FormC.review_status == True,
-            FormC.review_status1 == True,
-            FormC.submitted_to_rec == True,
-            FormC.reviewer_name1 != user_id,
-            FormC.reviewer_name2 != user_id
-        )
-]
+        (form, req, form_review_counts.get(form.form_id, 0))
+        for form, req in db_session.query(FormB, FormARequirements)
+            .join(FormARequirements, FormB.user_id == FormARequirements.user_id)
+            .outerjoin(Rec, Rec.form_id == FormB.form_id)
+            .filter(*get_common_filters(FormB))
+            .distinct(FormB.form_id)
+            .all()
+    ]
 
-    
-    all_Reviewers_counter=db_session.query(User).filter(User.role=='REVIEWER').count()
-    
-    # Requirements submitted by this supervisor
+    # Form C
+    submitted_form_c = [
+        (form, req, form_review_counts.get(form.form_id, 0))
+        for form, req in db_session.query(FormC, FormARequirements)
+            .join(FormARequirements, FormC.user_id == FormARequirements.user_id)
+            .outerjoin(Rec, Rec.form_id == FormC.form_id)
+            .filter(*get_common_filters(FormC))
+            .distinct(FormC.form_id)
+            .all()
+    ]
+
+    # Count all reviewers
+    all_reviewers_counter = db_session.query(User).filter(User.role == 'REVIEWER').count()
+
+    # Supervisor-specific requirements
     supervisor_formA_req = db_session.query(FormARequirements).filter_by(user_id=user_id).all()
-    role=user.role.value
-    today = date.today()
-    
+
     return render_template(
         'rec-dashboard.html',
         today=today,
         role=role,
-        all_Reviewers_counter=all_Reviewers_counter,
+        all_Reviewers_counter=all_reviewers_counter,
         submitted_form_a=submitted_form_a,
         submitted_form_b=submitted_form_b,
         submitted_form_c=submitted_form_c,
         supervisor_formA_req=supervisor_formA_req
     )
+
 
 @app.route('/admin_rec_form/<string:form_id>',methods=['GET','POST'])
 def admin_rec_form(form_id):
@@ -3437,15 +3635,15 @@ def admin_rec_form(form_id):
     user_id = session['id']
     user=db_session.query(User).filter(User.user_id==user_id).first()
    
-    Rec_team=db_session.query(Rec).filter(Rec.form_id==form_id).first()
-   
+    Rec_team=db_session.query(Rec).filter(Rec.form_id==form_id).all()
+  
     role=user.role.value
-    rec=[]
-    rec.append(Rec_team)
+    #rec=[]
+    #rec.append(Rec_team)
    
     return render_template(
         'chair_rec_form.html',
-        Rec_team=rec,
+        Rec_team=Rec_team,
         role=role
     )
 @app.route('/rec_form_a/<string:id>', methods=['GET'])
@@ -3618,7 +3816,7 @@ def ethics_reviewer_committee_forms(id,form_name):
             formA.supervisor_proposal_comments=request.form.get('review_proposal_comments')
             formA.supervisor_additional_comments=request.form.get('review_additional_comments')
             formA.supervisor_recommendation=request.form.get('review_recommendation')
-            formA.supervisor_supervisor_signature=request.form.get('review_supervisor_signature')
+            formA.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formA.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept')=='Accept':
                 
@@ -3652,7 +3850,7 @@ def ethics_reviewer_committee_forms(id,form_name):
             formB.supervisor_proposal_comments=request.form.get('review_proposal_comments')
             formB.supervisor_additional_comments=request.form.get('review_additional_comments')
             formB.supervisor_recommendation=request.form.get('review_recommendation')
-            formB.supervisor_supervisor_signature=request.form.get('review_supervisor_signature')
+            formB.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formB.supervisor_signature_date=request.form.get('review_signature_date')
             
             if request.form.get('accept')=='Accept':
@@ -3690,7 +3888,7 @@ def ethics_reviewer_committee_forms(id,form_name):
             formC.supervisor_proposal_comments=request.form.get('review_proposal_comments')
             formC.supervisor_additional_comments=request.form.get('review_additional_comments')
             formC.supervisor_recommendation=request.form.get('review_recommendation')
-            formC.supervisor_supervisor_signature=request.form.get('review_supervisor_signature')
+            formC.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formC.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept')=='Accept':
 

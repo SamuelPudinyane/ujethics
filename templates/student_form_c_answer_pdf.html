@@ -29,7 +29,19 @@
       max-width: 90%;
       box-shadow: 0 0 10px rgba(0,0,0,0.25);
     }
-
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-section, #print-section * {
+    visibility: visible;
+  }
+  #print-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
     .modal-content h3 {
       margin-bottom: 1rem;
       color: #2E1A46;
@@ -43,10 +55,6 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-    }
-    .dropdown-checkboxes {
-      max-height: 200px;
-      overflow-y: auto;
     }
   </style>
 </head>
@@ -64,48 +72,47 @@
       </div>
     </div>
   </header>
-
+<div id="print-section">
   <!-- Main Content -->
   <main class="main-content">
 
    
       <h2>SECTION 1: Researcher's Details</h2>
       <label>Applicant Name
-        <br><span class="form-answer">{{form.applicant_name}}</span>
+        <br><span>{{formc.application_name}}</span>
       </label>
       <label>Student/Staff Number
-        <br><span class="form-answer">{{form.student_number}}</span>
+        <br><span>{{formc.student_number}}</span>
       </label>
       <label>Institution
-        <br><span class="form-answer">{{form.institution}}</span>
+        <br><span>{{formc.institution}}</span>
       </label>
       <label>UJ Department and School
-        <br><span class="form-answer">{{form.department}}</span>
+        <br><span>{{formc.department}}</span>
       </label>
       <label>Degree Registered For
-        <br><span class="form-answer">{{form.degree}}</span>
+        <br><span>{{formc.degree}}</span>
       </label>
       <label>Title/Working Title of Study
-        <br><span class="form-answer">{{form.project_title}}</span>
+        <br><span>{{formc.project_title}}</span>
       </label>
       <label>Mobile Number
-        <br><span class="form-answer">{{form.mobile_number}}</span>
+        <br><span>{{formc.mobile_number}}</span>
       </label>
       <label>Email Address (Applicant)
-        <br><span class="form-answer">{{form.email_address}}</span>
+        <br><span>{{formc.email_address}}</span>
       </label>
       <label>Supervisor(s)
-        <br><span class="form-answer">{{form.supervisor_name}}</span>
+        <br><span>{{formc.supervisor_name}}</span>
       </label>
       <label>Supervisor Email(s)
-        <br><span class="form-answer">{{form.supervisor_email}}</span>
+        <br><span>{{formc.supervisor_email}}</span>
       </label>
 
       
     
   </main>
 
-  
   <!-- Section 2 -->
 
   <!-- Main Content -->
@@ -125,23 +132,23 @@
         </thead>
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td>
-            <td>{{'YES' if form.vulnerable else 'NO'}}</td></tr>
+            <td>{{formc.vulnerable}}</td></tr>
           <tr><td>People under the age of 18 or over 65</td>
-            <td>{{'YES' if form.age_under_18_or_over_65 else 'NO'}}</td></tr>
+            <td>{{formc.age_under_18_or_over_65}}</td></tr>
           <tr><td>UJ employees or students</td>
-            <td>{{'YES' if form.uj_employees else 'NO'}}</td></tr>
+            <td>{{formc.uj_employee}}</td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td>
-            <td>{{'YES' if form.non_vulnerable_context else 'NO'}}</td></tr>
+            <td>{{formc.non_vulnerable_context}}</td></tr>
           <tr><td>Non-English-speaking participants</td>
-            <td>{{'YES' if form.non_english else 'NO'}}</td></tr>
+            <td>{{formc.non_english}}</td></tr>
           <tr><td>A researcher’s own students</td>
-            <td>{{'YES' if form.own_students else 'NO'}}</td></tr>
+            <td>{{formc.own_student}}</td></tr>
           <tr><td>People living in poverty</td>
-            <td>{{'YES' if form.poverty else 'NO'}}</td></tr>
+            <td>{{formc.poverty}}</td></tr>
           <tr><td>People with little or no education</td>
-            <td>{{'YES' if form.no_education else 'NO'}}</td></tr>
+            <td>{{formc.non_education}}</td></tr>
           <tr><td>Other: Please describe.</td>
-            <td>{{form.vulnerable_other_description}}</td></tr>
+            <td>{{formc.vulnerable_other_description}}</td></tr>
         </tbody>
       </table>
       
@@ -159,30 +166,30 @@
     </tr>
   </thead>
   <tbody>
-  <tr><td>Collection/use/disclosure of info without individual’s consent (excluding StatsSA, etc.)</td>
-    <td>{{'YES' if form.consent_violation else 'NO'}}</td></tr>
+  <tr><td>Collection/use/disclosure of info WITHOUT individual’s consent (excluding StatsSA, etc.)</td>
+    <td>{{formc.consent_violation}}</td></tr>
 <tr><td>Causing discomfiture beyond normal inconvenience</td>
-  <td>{{'YES' if form.discomfiture else 'NO'}}</td></tr>
+  <td>{{formc.discomfiture}}</td></tr>
 <tr><td>Deception of participants or covert observation</td>
-  <td>{{'YES' if form.deception else 'NO'}}</td></tr>
+  <td>{{formc.deception}}</td></tr>
 <tr><td>Examining sensitive or contentious issues</td>
-  <td>{{'YES' if form.sensitive_issues else 'NO'}}</td></tr>
+  <td>{{formc.sensitive_issues}}</td></tr>
 <tr><td>Seeking prejudicial information about participants</td>
-  <td>{{'YES' if form.prejudicial_info else 'NO'}}</td></tr>
+  <td>{{formc.prejuditial_info}}</td></tr>
 <tr><td>Using intrusive techniques</td>
-  <td>{{'YES' if form.intrusive else 'NO'}}</td></tr>
+  <td>{{formc.intrusive}}</td></tr>
 <tr><td>Study/participation in illegal activities</td>
-  <td>{{'YES' if form.illegal else 'NO'}}</td></tr>
+  <td>{{formc.illegal}}</td></tr>
 <tr><td>Collecting personal/social info directly from participants</td>
-  <td>{{'YES' if form.direct_social_info else 'NO'}}</td></tr>
+  <td>{{formc.direct_social_info}}</td></tr>
 <tr><td>Identifiable info collected from available records (staff/student records)</td>
-  <td>{{'YES' if form.identifiable_records else 'NO'}}</td></tr>
+  <td>{{formc.identifiable_records}}</td></tr>
 <tr><td>Psychology inventories / scales / tests</td>
-  <td>{{'YES' if form.psychology_tests else 'NO'}}</td></tr>
+  <td>{{formc.psychology_tests}}</td></tr>
 <tr><td>Activities putting researcher/data collector at risk</td>
-  <td>{{'YES' if form.researcher_risk else 'NO'}}</td></tr>
+  <td>{{formc.reseacher_risk}}</td></tr>
     <tr><td>Other:  Please describe.</td>
-      <td>{{form.activity_other_description}}</td></tr>
+      <td>{{formc.activity_other_description}}</td></tr>
   </tbody>
 </table>
 
@@ -200,22 +207,22 @@
         </thead>
         <tbody>
        <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{{'YES' if form.incentives else 'NO'}}</td></tr>
+        <td>{{formc.incentives}}</td></tr>
         <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{{'YES' if form.participant_costs else 'NO'}}</td></tr>
+          <td>{{formc.participant_costs}}</td></tr>
         <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{{'YES' if form.researcher_interest else 'NO'}}</td></tr>
+          <td>{{formc.researcher_interest}}</td></tr>
         <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{{'YES' if form.conflict_of_interest else 'NO'}}</td></tr>
+          <td>{{formc.conflict_of_interest}}</td></tr>
         <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{{'YES' if form.uj_premises else 'NO'}}</td></tr>
+          <td>{{formc.uj_premises}}</td></tr>
         <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{{'YES' if form.uj_facilities else 'NO'}}</td></tr>
+          <td>{{formc.uj_facilities}}</td></tr>
         <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{{'YES' if form.uj_funding else 'NO'}}</td></tr>
+          <td>{{formc.uj_funding}}</td></tr>
         </tbody>
       </table>
-            
+      
       <label><strong>Comments:</strong></label>
      
       
@@ -224,21 +231,21 @@
       <h5>Risk Assessment</h5>
       
       <label><strong>Rate your project risk level:</strong>
-      <br><span class="form-answer">{{form.risk_level}}</span></label>
+      <br><span>{{formc.risk_level}}</span></label>
     
       
       <br>
       <label><strong>Justify the Risk Level</strong>
-      <br><span class="form-answer">{{form.risk_justification}}</span></label>
+      <br><span>{{formc.risk_justification}}</span></label>
 
       
       <label><strong>If Medium or High Risk, describe potential benefits:</strong>
-      <br><span class="form-answer">{{form.risk_benefits}}</span>
+      <br><span>{{formc.risk_benefits}}</span>
     </label>
      
       
       <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong>
-      <br><span class="form-answer">{{form.risk_mitigation}}</span></label>
+      <br><span>{{formc.risk_mitigation}}</span></label>
   
 
   </main>
@@ -254,42 +261,42 @@
 
       <div class="form-group">
         <label for="project_title">3.1 Title or Provisional Title of the Research Project
-          <br><span class="form-answer">{{form.summary_title}}</span>
+          <br><span>{{formc.summary_title}}</span>
         </label>
        
       </div>
 
       <div class="form-group">
         <label for="executive_summary">3.2 Executive Summary of the Study
-          <br><span class="form-answer">{{form.executive_summary}}</span>
+          <br><span>{{formc.executive_summary}}</span>
         </label>
       
       </div>
 
       <div class="form-group">
         <label for="research_questions">3.3 Research Questions / Hypotheses
-          <br><span class="form-answer">{{form.research_questions}}</span>
+          <br><span>{{formc.research_questions}}</span>
         </label>
 
       </div>
 
       <div class="form-group">
         <label for="research_purpose">3.4 Research Purpose and Objectives / Anticipated Outcomes
-          <br><span class="form-answer">{{form.research_purpose}}</span>
+          <br><span>{{formc.research_purpose}}</span>
         </label>
         
       </div>
 
       <div class="form-group">
         <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?
-          <br><span class="form-answer">{{form.secondary_data_info}}</span>
+          <br><span>{{formc.secondary_data_info}}</span>
         </label>
 
       </div>
 
       <div class="form-group">
         <label for="exemption_reason">3.6 Why does your study meet exemption requirements?
-          <br><span class="form-answer">{{form.exemption_reason}}</span>
+          <br><span>{{formc.exemption_reason}}</span>
         </label>
      
       </div>
@@ -305,7 +312,7 @@
       <h2>SECTION 4: Declaration</h2>
 
       <p class="form-note">
-        I, <strong><u> {{form.declaration_name}} </u></strong>
+        I, <span> {{formc.declaration_name}} </span>
         (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
  
         ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
@@ -314,71 +321,64 @@
       </p>
 
       <div class="form-group">
-        <label for="full_name"><strong>{{form.full_name}}</strong></label>
+        <label for="full_name"><strong>{{formc.full_name}}</strong></label>
       </div>
 
       <div class="form-group">
-        <label for="submission_date"><span class="form-answer">{{form.submission_date.strftime('%d/%m/%Y')}}</span></label>
+        <label for="submission_date"><span>{{formc.submission_date}}</span></label>
       </div>
-<hr>
-<h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
-  <div class="section">
-    <label>Student Name:</label>
-    <span class="form-answer">{{form.declaration_name}}</span>
-
-    <label>Date of Submission:</label>
-    <span class="form-answer">{% if form.submission_date%}{{form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
-
-    <label>Date of Re-submission:</label>
-    <span class="form-answer">{% if form.signature_date %}{{form.signature_date.strftime('%d/%m/%Y')}}{% endif%}</span>
-
-    <label>Supervisor:</label>
-    <span class="form-answer">{{form.supervisor_name}}</span>
-
-    <label>Title of Research:</label>
-    <span class="form-answer">{{form.project_title}}</span>
-
-    <label>Date of Review:</label>
-    <input type="date" name="review_date">
-  </div>
-
-  <form method="POST" action="{{ url_for('rec_response', id=form.form_id) }}">
-    <!-- Error Messages -->
-    {% if messages %}
-        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endif %}
-
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <label class="form-label">Rec Comments</label>
-    <textarea rows="5" name="rec_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
-
-    <input type="hidden" name="status" id="status" value="" />
-
-    <div class="submit-row">
-        <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button><br>
-        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button><br>
-        <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button><br>
-        <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
+   
     </div>
-</form>
 
 </div>
+
+  </main>
 
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>
 
+</div>
+
 <!-- SCRIPT: Confirmation Modal Logic -->
 <script>
+    window.addEventListener('load', () => {
+  setTimeout(() => {
+    window.print();
+  }, 500);
+});
+  const form = document.getElementById("formCDeclaration");
+  const modal = document.getElementById("confirmationModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
 
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    modal.style.display = "flex";
+  });
+
+  closeModalBtn.addEventListener("click", () => {
+    window.location.href = "supervisor-dashboard.html";
+  });
+
+  const supervisorDeclaration = document.getElementById("supervisorDeclaration");
+ 
+  
+
+  // Simulate submission
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    modal.style.display = "flex";
+  });
+
+  closeModalBtn.addEventListener("click", () => {
+    window.location.href = "supervisor-dashboard.html";
+  });
+
+   window.onload = function() {
+    window.print();
+  };
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

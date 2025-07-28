@@ -64,7 +64,7 @@
       <table class="status-table">
         <thead>
           <tr>
-            <th>Student</th>
+            <th>Student-Number</th>
             <th>Form</th>
             <th>Risk Level</th>
             <th>Date Assigned</th>
@@ -79,6 +79,7 @@
             <td>{{item.student_number}}</td>
             <td>Form A</td>
             <td><span class="badge status-high">{{item.risk_rating}}</span></td>
+            
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
             {% if item.rec_status=='Approved'%}
@@ -94,7 +95,7 @@
             <br>
             <span class="badge status-pending mt-2">
            
-              {{ '%.2g' % (count / all_Reviewers_counter * 100 if all_Reviewers_counter else 0) }}% Reviewed
+              {{ '%.2f' % (count / all_Reviewers_counter * 100 if all_Reviewers_counter else 0) }}% Reviewed
             </span>
           </td>
             <td>
@@ -154,7 +155,7 @@
         <thead>
           
           <tr>
-            <th>Student</th>
+            <th>Student-Number</th>
             <th>Form</th>
             <th>Risk Level</th>
             <th>Date Assigned</th>
@@ -184,7 +185,7 @@
              <br>
             <span class="badge status-pending mt-2">
            
-              {{ '%.2g' % (count / all_Reviewers_counter * 100 if all_Reviewers_counter else 0) }}% Reviewed
+              {{ '%.2f' % (count / all_Reviewers_counter * 100 if all_Reviewers_counter else 0) }}% Reviewed
             </span>
             </td>
             <td>
@@ -229,7 +230,7 @@
         <thead>
           
           <tr>
-            <th>Student</th>
+            <th>Student-Number</th>
             <th>Form</th>
             <th>Risk Level</th>
             <th>Date Assigned</th>
@@ -261,7 +262,7 @@
             </span>
              <br>
             <span class="badge status-pending mt-2">
-              {{ '%.2g' % (count / all_Reviewers_counter * 100) }}% Reviewed
+              {{ '%.2f' % (count / all_Reviewers_counter * 100) }}% Reviewed
             </span>
           </td>
             <td>

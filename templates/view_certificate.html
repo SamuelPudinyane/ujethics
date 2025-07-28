@@ -124,7 +124,7 @@
             <tr><td class="highlight">Ethical clearance code</td><td>{% if certificate_details.certificate_code %}{{certificate_details.certificate_code}}{% endif%}</td></tr>
             <tr><td class="highlight">Rating of application</td><td>
             {% if certificate_details.rec_status=='Approved' or certificate_details.status=='Approved'%}
-            CODE 1
+            CODE 2
             {% elif certificate_details.rec_status =='Approved with suggestions without re-submission' or certificate_details.status =='Approved with suggestions without re-submission'%}
             CODE 2
             {% elif certificate_details.rec_status=='Referred back' or certificate_details.status=='Referred back'%}
