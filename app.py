@@ -2948,7 +2948,7 @@ def chair_form_view(id,form_name):
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
+                        
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -2983,7 +2983,7 @@ def chair_form_view(id,form_name):
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
+                      
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3017,7 +3017,7 @@ def chair_form_view(id,form_name):
 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
+                        
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3081,7 +3081,7 @@ def chair_form_view(id,form_name):
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
+                        
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3483,7 +3483,6 @@ def review_dashboard():
         ))\
         .distinct()\
         .all()
-    print("user ",user_id)
     # Form C
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id)\

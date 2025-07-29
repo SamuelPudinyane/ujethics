@@ -165,6 +165,8 @@
               Awaiting for Review
               {% elif item.review_status and item.form_reviewed_by1==user_id and item.review_status1%}
               Submitted to Ethics Admin
+              {% elif item.review_status or item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id and not item.review_status1%}
+              Awaiting for Review
               {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' and not item.certificate_received %}
               Under Review
               {% elif not item.review_status or not item.review_status1 %}
@@ -240,6 +242,8 @@
               Awaiting for Review
               {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
+              {% elif item.review_status or item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id and not item.review_status1%}
+              Awaiting for Review
               {% elif item.review_status and item.review_status1 or item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' and not item.certificate_received%}
               Under Review
               {% elif not item.review_status or not item.review_status1 %}
