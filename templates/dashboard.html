@@ -109,9 +109,9 @@
                 </em>
                
                 <span style="color:green; font-size:12px;">
-                  {% if formA.rec_status=='Approved'  or formA.certificate_issued and forma.certificate_received%}
+                  {% if formA.rec_status=='Approved'  or formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
-                  {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and forma.certificate_received%}
+                  {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
                   FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT
