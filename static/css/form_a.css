@@ -23,9 +23,6 @@
     font-size: 18px;
   }
 
-  h2, label, input, select, textarea {
-    color: black;
-  }
 
   label {
     font-size: 25px;
@@ -112,7 +109,7 @@
   
   /* Main content styling */
   .main-content {
-    max-width: 1500px;
+    max-width: 1800px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: var(--white);
@@ -174,7 +171,7 @@
   }
 
 .table tr:nth-child(even) {
-    background-color: #f3eded; /* light grey */
+    background-color: #f8f9fa; /* light grey */
 }
 
 .table tr:nth-child(odd) {
@@ -222,26 +219,26 @@
 
 /* Approve Button */
 .btn-approve {
-  background-color: #27ae60; /* Bootstrap green */
+  background-color: #27ae60; 
   color: white;
 }
 
 /* Minor Changes */
 .btn-minor {
-  background-color: #caa228; /* Bootstrap yellow */
+  background-color: #caa228; 
   color: #212529;
 }
 
 
 /* Resubmission */
 .btn-resubmit {
-  background-color: #0d6efd; /* Bootstrap blue */
+  background-color: #0d6efd; 
 }
 
 
 /* Reject */
 .btn-reject {
-  background-color: #dc3545; /* Bootstrap red */
+  background-color: #dc3545;
 }
   
   /* Footer */
@@ -298,7 +295,7 @@
     }
   
     tr:nth-child(even) {
-    background-color: #f3eded; /* light grey */
+    background-color: #f8f9fa; /* light grey */
     }
 
     tr:nth-child(odd) {
@@ -315,4 +312,5 @@
   font-weight: 600;
   color: #333;
   width: 100%;
+  border: #939598 1px solid;
 }
