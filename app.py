@@ -176,8 +176,6 @@ def register():
         password = request.form.get('password', '').strip()
         
         
-        
-       
         # Validate UJ email
         if not email.endswith('student.uj.ac.za'):
             msg = "Only University of Johannesburg email allowed"
