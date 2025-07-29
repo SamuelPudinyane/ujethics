@@ -107,7 +107,7 @@
               Form submitted to Rec 
               {% elif (forma.review_recommendation in ['Ready for submission', 'Approved']) and
               (forma.review_recommendation1 in ['Ready for submission', 'Approved']) and not forma.certificate_received %}
-              Aproved by both Reviewers
+              Approved by both Reviewers
               {% elif forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_feedback%}
               Submitted to Reviewers
               {% elif not forma.review_status or not forma.review_status1%}
@@ -205,7 +205,7 @@
               Form submitted to Rec 
               {% elif (formb.review_recommendation in ['Ready for submission', 'Approved']) and
               (formb.review_recommendation1 in ['Ready for submission', 'Approved']) and not formb.certificate_received%}
-              Aproved by both Reviewers
+              Approved by both Reviewers
               {% elif formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_feedback%}
               Submitted to Reviewers
               {% elif not formb.review_status or not formb.review_status1%}
@@ -304,7 +304,7 @@
              
               {% elif (formc.review_recommendation in ['Ready for submission', 'Approved']) and
               (formc.review_recommendation1 in ['Ready for submission', 'Approved']) and not formc.certificate_received %}
-              Aproved by both Reviewers
+              Approved by both Reviewers
               {% elif formc.rejected_or_accepted and formc.reviewer_name1 and formc.supervisor_feedback and not formc.certificate_received%}
               Submitted to Reviewers
               {% elif not formc.review_status or not formc.review_status1%}

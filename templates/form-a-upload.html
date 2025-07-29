@@ -54,13 +54,13 @@
   </header>
 
   <main class="main-content">
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
       <div class="alert alert-{{ category }}">{{ message }}</div>
     {% endfor %}
   {% endif %}
-{% endwith %}
+{% endwith %} -->
     <h2>Before You Start Form A</h2>
     <form id="formARequirements" action="{{url_for('submit_form_a_requirements')}}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -93,7 +93,7 @@
         <input type="radio" name="company_requires_jbs" value="No" checked required> No
       </div>
 
-      <div class="question-block hidden" id="clearanceUpload11">
+      <div class="question-block hidden" id="clearanceUpload1">
         <label>Upload Ethical Clearance Document</label>
         <input type="file" name="prior_clearance1" accept=".pdf,.docx">
       </div>
@@ -137,12 +137,13 @@
     const permissionRadios = document.querySelectorAll('input[name="need_permission"]');
     const clearanceRadios = document.querySelectorAll('input[name="has_clearance"]');
     const jbsRadios = document.querySelectorAll('input[name="company_requires_jbs"]');
+    const jbsClearanceUpload1 = document.getElementById("clearanceUpload1");
 
 
     const companyLetterUpload = document.getElementById("companyLetterUpload");
     const clearanceUpload = document.getElementById("clearanceUpload");
     const clearanceUpload1 = document.getElementById("clearanceUpload1");
-    const jbsClearanceUpload = document.getElementById("jbsClearanceUpload");
+    // const jbsClearanceUpload = document.getElementById("jbsClearanceUpload");
     const prior_clearance1 = document.getElementById("prior_clearance1");
 
     permissionRadios.forEach(r => {

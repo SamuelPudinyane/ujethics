@@ -373,31 +373,17 @@
       <table class="table table-bordered mt-3">
         <thead class="thead-light">
           <tr>
-            <th>Document</th>
-            <th>Supervisor Comments</th>
+            <th style="width: 40%;">Document</th>
+            <th style="width: 60%;">Supervisor Comments</th>
           </tr>
         </thead>
         <tbody>
-          <!-- <tr>
-            <td>Organisational Permission/Signed Waiver from Business<br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
-            <td><textarea name="org_permission_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td>Signed Waiver from Business<br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
-            <td><textarea name="waiver_comment" class="form-control" rows="3"></textarea></td>
-          </tr> -->
+        
           <tr>
             <td>Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
             <td><textarea name="form_a_comment" class="form-control" rows="3"></textarea></td>
           </tr>
-          <!-- <tr>
-            <td>Interview Questions and/or Questionnaire<br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
-            <td><textarea name="questions_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td>Participant Information Sheet and Informed Consent Form<br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
-            <td><textarea name="consent_comment" class="form-control" rows="3"></textarea></td>
-          </tr> -->
+     
           <tr>
             <td>Refined Concept Proposal<br><small>This should match the approved version with the literature review.</small></td>
             <td><textarea name="proposal_comment" class="form-control" rows="3"></textarea></td>
@@ -409,6 +395,7 @@
         <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>
         <textarea class="form-control" id="supervisor_feedback" name="supervisor_feedback" rows="5" placeholder="Provide any feedback or required revisions..."></textarea>
       </div>
+      <br>
 
       <h5>Recommendation:</h5>
       <!-- Radio Buttons -->
@@ -437,6 +424,7 @@
       <label for="signature_date">Date:</label>
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
+    <br>
 
     <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Admin</button>
   </div>
@@ -449,8 +437,6 @@
 </div>
    
     </form>
-
-
 
   </main>
 

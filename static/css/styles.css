@@ -1,9 +1,9 @@
 /* === BASE RESET === */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 body {
   font-family: 'Arial', sans-serif;
@@ -24,7 +24,7 @@ h2, label, input, select, textarea {
 }
 
 .nav-content {
-  max-width: 500px;
+  max-width: 480px;
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
@@ -47,8 +47,8 @@ h2, label, input, select, textarea {
 .main-content,
 .auth-container,
 .container {
-  max-width: 1800px;
-  margin: 1rem auto;
+  max-width: 1700px;
+  margin: 1rem 1rem;
   background: white;
   padding: 2rem;
   border-radius: 12px;
@@ -567,5 +567,5 @@ form label {
 .form-navigation {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 2rem;
 }

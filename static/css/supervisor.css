@@ -135,8 +135,8 @@ h2, label, input, select, textarea {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
-    margin: 2rem;
+    /* padding: 2rem;
+    margin: 2rem; */
     overflow-x: auto;
   }
 

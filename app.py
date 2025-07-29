@@ -2353,7 +2353,6 @@ def student_edit_forma():
             org_name = request.form.get('org_name[]'),
             org_contact = request.form.get('org_contact[]'),
             org_role = request.form.get('org_role[]'),
-            # org_permission = request.form.get('org_permission'),
             
             researcher_affiliation = researcher_affiliation,
             affiliation_details = request.form.get('affiliation_details'),

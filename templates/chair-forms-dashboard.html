@@ -100,7 +100,7 @@
                   Form Rejected, Review feedback
                   {% elif (form.review_recommendation in ['Ready for submission', 'Approved']) and
                   (form.review_recommendation1 in ['Ready for submission', 'Approved']) %}
-                   Aproved by both Reviewers
+                   Approved by both Reviewers
                   {% elif form.review_supervisor_signature and form.reviewer_name1 is not none and form.reviewer_name2 is not none %}
                   Awaiting for second reviewers feedback
                   {% elif form.reviewer_name1 is none and form.reviewer_name2 is none %}
@@ -122,9 +122,9 @@
                   {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_feedback and not form.review_status%}
                   Submitted to Reviewers
                   {% elif form.review_status %}
-                  Form was Aproved by First Reviewer
+                  Form was Approved by First Reviewer
                   {% elif form.review_status1 %}
-                  Form was Aproved by both reviewers
+                  Form was Approved by both reviewers
                   
                   {% else %}
                   This is the previous version

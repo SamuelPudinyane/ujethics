@@ -304,9 +304,9 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 40%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 40%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -320,14 +320,7 @@
           <td><input type="text" name="org_permission_status"></td>
           <td><textarea name="org_permission_comments"></textarea></td>
         </tr>
-        <!-- <tr>
-          <td>
-            <strong>Impact Assessment</strong><br>
-            • Use template provided in “Ethical clearance templates”.
-          </td>
-          <td><input type="text" name="waiver_status"></td>
-          <td><textarea name="waiver_comments"></textarea></td>
-        </tr> -->
+   
         <tr>
           <td>
             <strong>Ethics Application Form</strong><br>
@@ -337,24 +330,7 @@
           <td><input type="text" name="form_status"></td>
           <td><textarea name="form_comments"></textarea></td>
         </tr>
-        <!-- <tr>
-          <td>
-            <strong>Interview Questions and/or Questionnaire</strong><br>
-            • As close to final as possible.<br>
-            • If preliminary, indicate clearly.<br>
-            • Sensitive/invasive questions increase risk – avoid where possible.
-          </td>
-          <td><input type="text" name="questions_status"></td>
-          <td><textarea name="questions_comments"></textarea></td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Participant Information Sheet & Informed Consent</strong><br>
-            • Use and adapt the provided template for your study.
-          </td>
-          <td><input type="text" name="consent_status"></td>
-          <td><textarea name="consent_comments"></textarea></td>
-        </tr> -->
+
         <tr>
           <td>
             <strong>Refined Concept Proposal</strong><br>
@@ -374,10 +350,7 @@
     <input type="hidden" name="status" id="status" value="" />
 
   <!-- Accept Fields (initially hidden) -->
-  <div >
-
-
-    <div class="form-group">
+     <div class="form-group">
       <label for="supervisor_signature">Reviewer Signature:</label>
       <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
     </div>
@@ -391,7 +364,7 @@
         <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button><br>
     </div>
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
-  </div>
+
   <div class="submit-row" id="rejectBtn">
     <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button>
     <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
