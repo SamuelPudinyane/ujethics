@@ -126,12 +126,10 @@
   <!-- Main Content -->
     <main class="main-content">
 
-
-
       <h2>SECTION 2: Risk Assessment</h2>
 
       <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
-      <table class="table table-bordered">
+      <table>
         <thead>
           <tr>
             <th>Participant Group</th>
@@ -166,7 +164,7 @@
       <hr>
 
       <h4>2.2 Research Activity Type</h4>
-<table class="table table-bordered">
+<table>
   <thead>
     <tr>
       <th>Activity</th>
@@ -206,7 +204,7 @@
       <hr>
 
       <h4>2.3 Additional Research Considerations</h4>
-      <table class="table table-bordered">
+      <table>
         <thead>
           <tr>
             <th>Item</th>
@@ -233,27 +231,29 @@
       </table>
       
       <label><strong>Comments:</strong></label>
+      <br>
+
+      <hr>
+      <br>
      
       
-      <hr>
+      <h3>Risk Assessment</h3>
       
-      <h5>Risk Assessment</h5>
-      
-      <label><strong>Rate your project risk level:</strong>
+      <label><strong>3.1 Rate your project risk level:</strong>
       <br><span class="form-answer">{{formc.risk_level}}</span></label>
     
       
       <br>
-      <label><strong>Justify the Risk Level</strong>
+      <label><strong>3.2 Justify the Risk Level</strong>
       <br><span class="form-answer">{{formc.risk_justification}}</span></label>
 
       
-      <label><strong>If Medium or High Risk, describe potential benefits:</strong>
+      <label><strong>3.3 If Medium or High Risk, describe potential benefits:</strong>
       <br><span class="form-answer">{{formc.risk_benefits}}</span>
     </label>
      
       
-      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong>
+      <label><strong>3.4 If Medium or High Risk, describe how risks will be mitigated:</strong>
       <br><span class="form-answer">{{formc.risk_mitigation}}</span></label>
   
 
@@ -263,8 +263,6 @@
 
    <!-- Main Content -->
   <main class="main-content">
-
-
 
       <h2>SECTION 3: Proposal Summary Sheet</h2>
 
@@ -320,7 +318,7 @@
 
       <h2>SECTION 4: Declaration</h2>
 
-      <p class="form-note">
+      <p class="form-note" style="text-align: justify;">
         I, <strong> <u>{{formc.declaration_name}}</u> </strong>
         (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
  
@@ -337,6 +335,7 @@
         <label for="submission_date"><span class="form-answer">{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span></label>
       </div>
 <hr>
+<br>
 
          <div id="supervisorDeclaration" >
     
@@ -370,7 +369,7 @@
 
       <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>
 
-      <table class="table table-bordered mt-3">
+      <table>
         <thead class="thead-light">
           <tr>
             <th style="width: 40%;">Document</th>
@@ -380,12 +379,12 @@
         <tbody>
         
           <tr>
-            <td>Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
+            <td><strong>Ethics Application Form</strong><br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
             <td><textarea name="form_a_comment" class="form-control" rows="3"></textarea></td>
           </tr>
      
           <tr>
-            <td>Refined Concept Proposal<br><small>This should match the approved version with the literature review.</small></td>
+            <td><strong>Refined Concept Proposal</strong><br><small>This should match the approved version with the literature review.</small></td>
             <td><textarea name="proposal_comment" class="form-control" rows="3"></textarea></td>
           </tr>
         </tbody>

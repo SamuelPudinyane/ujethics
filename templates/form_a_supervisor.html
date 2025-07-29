@@ -893,13 +893,11 @@
 
     <main class="main-content">
  
-
-
-    <h3>SECTION 7: Declaration</h3>
+    <h2>SECTION 7: Declaration</h2>
     <p><strong>STATEMENT AGREEING TO COMPLY WITH ETHICAL PRINCIPLES SET OUT IN UJ POLICY ON RESEARCH ETHICS</strong></p>
 
     <div class="form-group">
-      <label for="declaration-name">
+      <label for="declaration-name" style="text-align: justify;">
         I, <u>{{formA.declaration_name}}</u>
         (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity considering UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics. 
       </label>
@@ -915,7 +913,9 @@
       <span class="form-answer">{% if formA.declaration_date%}{{formA.declaration_date}}{% endif %}</span>
     </div>
 
+    <br>
     <hr>
+    <br>
 
     <div id="supervisorDeclaration" >
     
@@ -946,10 +946,12 @@
         <label for="supervisor_date">Date of Review:</label>
         <input type="date" class="form-control" id="supervisor_date" name="supervisor_date" required>
       </div>
+      <br>
 
       <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>
+      <br>
 
-      <table class="table table-bordered mt-3">
+      <table>
         <thead class="thead-light">
           <tr>
             <th style="width: 40%;">Document</th>
@@ -958,31 +960,32 @@
         </thead>
         <tbody>
           <tr>
-            <td>Organisational Permission/Signed Waiver from Business<br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
+            <td><strong>Organisational Permission/Signed Waiver from Business</strong><br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
             <td><textarea name="org_permission_comment" class="form-control" rows="3"></textarea></td>
           </tr>
           <tr>
-            <td>Personal Impact Assessment Form<br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
+            <td><strong>Personal Impact Assessment Form</strong><br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
             <td><textarea name="waiver_comment" class="form-control" rows="3"></textarea></td>
           </tr>
           <tr>
-            <td>Form – Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
+            <td><strong>Form – Ethics Application Form</strong><br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
             <td><textarea name="form_a_comment" class="form-control" rows="3"></textarea></td>
           </tr>
           <tr>
-            <td>Interview Questions and/or Questionnaire<br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
+            <td><strong>Interview Questions and/or Questionnaire</strong><br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
             <td><textarea name="questions_comment" class="form-control" rows="3"></textarea></td>
           </tr>
           <tr>
-            <td>Participant Information Sheet and Informed Consent Form<br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
+            <td><strong>Participant Information Sheet and Informed Consent Form</strong><br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
             <td><textarea name="consent_comment" class="form-control" rows="3"></textarea></td>
           </tr>
           <tr>
-            <td>Refined Concept Proposal<br><small>This should match the approved version with the literature review.</small></td>
+            <td><strong>Refined Concept Proposal</strong><br><small>This should match the approved version with the literature review.</small></td>
             <td><textarea name="proposal_comment" class="form-control" rows="3"></textarea></td>
           </tr>
         </tbody>
       </table>
+      <br>
 
       <div class="form-group">
         <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>

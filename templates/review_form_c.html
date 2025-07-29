@@ -127,7 +127,7 @@
       <h2>SECTION 2: Risk Assessment</h2>
 
       <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
-      <table class="table table-bordered">
+      <table>
         <thead>
           <tr>
             <th>Participant Group</th>
@@ -162,7 +162,7 @@
       <hr>
 
       <h4>2.2 Research Activity Type</h4>
-<table class="table table-bordered">
+<table>
   <thead>
     <tr>
       <th>Activity</th>
@@ -202,7 +202,7 @@
       <hr>
 
       <h4>2.3 Additional Research Considerations</h4>
-      <table class="table table-bordered">
+      <table>
         <thead>
           <tr>
             <th>Item</th>
@@ -344,7 +344,7 @@
 
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <table class="table table-bordered">
+    <table>
       <thead>
         <tr>
         <th style="width: 40%;">Document</th>
@@ -353,24 +353,7 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr>
-          <td>
-            <strong>Organisational permission/Signed Waiver</strong><br>
-            • Can be an email or formal letter.<br>
-            • Include permission to access relevant business documents.<br>
-            • If not requested, use the “Request for Permission” template.
-          </td>
-          <td><input type="text" name="org_permission_status"></td>
-          <td><textarea name="org_permission_comments"></textarea></td>
-        </tr> -->
-        <!-- <tr>
-          <td>
-            <strong>Impact Assessment Form</strong><br>
-            • Use template provided in “Ethical clearance templates”.
-          </td>
-          <td><input type="text" name="waiver_status"></td>
-          <td><textarea name="waiver_comments"></textarea></td>
-        </tr> -->
+        
         <tr>
           <td>
             <strong>Ethics Application Form</strong><br>
@@ -380,24 +363,7 @@
           <td><input type="text" name="form_status"></td>
           <td><textarea name="form_comments"></textarea></td>
         </tr>
-        <!-- <tr>
-          <td>
-            <strong>Interview Questions and/or Questionnaire</strong><br>
-            • As close to final as possible.<br>
-            • If preliminary, indicate clearly.<br>
-            • Sensitive/invasive questions increase risk – avoid where possible.
-          </td>
-          <td><input type="text" name="questions_status"></td>
-          <td><textarea name="questions_comments"></textarea></td>
-        </tr> -->
-        <!-- <tr>
-          <td>
-            <strong>Participant Information Sheet & Informed Consent</strong><br>
-            • Use and adapt the provided template for your study.
-          </td>
-          <td><input type="text" name="consent_status"></td>
-          <td><textarea name="consent_comments"></textarea></td>
-        </tr> -->
+      
         <tr>
           <td>
             <strong>Refined Concept Proposal</strong><br>
@@ -436,9 +402,10 @@
     </div>
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
   </div>
-  <div class="submit-row" id="rejectBtn">
+  <div id="rejectBtn">
     <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button>
     <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
+  </div>
   </div>
   <!-- Reject Button (initially hidden) -->
   <!--<div >

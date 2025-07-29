@@ -67,14 +67,14 @@
   </header>
 <form  action="{{url_for('student_edit_formb')}}" method="post" enctype="multipart/form-data">
       <!-- Error Messages -->
-            {% if messages %}
+            <!-- {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            {% endif %}
+            {% endif %} -->
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="formb_id" value="{{ formB.form_id }}">
