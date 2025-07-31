@@ -511,6 +511,8 @@ class FormA(Base):
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
     certificate_received=Column(Boolean,default=False)
+    certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
+    certificate_modified=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def __repr__(self):
@@ -684,6 +686,8 @@ class FormB(Base):
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
     certificate_received=Column(Boolean,default=False)
+    certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
+    certificate_modified=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
@@ -867,6 +871,8 @@ class FormC(Base):
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
     certificate_received=Column(Boolean,default=False)
+    certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
+    certificate_modified=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):

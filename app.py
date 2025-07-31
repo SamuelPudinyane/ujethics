@@ -2828,6 +2828,7 @@ def send_certificate(id):
             certificate_details = db_session.query(model).filter_by(form_id=id).first()
             if certificate_details:    
                 certificate_details.certificate_received=True
+                certificate_details.certificate_modified=True
                 db_session.commit()
                 print("date issue=true")
         return redirect(url_for('chair_landing'))
@@ -3809,6 +3810,8 @@ def certificate(id):
                 certificate_details.certificate_end_date = request.form.get('end_date')
                 certificate_details.certificate_issuer = request.form.get('certificate_issuer')
                 certificate_details.certificate_email = request.form.get('email')
+                certificate_details.certificate_heading=request.form.get('heading')
+            
                 # Overwrite with provided issued date if present
                 issued_date = request.form.get('certificate_issued')
                 if issued_date:
@@ -3821,11 +3824,53 @@ def certificate(id):
 
     if not certificate_details:
         return "No certificate data found.", 404
-
+    
     return render_template(
         'certificate.html',
         certificate_details=certificate_details,
         certification_code=certificate_details.certificate_code
+    )
+
+
+
+@app.route('/modify_certificate/<string:id>', methods=['GET', 'POST'])
+def modify_certificate(id):
+    code = 'JBSREC'
+    
+    certificate_details = None
+    for model in [FormA, FormB, FormC]:
+        certificate_details = db_session.query(model).filter_by(form_id=id).first()
+        if certificate_details:
+            
+
+            if request.method == 'POST':
+                
+                
+                certificate_details.certificate_issued = datetime.now()
+                certificate_details.certificate_valid_years = int(request.form.get('valid_years'))
+                certificate_details.certificate_end_date = request.form.get('end_date')
+                certificate_details.certificate_issuer = request.form.get('certificate_issuer')
+                certificate_details.certificate_email = request.form.get('email')
+                heading = request.form.get('heading')
+                certificate_details.certificate_heading = heading.upper() if heading else None
+                certificate_details.certificate_modified=False
+                # Overwrite with provided issued date if present
+                issued_date = request.form.get('certificate_issued')
+                if issued_date:
+                    certificate_details.certificate_issued = datetime.now()
+            
+            db_session.add(certificate_details)
+            db_session.commit()
+            
+            break
+
+    if not certificate_details:
+        return "No certificate data found.", 404
+    print("------------------------- ",certificate_details.certificate_heading)
+    return render_template(
+        'edit_certificate.html',
+        certificate_details=certificate_details
+        
     )
 
 

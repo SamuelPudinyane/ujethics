@@ -127,15 +127,21 @@
               {% elif 'Reject' in ['forma.form_review_comment', 'forma.form_review_comment1'] %}
               Rejected
               {% elif forma.certificate_issued and forma.certificate_received %}
-            <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
-              {% endif %}
+            <a href="{{url_for('view_certificate',id=forma.form_id)}}" >View Certificate</a>
+            </br>
+              {% elif forma.certificate_issued and forma.certificate_received %}
+            <a href="{{url_for('view_certificate',id=forma.form_id)}}" class="btn btn-sm btn-success text-white">View Certificate</a>
+          
+            {% endif %}
             </span>
-            <br>
-            
-              <br>
-              
-              <a href="{{url_for('ethics_view_feedback',id=forma.form_id)}}">View Feedback</a>
-          </td>
+          </br>
+            {% if forma.certificate_issued and forma.certificate_received %}
+            </br>
+            <a href="{{url_for('modify_certificate',id=forma.form_id)}}" class="btn btn-sm btn-success text-white">Modify Certificate</a>
+            {% endif %}
+          </br>
+            <a href="{{url_for('ethics_view_feedback',id=forma.form_id)}}" class="btn btn-sm btn-success text-white mt-2">View Feedback</a>
+            </td>
             <td>{{forma.risk_rating}}</td>
             <td>
               <ul class="doc-link">
@@ -247,15 +253,20 @@
               {% elif 'Reject' in ['formb.form_review_comment', 'formb.form_review_comment1'] %}
               Rejected
               {% elif formb.certificate_issued and formb.certificate_received %}
-            <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
-            
+            <a href="{{url_for('view_certificate',id=formb.form_id)}}" >View Certificate</a>
+            </br>
               {% elif formb.certificate_issued and formb.certificate_received %}
-            <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
-           {% endif %}
+            <a href="{{url_for('view_certificate',id=formb.form_id)}}" class="btn btn-sm btn-success text-white">View Certificate</a>
+          
+            {% endif %}
             </span>
-            
-            <br>
-            <a href="{{url_for('ethics_view_feedback',id=formb.form_id)}}">View Feedback</a>
+          </br>
+            {% if formb.certificate_issued and formb.certificate_received %}
+            </br>
+            <a href="{{url_for('modify_certificate',id=formb.form_id)}}" class="btn btn-sm btn-success text-white">Modify Certificate</a>
+            {% endif %}
+          </br>
+            <a href="{{url_for('ethics_view_feedback',id=formb.form_id)}}" class="btn btn-sm btn-success text-white mt-2">View Feedback</a>
             </td>
             <td>{{formb.risk_level}}</td>
             <td>
@@ -356,12 +367,20 @@
               {% elif 'Reject' in ['formc.form_review_comment', 'formc.form_review_comment1'] %}
               Rejected
               {% elif formc.certificate_issued and formc.certificate_received %}
-            <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
+            <a href="{{url_for('view_certificate',id=formc.form_id)}}" >View Certificate</a>
+            </br>
+              {% elif formc.certificate_issued and formc.certificate_received %}
+            <a href="{{url_for('view_certificate',id=formc.form_id)}}" class="btn btn-sm btn-success text-white">View Certificate</a>
+          
             {% endif %}
             </span>
-            <br>
-            
-            <a href="{{url_for('ethics_view_feedback',id=formc.form_id)}}">View Feedback</a>
+          </br>
+            {% if formc.certificate_issued and formc.certificate_received %}
+            </br>
+            <a href="{{url_for('modify_certificate',id=formc.form_id)}}" class="btn btn-sm btn-success text-white">Modify Certificate</a>
+            {% endif %}
+          </br>
+            <a href="{{url_for('ethics_view_feedback',id=formc.form_id)}}" class="btn btn-sm btn-success text-white mt-2">View Feedback</a>
             </td>
             <td>{{formc.risk_level}}</td>
             <td>
