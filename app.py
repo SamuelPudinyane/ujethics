@@ -2828,7 +2828,7 @@ def send_certificate(id):
             certificate_details = db_session.query(model).filter_by(form_id=id).first()
             if certificate_details:    
                 certificate_details.certificate_received=True
-                certificate_details.certificate_modified=True
+                certificate_details.certificate_modified=False
                 db_session.commit()
                 print("date issue=true")
         return redirect(url_for('chair_landing'))
@@ -3853,7 +3853,8 @@ def modify_certificate(id):
                 certificate_details.certificate_email = request.form.get('email')
                 heading = request.form.get('heading')
                 certificate_details.certificate_heading = heading.upper() if heading else None
-                certificate_details.certificate_modified=False
+                certificate_details.certificate_modified=True
+                certificate_details.certificate_received=False
                 # Overwrite with provided issued date if present
                 issued_date = request.form.get('certificate_issued')
                 if issued_date:
@@ -3866,7 +3867,7 @@ def modify_certificate(id):
 
     if not certificate_details:
         return "No certificate data found.", 404
-    print("------------------------- ",certificate_details.certificate_heading)
+    
     return render_template(
         'edit_certificate.html',
         certificate_details=certificate_details

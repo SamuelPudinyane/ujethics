@@ -161,7 +161,7 @@
 
     
 </div>
-{% if not certificate_details.certificate_issued and not certificate_details.certificate_modified %}
+{% if certificate_details.certificate_issued and not certificate_details.certificate_modified %}
 <button type="submit" 
         style="padding: 10px 20px; background: #004785; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; gap:1.5px;">
         Modify Certificate
