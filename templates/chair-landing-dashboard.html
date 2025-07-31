@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Select Submission Month | JBS Ethics</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" href="/static/css/supervisor.css">
-<link rel="stylesheet" href="/static/css/review.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/supervisor.css') }}">
+  <meta charset="UTF-8" />
+  <title>Select Submission Month | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/static/css/supervisor.css">
+  <link rel="stylesheet" href="/static/css/review.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/supervisor.css') }}">
 
-<style>
+  <style>
     .folder-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -67,9 +67,9 @@
     .no-data { display: none; text-align: center; font-weight: bold; color: #cc0000; margin-top: 2rem; }
     .table-container { display: block; }
     .table-container.hidden { display: none; }
-</style>
-
+  </style>
 </head>
+
 <body>
 <div class="admin-wrapper">
   <aside class="sidebar">
@@ -78,37 +78,21 @@
       <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="{{url_for('chair_landing')}}" class="sidebar-link">
-        <i class="fas fa-clipboard-list"></i> Dashboard
-      </a>
-
-      <a href="{{url_for('reviewer_list')}}" class="sidebar-link">
-        <i class="fas fa-user"></i> Reviewer List
-      </a>
-
-      <a href="{{url_for('all_users')}}" class="sidebar-link">
-        <i class="fas fa-users-cog"></i> User Management
-      </a>
-
-      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
-        <i class="fas fa-users"></i> Rec Team Dashboard
-      </a>
-
-      <a href="{{url_for('logout')}}" class="sidebar-link">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </a>
-
+      <a href="{{url_for('chair_landing')}}" class="sidebar-link"><i class="fas fa-clipboard-list"></i> Dashboard</a>
+      <a href="{{url_for('reviewer_list')}}" class="sidebar-link"><i class="fas fa-user"></i> Reviewer List</a>
+      <a href="{{url_for('all_users')}}" class="sidebar-link"><i class="fas fa-users-cog"></i> User Management</a>
+      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link"><i class="fas fa-users"></i> Rec Team Dashboard</a>
+      <a href="{{url_for('logout')}}" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </aside>
-
 
   <main class="admin-main">
     <header class="topbar">
       <h2>Submission Folders</h2>
       <p>Please select a submission month to view the forms.</p>
     </header>
+
     <section class="admin-content container-fluid">
-      <!-- Filter Section -->
       <div class="row mb-4">
         <div class="col-md-3">
           <label for="searchType">Search by</label>
@@ -123,7 +107,9 @@
           <input type="text" id="searchInput" class="form-control" placeholder="Enter Year or Qualification">
           <select id="specializationDropdown" class="form-select d-none mt-2">
             <option value="">-- Select Qualification--</option>
-            {% for spec in results %}<option value="{{ spec|lower }}">{{ spec }}</option>{% endfor %}
+            {% for spec in results %}
+              <option value="{{ spec|lower }}">{{ spec }}</option>
+            {% endfor %}
           </select>
         </div>
         <div class="col-md-3 d-flex align-items-end">
@@ -131,25 +117,44 @@
         </div>
       </div>
     </section>
+
     <section class="admin-content container-fluid">
       {% for form_type, sorted_years, forms_by_year in [('A', sorted_yearsA, forms_by_yearA), ('B', sorted_yearsB, forms_by_yearB), ('C', sorted_yearsC, forms_by_yearC)] %}
         {% if sorted_years %}
         <div class="table-container">
           <h2 class="mt-1 text-center">Form {{ form_type }}</h2>
           <div class="table-responsive">
-            <table class="status-table">
+            <table class="table table-bordered">
               <thead class="table-dark">
-                <tr><th>Year</th><th>Month</th><th>Folder</th></tr>
+                <tr>
+                  <th>Year</th>
+                  <th>Month</th>
+                  <th>Student ID</th>
+                  <th>Degree</th>
+                  <th>Submitted At</th>
+                  <th>Total Forms</th>
+                  <th>Folder</th>
+                </tr>
               </thead>
               <tbody>
                 {% for year in sorted_years %}
                   {% for month, forms in forms_by_year[year]|dictsort %}
-                    {% for form in forms %}
+                    {% for form, count in forms %}
+                    {% if loop.index ==1 %}
                     <tr data-degree="{{ form.degree | lower }}">
                       <td>{{ year }}</td>
                       <td>{{ month }}</td>
-                      <td><a href="{{ url_for('ethics_reviewer_committee_form_' + form_type|lower, year=year, month=month) }}">📁 View</a></td>
+                      <td>{{ form.user_id }}</td>
+                      <td>{{ form.degree }}</td>
+                      <td>
+                        {{ form.submitted_at if form_type != 'C' else form.submission_date }}
+                      </td>
+                      <td>{{ count }}</td>
+                      <td>
+                        <a href="{{ url_for('ethics_reviewer_committee_form_' + form_type|lower, year=year, month=month) }}">📁 View</a>
+                      </td>
                     </tr>
+                    {% endif %}
                     {% endfor %}
                   {% endfor %}
                 {% endfor %}
@@ -163,15 +168,14 @@
     </section>
   </main>
 </div>
-   <!-- <footer class="footer">
-      <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
-    </footer> -->
+
 <script>
 function updateSearchInput() {
   const type = document.getElementById("searchType").value;
   document.getElementById("searchInput").classList.toggle("d-none", type === "specialization");
   document.getElementById("specializationDropdown").classList.toggle("d-none", type !== "specialization");
 }
+
 function applyFilters() {
   const type = document.getElementById("searchType").value;
   const text = type === "specialization" ? document.getElementById("specializationDropdown").value : document.getElementById("searchInput").value;

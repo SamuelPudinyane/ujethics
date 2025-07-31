@@ -3347,18 +3347,33 @@ def student_form_pdf(form_id,form_type):
     elif form_type=='C':
         return render_template('student_form_c_answer_pdf.html',formc=form)
 
+@app.route('/ethics_form_pdf/<string:form_id>/<string:form_type>', methods=['GET','POST'])
+def ethics_form_pdf(form_id,form_type):
+    form_type = form_type.strip().upper()
+    
+    form = None
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=form_id).first()
+        if form:
+            break  # Stop once the form is found
+
+    if form_type=="FORM A":
+        return render_template('student_form_a_answer_pdf.html',formA=form)
+    elif form_type=="FORM B":
+        return render_template('student_form_b_answer_pdf.html',formB=form)
+    elif form_type=="FORM C":
+        return render_template('student_form_c_answer_pdf.html',formc=form)
 
 
 @app.route('/chair_landing', methods=['POST', 'GET'])
 def chair_landing():
-    # Fetch all degrees from all forms for filtering
+    # --- DEGREE FILTERING FROM ALL FORMS ---
     combined_query = db_session.query(FormA.degree).union_all(
         db_session.query(FormB.degree),
         db_session.query(FormC.degree)
     )
     results = combined_query.all()
 
-    # Flatten and deduplicate degrees
     specializations = []
     for row in results:
         if isinstance(row.degree, list):
@@ -3367,82 +3382,118 @@ def chair_landing():
             specializations.append(row.degree)
     unique_specializations = sorted(set(specializations))
 
-    # --------- FORM A ----------
-    formA_subquery = (
+    # ---------- FORM A ----------
+    latest_formA_subquery = (
         db_session.query(
             FormA.user_id,
-            func.max(FormA.submitted_at).label('latest')
+            func.max(FormA.submitted_at).label("latest_submission")
         )
         .filter(FormA.submitted_at != None)
         .group_by(FormA.user_id)
         .subquery()
     )
 
+    formA_counts = (
+        db_session.query(
+            FormA.user_id,
+            func.count(FormA.form_id).label("total_forms")
+        )
+        .group_by(FormA.user_id)
+        .subquery()
+    )
+
     formAs = (
-        db_session.query(FormA)
-        .join(formA_subquery, (FormA.user_id == formA_subquery.c.user_id) & (FormA.submitted_at == formA_subquery.c.latest))
+        db_session.query(FormA, formA_counts.c.total_forms)
+        .join(latest_formA_subquery, and_(
+            FormA.user_id == latest_formA_subquery.c.user_id,
+            FormA.submitted_at == latest_formA_subquery.c.latest_submission
+        ))
+        .join(formA_counts, formA_counts.c.user_id == FormA.user_id)
         .all()
     )
 
     forms_by_yearA = defaultdict(lambda: defaultdict(list))
-    for form in formAs:
-        if form.submitted_at:
-            year = form.submitted_at.year
-            month = form.submitted_at.strftime("%Y-%m")
-            forms_by_yearA[year][month].append(form)
+    for form, count in formAs:
+        year = form.submitted_at.year
+        month = form.submitted_at.strftime("%Y-%m")
+        forms_by_yearA[year][month].append((form, count))
     sorted_yearsA = sorted(forms_by_yearA.keys(), reverse=True)
 
-    # --------- FORM B ----------
-    formB_subquery = (
+    # ---------- FORM B ----------
+    latest_formB_subquery = (
         db_session.query(
             FormB.user_id,
-            func.max(FormB.submitted_at).label('latest')
+            func.max(FormB.submitted_at).label("latest_submission")
         )
         .filter(FormB.submitted_at != None)
         .group_by(FormB.user_id)
         .subquery()
     )
 
+    formB_counts = (
+        db_session.query(
+            FormB.user_id,
+            func.count(FormB.form_id).label("total_forms")
+        )
+        .group_by(FormB.user_id)
+        .subquery()
+    )
+
     formBs = (
-        db_session.query(FormB)
-        .join(formB_subquery, (FormB.user_id == formB_subquery.c.user_id) & (FormB.submitted_at == formB_subquery.c.latest))
+        db_session.query(FormB, formB_counts.c.total_forms)
+        .join(latest_formB_subquery, and_(
+            FormB.user_id == latest_formB_subquery.c.user_id,
+            FormB.submitted_at == latest_formB_subquery.c.latest_submission
+        ))
+        .join(formB_counts, formB_counts.c.user_id == FormB.user_id)
         .all()
     )
 
     forms_by_yearB = defaultdict(lambda: defaultdict(list))
-    for form in formBs:
-        if form.submitted_at:
-            year = form.submitted_at.year
-            month = form.submitted_at.strftime("%Y-%m")
-            forms_by_yearB[year][month].append(form)
+    for form, count in formBs:
+        year = form.submitted_at.year
+        month = form.submitted_at.strftime("%Y-%m")
+        forms_by_yearB[year][month].append((form, count))
     sorted_yearsB = sorted(forms_by_yearB.keys(), reverse=True)
 
-    # --------- FORM C ----------
-    formC_subquery = (
+    # ---------- FORM C ----------
+    latest_formC_subquery = (
         db_session.query(
             FormC.user_id,
-            func.max(FormC.submission_date).label('latest')
+            func.max(FormC.submission_date).label("latest_submission")
         )
         .filter(FormC.submission_date != None)
         .group_by(FormC.user_id)
         .subquery()
     )
 
+    formC_counts = (
+        db_session.query(
+            FormC.user_id,
+            func.count(FormC.form_id).label("total_forms")
+        )
+        .group_by(FormC.user_id)
+        .subquery()
+    )
+
     formCs = (
-        db_session.query(FormC)
-        .join(formC_subquery, (FormC.user_id == formC_subquery.c.user_id) & (FormC.submission_date == formC_subquery.c.latest))
+        db_session.query(FormC, formC_counts.c.total_forms)
+        .join(latest_formC_subquery, and_(
+            FormC.user_id == latest_formC_subquery.c.user_id,
+            FormC.submission_date == latest_formC_subquery.c.latest_submission
+        ))
+        .join(formC_counts, formC_counts.c.user_id == FormC.user_id)
         .all()
     )
 
     forms_by_yearC = defaultdict(lambda: defaultdict(list))
-    for form in formCs:
-        if form.submission_date:
-            year = form.submission_date.year
-            month = form.submission_date.strftime("%Y-%m")
-            forms_by_yearC[year][month].append(form)
+    for form, count in formCs:
+        year = form.submission_date.year
+        month = form.submission_date.strftime("%Y-%m")
+        forms_by_yearC[year][month].append((form, count))
     sorted_yearsC = sorted(forms_by_yearC.keys(), reverse=True)
 
-    # Render the page
+    # --- Render template ---
     return render_template(
         "chair-landing-dashboard.html",
         results=unique_specializations,
@@ -3630,9 +3681,13 @@ def admin_rec_form(form_id):
   
     user_id = session['id']
     user=db_session.query(User).filter(User.user_id==user_id).first()
-   
+    form = None
     Rec_team=db_session.query(Rec).filter(Rec.form_id==form_id).all()
-  
+    for model in [FormA, FormB, FormC]:
+        form = db_session.query(model).filter_by(form_id=form_id).first()
+        if form:
+            break  # Stop once the form is found
+    
     role=user.role.value
     #rec=[]
     #rec.append(Rec_team)
@@ -3640,7 +3695,8 @@ def admin_rec_form(form_id):
     return render_template(
         'chair_rec_form.html',
         Rec_team=Rec_team,
-        role=role
+        role=role,
+        form=form
     )
 @app.route('/rec_form_a/<string:id>', methods=['GET'])
 def rec_form_a(id):
@@ -3913,7 +3969,7 @@ def request_reset():
         return "Reset email sent!"
     return "Email not found", 404
 
-
+from sqlalchemy.orm import aliased
 @app.route('/supervisor_dashboard', methods=['GET','POST'])
 def supervisor_dashboard():
     supervisor_id=session.get('id')
@@ -3927,30 +3983,151 @@ def supervisor_dashboard():
     formC = db_session.query(FormC).all()
  
     # Query FormA and its FormARequirements for supervisor's users
-    supervisor_formA = db_session.query(FormA, FormARequirements) \
-        .join(User, FormA.user_id == User.user_id) \
-        .join(FormARequirements, FormARequirements.user_id == FormA.user_id) \
-        .filter(User.supervisor_id == supervisor_id) \
+     # Subquery to count all FormC submissions per user
+    forma_count_subquery = (
+    db_session.query(
+        FormA.user_id,
+        func.count(FormA.form_id).label("forma_count")
+    )
+    .group_by(FormA.user_id)
+    .subquery()
+    )
+
+    # Subquery: Earliest FormA per user
+    min_forma_subquery = (
+        db_session.query(
+            FormA.user_id,
+            func.min(FormA.form_id).label("min_form_id")
+        )
+        .group_by(FormA.user_id)
+        .subquery()
+    )
+
+    fa_alias = aliased(FormA)
+
+    supervisor_formA = (
+        db_session.query(fa_alias, FormARequirements, forma_count_subquery.c.forma_count)
+        .join(User, fa_alias.user_id == User.user_id)
+        .join(FormARequirements, FormARequirements.user_id == fa_alias.user_id)
+        .join(min_forma_subquery, and_(
+            min_forma_subquery.c.user_id == fa_alias.user_id,
+            min_forma_subquery.c.min_form_id == fa_alias.form_id
+        ))
+        .join(forma_count_subquery, forma_count_subquery.c.user_id == fa_alias.user_id)
+        .filter(User.supervisor_id == supervisor_id)
         .all()
+    )
 
     # Query FormB and its FormARequirements for supervisor's users
-    supervisor_formB = db_session.query(FormB, FormARequirements) \
-        .join(User, FormB.user_id == User.user_id) \
-        .join(FormARequirements, FormARequirements.user_id == FormB.user_id) \
-        .filter(User.supervisor_id == supervisor_id) \
-        .all()
+    # Subquery: Count of FormB submissions per user
+    formb_count_subquery = (
+        db_session.query(
+            FormB.user_id,
+            func.count(FormB.form_id).label("formb_count")
+        )
+        .group_by(FormB.user_id)
+        .subquery()
+    )
 
-    # Query FormC and its FormARequirements for supervisor's users
-    supervisor_formC = db_session.query(FormC, FormARequirements) \
-        .join(User, FormC.user_id == User.user_id) \
-        .join(FormARequirements, FormARequirements.user_id == FormC.user_id) \
-        .filter(User.supervisor_id == supervisor_id) \
+    # Subquery: Earliest FormB per user
+    min_formb_subquery = (
+        db_session.query(
+            FormB.user_id,
+            func.min(FormB.form_id).label("min_form_id")
+        )
+        .group_by(FormB.user_id)
+        .subquery()
+    )
+
+    fb_alias = aliased(FormB)
+
+    supervisor_formB = (
+        db_session.query(fb_alias, FormARequirements, formb_count_subquery.c.formb_count)
+        .join(User, fb_alias.user_id == User.user_id)
+        .join(FormARequirements, FormARequirements.user_id == fb_alias.user_id)
+        .join(min_formb_subquery, and_(
+            min_formb_subquery.c.user_id == fb_alias.user_id,
+            min_formb_subquery.c.min_form_id == fb_alias.form_id
+        ))
+        .join(formb_count_subquery, formb_count_subquery.c.user_id == fb_alias.user_id)
+        .filter(User.supervisor_id == supervisor_id)
         .all()
+    )
+    
+    # Subquery to count all FormC submissions per user
+    formc_count_subquery = (
+        db_session.query(
+            FormC.user_id,
+            func.count(FormC.form_id).label("formc_count")
+        )
+        .group_by(FormC.user_id)
+        .subquery()
+    )
+
+    # Subquery to get the earliest FormC per user
+    min_formc_subquery = (
+        db_session.query(
+            FormC.user_id,
+            func.min(FormC.form_id).label("min_form_id")
+        )
+        .group_by(FormC.user_id)
+        .subquery()
+    )
+
+    # Alias FormC for joining
+    fc_alias = aliased(FormC)
+
+    # Main query
+    supervisor_formC = (
+        db_session.query(fc_alias, FormARequirements, formc_count_subquery.c.formc_count)
+        .join(User, fc_alias.user_id == User.user_id)
+        .join(FormARequirements, FormARequirements.user_id == fc_alias.user_id)
+        .join(min_formc_subquery, and_(
+            min_formc_subquery.c.user_id == fc_alias.user_id,
+            min_formc_subquery.c.min_form_id == fc_alias.form_id
+        ))
+        .join(formc_count_subquery, formc_count_subquery.c.user_id == fc_alias.user_id)
+        .filter(User.supervisor_id == supervisor_id)
+        .all()
+    )
 
 
     #supervisor_formA_req=db_session.query(model).filter(FormARequirements.user_id == FormA.user_id).all()
 
     return render_template("supervisor-dashboard.html",supervisor_role=supervisor_role,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
+
+
+
+@app.route('/supervisor_dashboard_previous_forms/<string:user_id>', methods=['GET','POST'])
+def supervisor_dashboard_previous_forms(user_id):
+    supervisor_id=session.get('id')
+    supervisor_role=session['supervisor_role']
+    if not supervisor_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    formA = db_session.query(FormA).all()
+    formB = db_session.query(FormB).all()
+    formC = db_session.query(FormC).all()
+
+    supervisor_formA = db_session.query(FormA, FormARequirements) \
+        .join(User, FormA.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormA.user_id) \
+        .filter(FormA.user_id==user_id) \
+        .all()
+    
+    supervisor_formB = db_session.query(FormB, FormARequirements) \
+        .join(User, FormB.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormB.user_id) \
+        .filter(FormA.user_id==user_id) \
+        .all()
+    
+    supervisor_formC = db_session.query(FormC, FormARequirements) \
+        .join(User, FormC.user_id == User.user_id) \
+        .join(FormARequirements, FormARequirements.user_id == FormC.user_id) \
+        .filter(FormC.user_id==user_id) \
+        .all()
+    
+    return render_template("supervisor_form_version_control.html",supervisor_role=supervisor_role,formA=formA,formB=formB,formC=formC,supervisor_formA=supervisor_formA,supervisor_formB=supervisor_formB,supervisor_formC=supervisor_formC)
 
 
 

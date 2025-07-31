@@ -99,21 +99,32 @@
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
+              {% elif not formc.recommendation%}
+              Ready for review
               {% elif forma.certificate_issued and not forma.certificate_received%}
               Certificate issued but not send
               {% elif forma.review_recommendation and not forma.review_recommendation1 %}
               Awaiting second reviewer
-              {% elif forma.submitted_to_rec and 'low' not in forma.risk_rating|lower%}
+              {% elif forma.submitted_to_rec and 'low' not in forma.risk_rating|lower and not forma.certificate_issued%}
               Form submitted to Rec 
-              {% elif (forma.review_recommendation in ['Ready for submission', 'Approved']) and
-              (forma.review_recommendation1 in ['Ready for submission', 'Approved']) and not forma.certificate_received %}
+              {% elif (forma.review_recommendation in ['Approved']) and
+              (forma.review_recommendation1 in ['Approved']) and not forma.certificate_received %}
               Approved by both Reviewers
-              {% elif forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_feedback%}
+              {% elif forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_feedback and not forma.review_status%}
               Submitted to Reviewers
               {% elif not forma.review_status or not forma.review_status1%}
               {{forma.review_recommendation}}
               {{forma.review_recommendation1}}
-              {% elif not forma.review_status and not forma.review_status%}
+               {% set review_comment = '' %}
+                {% elif forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = forma.form_review_comment %}
+                {% elif forma.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = forma.form_review_comment1 %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status: {{ review_comment }}</p>
+                  {% endif %}
+              {% elif 'Reject' in ['forma.form_review_comment', 'forma.form_review_comment1'] %}
               Rejected
               {% elif forma.certificate_issued and forma.certificate_received %}
             <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
@@ -168,7 +179,7 @@
             
             <td>
               
-              <a href="{{url_for('chair_forma_view',id=forma.user_id)}}" >Review</a>
+              <a href="{{url_for('chair_forma_view',id=forma.user_id)}}" class="btn btn-sm btn-success text-white" >Review</a>
            
             </td>
           </tr>
@@ -178,8 +189,7 @@
       </table>
       
       <br>
-      {% endif %}
-      {% if submitted_form_b %}
+      {% elif submitted_form_b %}
       <!-- Table -->
       <table class="status-table">
         <h3>Form B</h3>
@@ -209,21 +219,32 @@
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
+              {% elif not formb.recommendation%}
+              Ready for review
              {% elif formb.certificate_issued and not formb.certificate_received%}
               Certificate issued but not send
               {% elif formb.review_recommendation and not formb.review_recommendation1 %}
               Awaiting second reviewer
-              {% elif formb.submitted_to_rec and 'low' not in formb.risk_level|lower %}
+              {% elif formb.submitted_to_rec and 'low' not in formb.risk_level|lower and not formb.certificate_issued%}
               Form submitted to Rec 
-              {% elif (formb.review_recommendation in ['Ready for submission', 'Approved']) and
-              (formb.review_recommendation1 in ['Ready for submission', 'Approved']) and not formb.certificate_received%}
+              {% elif (formb.review_recommendation in ['Approved']) and
+              (formb.review_recommendation1 in ['Approved']) and not formb.certificate_received%}
               Approved by both Reviewers
-              {% elif formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_feedback%}
+              {% elif formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_feedback and not formb.review_status%}
               Submitted to Reviewers
               {% elif not formb.review_status or not formb.review_status1%}
               {{formb.review_recommendation}}
               {{formb.review_recommendation1}}
-              {% elif not formb.review_status and not formb.review_status%}
+              {% set review_comment = '' %}
+                {% elif formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formb.form_review_comment %}
+                {% elif formb.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formb.form_review_comment1 %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status: {{ review_comment }}</p>
+                  {% endif %}
+              {% elif 'Reject' in ['formb.form_review_comment', 'formb.form_review_comment1'] %}
               Rejected
               {% elif formb.certificate_issued and formb.certificate_received %}
             <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
@@ -265,7 +286,7 @@
             
             <td>
              
-              <a href="{{url_for('chair_formb_view',id=formb.user_id)}}" >Review</a>
+              <a href="{{url_for('chair_formb_view',id=formb.user_id)}}" class="btn btn-sm btn-success text-white" >Review</a>
              
             </td>
           </tr>
@@ -274,8 +295,7 @@
         </tbody>
       </table>
       <br>
-      {% endif %}
-      {% if submitted_form_c %}
+      {% elif submitted_form_c %}
       <!-- Table -->
       <table class="status-table">
         <h3>Form C</h3>
@@ -301,28 +321,39 @@
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="status-pill approved">
-       {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
+            {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
               Awaiting for review
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
-              
+              {% elif not formc.recommendation%}
+              Ready for review
               {% elif formc.certificate_email%}
               Certificate issued
               {% elif formc.review_recommendation and not formc.review_recommendation1 %}
               Awaiting second reviewer
               
-              {% elif formc.submitted_to_rec and 'low' not in formc.risk_level|lower %}
+              {% elif formc.submitted_to_rec and 'low' not in formc.risk_level|lower and not formc.certificate_issued%}
               Form submitted to Rec 
              
-              {% elif (formc.review_recommendation in ['Ready for submission', 'Approved']) and
-              (formc.review_recommendation1 in ['Ready for submission', 'Approved']) and not formc.certificate_received %}
+              {% elif (formc.review_recommendation in ['Approved']) and
+              (formc.review_recommendation1 in ['Approved']) and not formc.certificate_received %}
               Approved by both Reviewers
-              {% elif formc.rejected_or_accepted and formc.reviewer_name1 and formc.supervisor_feedback and not formc.certificate_received%}
+              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_feedback and not formc.review_status%}
               Submitted to Reviewers
               {% elif not formc.review_status or not formc.review_status1%}
               {{formc.review_recommendation}}
               {{formc.review_recommendation1}}
-              {% elif not formc.review_status and not formc.review_status %}
+              {% set review_comment = '' %}
+                {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formc.form_review_comment %}
+                {% elif formc.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formc.form_review_comment1 %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status: {{ review_comment }}</p>
+                  {% endif %}
+                
+              {% elif 'Reject' in ['formc.form_review_comment', 'formc.form_review_comment1'] %}
               Rejected
               {% elif formc.certificate_issued and formc.certificate_received %}
             <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
@@ -340,7 +371,7 @@
             </td>
             <td>
               
-              <a href="{{url_for('chair_formc_view',id=formc.user_id)}}" >Review</a>
+              <a href="{{url_for('chair_formc_view',id=formc.user_id)}}" class="btn btn-sm btn-success text-white">Review</a>
              
             </td>
           </tr>

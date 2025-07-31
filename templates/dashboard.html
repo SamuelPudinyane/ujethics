@@ -107,7 +107,13 @@
                 <em>{% if formA.supervisor_date%}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
                 </em>
-               
+              </br>
+              {% if formA.supervisor_date %}
+                <span>Feedback: </span>
+                <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
+                <br>
+                  {% endif %}
+            </br>
                 <span style="color:green; font-size:12px;">
                   {% if formA.rec_status=='Approved'  or formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
@@ -123,11 +129,7 @@
                 </span>
                 <br>
                 
-                {% if formA.supervisor_date %}
-                <span>Feedback: </span>
-                <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
-                <br>
-                  {% endif %}
+                
                 
                 </td>
             <td>
@@ -151,6 +153,12 @@
                   {% if formB.supervisor_date%}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
 
                 {% endif %}</em>
+                <br>
+                {% if formB.supervisor_date %}
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
+                <br>
+                
+                  {% endif %}
                 
                 <span style="color:green; font-size:12px;">
                   {% if formB.rec_status=='Approved'  or formB.certificate_issued and formB.certificate_received%}
@@ -167,11 +175,6 @@
                  </span>
                 <br>
                 
-                {% if formB.supervisor_date %}
-                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
-                <br>
-                
-                  {% endif %}
                 
                 
             </td>
@@ -190,8 +193,16 @@
           <tr>
             
             <td>Form C</td>
-            <td>{% if formC.submission_date %}{{formC.submission_date.strftime('%d/%m/%Y')}} {% endif %}</td>
             <td>
+              <em>{% if formC.submission_date %}{{formC.submission_date.strftime('%d/%m/%Y')}} {% endif %}
+              </em></br>
+              </td>
+            <td>
+              {% if formC.supervisor_date%}
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
+                <br>
+                {% endif%}
+            </br>
                 <span style="color:green; font-size:12px;">
     
                   {% if formC.rec_status=='Approved' or formC.certificate_issued and formC.certificate_received%}
@@ -209,10 +220,7 @@
                 </span>
                 <br>
                 
-                {% if formC.supervisor_date%}
-                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
-                <br>
-                {% endif%}
+                
                 </td>
             <td>
               {% if not formC.rejected_or_accepted and formC.supervisor_date %}

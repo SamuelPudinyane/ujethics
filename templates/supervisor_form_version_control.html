@@ -58,7 +58,7 @@
         </thead>
         <tbody>
           {% if supervisor_formA %}
-          {% for forma,req,forma_count in supervisor_formA %}
+          {% for forma,req in supervisor_formA %}
           <tr>
             <td>Form A</td>
             <td>{{forma.declaration_name}}</td>
@@ -93,13 +93,7 @@
               Rejected
               
               {% endif %}
-            </span>
-            <br>
-            {% if forma_count > 1 %}
-            <br>
-              <a href="{{url_for('supervisor_dashboard_previous_forms',user_id=forma.user_id)}}" class="view-btn" >Review Previous Forms </a>
-            {% endif %}
-          </td>
+            </span></td>
             <td>
               {% if forma.supervisor_feedback and not forma.ethics_commettee_comments%}
               <!-- <strong>Supervisors comments</strong> -->
@@ -159,7 +153,7 @@
           {% endif%}
           
           {% if supervisor_formB %}
-          {% for formb,req,formb_count in supervisor_formB %}
+          {% for formb,req in supervisor_formB %}
           <br>
           <tr>
             <td>Form B</td>
@@ -195,13 +189,7 @@
               Rejected
               
               {% endif %}
-            </span>
-          <br>
-            {% if formb_count > 1 %}
-            <br>
-              <a href="{{url_for('supervisor_dashboard_previous_forms',user_id=formb.user_id)}}" class="view-btn" >Review Previous Forms </a>
-            {% endif %}
-          </td>
+            </span></td>
             <td>
               {% if formb.supervisor_feedback and not formb.ethics_commettee_comments%}
               <!-- <strong>Supervisors comments</strong> -->
@@ -248,7 +236,7 @@
           {% endif %}
           <br>
           {% if supervisor_formC%}
-          {% for formc,req,formc_count in supervisor_formC %}
+          {% for formc,req in supervisor_formC %}
           <br>
         
           <tr>
@@ -285,14 +273,10 @@
               Rejected
               
               {% endif %}
-              </span>
-              <br>
-              {% if formc_count > 1 %}
-              <br>
-                <a href="{{url_for('supervisor_dashboard_previous_forms',user_id=formc.user_id)}}" class="view-btn" >Review Previous Forms </a>
-              {% endif %}
-              </td>
-              <td>
+</span>
+
+</td>
+<td>
               {% if formc.supervisor_feedback and not formc.ethics_commettee_comments%}
             
               <!-- <strong>Supervisors comments</strong> -->
