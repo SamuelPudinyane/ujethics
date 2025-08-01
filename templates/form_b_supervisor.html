@@ -66,15 +66,7 @@
     </div>
   </header>
 <form action="{{url_for('reject_or_Accept_form_b',id=formB.form_id)}}" method="post">
-    <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
+   
 
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       
@@ -91,8 +83,8 @@
       <label>UJ Department and School <br>
         <span class="form-answer">{{formB.department}}</span></label>
       <label>Degree Registered For <br>
-        <span class="form-answer">{{formB.dregree}}</span></label>
-      <label>Title/Working Title of Project or Study <br>
+        <span class="form-answer">{{formB.degree}}</span></label>
+      <label>Title of Project or Study <br>
         <span class="form-answer">{{formB.study_title}}</span></label>
       <label>Mobile Number <br>
         <span class="form-answer">{{formB.mobile}}</span></label>
@@ -284,22 +276,22 @@
     
       <div class="form-group">
         <label for="student_name">Student Name:</label>
-        <span  id="student_name"  >{{formB.declaration_name}}</span>
+        <span class="form-answer" id="student_name"  >{{formB.declaration_name}}</span>
       </div>
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{% if formB.submitted_at%}{{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</span>
+        <span class="form-answer" id="submission_date" >{% if formB.submitted_at%}{{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</span>
       </div>
 
       <div class="form-group">
         <label for="supervisor_name">Supervisor Name:</label>
-        <span  id="supervisor_name"  >{{formB.supervisor}}</span>
+        <span class="form-answer" id="supervisor_name"  >{{formB.supervisor}}</span>
       </div>
 
       <div class="form-group">
         <label for="research_title">Title of Research:</label>
-        <span  id="research_title" >{{formB.study_title}}</span>
+        <span class="form-answer" id="research_title" >{{formB.study_title}}</span>
       </div>
 
       <div class="form-group">

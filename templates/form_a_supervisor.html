@@ -81,7 +81,7 @@
             <h1>Research Ethics Application for Conducting Research Involving Humans</h1>
             <h2>Section 1: Researcher's Details</h2>
         <label for="applicant-name">Applicant Name
-          <br><span class="form-answer">{{formA.application_name}}</span>
+          <br><span class="form-answer">{{formA.applicant_name}}</span>
         </label>
         <label for="student-number">Student / Staff Number
           <br><span class="form-answer">{{formA.student_number}}</span>
@@ -121,7 +121,7 @@
   <!-- Main Content -->
   <main class="main-content">
     <h2>Section 2: Ethical Clearance Aspects</h2>
-    <table class="table table-bordered">
+    <table>
       <thead>
         <tr>
           <th>Aspect</th>
@@ -164,9 +164,10 @@
         </tr>
       </tbody>
     </table>
+    <br>
 
     <h3>2. Risk Assessment</h3>
-    <table class="table table-bordered">
+    <table>
       <thead>
         <tr>
           <th>2.1 Does your research include the direct involvement of any of the following groups of participants?</th>
@@ -227,8 +228,9 @@
 
 
     <hr>
+    <br>
 
-    <table class="table table-bordered">
+    <table>
       <thead>
         <tr>
           <th>2.2 Does your research involve any of the following types of activity?</th>
@@ -304,8 +306,9 @@
     </table>
    <label>Comments: <span class="form-answer">{{formA.vulnerable_comments}}</span></label>
     <hr>
+    <br>
 
-    <table class="table table-bordered">
+    <table>
       <thead>
         <tr>
           <th>2.3 Do any of the following apply to your research project?</th>
@@ -362,6 +365,7 @@
       </tbody>
     </table>
    <label>Comments: <span class="form-answer">{{formA.apply_comments}}</span></label>
+   <br>
     <div class="mb-3">
       <label><strong>Rate your project (Low, Medium, High Risk):
         <br><span class="form-answer">{{formA.risk_rating}}</span>
@@ -402,6 +406,9 @@
       </label>
  
     </div>
+    </main>
+
+    <main class="main-content">
 
     <h2>Section 4: Details of Proposed Research</h2>
     <div class="section">
@@ -502,14 +509,15 @@
       </tbody>
     </table>
 
-    <label>Explain your paradigm selection: <span class="form-answer">{{formA.paradigm_explanation}}</span></label>
+    <label>5.1.1 Explain your paradigm selection: <span class="form-answer">{{formA.paradigm_explanation}}</span></label>
     <label>5.2 Research Design / Approach
       <br><span class="form-answer">{{formA.design}}</span>
     </label>
     <br>
     
 
-    <h3>5.3 Details of the participants</h3>
+    <h2>5.3 Details of the participants</h2>
+    <br>
     <br>
 
     <h4>5.3.1 Participant Group Description</h4>
@@ -550,8 +558,9 @@
     </label>
     <br><span class="form-answer">{{formA.conflict_explanation}}</span>
     <br>
+    <br>
 
-    <h3>5.4 Research Instruments for Data Collection</h3>
+    <h2>5.4 Research Instruments for Data Collection</h2>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
             <label>(a) Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
@@ -625,7 +634,9 @@
     <br>
     <br><span class="form-answer">{{formA.translator_procedure}}</span>
 
-<h3>5.5 Secondary Data Usage</h3>
+    <br>
+    <br>
+<h2>5.5 Secondary Data Usage</h2>
 
 <label>5.5.1 Will secondary data be used?</label><br>
 <span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
@@ -804,7 +815,7 @@
     <div class="question-block">
       <label>6.9 Checklist to ensure the covering letter meets ethical requirements</label>
 
-<table class="table table-bordered">
+<table>
   <thead>
     <tr>
       <th style="width: 70%;">Checklist Item</th>
