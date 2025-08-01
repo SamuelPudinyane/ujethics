@@ -24,7 +24,29 @@
     button {
       margin-right: 10px;
     }
-  </style>
+
+    .btn-logout {
+      margin-left: 600px;
+    }
+
+.confirm-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+.confirm-check input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: #F26522; /* UJ orange */
+  vertical-align: middle;
+}
+
+</style>
 
 </head>
 
@@ -44,14 +66,12 @@
 
 <!-- Presentation Section -->
 <main class="main-content">
-  <h2>Ethics Training Presentation</h2>
+  <h2>Ethics Presentation</h2>
   <div id="presentation-section">
-    <h3>Please Review the Ethics Training Presentation</h3>
     <p>The presentation covers important topics and process related to the application of an Ethical Clearance in research.</p>
-      <br>
       <p>Please view and download the presentation before starting the videos.</p>
     <div class="presentation-buttons text-center mb-3">
-      <a class="btn btn-outline-primary" href="{{ url_for('static', filename='img/Ethics_ppt.pptx') }}" download>
+      <a class="btn btn-outline-primary" href="{{ url_for('static', filename='img/Ethics_ppt.pptx') }}" download style="font-size: 25px;">
         ↓ Download Presentation
       </a>
     </div>
@@ -60,7 +80,7 @@
       <label for="confirm-ppt">I confirm I have viewed the Ethics Presentation.</label>
     </div>
     <br>
-    <button id="startVideosBtn" class="btn btn-success" disabled>Start Training Videos</button>
+    <button id="startVideosBtn" disabled>Start Training Videos</button>
   </div>
 
 
@@ -71,7 +91,7 @@
   <div id="video1" class="video-box">
    
     <div>
-      <h5>Video 1 Summary</h5>
+      <h5>How to Complete Ethics Form A</h5>
       <summary>This video, provides a detailed walkthrough on how to correctly complete Ethics Form A for research involving human participants. 
         It is a crucial resource for students preparing to apply for ethics clearance as part of their capstone or postgraduate research projects. 
         The video explains each section of the form, including consent procedures, risk classification, research methodology alignment, data confidentiality, and how to handle vulnerable populations. 
@@ -92,7 +112,7 @@
   <div id="video2" class="video-box">
     
     <div>
-      <h5>Video 2 Summary</h5>
+      <h5>How to Complete Ethics Form B</h5>
       <summary>This follow-up video, provides a detailed explanation of Ethics Form B, which is required when using secondary data that is not publicly available and involves no direct interaction with human participants. 
         The session distinguishes Form B from Form A, and provides a real anonymized example to demonstrate how to correctly complete the application. 
         The video also explains how to request data access from institutions, address data that contains identifiers, anonymize sensitive information, and manage risks. 
