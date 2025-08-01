@@ -85,8 +85,12 @@
         </tbody>
       </table>
       <br>
-      {% if 'admin' in role|lower%}
+      {% if form %}
+     
+      {% if 'admin' in role|lower and not form.certificate_issued %}
                    <a href="{{url_for('certificate',id=Rec_team[0].form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificates</a>
+              {% endif %}
+             
               {% endif %}
       {% else %}
       No Submissions

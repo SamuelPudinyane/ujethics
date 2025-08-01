@@ -21,17 +21,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-# connection_string = (
-#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-#     "driver=ODBC+Driver+17+for+SQL+Server&"
-#     "trusted_connection=yes"
-# )
-
 connection_string = (
-    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
+
+# connection_string = (
+#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
 
 engine = create_engine(connection_string, echo=True)
 
@@ -511,6 +511,8 @@ class FormA(Base):
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
     certificate_received=Column(Boolean,default=False)
+    certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
+    certificate_modified=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def __repr__(self):
@@ -684,6 +686,8 @@ class FormB(Base):
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
     certificate_received=Column(Boolean,default=False)
+    certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
+    certificate_modified=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
@@ -867,6 +871,8 @@ class FormC(Base):
     certificate_issuer=Column(String(255),nullable=True)
     certificate_email=Column(String(255),nullable=True)
     certificate_received=Column(Boolean,default=False)
+    certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
+    certificate_modified=Column(Boolean,default=False)
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
