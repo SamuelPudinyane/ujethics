@@ -80,15 +80,7 @@
       </div>
       <h2>Section 3: Proposal Summary Sheet</h2>
       <form action="{{url_for('form_a_sec3')}}" method="post">
-        <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
+
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="section">
           <label>3.1 Title or provisional title of the research project:</label>
@@ -109,6 +101,8 @@
           <label>3.4 Research Purpose and Objectives / Anticipated outcomes:</label>
           <textarea name="purpose_objectives" rows="4" required placeholder="State the purpose, objectives, and anticipated outcomes..."></textarea>
         </div>
+        <br>
+        <br>
 
         <h2>Section 4: Details of Proposed Research</h2>
         <div class="section">
@@ -221,15 +215,6 @@
       </p>
     </footer>
 <script>
-  // Hide alert after 3 seconds
-  setTimeout(function() {
-    const alert = document.getElementById('alertMessage');
-    if (alert) {
-      alert.classList.remove('show');
-      alert.classList.add('fade');
-      alert.style.display = 'none';
-    }
-  }, 3000);
 
   // Show/hide organisation permission table
   document.querySelectorAll('input[name="grant_permission"]').forEach(radio => {

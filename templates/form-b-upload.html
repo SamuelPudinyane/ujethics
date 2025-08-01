@@ -87,16 +87,7 @@
         <input type="file" name="prior_clearance_path" accept=".pdf,.docx">
       </div>
 
-      <!-- <div class="question-block">
-        <label>3. Has the data source confirmed compliance with ethics (e.g. consent form, anonymization)?</label><br>
-        <input type="radio" name="has_ethics_evidence" value="Yes" required> Yes
-        <input type="radio" name="has_ethics_evidence" value="No" required> No
-      </div>
-
-      <div class="question-block hidden" id="ethicsEvidenceUpload">
-        <label>Upload Evidence of Ethical Compliance</label>
-        <input type="file" name="ethics_evidence" accept=".pdf,.docx">
-      </div> -->
+    
 
       <div class="question-block">
         <label>3. Upload Approved Proposal</label>
@@ -121,15 +112,6 @@
 
   <!-- Script -->
   <script>
-    // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
 
 
     function setupRadioConditional(questionName, containerId) {

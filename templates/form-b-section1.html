@@ -41,18 +41,11 @@
   <!-- Main Content -->
   <main class="main-content">
     <form action="{{url_for('form_b_sec1')}}" method="post">
-      <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
+   
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <h2>Researcher's Details</h2>
+
+      <h2>Section 1: Researcher's Details</h2>
 
       <label>Applicant Name</label>
       <input type="text" name="applicant_name" required>
@@ -75,15 +68,7 @@
       <label>Mobile Number</label>
       <input type="tel" name="mobile_number" required>
 
-      <!--<label>Email Address</label>
-      <input type="email" name="email_address" >
-
-      <label>Supervisor(s)</label>
-      <input type="text" name="supervisor_name" >
-
-      <label>Supervisor Email Address</label>
-      <input type="email" name="supervisor_email" >
-              -->
+ 
       <!-- Navigation Buttons -->
       <div class="form-navigation">
         <a href="{{url_for('student_dashboard')}}" class="revise-btn">⬅ Back</a>
@@ -96,16 +81,6 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
-<script>
-  // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
-</script>
+
 </body>
 </html>

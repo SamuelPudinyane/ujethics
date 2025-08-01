@@ -30,18 +30,10 @@
   <!-- Main Content -->
   <main class="main-content">
 <form  action="{{url_for('form_a_sec2')}}" method="post" enctype="multipart/form-data">
-        <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
+
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <h1>FORM A</h1>
+   
     <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
 
     <h3>1. Ethical Clearance Aspects</h3>
@@ -56,27 +48,27 @@
       <tbody>
         <tr>
           <td>Survey/questionnaire</td>
-          <td><input type="radio" value="Yes" name="survey"></td>
+          <td><input type="checkbox" value="Yes" name="survey"></td>
 
         </tr>
         <tr>
           <td>Focus groups</td>
-          <td><input type="radio" value="Yes" name="focus_groups"></td>
+          <td><input type="checkbox" value="Yes" name="focus_groups"></td>
 
         </tr>
         <tr>
           <td>Observations</td>
-          <td><input type="radio" value="Yes" name="observations"></td>
+          <td><input type="checkbox" value="Yes" name="observations"></td>
 
         </tr>
         <tr>
           <td>Interviews</td>
-          <td><input type="radio" value="Yes" name="interviews"></td>
+          <td><input type="checkbox" value="Yes" name="interviews"></td>
 
         </tr>
         <tr>
           <td>Documents</td>
-          <td><input type="radio" value="Yes" name="documents"></td>
+          <td><input type="checkbox" value="Yes" name="documents"></td>
 
         </tr>
         <tr>
@@ -101,43 +93,43 @@
              <tbody>
         <tr>
           <td>Communities that may be considered as vulnerable</td>
-          <td><input type="radio" value="Yes" name="vulnerable_communities"></td>
+          <td><input type="checkbox" value="Yes" name="vulnerable_communities"></td>
 
         </tr>
         <tr>
           <td>People under the age of 18 or over 65</td>
-          <td><input type="radio" value="Yes" name="age_range"></td>
+          <td><input type="checkbox" value="Yes" name="age_range"></td>
 
         </tr>
         <tr>
           <td>UJ employees or students</td>
-          <td><input type="radio" value="Yes" name="uj_employees"></td>
+          <td><input type="checkbox" value="Yes" name="uj_employees"></td>
 
         </tr>
         <tr>
           <td>Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this
             research project</td>
-          <td><input type="radio" value="Yes" name="vulnerable"></td>
+          <td><input type="checkbox" value="Yes" name="vulnerable"></td>
 
         </tr>
         <tr>
           <td>Non-English-speaking participants</td>
-          <td><input type="radio" value="Yes" name="non-english"></td>
+          <td><input type="checkbox" value="Yes" name="non-english"></td>
 
         </tr>
         <tr>
           <td>A researcher’s own students</td>
-          <td><input type="radio" value="Yes" name="own_students"></td>
+          <td><input type="checkbox" value="Yes" name="own_students"></td>
 
         </tr>
         <tr>
           <td>People living in poverty</td>
-          <td><input type="radio" value="Yes" name="poverty"></td>
+          <td><input type="checkbox" value="Yes" name="poverty"></td>
 
         </tr>
         <tr>
           <td>People with little or no education </td>
-          <td><input type="radio" value="Yes" name="no_education"></td>
+          <td><input type="checkbox" value="Yes" name="no_education"></td>
 
         </tr>
         <tr>
@@ -163,58 +155,58 @@
         <tr>
           <td>Collection, use or disclosure of information WITHOUT the consent of the individual whose information it
             is, with the exception of aggregated data or data from official databases such as StatsSA, SARS, etc.</td>
-          <td><input type="radio" value="Yes" name="disclosure"></td>
+          <td><input type="checkbox" value="Yes" name="disclosure"></td>
 
         </tr>
         <tr>
           <td>Causing discomfiture to participants beyond normal levels of inconvenience</td>
-          <td><input type="radio" value="Yes" name="discomfiture"></td>
+          <td><input type="checkbox" value="Yes" name="discomfiture"></td>
 
         </tr>
         <tr>
           <td>Deception of participants, concealment or covert observation</td>
-          <td><input type="radio" value="Yes" name="deception"></td>
+          <td><input type="checkbox" value="Yes" name="deception"></td>
 
         </tr>
         <tr>
           <td>Examining potentially sensitive or contentious issues</td>
-          <td><input type="radio" value="Yes" name="sensitive"></td>
+          <td><input type="checkbox" value="Yes" name="sensitive"></td>
 
         </tr>
         <tr>
           <td>Seeking disclosure of information which may be prejudicial to participants</td>
-          <td><input type="radio" value="Yes" name="prejudice"></td>
+          <td><input type="checkbox" value="Yes" name="prejudice"></td>
 
         </tr>
         <tr>
           <td>Using intrusive techniques</td>
-          <td><input type="radio" value="Yes" name="intrusive_techniques"></td>
+          <td><input type="checkbox" value="Yes" name="intrusive_techniques"></td>
 
         </tr>
         <tr>
           <td>Study of or participation in illegal activities</td>
-          <td><input type="radio" value="Yes" name="illegal_activities"></td>
+          <td><input type="checkbox" value="Yes" name="illegal_activities"></td>
 
         </tr>
         <tr>
           <td>Personal and social information collected directly from participants</td>
-          <td><input type="radio" value="Yes" name="personal"></td>
+          <td><input type="checkbox" value="Yes" name="personal"></td>
 
         </tr>
         <tr>
           <td>Identifiable information to be collected about people from available records (e.g., staff records, student
             records, etc.)</td>
-          <td><input type="radio" value="Yes" name="available_records"></td>
+          <td><input type="checkbox" value="Yes" name="available_records"></td>
 
         </tr>
         <tr>
           <td>Psychology inventories / scales / tests</td>
-          <td><input type="radio" value="Yes" name="inventories"></td>
+          <td><input type="checkbox" value="Yes" name="inventories"></td>
 
         </tr>
         <tr>
           <td>Activities which may place the researcher(s) / data collector at risk</td>
-          <td><input type="radio" value="Yes" name="risk_activities"></td>
+          <td><input type="checkbox" value="Yes" name="risk_activities"></td>
 
         </tr>
         <tr>
@@ -238,40 +230,40 @@
       <tbody>
         <tr>
           <td>a) Reimbursement or incentives to any participants. </td>
-          <td><input type="radio" name="Yes" name="incentives"></td>
+          <td><input type="checkbox" name="Yes" name="incentives"></td>
 
         </tr>
         <tr>
           <td>b) The participants will incur financial costs by participating in the study.</td>
-          <td><input type="radio" value="Yes" name="financial_costs"></td>
+          <td><input type="checkbox" value="Yes" name="financial_costs"></td>
 
         </tr>
         <tr>
           <td>c) At least one of the researchers has a financial or other involvement in the research (apart from their
             research role) or may receive a reward.</td>
-          <td><input type="radio" value="Yes" name="reward"></td>
+          <td><input type="checkbox" value="Yes" name="reward"></td>
 
         </tr>
         <tr>
           <td>d) Any other potential conflict of interest for any of the researchers (real or perceived financial or
             personal considerations that may compromise a researcher’s professional judgement in carrying out or
             reporting research, such as conducting research with colleagues, peers or students).</td>
-          <td><input type="radio" value="Yes" name="conflict"></td>
+          <td><input type="checkbox" value="Yes" name="conflict"></td>
 
         </tr>
         <tr>
           <td>e) Research is done on the premises of UJ or any of its units.</td>
-          <td><input type="radio" value="Yes" name="uj_premises"></td>
+          <td><input type="checkbox" value="Yes" name="uj_premises"></td>
 
         </tr>
         <tr>
           <td>f) Research will make use of some of UJs facilities (venues, software, hardware, etc.)</td>
-          <td><input type="radio" value="Yes" name="uj_facilities"></td>
+          <td><input type="checkbox" value="Yes" name="uj_facilities"></td>
 
         </tr>
         <tr>
           <td>g) Research will be funded by UJ or funding for it was acquired through UJ.</td>
-          <td><input type="radio" value="Yes" name="uj_funding"></td>
+          <td><input type="checkbox" value="Yes" name="uj_funding"></td>
 
         </tr>
         <tr>
@@ -284,8 +276,9 @@
     </table>
 
     <textarea name="apply_comments" rows="3" placeholder="Comments (if any)..."></textarea>
+    <br>
   <div class="mb-3">
-                        <label><strong>Rate your project (Low, Medium, High Risk):</strong>
+                        <label><strong>2.4 Rate your project (Low, Medium, High Risk):</strong>
                           <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ</span>
                         </label>
                         <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
@@ -294,15 +287,15 @@
                           <option value="medium">Medium</option>
                           <option value="high">High</option>
                         </select>
-                          <label for="risk_justification">Please justify your risk level (Mandatory)</label>
+                          <label for="risk_justification">2.4.1 Please justify your risk level (Mandatory)</label>
                           <input type="text" name="risk_justification" required placeholder="Justification for risk level">
                         <div id="risk-fields">
                           
 
-                          <label for="benefits_description">For medium and high risk, describe the potential benefits of the study:</label>
+                          <label for="benefits_description">2.4.2 For medium and high risk, describe the potential benefits of the study:</label>
                           <input type="text" name="benefits_description" placeholder="Describe potential benefits">
 
-                          <label for="risk_mitigation">For medium and high risk, describe how potential risks will be mitigated against:</label>
+                          <label for="risk_mitigation">2.4.3 For medium and high risk, describe how potential risks will be mitigated against:</label>
                           <input type="text" name="risk_mitigation" placeholder="Describe risk mitigation strategies">
                         </div>
                       </div>
@@ -341,15 +334,7 @@
       const result = await response.json();
       document.getElementById("message").textContent = result.message;
     });
- // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
+
 function toggleRiskFields() {
     const riskLevel = document.getElementById("risk-rating").value;
     const riskFields = document.getElementById("risk-fields");

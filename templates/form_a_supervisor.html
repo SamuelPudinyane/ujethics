@@ -67,18 +67,19 @@
   <main class="main-content">
 <form  action="{{url_for('reject_or_Accept_form_a',id=formA.form_id)}}" method="POST" >
   <!-- Error Messages -->
-            {% if messages %}
+            <!-- {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            {% endif %}
+            {% endif %} -->
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-       
-      <div class="form-section">
+       <div class="form-section">
+            <h1>Research Ethics Application for Conducting Research Involving Humans</h1>
+            <h2>Section 1: Researcher's Details</h2>
         <label for="applicant-name">Applicant Name
           <br><span class="form-answer">{{formA.application_name}}</span>
         </label>
@@ -119,11 +120,7 @@
 
   <!-- Main Content -->
   <main class="main-content">
-
-    <h1>FORM A</h1>
-    <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
-
-    <h3>1. Ethical Clearance Aspects</h3>
+    <h2>Section 2: Ethical Clearance Aspects</h2>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -168,7 +165,7 @@
       </tbody>
     </table>
 
-    <h3>2. Risk Assessment (Except)</h3>
+    <h3>2. Risk Assessment</h3>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -476,8 +473,6 @@
 
     </div>
 
-  
-
   </main>
 
   <!-- Section 4 -->
@@ -487,7 +482,7 @@
 
   <!-- Section 5: Methodology -->
   <section id="section-5">
-    <h2>SECTION 5 – METHODOLOGY</h2>
+    <h2>Section 5: Methodology</h2>
 
     <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
     <table id="methodTypeTable" class="table table-bordered">
@@ -739,8 +734,8 @@
  
 <!-- Section 6 – Ethical Considerations -->
 <div class="form-section" id="section6">
-    <h2>SECTION 6 – ETHICAL CONSIDERATIONS</h2>
-  
+    <h2>Section 6: Ethical Considerations</h2>
+
     <div class="question-block">
       <label for="informed-consent">6.1 Will informed consent be obtained? Explain the process:</label>
       <br>
@@ -883,17 +878,14 @@
       </label>
     
     </div>
-  
 
-
-  
     </main>
   
     <!-- Section 6 -->
 
     <main class="main-content">
  
-    <h2>SECTION 7: Declaration</h2>
+    <h2>Section 7: Declaration</h2>
     <p><strong>STATEMENT AGREEING TO COMPLY WITH ETHICAL PRINCIPLES SET OUT IN UJ POLICY ON RESEARCH ETHICS</strong></p>
 
     <div class="form-group">

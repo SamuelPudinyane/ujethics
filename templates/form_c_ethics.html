@@ -67,22 +67,13 @@
 
   <form action="{{url_for('ethics_reviewer_committee_forms',id=formc.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
   <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
-
+  
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
    
   <!-- Main Content -->
   <main class="main-content">
 
-   
-      <h2>SECTION 1: Researcher's Details</h2>
+      <h2>Section 1: Researcher's Details</h2>
       <label>Applicant Name
         <br><span class="form-answer">{{formc.applicant_name}}</span>
       </label>
@@ -114,19 +105,15 @@
         <br><span class="form-answer">{{formc.supervisor_email}}</span>
       </label>
 
-      
     
   </main>
 
-  
   <!-- Section 2 -->
 
   <!-- Main Content -->
     <main class="main-content">
 
-
-
-      <h2>SECTION 2: Risk Assessment</h2>
+      <h2>Section 2: Risk Assessment</h2>
 
       <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
       <table>
@@ -160,8 +147,8 @@
       
       <label><strong>Comments (e.g. “No participants”):</strong></label>
      
-      
       <hr>
+      <br>
 
       <h4>2.2 Research Activity Type</h4>
 <table>
@@ -202,36 +189,7 @@
 <label><strong>Comments:</strong></label>
 
       <hr>
-
-      <!-- <h4>2.3 Additional Research Considerations</h4>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Tick if Applicable</th>
-          </tr>
-        </thead>
-        <tbody>
-       <tr><td>a) Reimbursement or incentives to any participants.</td>
-        <td>{% if formc.incentives%}{{formc.incentives}}{% endif%}</td></tr>
-        <tr><td>b) Participants will incur financial costs by participating.</td>
-          <td>{% if formc.participant_costs%}{{formc.participant_costs}}{% endif%}</td></tr>
-        <tr><td>c) Researcher has financial or other involvement in the research.</td>
-          <td>{% if formc.researcher_interest%}{{formc.researcher_interest}}{% endif%}</td></tr>
-        <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td>
-          <td>{% if formc.conflict_of_interest%}{{formc.conflict_of_interest}}{% endif%}</td></tr>
-        <tr><td>e) Research is conducted on UJ premises.</td>
-          <td>{% if formc.uj_premises%}{{formc.uj_premises}}{% endif%}</td></tr>
-        <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td>
-          <td>{% if formc.uj_facilities%}{{formc.uj_facilities}}{% endif%}</td></tr>
-        <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td>
-          <td>{% if formc.uj_funding%}{{formc.uj_funding}}{% endif%}</td></tr>
-        </tbody>
-      </table>
-      
-<label><strong>Comments:</strong></label>
-
-      <hr> -->
+      <br>
 
       <h4>2.3 Additional Research Considerations</h4>
       <table>
@@ -262,28 +220,20 @@
       
       <label><strong>Comments:</strong></label>
      
-      
       <hr>
+      <br>
       
-      <h5>Risk Assessment</h5>
+      <h4>2.4 Risk Assessment</h4>
       
-      <label><strong>Rate your project risk level:</strong>
+      <label><strong>2.4.1 Rate your project risk level:</strong>
       <br><span class="form-answer">{{formc.risk_level}}</span></label>
     
       
       <br>
-      <label><strong>Justify the Risk Level</strong>
+      <label><strong>2.4.2 Justify the Risk Level</strong>
       <br><span class="form-answer">{{formc.risk_justification}}</span></label>
 
-      
-      <label><strong>If Medium or High Risk, describe potential benefits:</strong>
-      <br><span class="form-answer">{{formc.risk_benefits}}</span>
-    </label>
-     
-      
-      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong>
-      <br><span class="form-answer">{{formc.risk_mitigation}}</span></label>
-  
+    
 
   </main>
 
@@ -292,9 +242,7 @@
    <!-- Main Content -->
   <main class="main-content">
 
-
-
-      <h2>SECTION 3: Proposal Summary Sheet</h2>
+      <h2>Section 3: Proposal Summary Sheet</h2>
 
       <div class="form-group">
         <label for="project_title">3.1 Title or Provisional Title of the Research Project
@@ -346,10 +294,10 @@
  <!-- Main Content -->
   <main class="main-content">
 
-      <h2>SECTION 4: Declaration</h2>
+      <h2>Section 4: Declaration</h2>
 
       <p class="form-note" style="text-align: justify;">
-        I, <u> {{formc.declaration_name}} </u>
+        I, <u><strong>{{formc.declaration_name}}</strong></u>
         (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
  
         ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
@@ -365,7 +313,7 @@
         <label for="submission_date"><span class="form-answer">{{formc.submission_date.strftime('%d/%m/%Y')}}</span></label>
       </div>
 <hr>
-<h1>JOHANNESBURG BUSINESS SCHOOL<br>RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+<h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
     <label>Student Name:</label>

@@ -23,22 +23,13 @@
     </div>
   </header>
  <form action="{{url_for('student_edit_formc')}}" method="post" enctype="multipart/form-data">
-      <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       
   <!-- Main Content -->
   <main class="main-content">
 
-    <h2>SECTION 1: Researcher's Details</h2>
+    <h2>Section 1: Researcher's Details</h2>
 
       <label>Applicant Name</label>
       <input type="text" name="applicant_name" value="{{formc.applicant_name}}" >
@@ -65,7 +56,7 @@
   <!-- Main Content -->
     <main class="main-content">
 
-      <h2>SECTION 2: Risk Assessment</h2>
+      <h2>Section 2: Risk Assessment</h2>
 
       <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
       <table class="table table-bordered">
@@ -76,14 +67,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Communities that may be considered as vulnerable</td><td><input {% if formc.vulnerable%}checked{% endif %} type="radio" name="vulnerable"></td></tr>
-          <tr><td>People under the age of 18 or over 65</td><td><input type="radio" {% if formc.age_under_18_or_over_65%}checked{% endif %} name="age_under_18_or_over_65"></td></tr>
-          <tr><td>UJ employees or students</td><td><input type="radio" name="uj_employees" {% if formc.uj_employees%}checked{% endif %}></td></tr>
-          <tr><td>Persons not usually considered vulnerable but would be in this context</td><td><input type="radio" {% if formc.non_vulnerable_context %}checked{% endif %} name="non_vulnerable_context"></td></tr>
-          <tr><td>Non-English-speaking participants</td><td><input type="radio" {% if formc.non_english %}checked{% endif %} name="non_english"></td></tr>
-          <tr><td>A researcher’s own students</td><td><input type="radio" {% if formc.own_student %}checked{% endif %} name="own_students"></td></tr>
-          <tr><td>People living in poverty</td><td><input type="radio" {% if formc.poverty%}checked{% endif %} name="poverty"></td></tr>
-          <tr><td>People with little or no education</td><td><input type="radio" {% if formc.non_education %}checked{% endif %} name="non_education"></td></tr>
+          <tr><td>Communities that may be considered as vulnerable</td><td><input {% if formc.vulnerable%}checked{% endif %} type="checkbox" name="vulnerable"></td></tr>
+          <tr><td>People under the age of 18 or over 65</td><td><input type="checkbox" {% if formc.age_under_18_or_over_65%}checked{% endif %} name="age_under_18_or_over_65"></td></tr>
+          <tr><td>UJ employees or students</td><td><input type="checkbox" name="uj_employees" {% if formc.uj_employees%}checked{% endif %}></td></tr>
+          <tr><td>Persons not usually considered vulnerable but would be in this context</td><td><input type="checkbox" {% if formc.non_vulnerable_context %}checked{% endif %} name="non_vulnerable_context"></td></tr>
+          <tr><td>Non-English-speaking participants</td><td><input type="checkbox" {% if formc.non_english %}checked{% endif %} name="non_english"></td></tr>
+          <tr><td>A researcher’s own students</td><td><input type="checkbox" {% if formc.own_student %}checked{% endif %} name="own_students"></td></tr>
+          <tr><td>People living in poverty</td><td><input type="checkbox" {% if formc.poverty%}checked{% endif %} name="poverty"></td></tr>
+          <tr><td>People with little or no education</td><td><input type="checkbox" {% if formc.non_education %}checked{% endif %} name="non_education"></td></tr>
           <tr><td>Other: Please describe.</td><td><textarea name="vulnerable_other_description" class="form-control" rows="2">{{formc.vulnerable_other_description}}</textarea></td></tr>
         </tbody>
       </table>
@@ -102,17 +93,17 @@
     </tr>
   </thead>
   <tbody>
-    <tr><td>Collection/use/disclosure of info without individual’s consent (excluding StatsSA, etc.)</td><td><input type="radio" {% if formc.consent_violation %}checked{% endif %} name="consent_violation"></td></tr>
-    <tr><td>Causing discomfiture beyond normal inconvenience</td><td><input type="radio" {% if formc.discomfiture%}checked{% endif %} name="discomfiture"></td></tr>
-    <tr><td>Deception of participants or covert observation</td><td><input type="radio" {% if formc.deception%}checked{% endif %} name="deception"></td></tr>
-    <tr><td>Examining sensitive or contentious issues</td><td><input type="radio" {% if formc.sensitive_issues%}checked{% endif%} name="sensitive_issues"></td></tr>
-    <tr><td>Seeking prejudicial information about participants</td><td><input type="radio" {% if formc.prejudicial_info%}checked{% endif%} name="prejudicial_info"></td></tr>
-    <tr><td>Using intrusive techniques</td><td><input type="radio" value="{{formc.intrusive}}" name="intrusive"></td></tr>
-    <tr><td>Study/participation in illegal activities</td><td><input type="radio" {% if formc.illegal%}checked{% endif %} name="illegal"></td></tr>
-    <tr><td>Collecting personal/social info directly from participants</td><td><input type="radio" {% if formc.direct_social_info%}checked{% endif %} name="direct_social_info"></td></tr>
-    <tr><td>Identifiable info collected from available records (staff/student records)</td><td><input type="radio" {% if formc.identifiable_records%}checked{% endif %} name="identifiable_records"></td></tr>
-    <tr><td>Psychology inventories / scales / tests</td><td><input type="radio" {% if formc.psychology_tests%}checked{% endif %} name="psychology_tests"></td></tr>
-    <tr><td>Activities putting researcher/data collector at risk</td><td><input type="radio" {% if formc.researcher_risk%}checked{% endif %} name="researcher_risk"></td></tr>
+    <tr><td>Collection/use/disclosure of info without individual’s consent (excluding StatsSA, etc.)</td><td><input type="checkbox" {% if formc.consent_violation %}checked{% endif %} name="consent_violation"></td></tr>
+    <tr><td>Causing discomfiture beyond normal inconvenience</td><td><input type="checkbox" {% if formc.discomfiture%}checked{% endif %} name="discomfiture"></td></tr>
+    <tr><td>Deception of participants or covert observation</td><td><input type="checkbox" {% if formc.deception%}checked{% endif %} name="deception"></td></tr>
+    <tr><td>Examining sensitive or contentious issues</td><td><input type="checkbox" {% if formc.sensitive_issues%}checked{% endif%} name="sensitive_issues"></td></tr>
+    <tr><td>Seeking prejudicial information about participants</td><td><input type="checkbox" {% if formc.prejudicial_info%}checked{% endif%} name="prejudicial_info"></td></tr>
+    <tr><td>Using intrusive techniques</td><td><input type="checkbox" value="{{formc.intrusive}}" name="intrusive"></td></tr>
+    <tr><td>Study/participation in illegal activities</td><td><input type="checkbox" {% if formc.illegal%}checked{% endif %} name="illegal"></td></tr>
+    <tr><td>Collecting personal/social info directly from participants</td><td><input type="checkbox" {% if formc.direct_social_info%}checked{% endif %} name="direct_social_info"></td></tr>
+    <tr><td>Identifiable info collected from available records (staff/student records)</td><td><input type="checkbox" {% if formc.identifiable_records%}checked{% endif %} name="identifiable_records"></td></tr>
+    <tr><td>Psychology inventories / scales / tests</td><td><input type="checkbox" {% if formc.psychology_tests%}checked{% endif %} name="psychology_tests"></td></tr>
+    <tr><td>Activities putting researcher/data collector at risk</td><td><input type="checkbox" {% if formc.researcher_risk%}checked{% endif %} name="researcher_risk"></td></tr>
     <tr><td>Other:  Please describe.</td><td><textarea name="activity_other_description" value="{{formc.activity_other_description}}" class="form-control" rows="2"></textarea></td></tr>
   </tbody>
 </table>
@@ -130,13 +121,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>a) Reimbursement or incentives to any participants.</td><td><input type="radio" {% if formc.incentives%}checked{% endif %} name="incentives"></td></tr>
-          <tr><td>b) Participants will incur financial costs by participating.</td><td><input type="radio" {% if formc.participant_costs%}checked{% endif %} name="participant_costs"></td></tr>
-          <tr><td>c) Researcher has financial or other involvement in the research.</td><td><input type="radio" {% if formc.researcher_interest%}checked{% endif %} name="researcher_interest"></td></tr>
-          <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td><td><input type="radio" {% if formc.conflict_of_interest%}checked{% endif %} name="conflict_of_interest"></td></tr>
-          <tr><td>e) Research is conducted on UJ premises.</td><td><input type="radio" {% if formc.uj_premises%}checked{% endif %} name="uj_premises"></td></tr>
-          <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td><td><input type="radio" {% if formc.uj_facilities%}checked{% endif%} name="uj_facilities"></td></tr>
-          <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td><td><input type="radio" {% if formc.uj_funding%}checked{% endif %} name="uj_funding"></td></tr>
+          <tr><td>a) Reimbursement or incentives to any participants.</td><td><input type="checkbox" {% if formc.incentives%}checked{% endif %} name="incentives"></td></tr>
+          <tr><td>b) Participants will incur financial costs by participating.</td><td><input type="checkbox" {% if formc.participant_costs%}checked{% endif %} name="participant_costs"></td></tr>
+          <tr><td>c) Researcher has financial or other involvement in the research.</td><td><input type="checkbox" {% if formc.researcher_interest%}checked{% endif %} name="researcher_interest"></td></tr>
+          <tr><td>d) Any potential conflict of interest (e.g., researching peers/students).</td><td><input type="checkbox" {% if formc.conflict_of_interest%}checked{% endif %} name="conflict_of_interest"></td></tr>
+          <tr><td>e) Research is conducted on UJ premises.</td><td><input type="checkbox" {% if formc.uj_premises%}checked{% endif %} name="uj_premises"></td></tr>
+          <tr><td>f) Research uses UJ facilities (venues, software, hardware, etc.)</td><td><input type="checkbox" {% if formc.uj_facilities%}checked{% endif%} name="uj_facilities"></td></tr>
+          <tr><td>g) Research is funded by UJ or through UJ-acquired funding.</td><td><input type="checkbox" {% if formc.uj_funding%}checked{% endif %} name="uj_funding"></td></tr>
         </tbody>
       </table>
       
@@ -145,9 +136,9 @@
       
       <hr>
       
-      <h5>Risk Assessment</h5>
+      <h3>2.4 Risk Assessment</h3>
       
-      <label><strong>Rate your project risk level:</strong></label>
+      <label><strong>2.4.1 Rate your project risk level:</strong></label>
       <select name="risk_level" class="form-select">
         <option value="">-- Select Risk Level --</option>
         <option value="Low">Low Risk</option>
@@ -156,22 +147,15 @@
       </select>
       
       <br>
-      <label><strong>Justify the Risk Level</strong></label>
+      <label><strong>2.4.2 Justify the Risk Level</strong></label>
      
-      <textarea type="text" name="risk_justification" class="form-control" rows="3">{{formc.risk_justification}}</textarea>
-      
-      <label><strong>If Medium or High Risk, describe potential benefits:</strong></label>
-      <textarea name="risk_benefits"  class="form-control" rows="3">{{formc.risk_benefits}}</textarea>
-      
-      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong></label>
-      <textarea name="risk_mitigation" class="form-control" rows="3">{{formc.risk_mitigation}}</textarea>
-      
+      <textarea type="text" name="risk_justification" class="form-control" rows="3">{{formc.risk_justification}}</textarea>      
 
   </main>
 <!-- Main Content -->
   <main class="main-content">
   
-    <h2>SECTION 3: Proposal Summary Sheet</h2>
+    <h2>Section 3: Proposal Summary Sheet</h2>
 
       <div class="form-group">
         <label for="summary_title">3.1 Title or Provisional Title of the Research Project</label>
@@ -209,15 +193,13 @@
     <main class="main-content">
 
  
- <h2>SECTION 4: Declaration</h2>
+ <h2>Section 4: Declaration</h2>
 
-      <p class="form-note">
+      <p class="form-note" style="text-align: justify;">
         I, <input type="text" value="{{formc.declaration_name}}" id="declaration-name" name="declaration_name" required style="display: inline-block; width: 300px;">
         (full name of main researcher),declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the injury or harm experienced by the participants in the study. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall maintain the confidentiality of all data collected from or about the research participants and impose strict controls in the maintenance of privacy. I shall record all data captured during interviews in accordance with
  
-        ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.
-                                      
-
+        ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethical principles set out in the UJ Policy on Research Ethics.                                
       </p>
 
       <div class="form-group">
@@ -247,16 +229,6 @@
   </footer>
 
 </div>
-<script>
-  // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
-</script>
+
 </body>
 </html>

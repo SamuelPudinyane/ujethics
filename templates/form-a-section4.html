@@ -29,15 +29,7 @@
   <!-- Main Content -->
   <main class="main-content">
     <form action="{{url_for('form_a_sec4')}}" method="post">
-  <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
+ 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <!-- Top Bar -->
     <div class="form-header">
@@ -53,7 +45,7 @@
 
   <!-- Section 5: Methodology -->
   <section id="section-5">
-    <h2>SECTION 5 – METHODOLOGY</h2>
+    <h2>Section 5: Methodology</h2>
 
     <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
     <table id="methodTypeTable" class="table table-bordered">
@@ -332,15 +324,6 @@
 
     <script>
       
-      // Hide alert after 3 seconds
-      setTimeout(function () {
-        const alert = document.getElementById("alertMessage");
-        if (alert) {
-          alert.classList.remove("show"); // Bootstrap fade out
-          alert.classList.add("fade"); // add fade class
-          alert.style.display = "none"; // or use .remove() if you prefer
-        }
-      }, 3000); // 3000ms = 3 seconds
    
       function addRow() {
       const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
