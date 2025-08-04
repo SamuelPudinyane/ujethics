@@ -110,12 +110,9 @@
   <!-- Main Content -->
   <main class="main-content">
 
-  
-    <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
-
     <h3>1. Ethical Clearance Aspects</h3>
     <table>
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>Aspect</th>
           <th>Tick that is applicable:</th>
@@ -130,7 +127,7 @@
         </tr>
         <tr>
           <td>Focus groups</td>
-          <td><span class="form-answer">{{formA.focus_group}}</span></td>
+          <td><span class="form-answer">{{formA.focus_groups}}</span></td>
 
         </tr>
         <tr>
@@ -160,7 +157,7 @@
 
     <h3>2. Risk Assessment</h3>
     <table>
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>2.1 Does your research include the direct involvement of any of the following groups of participants?</th>
           <th>Tick where applicable</th>
@@ -175,7 +172,7 @@
         </tr>
         <tr>
           <td>People under the age of 18 or over 65</td>
-          <td><span class="form-answer">{{formA.age_group}}</span></td>
+          <td><span class="form-answer">{{formA.age_range}}</span></td>
 
         </tr>
         <tr>
@@ -222,7 +219,7 @@
     <hr>
 
     <table>
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>2.2 Does your research involve any of the following types of activity?</th>
           <th>Tick where applicable</th>
@@ -258,7 +255,7 @@
         </tr>
         <tr>
           <td>Using intrusive techniques</td>
-          <td><span class="form-answer">{{formA.intrusive_technique}}</span></td>
+          <td><span class="form-answer">{{formA.intrusive_techniques}}</span></td>
 
         </tr>
         <tr>
@@ -299,7 +296,7 @@
     <hr>
 
     <table>
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>2.3 Do any of the following apply to your research project?</th>
           <th>Tick where applicable</th>
@@ -344,45 +341,25 @@
           <td><span class="form-answer">{{formA.uj_funding}}</span></td>
 
         </tr>
-        <tr>
+         <tr>
           <td>
-
+          <label>Other (Specify)</label>
           </td>
-          <td></td>
+          <td>
+            <span class="form-answer">{{formA.vulnerable_comments_3}}</span>
+          </td>
         </tr>
       </tbody>
     </table>
 
     <div class="mb-3">
-      <label><strong>Rate your project (Negligible, Low, Medium, High Risk):
+      <label><strong>2.4 Rate your project (Negligible, Low, Medium, High Risk):
         <br><span class="form-answer">{{formA.risk_rating}}</span>
       </strong>
+      <label for="risk_justification"> 2.4.1 Please justify your risk level (Mandatory): <span class="form-answer">{{formA.risk_justification}}</span></label>
+      <label for="benefits_description"> 2.4.2 For medium and high risk, describe the potential benefits of the study: <span class="form-answer">{{formA.benefits_description}}</span></label>
+      <label for="risk_mitigation"> 2.4.3 For medium and high risk, describe how potential risks will be mitigated against: <span class="form-answer">{{formA.risk_mitigation}}</span></label>
     </div>
-
-
-
-    </tr>
-    <tr>
-      <td>Interviews</td>
-      <td>{{formA.interviews_one}}</td>
-
-    </tr>
-    <tr>
-      <td>Documents</td>
-      <td>{{formA.documents_one}}</td>
-
-    </tr>
-    <tr>
-      <td colspan="2">
-        <label>Other </label>
-     
-      </td>
-      <td>{{formA.other_sec2}}</td>
-    </tr>
-    </tbody>
-    </table>
-
-    </form>
 
   </main>
 
@@ -420,8 +397,11 @@
     <h2>Section 4: Details of Proposed Research</h2>
     <div class="section">
       <label>4.1 Does your project involve organisations or institutions that need to grant permission for research activities?</label>
+      <br><span class="form-answer">{{'Yes' if formA.grant_permission else 'No'}}</span>
+      <br>
+      <br>
       <table>
-        <thead>
+        <thead class="thead-light">
           <tr>
             <th>Name of Organisation</th>
             <th>Person Granting Permission & Contact</th>
@@ -450,9 +430,10 @@
       <label>4.4 Is your project funded or sponsored?
         <br><span class="form-answer">{{'Yes' if formA.is_funded else 'No'}}</span>
       </label>
+      <br>
       
       <table>
-        <thead>
+        <thead class="thead-light">
           <tr>
             <th>Organisation Name</th>
             <th>Contact Person & Details</th>
@@ -462,10 +443,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{formA.fund_org}}</td>
-                <td>{{formA.fund_contact}}</td>
-                <td>{{formA.role}}</td>
-                <td>{{formA.amount}}</td>
+            <td><span class="form-answer">{{formA.fund_org}}</span></td>
+            <td><span class="form-answer">{{formA.fund_contact}}</span></td>
+            <td><span class="form-answer">{{formA.fund_role}}</span></td>
+            <td><span class="form-answer">{{formA.fund_amount}}</span></td>
           </tr>
           <!-- add button to add row -->
           <tr>
@@ -500,7 +481,7 @@
 
     <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
     <table id="methodTypeTable" class="table table-bordered">
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>Quantitative Methods</th>
           <th>Qualitative Methods</th>
@@ -510,7 +491,7 @@
       <tbody>
         <tr>
           <td class="text-center">{{formA.quantitative}}</td>
-          <td class="text-center">{{formA.qualiotative}}</td>
+          <td class="text-center">{{formA.qualitative}}</td>
           <td class="text-center">{{formA.mixed_methods}}</td>
         </tr>
       </tbody>
@@ -529,9 +510,10 @@
     <h4>5.3.1 Participant Group Description</h4>
 <br><span class="form-answer">{{formA.participants_description}}</span>
 <br>
+<br>
 
     <table id="participantsTable" class="table table-bordered">
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>Population</th>
           <th>Sampling Method</th>
@@ -552,7 +534,7 @@
     
 
     <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.
-      <br><span class="form-answer">{{formA.duration_time}}</span>
+      <br><span class="form-answer">{{formA.duration_timing}}</span>
     </label>
     <br>
 
@@ -565,99 +547,63 @@
     </label>
     <br><span class="form-answer">{{formA.conflict_explanation}}</span>
     <br>
+<h3>5.4 Research Instruments for Data Collection</h3>
 
-  <h3>5.4 Research Instruments for Data Collection</h3>
-    <label>5.4.1 Indicate which data collection methods will be used</label><br>
-     <div id="data-methods">
-            <label>(a) Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
-            <label>(b) Interview: <span class="form-answer">{{formA.interview}}</span></label><br>
-            <label>(c) Focus Group: <span class="form-answer">{{formA.focus}}</span></label><br>
-            <label>(d) Observation: <span class="form-answer">{{formA.observation}}</span></label><br>
-            <label>(e) Documents: <span class="form-answer">{{formA.documents}}</span></label><br>
-            <label>(f) Other: <span class="form-answer">{{formA.other}}</span></label><br>
-    </div>
-      
-    <!-- Questionnaire -->
-    <label>5.4.1.1 Questionnaire(s):</label>
-      <br>
-      {% if formA.questionnaire%}<span class="form-answer">Questionnaire Type: {{formA.questionnaire_type}}</span>{% endif %}
-    <br>
-    {% if formA.questionnaire_type=='Existing'%}<label>5.4.1.1.1 Permission obtained? </label>
-    <br><span class="form-answer">{% if formA.permission%}{{formA.permission}}{% endif %} </span>
-    <br><span class="form-answer">{% if formA.open_source%}{{formA.open_source}}{% endif %} </span>{% endif %}
-    <br>
-    <label>5.4.1.1.2 Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span>
+<label>5.4.1 Selected Data Collection Methods:</label><br>
+<span class="form-answer">
+  Questionnaire: <strong>{{formA.questionnaire}}</strong><br>
+  Interview: <strong>{{formA.interview}}</strong><br>
+  Focus Group: <strong>{{formA.focus}}</strong><br>
+  Observation: <strong>{{formA.observation}}</strong><br>
+  Documents: <strong>{{formA.documents}}</strong><br>
+  Other: <strong>{{formA.other}}</strong>
+</span>
 
-    <!-- Interview -->
-    <label>5.4.1.2 Interviews</label><br>
-    <span class="form-answer">{{formA.interview_type}}</span>
-    <label>5.4.1.2.1 Will interviews be recorded?</label><br>
-    <span class="form-answer">{% if formA.interview_recording=='Audio'%}{{formA.interview_recording}}{% endif%}</span>
-    <br>
-    <span class="form-answer">{% if formA.interview_recording=='Video'%}{{formA.interview_recording}}{% endif%}</span>
-    
-    <!-- Focus Group -->
-    <label>5.4.1.3 Focus Groups: </label>
-    <br><span class="form-answer">{{formA.use_focus_groups}}</span>
-   <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
-   <span class="form-answer">{% if formA.focus_recording=='Audio'%}{{formA.focus_recording}}{% endif%}</span>
-   <span class="form-answer">{% if formA.focus_recording=='Video'%}{{formA.focus_recording}}{% endif%}</span>
-   <br>
-   <!-- Observation -->
-    <label>5.4.1.4 Please describe your observation protocol:</label>
-    <br><span class="form-answer">{{formA.observation_details}}</span>
-    <br>
-    <label>5.4.1.5 What type of documents will be analyzed?</label><br>
-    <span class="form-answer">{{formA.documents_details}}</span>
-    <br>
-  <!-- Other -->
-  <label>5.4.1.6 Please describe other data collection method(s):</label>
-  <br>
-  <span class="form-answer">{{formA.other_details}}</span>
-    <!-- General Data Collection Procedure -->
-     <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
-     <br>
-     <span class="form-answer">{{formA.data_collection_procedure}}</span>
-    
-    <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?
-      <br></span>{{formA.data_collectors}}<span class="form-answer">
-    </label>
-    <br>
+{% if formA.questionnaire %}
+  <label>5.4.1.1 Questionnaire Type:</label> <span class="form-answer">{{formA.questionnaire_type}}</span><br>
+  {% if formA.questionnaire_type == 'Existing' %}
+    <label>5.4.1.1.1 Permission Obtained:</label> <span class="form-answer">{{formA.permission or formA.open_source}}</span><br>
+  {% endif %}
+  <label>5.4.1.1.2 Justification:</label> <span class="form-answer">{{formA.instrument_attachment_reason}}</span><br>
+{% endif %}
 
-    <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?
-      <br><span class="form-answer">{{'Yes' if formA.intervention else 'No'}}</span>
-    </label><br>
-    
+<label>5.4.1.2 Interview Type:</label> <span class="form-answer">{{formA.interview_type}}</span><br>
+<label>5.4.1.2.1 Recorded Interviews:</label> <span class="form-answer">{{formA.interview_recording}}</span><br>
 
-    <label>5.4.5 Sensitive data or vulnerable populations?
-      <br><span class="form-answer">{{formA.sensitive_data}}</span>
-    </label>
-    <br>
+<label>5.4.1.3 Focus Group Used:</label> <span class="form-answer">{{formA.use_focus_groups}}</span><br>
+<label>5.4.1.3.1 Recorded:</label> <span class="form-answer">{{formA.focus_recording}}</span><br>
 
-    <label>5.4.6 Will a translator be required?
-      <br><span class="form-answer">{% if formA.translator%}{{formA.translator}}{% endif%}</span>
-    </label>
-    <br>
-    <br><span class="form-answer">{{formA.translator_procedure}}</span>
+<label>5.4.1.4 Observation Protocol:</label> <span class="form-answer">{{formA.observation_details}}</span><br>
+<label>5.4.1.5 Documents:</label> <span class="form-answer">{{formA.documents_details}}</span><br>
+<label>5.4.1.6 Other Methods:</label> <span class="form-answer">{{formA.other_details}}</span><br>
 
-    <br>
-    <br>
+<label>5.4.2 Data Collection Procedure:</label> <span class="form-answer">{{formA.data_collection_procedure}}</span><br>
+<label>5.4.3 Data Collector(s):</label> <span class="form-answer">{{formA.data_collectors}}</span><br>
+<label>5.4.4 Any Intervention:</label> <span class="form-answer">{{formA.intervention}}</span><br>
+{% if formA.intervention == 'Yes' %}
+  <label>Details:</label> <span class="form-answer">{{formA.intervention_details}}</span><br>
+{% endif %}
+<label>5.4.5 Sensitive Data / Vulnerable Groups:</label> <span class="form-answer">{{formA.sensitive_data}}</span><br>
+<label>5.4.6 Translator Required:</label> <span class="form-answer">{{formA.translator}}</span><br>
+{% if formA.translator == 'Yes' %}
+  <label>Translator Details:</label> <span class="form-answer">{{formA.translator_procedure}}</span><br>
+{% endif %}
+
+<br>
+
 
 <h3>5.5 Secondary Data Usage</h3>
 
-<!-- 5.5.1 -->
 <label>5.5.1 Will secondary data be used?</label><br>
 <span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
 
 <br><br>
 
-<!-- 5.5.2 -->
 <label>5.5.2 Is the data Public or Private?</label><br>
 <span class="form-answer">{{ formA.data_type or 'Not specified' }}</span>
 
 <br><br>
 
-<!-- 5.5.3 -->
 <h5>5.5.3 Details of the Secondary Data</h5>
 
 <label>5.5.3.1 Nature of the Data</label><br>
@@ -678,30 +624,29 @@
 <label>5.5.3.4 Does the database contain personal information/identifiers?</label><br>
 <span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
 
+{% if formA.personal_info == 'Yes' %}
+  <label>5.5.3.5 Specify the personal info/identifiers:</label><br>
+  <span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
+{% endif %}
+
 <br><br>
 
-<label>5.5.3.4.1 If yes, specify the personal info/identifiers:</label><br>
-<span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
-
-<br><br>
-
-<label>5.5.3.5 Has the data been anonymized?</label><br>
+<label>5.5.3.6 Has the data been anonymized?</label><br>
 <span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.3.6 Comment / Justification:</label><br>
+<label>5.5.3.7 Comment / Justification:</label><br>
 <span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
 
 <br><br>
 
-<!-- Private Data Section -->
-<label>5.5.3.7 Is the data from a company that has provided permission?</label><br>
+<label>5.5.3.8 Is the data from a company that has provided permission?</label><br>
 <span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.3.7.1 Uploaded permission document:</label><br>
+<label>5.5.3.9 Uploaded permission document:</label><br>
 {% if formA.private_permission_file %}
   <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
 {% else %}
@@ -710,31 +655,29 @@
 
 <br><br>
 
-<!-- Public Data Section -->
-<label>5.5.4 What type of public data is going to be used?</label><br>
+<label>5.5.3.10 What type of public data will be used?</label><br>
 <span class="form-answer">{{ formA.public_data_description or 'None specified' }}</span>
 
 <br><br>
 
-<!--Additional Considerations -->
-<label>5.5.5 Will data shortcomings/incompleteness be reported?</label><br>
+<label>5.5.3.11 Will data shortcomings/incompleteness be reported?</label><br>
 <span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.6 How will data limitations be reported?</label><br>
+<label>5.5.3.12 How will data limitations be reported?</label><br>
 <span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
 
 <br><br>
 
-<label>5.5.7 Is the methodology and design aligned with secondary data use?</label><br>
+<label>5.5.3.13 Is the research methodology and design aligned with secondary data use?</label><br>
 <span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.8 How will the original owners of the data be acknowledged?</label><br>
+<label>5.5.3.14 How will the original owners of the data be acknowledged?</label><br>
 <span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
-   
+
   </section>
 
 
@@ -753,19 +696,16 @@
   
     <div class="question-block">
       <label for="informed-consent">6.1 Will informed consent be obtained? Explain the process:</label>
+      <br><span class="form-answer">{{formA.informed_consent}}</span>
       <br>
     </div>
   
     <div class="question-block">
       <label>6.2 Data storage and access to data</label><br>
-      <span class="form-answer">Paper-based records must be kept in a secure location</span><br>
-      <span class="form-answer">{{formA.secure_location}}</span>
-      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges<br>
-      <span class="form-answer">{{formA.password_protected}}</span>
-      <span class="form-answer"> Electronic data will be kept in a protected place</span>
-      <br><span class="form-answer">{{formA.protected_place}}</span>
-      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed</span>
-      <br><span class="form-answer">{{formA.retention}}</span>
+      <span class="form-answer">Paper-based records must be kept in a secure location: {{'Yes' if formA.secure_location else 'No'}}</span>
+      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges: {{'Yes' if formA.password_protected else 'No'}}</span>
+      <span class="form-answer"> Electronic data will be kept in a protected place: {{'Yes' if formA.protected_place else 'No'}}</span>
+      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed: {{'Yes' if formA.retention else 'No'}}</span>
     </div>
   
     <div class="question-block">
@@ -805,7 +745,13 @@
   
     <div class="question-block">
       <label>6.8 Select all data privacy practices applied:
-        <br><span class="form-answer">{{formA.privacy}}</span>
+        <span class="form-answer">Personal identifiers will be removed: {{'Yes' if formA.remove_identifiers else 'No'}}</span>
+        <br>
+        <span class="form-answer">Data encryption will be applied: {{'Yes' if formA.encryption else 'No'}}</span>
+        <br>
+        <span class="form-answer">Use of Pseudonyms: {{'Yes' if formA.pseudonyms else 'No'}}</span>
+        <br>
+        <span class="form-answer">Participants in focus groups will be advised confidentiality cannot be assured: {{'Yes' if formA.focus_group_warning else 'No'}}</span>
       </label>
     </div>
   
@@ -813,7 +759,7 @@
       <label>6.9 Checklist to ensure the covering letter meets ethical requirements</label>
 
 <table>
-  <thead>
+  <thead class="thead-light">
     <tr>
       <th style="width: 70%;">Checklist Item</th>
       <th style="width: 30%;">Select</th>
@@ -868,14 +814,14 @@
   
     <div class="question-block">
       <label for="participant-comp">6.13 Describe compensation to participants (if applicable):
-        <br><span class="form-answer">{{formA.participants_comp}}</span>
+        <br><span class="form-answer">{{formA.participant_comp}}</span>
       </label>
 
     </div>
   
     <div class="question-block">
       <label for="participant-costs">6.14 Describe any financial costs to participants (if applicable):
-        <span class="form-answer">{{formA.participants_costs}}</span>
+        <span class="form-answer">{{formA.participant_costs}}</span>
       </label>
 
     </div>
@@ -898,7 +844,7 @@
   <form id="formA">
 
 
-    <h3>Section 7: Declaration</h3>
+    <h2>Section 7: Declaration</h2>
     <p><strong>Statement Agreeing To Comply With Ethical Principles Set Out In UJ Policy On Research Ethics</strong></p>
 
     <div class="form-group">

@@ -66,19 +66,11 @@
   <!-- Main Content -->
   <main class="main-content">
 <form  action="{{url_for('reject_or_Accept_form_a',id=formA.form_id)}}" method="POST" >
-  <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
+
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
        <div class="form-section">
-            <h1>Research Ethics Application for Conducting Research Involving Humans</h1>
+            
             <h2>Section 1: Researcher's Details</h2>
         <label for="applicant-name">Applicant Name
           <br><span class="form-answer">{{formA.applicant_name}}</span>
@@ -131,13 +123,13 @@
       </thead>
       <tbody>
         <tr>
-          <td>Survey/questionnaire</td>
+          <td>Survey/Questionnaire</td>
           <td><span class="form-answer">{{'Yes' if formA.survey else 'No'}}</span></td>
 
         </tr>
         <tr>
           <td>Focus groups</td>
-          <td><span class="form-answer">{{'Yes' if formA.focus_group else 'No'}}</span></td>
+          <td><span class="form-answer">{{'Yes' if formA.focus_groups else 'No'}}</span></td>
 
         </tr>
         <tr>
@@ -183,7 +175,7 @@
         </tr>
         <tr>
           <td>People under the age of 18 or over 65</td>
-          <td><span class="form-answer">{{'Yes' if formA.age_group else 'No'}}</span></td>
+          <td><span class="form-answer">{{'Yes' if formA.age_range else 'No'}}</span></td>
 
         </tr>
         <tr>
@@ -267,7 +259,7 @@
         </tr>
         <tr>
           <td>Using intrusive techniques</td>
-          <td><span class="form-answer">{{'Yes' if formA.intrusive_technique else 'No'}}</span></td>
+          <td><span class="form-answer">{{'Yes' if formA.intrusive_techniques else 'No'}}</span></td>
 
         </tr>
         <tr>
@@ -367,15 +359,13 @@
    <label>Comments: <span class="form-answer">{{formA.apply_comments}}</span></label>
    <br>
     <div class="mb-3">
-      <label><strong>Rate your project (Low, Medium, High Risk):
+      <label><strong>2.4 Rate your project (Low, Medium, High Risk):
         <br><span class="form-answer">{{formA.risk_rating}}</span>
       </strong>
-      <label for="risk_justification"> Please justify your risk level (Mandatory): <span class="form-answer">{{formA.risk_justification}}</span></label>
-      <label for="benefits_description"> For medium and high risk, describe the potential benefits of the study: <span class="form-answer">{{formA.benefits_description}}</span></label>
-      <label for="risk_mitigation"> For medium and high risk, describe how potential risks will be mitigated against: <span class="form-answer">{{formA.risk_mitigation}}</span></label>
+      <label for="risk_justification"> 2.4.1 Please justify your risk level (Mandatory): <span class="form-answer">{{formA.risk_justification}}</span></label>
+      <label for="benefits_description"> 2.4.2 For medium and high risk, describe the potential benefits of the study: <span class="form-answer">{{formA.benefits_description}}</span></label>
+      <label for="risk_mitigation"> 2.4.3 For medium and high risk, describe how potential risks will be mitigated against: <span class="form-answer">{{formA.risk_mitigation}}</span></label>
     </div>
-
-
 
   </main>
 
@@ -445,6 +435,7 @@
       <label>4.4 Is your project funded or sponsored?
         <br><span class="form-answer">{{'Yes' if formA.is_funded else 'No'}}</span>
       </label>
+      <br>
       
       <table class="table table-bordered">
         <thead>
@@ -457,10 +448,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{formA.fund_org}}</td>
-                <td>{{formA.fund_contact}}</td>
-                <td>{{formA.fund_role}}</td>
-                <td>{{formA.fund_amount}}</td>
+            <td><span class="form-answer">{{formA.fund_org}}</span></td>
+            <td><span class="form-answer">{{formA.fund_contact}}</span></td>
+            <td><span class="form-answer">{{formA.fund_role}}</span></td>
+            <td><span class="form-answer">{{formA.fund_amount}}</span></td>
           </tr>
           <!-- add button to add row -->
           <tr>
@@ -545,7 +536,7 @@
     
 
     <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.
-      <br><span class="form-answer">{{formA.duration_time}}</span>
+      <br><span class="form-answer">{{formA.duration_timing}}</span>
     </label>
     <br>
 
@@ -563,12 +554,12 @@
     <h2>5.4 Research Instruments for Data Collection</h2>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
-            <label>(a) Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
-            <label>(b) Interview: <span class="form-answer">{{formA.interview}}</span></label><br>
-            <label>(c) Focus Group: <span class="form-answer">{{formA.focus}}</span></label><br>
-            <label>(d) Observation: <span class="form-answer">{{formA.observation}}</span></label><br>
-            <label>(e) Documents: <span class="form-answer">{{formA.documents}}</span></label><br>
-            <label>(f) Other: <span class="form-answer">{{formA.other}}</span></label><br>
+        <label>Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
+        <label>Interview: <span class="form-answer">{{formA.interview}}</span></label><br>
+        <label>Focus Group: <span class="form-answer">{{formA.focus}}</span></label><br>
+        <label>Observation: <span class="form-answer">{{formA.observation}}</span></label><br>
+        <label>Documents: <span class="form-answer">{{formA.documents}}</span></label><br>
+        <label>Other: <span class="form-answer">{{formA.other}}</span></label><br>
     </div>
       
     <!-- Questionnaire -->
@@ -577,25 +568,25 @@
       {% if formA.questionnaire%}<span class="form-answer">Questionnaire Type: {{formA.questionnaire_type}}</span>{% endif %}
     <br>
     {% if formA.questionnaire_type=='Existing'%}<label>5.4.1.1.1 Permission obtained? </label>
-    <br><span class="form-answer">{% if formA.permission%}{{formA.permission}}{% endif %} </span>
+    <br><span class="form-answer">{% if formA.permission_obtained%}{{formA.permission_obtained}}{% endif %} </span>
     <br><span class="form-answer">{% if formA.open_source%}{{formA.open_source}}{% endif %} </span>{% endif %}
     <br>
-    <label>5.4.1.1.2 Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span>
+    <label>5.4.1.1.2 Justification: </label><span class="form-answer">{{formA.instrument_attachment_reason}}</span>
 
     <!-- Interview -->
     <label>5.4.1.2 Interviews</label><br>
     <span class="form-answer">{{formA.interview_type}}</span>
     <label>5.4.1.2.1 Will interviews be recorded?</label><br>
-    <span class="form-answer">{% if formA.interview_recording=='Audio'%}{{formA.interview_recording}}{% endif%}</span>
+    <span class="form-answer">{% if formA.interview_recording=='Audio'%}{{formA.interview_recording}}{% endif %}</span>
     <br>
-    <span class="form-answer">{% if formA.interview_recording=='Video'%}{{formA.interview_recording}}{% endif%}</span>
+    <span class="form-answer">{% if formA.interview_recording=='Video'%}{{formA.interview_recording}}{% endif %}</span>
     
     <!-- Focus Group -->
     <label>5.4.1.3 Focus Groups: </label>
-    <br><span class="form-answer">{% if formA.use_focus_groups%}{{formA.use_focus_groups}}{% endif%}</span>
+    <br><span class="form-answer">{% if formA.use_focus_groups%}{{formA.use_focus_groups}}{% endif %}</span>
    <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
-   <span class="form-answer">{% if formA.focus_recording=='Audio'%}{{formA.focus_recording}}{% endif%}</span>
-   <span class="form-answer">{% if formA.focus_recording=='Video'%}{{formA.focus_recording}}{% endif%}</span>
+   <span class="form-answer">{% if formA.focus_recording=='Audio'%}{{formA.focus_recording}}{% endif %}</span>
+   <span class="form-answer">{% if formA.focus_recording=='Video'%}{{formA.focus_recording}}{% endif %}</span>
    <br>
    <!-- Observation -->
     <label>5.4.1.4 Please describe your observation protocol:</label>
@@ -613,8 +604,8 @@
      <br>
      <span class="form-answer">{{formA.data_collection_procedure}}</span>
     
-    <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?
-      <br></span>{{formA.data_collectors}}<span class="form-answer">
+    <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?<br></span>
+      <span class="form-answer">{{formA.data_collectors}}</span>
     </label>
     <br>
 
@@ -636,7 +627,8 @@
 
     <br>
     <br>
-<h2>5.5 Secondary Data Usage</h2>
+
+<h3>5.5 Secondary Data Usage</h3>
 
 <label>5.5.1 Will secondary data be used?</label><br>
 <span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
@@ -648,59 +640,49 @@
 
 <br><br>
 
-<!-- Nature and Origin -->
-<label>5.5.3 Nature of the Data</label><br>
+<h5>5.5.3 Details of the Secondary Data</h5>
+
+<label>5.5.3.1 Nature of the Data</label><br>
 <span class="form-answer">{{ formA.data_nature or 'Not provided' }}</span>
 
 <br><br>
 
-<label>5.5.4 Origin/Source of Research Data</label><br>
+<label>5.5.3.2 Origin/Source of Research Data</label><br>
 <span class="form-answer">{{ formA.data_origin or 'Not provided' }}</span>
 
 <br><br>
 
-<label>5.5.5 Are the sources of the research data in the public domain?</label><br>
-<span class="form-answer">{{ formA.data_public or 'Not specified' }}</span>
-
-<br><br>
-
-<label>5.5.6 Provide evidence or explanation:</label><br>
-<span class="form-answer">{{ formA.public_evidence or 'None provided' }}</span>
-
-<br><br>
-
-<label>5.5.7 What are the access conditions?</label><br>
+<label>5.5.3.3 What are the access conditions?</label><br>
 <span class="form-answer">{{ formA.access_conditions or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.8 Does the database contain personal information/identifiers?</label><br>
+<label>5.5.3.4 Does the database contain personal information/identifiers?</label><br>
 <span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
 
+{% if formA.personal_info == 'Yes' %}
+  <label>5.5.3.5 Specify the personal info/identifiers:</label><br>
+  <span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
+{% endif %}
+
 <br><br>
 
-<label>5.5.8.1 If yes, specify the personal info/identifiers:</label><br>
-<span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
-
-<br><br>
-
-<label>5.5.8.2 Has the data been anonymized?</label><br>
+<label>5.5.3.6 Has the data been anonymized?</label><br>
 <span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.8.3 Comment / Justification:</label><br>
+<label>5.5.3.7 Comment / Justification:</label><br>
 <span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
 
 <br><br>
 
-<!-- Private Data Section -->
-<label>5.5.9 Is the data from a company that has provided permission?</label><br>
+<label>5.5.3.8 Is the data from a company that has provided permission?</label><br>
 <span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.9.1 Uploaded permission document:</label><br>
+<label>5.5.3.9 Uploaded permission document:</label><br>
 {% if formA.private_permission_file %}
   <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
 {% else %}
@@ -709,29 +691,27 @@
 
 <br><br>
 
-<!-- Public Data Section -->
-<label>5.5.10 What type of public data is going to be used?</label><br>
-<span class="form-answer">{{ formA.public_data_description or 'Not specified' }}</span>
+<label>5.5.3.10 What type of public data will be used?</label><br>
+<span class="form-answer">{{ formA.public_data_description or 'None specified' }}</span>
 
 <br><br>
 
-<!-- Additional Considerations -->
-<label>5.5.11 Will data shortcomings/incompleteness be reported?</label><br>
+<label>5.5.3.11 Will data shortcomings/incompleteness be reported?</label><br>
 <span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.12 How will data limitations be reported?</label><br>
+<label>5.5.3.12 How will data limitations be reported?</label><br>
 <span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
 
 <br><br>
 
-<label>5.5.13 Is the methodology and design aligned with secondary data use?</label><br>
+<label>5.5.3.13 Is the research methodology and design aligned with secondary data use?</label><br>
 <span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.14 How will the original owners of the data be acknowledged?</label><br>
+<label>5.5.3.14 How will the original owners of the data be acknowledged?</label><br>
 <span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
 
 </section>
@@ -749,19 +729,15 @@
 
     <div class="question-block">
       <label for="informed-consent">6.1 Will informed consent be obtained? Explain the process:</label>
-      <br>
+      <br><span class="form-answer">{{formA.informed_consent}}</span>
     </div>
   
     <div class="question-block">
       <label>6.2 Data storage and access to data</label><br>
-      <span class="form-answer">Paper-based records must be kept in a secure location</span><br>
-      <span class="form-answer">{{formA.secure_location}}</span>
-      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges<br>
-      <span class="form-answer">{{formA.password_protected}}</span>
-      <span class="form-answer"> Electronic data will be kept in a protected place</span>
-      <br><span class="form-answer">{{formA.protected_place}}</span>
-      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed</span>
-      <br><span class="form-answer">{{formA.retention}}</span>
+      <span class="form-answer">Paper-based records must be kept in a secure location: {{'Yes' if formA.secure_location else 'No'}}</span>
+      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges: {{'Yes' if formA.password_protected else 'No'}}</span>
+      <span class="form-answer">Electronic data will be kept in a protected place: {{'Yes' if formA.protected_place else 'No'}}</span>
+      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed: {{'Yes' if formA.retention else 'No'}}</span>
     </div>
   
     <div class="question-block">
@@ -798,18 +774,18 @@
       </label>
       <br>
     </div>
+
   
     <div class="question-block">
-      <label>6.8 Select all data privacy practices applied:
-        <br>
-        <span class="form-answer">{{formA.remove_identifiers}}</span>
-        <br>
-        <span class="form-answer">{{formA.encryption}}</span>
-        <br>
-        <span class="form-answer">{{formA.pseudonyms}}</span>
-        <br>
-        <span class="form-answer">{{formA.focus_group_warning}}</span>
-      </label>
+      <label for="data-privacy-practices">6.8 Select all data privacy practices applied:</label>
+      <br>
+      <span class="form-answer">Personal identifiers will be removed: {{'Yes' if formA.remove_identifiers else 'No'}}</span>
+      <br>
+      <span class="form-answer">Encryption applied: {{'Yes' if formA.encryption else 'No'}}</span>
+      <br>
+      <span class="form-answer">Use of Pseudonyms: {{'Yes' if formA.pseudonyms else 'No'}}</span>
+      <br>
+      <span class="form-answer">Participants in focus groups will be advised confidentiality cannot be assured: {{'Yes' if formA.focus_group_warning else 'No'}}</span>
     </div>
   
     <div class="question-block">
@@ -871,14 +847,14 @@
   
     <div class="question-block">
       <label for="participant-comp">6.13 Describe compensation to participants (if applicable):
-        <br><span class="form-answer">{{formA.participants_comp}}</span>
+        <br><span class="form-answer">{{formA.participant_comp}}</span>
       </label>
 
     </div>
   
     <div class="question-block">
       <label for="participant-costs">6.14 Describe any financial costs to participants (if applicable):
-        <span class="form-answer">{{formA.participants_costs}}</span>
+        <span class="form-answer">{{formA.participant_costs}}</span>
       </label>
 
     </div>

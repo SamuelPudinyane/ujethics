@@ -549,7 +549,7 @@
     
 
     <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.
-      <br><span class="form-answer">{{formA.duration_time}}</span>
+      <br><span class="form-answer">{{formA.duration_timing}}</span>
     </label>
     <br>
 
@@ -617,40 +617,93 @@
     <br>
     <br><span class="form-answer">{{formA.translator_procedure}}</span>
 
-    <h3>5.5 Secondary Data Usage</h3>
+<h3>5.5 Secondary Data Usage</h3>
 
-    <label>Will secondary data be used?
-       <br><span class="form-answer">{{'Yes' if formA.uses_secondary_data else 'No'}}</span>
-    </label><br>
-   
-    
-    <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
-    
-      <label>Is the data Public or Private?
-        <br><span class="form-answer">{{formA.private_permission}}
-      </label><br>
-   
-    
-      <!-- Private Data Section -->
-      <div id="privateDataSection" style="display: none; margin-top: 1rem;">
-        <label>Is the data from a company that has provided permission?
-          <br><span class="form-answer">{{formA.org_permision}}</span>
-        </label>
-    
-        <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
-          <label>Please upload the permission for use of private data:</label>
-          <br><span class="form-answer">{{formA.private_permission_file}}</span>
-        </div>
-      </div>
-    
-      <!-- Public Data Section -->
-      <div id="publicDataSection" style="display: none; margin-top: 1rem;">
-        <label>What type of public data is going to be used?</label>
-              <br><span class="form-answer">{{formA.public_data_description}}</span>
-      </div>
-    </div>
-  </section>
+<label>5.5.1 Will secondary data be used?</label><br>
+<span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
 
+<br><br>
+
+<label>5.5.2 Is the data Public or Private?</label><br>
+<span class="form-answer">{{ formA.data_type or 'Not specified' }}</span>
+
+<br><br>
+
+<h5>5.5.3 Details of the Secondary Data</h5>
+
+<label>5.5.3.1 Nature of the Data</label><br>
+<span class="form-answer">{{ formA.data_nature or 'Not provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.2 Origin/Source of Research Data</label><br>
+<span class="form-answer">{{ formA.data_origin or 'Not provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.3 What are the access conditions?</label><br>
+<span class="form-answer">{{ formA.access_conditions or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.4 Does the database contain personal information/identifiers?</label><br>
+<span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
+
+{% if formA.personal_info == 'Yes' %}
+  <label>5.5.3.5 Specify the personal info/identifiers:</label><br>
+  <span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
+{% endif %}
+
+<br><br>
+
+<label>5.5.3.6 Has the data been anonymized?</label><br>
+<span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.7 Comment / Justification:</label><br>
+<span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.8 Is the data from a company that has provided permission?</label><br>
+<span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.9 Uploaded permission document:</label><br>
+{% if formA.private_permission_file %}
+  <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
+{% else %}
+  <span class="form-answer">No file uploaded</span>
+{% endif %}
+
+<br><br>
+
+<label>5.5.3.10 What type of public data will be used?</label><br>
+<span class="form-answer">{{ formA.public_data_description or 'None specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.11 Will data shortcomings/incompleteness be reported?</label><br>
+<span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.12 How will data limitations be reported?</label><br>
+<span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
+
+<br><br>
+
+<label>5.5.3.13 Is the research methodology and design aligned with secondary data use?</label><br>
+<span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
+
+<br><br>
+
+<label>5.5.3.14 How will the original owners of the data be acknowledged?</label><br>
+<span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
+
+</section>
 
       </form>
   

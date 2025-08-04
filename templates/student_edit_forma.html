@@ -579,7 +579,7 @@
                     <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.
                       
                     </label>
-                    <textarea  name="duration_timing" rows="2">{{formA.duration_time}}</textarea>
+                    <textarea  name="duration_timing" rows="2">{{formA.duration_timing}}</textarea>
                     <br>
 
                     <label>5.3.3 Explain how you will obtain the contact details of participantslabel
@@ -600,12 +600,12 @@
                     <h3>5.4 Research Instruments for Data Collection</h3>
                     <label>5.4.1 Indicate which data collection methods will be used</label><br>
                     <div id="data-methods">
-                            <label><input type="checkbox" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> (a) Questionnaire</label><br>
-                            <label><input type="checkbox" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> (b) Interview</label><br>
-                            <label><input type="checkbox" {% if formA.focus_groups %}checked{% endif %} value="focus" class="method-check"> (c) Focus Group</label><br>
-                            <label><input type="checkbox" {% if formA.observations %}checked{% endif %} value="observation" class="method-check"> (d) Observation</label><br>
-                            <label><input type="checkbox" {% if formA.documents %}checked{% endif %} value="documents" class="method-check"> (e) Documents</label><br>
-                            <label><input type="checkbox" {% if formA.other %}checked{% endif %} value="other" class="method-check"> (f) Other</label><br>
+                            <label><input type="checkbox" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> Questionnaire</label><br>
+                            <label><input type="checkbox" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> Interview</label><br>
+                            <label><input type="checkbox" {% if formA.focus_groups %}checked{% endif %} value="focus" class="method-check"> Focus Group</label><br>
+                            <label><input type="checkbox" {% if formA.observations %}checked{% endif %} value="observation" class="method-check"> Observation</label><br>
+                            <label><input type="checkbox" {% if formA.documents %}checked{% endif %} value="documents" class="method-check"> Documents</label><br>
+                            <label><input type="checkbox" {% if formA.other %}checked{% endif %} value="other" class="method-check"> Other</label><br>
                     </div>
                     <!-- Questionnaire -->
                           <div id="questionnaire_fields" style="display:none; margin-top: 1rem;">
@@ -688,6 +688,9 @@
                   
                  <h3>5.5 Secondary Data Usage</h3>
 
+<h3>5.5 Secondary Data Usage</h3>
+
+<!-- 5.5.1 -->
 <label>5.5.1 Will secondary data be used?</label>
 <select id="secondaryData" name="secondary_data" required class="form-select" onchange="handleSecondaryData()">
   <option value="">-- Select --</option>
@@ -695,7 +698,10 @@
   <option value="No" {% if formA.secondary_data == 'No' %}selected{% endif %}>No</option>
 </select>
 
-<div id="secondaryDetails" style="margin-top: 1rem;">
+<!-- Secondary Details Section -->
+<div id="secondaryDetails" style="display: none; margin-top: 1rem;">
+
+  <!-- 5.5.2 -->
   <label>5.5.2 Is the data Public or Private?</label>
   <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
     <option value="">-- Select --</option>
@@ -706,99 +712,114 @@
 
   <br>
 
-  <label>5.6 Nature of the Data</label>
+  <!-- 5.5.3 -->
+  <label>5.5.3 Nature of the Data</label>
   <input type="text" name="data_nature" class="form-control" value="{{ formA.data_nature }}" placeholder="e.g., survey, interviews, secondary data">
 
   <br>
 
-  <label>5.7 Origin/Source of Research Data</label>
-  <input type="text" name="data_origin" class="form-control" value="{{ formA.data_origin }}" placeholder="e.g., existing database, public record, institution">
+  <!-- 5.5.4 -->
+  <label>5.5.4 Origin/Source of Research Data</label>
+  <input type="text" name="data_origin" class="form-control" value="{{ formA.data_origin }}" placeholder="e.g., public records, academic journals">
 
   <br>
 
-  <label>5.8 Are the sources of the research data in the public domain?</label><br>
-  <input type="checkbox" name="data_public" value="Yes" {% if formA.data_public == 'Yes' %}checked{% endif %} onchange="togglePublicData()"> Yes
-  <input type="checkbox" name="data_public" value="No" {% if formA.data_public == 'No' %}checked{% endif %} onchange="togglePublicData()"> No
+  <!-- 5.5.5 -->
+  <label>5.5.5 Are the sources of the research data in the public domain?</label><br>
+  <input type="radio" name="data_public" value="Yes" {% if formA.data_public == 'Yes' %}checked{% endif %} onchange="togglePublicData()"> Yes
+  <input type="radio" name="data_public" value="No" {% if formA.data_public == 'No' %}checked{% endif %} onchange="togglePublicData()"> No
 
   <br><br>
 
-  <div id="public_data_fields">
-    <label>5.8.1 Provide evidence or explanation (if applicable)</label>
+  <!-- 5.5.5.1 + 5.5.5.2 -->
+  <div id="public_data_fields" style="display: none;">
+    <label>5.5.5.1 Provide evidence or explanation (if applicable):</label>
     <textarea name="public_evidence" rows="3" class="form-control">{{ formA.public_evidence }}</textarea>
 
-    <label>5.8.2 If data is not public, what are the access conditions?</label>
+    <label>5.5.5.2 If data is not public, what are the access conditions?</label>
     <textarea name="access_conditions" rows="3" class="form-control">{{ formA.access_conditions }}</textarea>
   </div>
 
   <br>
 
-  <label>5.9 Does the database contain personal information/identifiers?</label><br>
-  <input type="checkbox" name="personal_info" value="Yes" {% if formA.personal_info == 'Yes' %}checked{% endif %} onchange="togglePersonalInfo()"> Yes
-  <input type="checkbox" name="personal_info" value="No" {% if formA.personal_info == 'No' %}checked{% endif %} onchange="togglePersonalInfo()"> No
+  <!-- 5.5.6 -->
+  <label>5.5.6 Does the database contain personal information/identifiers?</label><br>
+  <input type="radio" name="personal_info" value="Yes" {% if formA.personal_info == 'Yes' %}checked{% endif %} onchange="togglePersonalInfo()"> Yes
+  <input type="radio" name="personal_info" value="No" {% if formA.personal_info == 'No' %}checked{% endif %} onchange="togglePersonalInfo()"> No
 
-  <div id="personalInfoComment" style="margin-top: 1rem;">
-    <label>5.9.1 If yes, specify what kind of personal information/identifiers:</label>
+  <!-- 5.5.6.1 -->
+  <div id="personalInfoComment" style="margin-top: 1rem; display: none;">
+    <label>5.5.6.1 If yes, specify what kind of personal information/identifiers:</label>
     <textarea name="personal_info_comment" rows="3" class="form-control">{{ formA.personal_info_comment }}</textarea>
   </div>
 
   <br>
 
-  <label>5.10 Has the data been anonymized?</label><br>
-  <input type="checkbox" name="data_anonymized" value="Yes" {% if formA.data_anonymized == 'Yes' %}checked{% endif %}> Yes
-  <input type="checkbox" name="data_anonymized" value="No" {% if formA.data_anonymized == 'No' %}checked{% endif %}> No
-  <input type="checkbox" name="data_anonymized" value="Not Applicable" {% if formA.data_anonymized == 'Not Applicable' %}checked{% endif %}> Not Applicable
+  <!-- 5.5.7 -->
+  <label>5.5.7 Has the data been anonymized?</label><br>
+  <input type="radio" name="data_anonymized" value="Yes" {% if formA.data_anonymized == 'Yes' %}checked{% endif %}> Yes
+  <input type="radio" name="data_anonymized" value="No" {% if formA.data_anonymized == 'No' %}checked{% endif %}> No
+  <input type="radio" name="data_anonymized" value="Not Applicable" {% if formA.data_anonymized == 'Not Applicable' %}checked{% endif %}> Not Applicable
 
   <br><br>
 
-  <label>5.10.1 Comment / Justification</label>
+  <!-- 5.5.7.1 -->
+  <label>5.5.7.1 Comment / Justification</label>
   <textarea name="anonymization_comment" rows="3" class="form-control">{{ formA.anonymization_comment }}</textarea>
 
   <br>
 
-  <!-- Private Data Section -->
-  <div id="privateDataSection">
-    <label>5.11 Is the data from a company that has provided permission?</label>
+  <!-- PRIVATE DATA SECTION -->
+  <div id="privateDataSection" style="display: none; margin-top: 1rem;">
+    <!-- 5.5.8 -->
+    <label>5.5.8 Is the data from a company that has provided permission?</label>
     <select id="privatePermission" name="org_permision" class="form-select" onchange="handlePrivatePermission()">
       <option value="">-- Select --</option>
       <option value="Yes" {% if formA.org_permision == 'Yes' %}selected{% endif %}>Yes</option>
       <option value="No" {% if formA.org_permision == 'No' %}selected{% endif %}>No</option>
     </select>
 
-    <div id="uploadPrivatePermission" style="margin-top: 1rem;">
-      <label>5.11.1 Please upload the permission for use of private data:</label>
+    <!-- 5.5.8.1 -->
+    <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
+      <label>5.5.8.1 Upload the permission document from the organization:</label>
       <input type="file" name="private_permission_file" class="form-control">
     </div>
   </div>
 
-  <!-- Public Data Section -->
-  <div id="publicDataSection" style="margin-top: 1rem;">
-    <label>5.12 What type of public data is going to be used?</label>
-    <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Annual reports; Open data; investigative reports">{{ formA.public_data_description }}</textarea>
+  <!-- PUBLIC DATA SECTION -->
+  <div id="publicDataSection" style="display: none; margin-top: 1rem;">
+    <!-- 5.5.9 -->
+    <label>5.5.9 What type of public data will be used?</label>
+    <textarea name="public_data_description" rows="3" class="form-control" placeholder="e.g., Stats SA, open government data, research archives">{{ formA.public_data_description }}</textarea>
   </div>
 
   <br>
 
-  <label>5.13 Will data shortcomings/incompleteness be reported?</label><br>
-  <input type="checkbox" name="shortcomings_reported" value="Yes" {% if formA.shortcomings_reported == 'Yes' %}checked{% endif %}> Yes
-  <input type="checkbox" name="shortcomings_reported" value="No" {% if formA.shortcomings_reported == 'No' %}checked{% endif %}> No
+  <!-- 5.5.10 -->
+  <label>5.5.10 Will data shortcomings/incompleteness be reported?</label><br>
+  <input type="radio" name="shortcomings_reported" value="Yes" {% if formA.shortcomings_reported == 'Yes' %}checked{% endif %}> Yes
+  <input type="radio" name="shortcomings_reported" value="No" {% if formA.shortcomings_reported == 'No' %}checked{% endif %}> No
 
   <br><br>
 
-  <label>5.14 How will data limitations be reported?</label>
+  <!-- 5.5.11 -->
+  <label>5.5.11 How will data limitations be reported?</label>
   <textarea name="limitations_reporting" rows="3" class="form-control">{{ formA.limitations_reporting }}</textarea>
 
   <br>
 
-  <label>5.15 Are the research methodology and design aligned with secondary data use?</label><br>
-  <input type="checkbox" name="methodology_alignment" value="Yes" {% if formA.methodology_alignment == 'Yes' %}checked{% endif %}> Yes
-  <input type="checkbox" name="methodology_alignment" value="No" {% if formA.methodology_alignment == 'No' %}checked{% endif %}> No
+  <!-- 5.5.12 -->
+  <label>5.5.12 Is the research methodology and design aligned with secondary data use?</label><br>
+  <input type="radio" name="methodology_alignment" value="Yes" {% if formA.methodology_alignment == 'Yes' %}checked{% endif %}> Yes
+  <input type="radio" name="methodology_alignment" value="No" {% if formA.methodology_alignment == 'No' %}checked{% endif %}> No
 
   <br><br>
 
-  <label>5.16 How will original owners of the data be acknowledged?</label>
+  <!-- 5.5.13 -->
+  <label>5.5.13 How will the original owners of the data be acknowledged?</label>
   <textarea name="data_acknowledgment" rows="3" class="form-control">{{ formA.data_acknowledgment }}</textarea>
-</div>
 
+</div>
 
     </main>
 
