@@ -3811,6 +3811,15 @@ def certificate(id):
                 certificate_details.certificate_issuer = request.form.get('certificate_issuer')
                 certificate_details.certificate_email = request.form.get('email')
                 certificate_details.certificate_heading=request.form.get('heading')
+                certificate_details.certificate_condition_1=request.form.get('condition_1')
+                certificate_details.certificate_condition_2=request.form.get('condition_2')
+                certificate_details.certificate_condition_3=request.form.get('condition_3')
+                certificate_details.certificate_condition_4=request.form.get('condition_4')
+                certificate_details.certificate_condition_5=request.form.get('condition_5')
+                certificate_details.certificate_condition_6=request.form.get('condition_6')
+                certificate_details.certificate_condition_7=request.form.get('condition_7')
+                certificate_details.certificate_condition_8=request.form.get('condition_8')
+                certificate_details.certificate_condition_9=request.form.get('condition_9')
             
                 # Overwrite with provided issued date if present
                 issued_date = request.form.get('certificate_issued')
