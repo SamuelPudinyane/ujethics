@@ -276,7 +276,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>Collection, use or disclosure of informAtion WITHOUT the consent of the individual whose informAtion it
+          <td>Collection, use or disclosure of information WITHOUT the consent of the individual whose information it
             is, with the exception of aggregated data or data from official databases such as StatsSA, SARS, etc.</td>
           <td><span class="form-answer">{{'Yes' if form.disclosure else 'No'}}</span></td>
 
@@ -297,7 +297,7 @@
 
         </tr>
         <tr>
-          <td>Seeking disclosure of informAtion which may be prejudicial to participants</td>
+          <td>Seeking disclosure of information which may be prejudicial to participants</td>
           <td><span class="form-answer">{{'Yes' if form.prejudice else 'No'}}</span></td>
 
         </tr>
@@ -312,12 +312,12 @@
 
         </tr>
         <tr>
-          <td>Personal and social informAtion collected directly from participants</td>
+          <td>Personal and social information collected directly from participants</td>
           <td><span class="form-answer">{{'Yes' if form.personal else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Identifiable informAtion to be collected about people from available records (e.g., staff records, student
+          <td>Identifiable information to be collected about people from available records (e.g., staff records, student
             records, etc.)</td>
           <td><span class="form-answer">{{'Yes' if form.available_records else 'No'}}</span></td>
 
@@ -552,10 +552,9 @@
     </label>
     <br>
 
-    <h3>5.3 Details of the participants</h3>
-    <br>
+    <label>5.3 Details of the participants</label>
 
-    <h4>5.3.1 Participant Group Description</h4>
+    <label>5.3.1 Participant Group Description</label>
 <br><span class="form-answer">{{form.participants_description}}</span>
 
     <table id="participantsTable" class="table table-bordered">
@@ -594,7 +593,7 @@
     <br><span class="form-answer">{{form.conflict_explanation}}</span>
     <br>
 
-    <h3>5.4 Research Instruments for Data Collection</h3>
+    <label>5.4 Research Instruments for Data Collection</label>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
             <label>Questionnaire: <span class="form-answer">{{form.questionnaire}}</span></label><br>
@@ -672,63 +671,63 @@
     <br>
     <br>
 
-<h3>5.5 Secondary Data Usage</h3>
+<label>5.5 Secondary Data Usage</label>
 
 <label>5.5.1 Will secondary data be used?</label><br>
-<span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
+<span class="form-answer">{{ 'Yes' if form.uses_secondary_data else 'No' }}</span>
 
 <br><br>
 
 <label>5.5.2 Is the data Public or Private?</label><br>
-<span class="form-answer">{{ formA.data_type or 'Not specified' }}</span>
+<span class="form-answer">{{ form.data_type or 'Not specified' }}</span>
 
 <br><br>
 
 <h5>5.5.3 Details of the Secondary Data</h5>
 
 <label>5.5.3.1 Nature of the Data</label><br>
-<span class="form-answer">{{ formA.data_nature or 'Not provided' }}</span>
+<span class="form-answer">{{ form.data_nature or 'Not provided' }}</span>
 
 <br><br>
 
 <label>5.5.3.2 Origin/Source of Research Data</label><br>
-<span class="form-answer">{{ formA.data_origin or 'Not provided' }}</span>
+<span class="form-answer">{{ form.data_origin or 'Not provided' }}</span>
 
 <br><br>
 
 <label>5.5.3.3 What are the access conditions?</label><br>
-<span class="form-answer">{{ formA.access_conditions or 'Not specified' }}</span>
+<span class="form-answer">{{ form.access_conditions or 'Not specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.4 Does the database contain personal information/identifiers?</label><br>
-<span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
+<span class="form-answer">{{ form.personal_info or 'Not specified' }}</span>
 
-{% if formA.personal_info == 'Yes' %}
+{% if form.personal_info == 'Yes' %}
   <label>5.5.3.5 Specify the personal info/identifiers:</label><br>
-  <span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
+  <span class="form-answer">{{ form.personal_info_comment or 'None provided' }}</span>
 {% endif %}
 
 <br><br>
 
 <label>5.5.3.6 Has the data been anonymized?</label><br>
-<span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
+<span class="form-answer">{{ form.data_anonymized or 'Not specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.7 Comment / Justification:</label><br>
-<span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
+<span class="form-answer">{{ form.anonymization_comment or 'None provided' }}</span>
 
 <br><br>
 
 <label>5.5.3.8 Is the data from a company that has provided permission?</label><br>
-<span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
+<span class="form-answer">{{ form.org_permision or 'Not specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.9 Uploaded permission document:</label><br>
-{% if formA.private_permission_file %}
-  <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
+{% if form.private_permission_file %}
+  <a href="{{ url_for('static', filename=form.private_permission_file) }}" target="_blank">View Document</a>
 {% else %}
   <span class="form-answer">No file uploaded</span>
 {% endif %}
@@ -736,27 +735,27 @@
 <br><br>
 
 <label>5.5.3.10 What type of public data will be used?</label><br>
-<span class="form-answer">{{ formA.public_data_description or 'None specified' }}</span>
+<span class="form-answer">{{ form.public_data_description or 'None specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.11 Will data shortcomings/incompleteness be reported?</label><br>
-<span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
+<span class="form-answer">{{ form.shortcomings_reported or 'Not specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.12 How will data limitations be reported?</label><br>
-<span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
+<span class="form-answer">{{ form.limitations_reporting or 'Not provided' }}</span>
 
 <br><br>
 
 <label>5.5.3.13 Is the research methodology and design aligned with secondary data use?</label><br>
-<span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
+<span class="form-answer">{{ form.methodology_alignment or 'Not specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.14 How will the original owners of the data be acknowledged?</label><br>
-<span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
+<span class="form-answer">{{ form.data_acknowledgment or 'Not provided' }}</span>
 
    
   </section>
@@ -779,10 +778,10 @@
   
     <div class="question-block">
       <label>6.2 Data storage and access to data</label><br>
-      <span class="form-answer">Paper-based records must be kept in a secure location: {{'Yes' if formA.secure_location else 'No'}}</span>
-      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges: {{'Yes' if formA.password_protected else 'No'}}</span>
-      <span class="form-answer"> Electronic data will be kept in a protected place: {{'Yes' if formA.protected_place else 'No'}}</span>
-      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed: {{'Yes' if formA.retention else 'No'}}</span>
+      <span class="form-answer">Paper-based records must be kept in a secure location: {{'Yes' if form.secure_location else 'No'}}</span>
+      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges: {{'Yes' if form.password_protected else 'No'}}</span>
+      <span class="form-answer"> Electronic data will be kept in a protected place: {{'Yes' if form.protected_place else 'No'}}</span>
+      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed: {{'Yes' if form.retention else 'No'}}</span>
     </div>
   
     <div class="question-block">
@@ -823,13 +822,13 @@
     <div class="question-block">
       <label>6.8 Select all data privacy practices applied:
         <br>
-        <span class="form-answer">Personal identifiers will be removed: {{'Yes' if formA.remove_identifiers else 'No'}}</span>
+        <span class="form-answer">Personal identifiers will be removed: {{'Yes' if form.remove_identifiers else 'No'}}</span>
         <br>
-        <span class="form-answer">Data encryption will be applied: {{'Yes' if formA.encryption else 'No'}}</span>
+        <span class="form-answer">Data encryption will be applied: {{'Yes' if form.encryption else 'No'}}</span>
         <br>
-        <span class="form-answer">Use of Pseudonyms: {{'Yes' if formA.pseudonyms else 'No'}}</span>
+        <span class="form-answer">Use of Pseudonyms: {{'Yes' if form.pseudonyms else 'No'}}</span>
         <br>
-        <span class="form-answer">Participants in focus groups will be advised confidentiality cannot be assured: {{'Yes' if formA.focus_group_warning else 'No'}}</span>
+        <span class="form-answer">Participants in focus groups will be advised confidentiality cannot be assured: {{'Yes' if form.focus_group_warning else 'No'}}</span>
       </label>
     </div>
   
@@ -845,7 +844,7 @@
   </thead>
   <tbody>
     <tr><td>a) Identity and position of the researcher(s)?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9a else 'No'}}</span></td></tr>
-<tr><td>b) Purpose of the informAtion collection?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9b else 'No'}}</span></td></tr>
+<tr><td>b) Purpose of the information collection?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9b else 'No'}}</span></td></tr>
 <tr><td>c) Reason for selection and procedures for selecting participants?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9c else 'No'}}</span></td></tr>
 <tr><td>d) Participant’s role in the study?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9d else 'No'}}</span></td></tr>
 <tr><td>e) Expected duration of participation?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9e else 'No'}}</span></td></tr>
@@ -858,7 +857,7 @@
 <tr><td>l) Indemnity if applicable?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9l else 'No'}}</span></td></tr>
 <tr><td>m) Period for which records will be kept?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9m else 'No'}}</span></td></tr>
 <tr><td>n) Steps for confidentiality and secure storage?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9n else 'No'}}</span></td></tr>
-<tr><td>o) Disclosure of informAtion to third parties?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9o else 'No'}}</span></td></tr>
+<tr><td>o) Disclosure of information to third parties?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9o else 'No'}}</span></td></tr>
 <tr><td>p) Privacy protection in publications?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9p else 'No'}}</span></td></tr>
 <tr><td>q) Feedback to participants?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9q else 'No'}}</span></td></tr>
 <tr><td>r) Exclusions to confidentiality disclosed?</td><td><br><span class="form-answer">{{'Yes' if form.q6_9r else 'No'}}</span></td></tr>
