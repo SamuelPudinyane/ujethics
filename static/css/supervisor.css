@@ -156,7 +156,7 @@ h2, label, input, select, textarea {
 
   /* Table Head */
   .status-table thead th {
-    background-color: #000000;
+    background-color: #a09e9e;
     color: #ffffff;
     padding: 1rem;
     text-align: left;
@@ -457,7 +457,7 @@ h2, label, input, select, textarea {
 
   /* Table Head */
   .table thead th {
-    background-color: #000000;
+    background-color: #a09e9e;
     color: #ffffff;
     padding: 1rem;
     text-align: left;

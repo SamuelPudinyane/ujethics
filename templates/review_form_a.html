@@ -113,22 +113,13 @@
   </header>
  <!-- Form -->
     <form id="formAsection1" action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
-      <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
-
+      
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <!-- Main Content -->
   <main class="main-content">
-
    
       <div class="form-section">
+        <h2>Section 1: Researcher’s Details</h2>
         <label for="applicant-name">Applicant Name
           <br><span class="form-answer">{{form.applicant_name}}</span>
         </label>
@@ -169,16 +160,14 @@
 
   <!-- Main Content -->
   <main class="main-content">
-
-    <h1>FORM A</h1>
-    <h2>Research Ethics Application for Conducting Research Involving Humans</h2>
+    <h2>Section 2: Ethical Considerations</h2>
 
     <h3>1. Ethical Clearance Aspects</h3>
     <table>
       <thead>
         <tr>
           <th>Aspect</th>
-          <th>Tick that is applicable:</th>
+          <th>Check all that is applicable:</th>
 
         </tr>
       </thead>

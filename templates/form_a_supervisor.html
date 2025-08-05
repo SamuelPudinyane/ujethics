@@ -117,7 +117,7 @@
       <thead>
         <tr>
           <th>Aspect</th>
-          <th>Tick that is applicable:</th>
+          <th>Check all that is applicable:</th>
 
         </tr>
       </thead>
@@ -505,17 +505,17 @@
       <br><span class="form-answer">{{formA.design}}</span>
     </label>
     <br>
+    <br>
     
+    <h3>5.3 Details of the participants</h3>
 
-    <h2>5.3 Details of the participants</h2>
-    <br>
-    <br>
-
-    <h4>5.3.1 Participant Group Description</h4>
+    <label>5.3.1 Participant Group Description</label>
 <br><span class="form-answer">{{formA.participants_description}}</span>
+<br>
+<br>
 
     <table id="participantsTable" class="table table-bordered">
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>Population</th>
           <th>Sampling Method</th>
@@ -551,7 +551,7 @@
     <br>
     <br>
 
-    <h2>5.4 Research Instruments for Data Collection</h2>
+    <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
         <label>Questionnaire: <span class="form-answer">{{formA.questionnaire}}</span></label><br>
@@ -903,22 +903,22 @@
     
       <div class="form-group">
         <label for="student_name">Student Name:</label>
-        <span  id="student_name"  >{{formA.declaration_name}}</span>
+        <span class="form-answer" id="student_name"  >{{formA.declaration_name}}</span>
       </div>
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{% if formA.submitted_at%}{{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif%}</span>
+        <span class="form-answer" id="submission_date" >{% if formA.submitted_at%}{{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif%}</span>
       </div>
 
       <div class="form-group">
         <label for="supervisor_name">Supervisor Name:</label>
-        <span  id="supervisor_name"  >{{formA.supervisor}}</span>
+        <span class="form-answer" id="supervisor_name"  >{{formA.supervisor}}</span>
       </div>
 
       <div class="form-group">
         <label for="research_title">Title of Research:</label>
-        <span  id="research_title" >{{formA.study_title}}</span>
+        <span class="form-answer" id="research_title" >{{formA.study_title}}</span>
       </div>
 
       <div class="form-group">

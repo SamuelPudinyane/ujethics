@@ -99,7 +99,7 @@
               <ul class="doc-link">
                   {% if req.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=req.proposal_path) }}" target="_blank">Research Proposal</a></li>
                   {% endif %}
 
                   {% if req.permission_letter %}
@@ -111,16 +111,16 @@
                       <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                   {% if req.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey</a></li>
+                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey/Questionnaire/Focus Group Questions</a></li>
                   {% endif %}
                   {% if req.impact_assessment_path %}
-                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">impact assessment path</a></li>
+                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">Personal Impact Assessment Form</a></li>
                   {% endif %}
                   {% if req.prior_clearance %}
-                  <li><a href="{{url_for('static',filename=req.prior_clearance)}}">Clearance</a></li>
+                  <li><a href="{{url_for('static',filename=req.prior_clearance)}}">Prior Clearance</a></li>
                   {% endif %}
                   {% if req.prior_clearance1 %}
-                  <li><a href="{{url_for('static',filename=req.prior_clearance1)}}">Clearance 1</a></li>
+                  <li><a href="{{url_for('static',filename=req.prior_clearance1)}}">Ethical Clearance</a></li>
                   {% endif %}
                   {% if req.need_jbs_clearance%}
                   <li><a href="{{url_for('static',filename=req.need_jbs_clearance)}}">JBS Clearance</a></li>
