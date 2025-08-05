@@ -43,7 +43,7 @@
 
 .form-option input[type="radio"] {
   margin: 0; 
-  transform: scale(1.3);
+  transform: scale(1.2);
   accent-color: #000;
   cursor: pointer;
 }
@@ -68,7 +68,7 @@
       margin-top: 2rem;
     }
 
-.footer {
+/* .footer {
   background-color: #ef820d;
   color: white;
   text-align: center;
@@ -78,7 +78,7 @@
   bottom: 0;
   width: 100%;
   position: sticky;
-}
+} */
 
   </style>
 </head>
@@ -86,13 +86,13 @@
 
 <!-- Navbar -->
 <header class="navbar">
-  <div class="nav-content d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center gap-3">
+  <div class="nav-content">
+    
       <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj" style="height: 50px;">
-      <span class="nav-title h5 mb-0">Ethics Application System</span>
-    </div>
-    <div>
-      <a href="{{url_for('logout')}}" class="btn-logout" style="margin-left: 900px;">Logout</a>
+      <span class="nav-title">Ethics Application System</span>
+    
+     <div style="text-align: right; margin-left: 800px;">
+      <a href="{{url_for('logout')}}" class="btn-logout">Logout</a>
     </div>
   </div>
 </header>
@@ -158,6 +158,11 @@
 </div>
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
