@@ -2920,7 +2920,7 @@ def chair_form_view(id,form_name):
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
 
-            if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
+            if request.form.get('status') in ['Approved']:
                 if not formA.review_date:
                     
                     formA.review_date=review_date
@@ -3110,12 +3110,11 @@ def chair_form_view(id,form_name):
                     formB.review_supervisor_signature1=review_supervisor_signature
                     formB.review_signature_date1=review_signature_date
                     formB.form_review_comment1=form_review_comment
-                    formB.form_reviewed_by=form_reviewed_by
+                    formB.form_reviewed_by1=form_reviewed_by
                     formB.review_status1=True
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3149,7 +3148,6 @@ def chair_form_view(id,form_name):
 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3217,7 +3215,6 @@ def chair_form_view(id,form_name):
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3247,12 +3244,11 @@ def chair_form_view(id,form_name):
                     formC.review_supervisor_signature1=review_supervisor_signature
                     formC.review_signature_date1=review_signature_date
                     formC.form_review_comment1=form_review_comment
-                    formC.form_reviewed_by=form_reviewed_by
+                    formC.form_reviewed_by1=form_reviewed_by
                     formC.review_status1=True
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        print("------------ ",user_name.role.value)
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
