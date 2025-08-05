@@ -93,6 +93,8 @@
                   {% endif %}
               {% elif 'Reject' in ['Approved with Minor Changes', 'Resubmission Required'] %}
               Rejected
+              {% elif not item.certificate_issued and not item.certificate_received and not (item.reviewed_by and item.reviewed_by1 )%}
+              Awaiting for review
               {% endif %}
             </span></td>
             <td>
@@ -193,6 +195,8 @@
                   {% endif %}
               {% elif 'Reject' in ['Approved with Minor Changes', 'Resubmission Required'] %}
               Rejected
+              {% elif not item.certificate_issued and not item.certificate_received and not (item.reviewed_by and item.reviewed_by1 )%}
+              Awaiting for review
               {% endif %}
             </span></td>
             <td>
@@ -281,6 +285,8 @@
                   {% endif %}
               {% elif 'Reject' in ['Approved with Minor Changes', 'Resubmission Required'] %}
               Rejected
+              {% elif not item.certificate_issued and not item.certificate_received and not (item.reviewed_by and item.reviewed_by1 )%}
+              Awaiting for review
               {% endif %}
             </span></td>
             <td>
