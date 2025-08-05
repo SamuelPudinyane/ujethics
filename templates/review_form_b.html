@@ -216,7 +216,7 @@
    <!-- Main Content -->
   <main class="main-content">
     
-      <h2>33 Ethical Considerations</h2>
+      <h2>Section 3: Ethical Considerations</h2>
 
       <div class="question-block" >
         <label>3.1 Was ethical clearance granted for the original data gathering phase?
@@ -235,27 +235,28 @@
       <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:
         <br><span class="form-answer">{{form.data_safekeeping}}</span>
       </label>
+  </main>
  
 
-      <hr>
+      <main class="main-content">
 
-      <h2>4. Risk Assessment</h2>
+      <h2>Section 4: Risk Assessment</h2>
 
       <div class="question-block">
-        <label>The study presents:
+        <label>4.1 The study presents:
             <br><span class="form-answer">{{form.risk_level}}</span>
         </label>
         
       </div>
 
-      <label>Comments:
+      <label>4.2 Comments:
         <br><span class="form-answer">{{form.risk_comments}}</span>
       </label>
+      </main>
     
+      <main class="main-content">
 
-      <hr>
-
-      <h2>Declaration</h2>
+      <h2>Section 5: Declaration</h2>
 
       <p class="form-note">
         I, <strong>{{form.declaration_name}}</strong>
@@ -269,8 +270,6 @@
       <label>Date
         <br><span class="form-answer">{% if form.declaration_date%}{{form.declaration_date}}{% endif%}</span>
       </label>
-
-      <hr>
    
        
       <div id="supervisorDeclaration" >
@@ -360,8 +359,8 @@
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
     <div class="submit-row">
-       <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button><br>
-        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button><br>
+       <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button>
     
     <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
 

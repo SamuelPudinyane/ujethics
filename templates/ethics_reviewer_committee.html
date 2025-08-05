@@ -99,7 +99,7 @@
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
-              {% elif not formc.recommendation%}
+              {% elif not forma.recommendation%}
               Ready for review
               {% elif forma.certificate_issued and not forma.certificate_received%}
               Certificate issued but not send

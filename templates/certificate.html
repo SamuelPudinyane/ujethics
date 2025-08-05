@@ -97,7 +97,7 @@
         <div class="header">
             <img src="{{ url_for('static', filename='img/uj.png') }}" alt="UJ JBS Logo">
             <div>
-                <h2>JBSREC & Subcommittees</h2>
+                <h2>JBS REC & Subcommittees</h2>
                 <h3>Johannesburg Business School Research Ethics Committee (JBSREC)</h3>
             </div>
         </div>
@@ -154,7 +154,7 @@
         <div class="signature">
             <p><strong>Date:</strong> {% if certificate_details.certificate_issued %}{{certificate_details.certificate_issued.strftime('%Y-%m-%d')}}{% else %}<input type="date" name="certificate_issued" requred>{% endif%}</p>
             <!-- <p><strong>Name <input type="text" name="certificate_issuer" required></strong><br> -->
-               Chairperson: JBS Research Ethics Committee<br>
+               JBS Research Ethics Committee<br>
                Email: <a href="mailto:user@example.com" class="text-primary">jbssubmissions@uj.ac.za</a>
         </div>
     </div>

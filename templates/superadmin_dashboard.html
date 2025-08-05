@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Select Submission Month | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="/static/css/supervisor.css">
+  <link rel="stylesheet" href="/static/css/review.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/supervisor.css') }}">
+
+  <style>
+    .folder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .folder-card {
+      text-align: center;
+      padding: 2rem;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .folder-card:hover {
+      transform: scale(1.05);
+      background-color: #e9f3ff;
+    }
+    .folder-icon {
+      font-size: 3rem;
+      color: #4F2365;
+    }
+    .folder-label {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: #022169;
+    }
+    .navbar {
+      background: #022169;
+      color: white;
+      padding: 1rem 2rem;
+    }
+    .navbar h2 { margin: 0; }
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background: #939598;
+      color: white;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      background-color: #022169;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .year-section { margin-bottom: 2rem; }
+    .month-header { font-weight: bold; color: #022169; margin-top: 1rem; }
+    .form-list { margin-left: 1rem; list-style-type: square; }
+    .no-data { display: none; text-align: center; font-weight: bold; color: #cc0000; margin-top: 2rem; }
+    .table-container { display: block; }
+    .table-container.hidden { display: none; }
+
+    .card h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #022169;
+}
+
+.card h6 {
+  font-size: 1rem;
+  color: #666;
+}
+
+  </style>
+</head>
+
+<body>
+<div class="admin-wrapper">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
+      <h3>JBS Ethics Application</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="{{url_for('superadmin')}}" class="sidebar-link"><i class="fas fa-clipboard-list"></i> Dashboard</a>
+      <a href="{{url_for('logout')}}" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="topbar">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Ethics Superadmin Dashboard</h2>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+  </div>
+  <p class="text-muted">Monitor submissions, certificates, review stages, and reviewer efficiency.</p>
+</header>
+
+<section class="admin-content container-fluid mt-4">
+  <div class="row text-center mb-4">
+    <div class="col-md-3">
+      <div class="card shadow-sm p-3">
+        <h6>Submitted This Month</h6>
+        <h3>{{ stats.submitted_this_month }}</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm p-3">
+        <h6>In Review</h6>
+        <h3>{{ stats.in_review }}</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm p-3">
+        <h6>Certificates Issued</h6>
+        <h3>{{ stats.certificates_issued }}</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm p-3">
+        <h6>Avg Reviewer Time (days)</h6>
+        <h3>{{ stats.avg_turnaround_time }}</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Revieiwer performance Tracking -->
+<section class="admin-content container-fluid mt-5">
+  <h4 class="mb-3 text-center">Reviewer Performance Tracker</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th>Reviewer Name</th>
+          <th>Applications Assigned</th>
+          <th>Reviews Completed</th>
+          <th>Average Turnaround Time (days)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reviewer in reviewers %}
+        <tr>
+          <td>{{ reviewer.name }}</td>
+          <td>{{ reviewer.assigned }}</td>
+          <td>{{ reviewer.completed }}</td>
+          <td>{{ reviewer.avg_time }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" class="text-center text-muted">No reviewers found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+   
+  </main>
+</div>
+
+<script>
+function updateSearchInput() {
+  const type = document.getElementById("searchType").value;
+  document.getElementById("searchInput").classList.toggle("d-none", type === "specialization");
+  document.getElementById("specializationDropdown").classList.toggle("d-none", type !== "specialization");
+}
+
+function applyFilters() {
+  const type = document.getElementById("searchType").value;
+  const text = type === "specialization" ? document.getElementById("specializationDropdown").value : document.getElementById("searchInput").value;
+  if (!type || !text.trim()) return alert("Please select a filter type and provide a value.");
+  const input = text.trim().toLowerCase();
+
+  document.querySelectorAll(".table-container").forEach(container => {
+    let matchCount = 0;
+    const rows = container.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+      const show = type === "year" ? row.cells[0].innerText.toLowerCase().includes(input) : row.dataset.degree.includes(input);
+      row.style.display = show ? "" : "none";
+      if (show) matchCount++;
+    });
+    container.querySelector(".no-data").style.display = matchCount === 0 ? "block" : "none";
+    container.classList.toggle("hidden", matchCount === 0);
+  });
+}
+</script>
+</body>
+</html>

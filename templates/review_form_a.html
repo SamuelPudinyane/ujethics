@@ -416,12 +416,12 @@
     </table>
    <label>Comments: <span class="form-answer">{{form.apply_comments}}</span></label>
     <div class="mb-3">
-      <label><strong>Rate your project (Negligible, Low, Medium, High Risk):
+      <label><strong>2.4 Rate your project (Negligible, Low, Medium, High Risk):
         <br><span class="form-answer">{{form.risk_rating}}</span>
       </strong>
-      <label for="risk_justification"> Please justify your risk level (Mandatory): <span class="form-answer">{{form.risk_justification}}</span></label>
-      <label for="benefits_description"> For medium and high risk, describe the potential benefits of the study: <span class="form-answer">{{form.benefits_description}}</span></label>
-      <label for="risk_mitigation"> For medium and high risk, describe how potential risks will be mitigated against: <span class="form-answer">{{form.risk_mitigation}}</span></label>
+      <label for="risk_justification">2.4.1 Please justify your risk level (Mandatory): <span class="form-answer">{{form.risk_justification}}</span></label>
+      <label for="benefits_description">2.4.2 For medium and high risk, describe the potential benefits of the study: <span class="form-answer">{{form.benefits_description}}</span></label>
+      <label for="risk_mitigation">2.4.3 For medium and high risk, describe how potential risks will be mitigated against: <span class="form-answer">{{form.risk_mitigation}}</span></label>
     </div>
 
 
@@ -509,9 +509,10 @@
                 <td>{{form.fund_amount}}</td>
           </tr>
           <!-- add button to add row -->
-          <tr>
+          <tr></tr>
             <td colspan="4">
             </td>
+          </tr>
         </tbody>
       </table>
 
@@ -526,8 +527,6 @@
 
     </div>
 
-  
-
   </main>
 
   <!-- Section 4 -->
@@ -537,7 +536,7 @@
 
   <!-- Section 5: Methodology -->
   <section id="section-5">
-    <h2>SECTION 5 – METHODOLOGY</h2>
+    <h2>Section 5: Methodology</h2>
 
     <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
     <table id="methodTypeTable" class="table table-bordered">
@@ -609,12 +608,12 @@
     <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
      <div id="data-methods">
-            <label>(a) Questionnaire: <span class="form-answer">{{form.questionnaire}}</span></label><br>
-            <label>(b) Interview: <span class="form-answer">{{form.interview}}</span></label><br>
-            <label>(c) Focus Group: <span class="form-answer">{{form.focus}}</span></label><br>
-            <label>(d) Observation: <span class="form-answer">{{form.observation}}</span></label><br>
-            <label>(e) Documents: <span class="form-answer">{{form.documents}}</span></label><br>
-            <label>(f) Other: <span class="form-answer">{{form.other}}</span></label><br>
+            <label>Questionnaire: <span class="form-answer">{{form.questionnaire}}</span></label><br>
+            <label>Interview: <span class="form-answer">{{form.interview}}</span></label><br>
+            <label>Focus Group: <span class="form-answer">{{form.focus}}</span></label><br>
+            <label>Observation: <span class="form-answer">{{form.observation}}</span></label><br>
+            <label>Documents: <span class="form-answer">{{form.documents}}</span></label><br>
+            <label>Other: <span class="form-answer">{{form.other}}</span></label><br>
     </div>
       
     <!-- Questionnaire -->
@@ -682,95 +681,90 @@
 
 <h3>5.5 Secondary Data Usage</h3>
 
-<!-- 5.5.1 -->
 <label>5.5.1 Will secondary data be used?</label><br>
-<span class="form-answer">{{ 'Yes' if form.uses_secondary_data else 'No' }}</span>
+<span class="form-answer">{{ 'Yes' if formA.uses_secondary_data else 'No' }}</span>
 
 <br><br>
 
-<!-- 5.5.2 -->
 <label>5.5.2 Is the data Public or Private?</label><br>
-<span class="form-answer">{{ form.data_type or 'Not specified' }}</span>
+<span class="form-answer">{{ formA.data_type or 'Not specified' }}</span>
 
 <br><br>
 
-<!-- 5.5.3 -->
 <h5>5.5.3 Details of the Secondary Data</h5>
 
 <label>5.5.3.1 Nature of the Data</label><br>
-<span class="form-answer">{{ form.data_nature or 'Not provided' }}</span>
+<span class="form-answer">{{ formA.data_nature or 'Not provided' }}</span>
 
 <br><br>
 
 <label>5.5.3.2 Origin/Source of Research Data</label><br>
-<span class="form-answer">{{ form.data_origin or 'Not provided' }}</span>
+<span class="form-answer">{{ formA.data_origin or 'Not provided' }}</span>
 
 <br><br>
 
 <label>5.5.3.3 What are the access conditions?</label><br>
-<span class="form-answer">{{ form.access_conditions or 'Not specified' }}</span>
+<span class="form-answer">{{ formA.access_conditions or 'Not specified' }}</span>
 
 <br><br>
 
 <label>5.5.3.4 Does the database contain personal information/identifiers?</label><br>
-<span class="form-answer">{{ form.personal_info or 'Not specified' }}</span>
+<span class="form-answer">{{ formA.personal_info or 'Not specified' }}</span>
+
+{% if formA.personal_info == 'Yes' %}
+  <label>5.5.3.5 Specify the personal info/identifiers:</label><br>
+  <span class="form-answer">{{ formA.personal_info_comment or 'None provided' }}</span>
+{% endif %}
 
 <br><br>
 
-<label>5.5.3.4.1 If yes, specify the personal info/identifiers:</label><br>
-<span class="form-answer">{{ form.personal_info_comment or 'None provided' }}</span>
+<label>5.5.3.6 Has the data been anonymized?</label><br>
+<span class="form-answer">{{ formA.data_anonymized or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.3.5 Has the data been anonymized?</label><br>
-<span class="form-answer">{{ form.data_anonymized or 'Not specified' }}</span>
+<label>5.5.3.7 Comment / Justification:</label><br>
+<span class="form-answer">{{ formA.anonymization_comment or 'None provided' }}</span>
 
 <br><br>
 
-<label>5.5.3.6 Comment / Justification:</label><br>
-<span class="form-answer">{{ form.anonymization_comment or 'None provided' }}</span>
+<label>5.5.3.8 Is the data from a company that has provided permission?</label><br>
+<span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
 
 <br><br>
 
-<!-- Private Data Section -->
-<label>5.5.3.7 Is the data from a company that has provided permission?</label><br>
-<span class="form-answer">{{ form.org_permision or 'Not specified' }}</span>
-
-<br><br>
-
-<label>5.5.3.7.1 Uploaded permission document:</label><br>
-{% if form.private_permission_file %}
-  <a href="{{ url_for('static', filename=form.private_permission_file) }}" target="_blank">View Document</a>
+<label>5.5.3.9 Uploaded permission document:</label><br>
+{% if formA.private_permission_file %}
+  <a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
 {% else %}
   <span class="form-answer">No file uploaded</span>
 {% endif %}
 
 <br><br>
 
-<!-- Public Data Section -->
-<label>5.5.4 What type of public data is going to be used?</label><br>
-<span class="form-answer">{{ form.public_data_description or 'None specified' }}</span>
+<label>5.5.3.10 What type of public data will be used?</label><br>
+<span class="form-answer">{{ formA.public_data_description or 'None specified' }}</span>
 
 <br><br>
 
-<!--Additional Considerations -->
-<label>5.5.5 Will data shortcomings/incompleteness be reported?</label><br>
-<span class="form-answer">{{ form.shortcomings_reported or 'Not specified' }}</span>
+<label>5.5.3.11 Will data shortcomings/incompleteness be reported?</label><br>
+<span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.6 How will data limitations be reported?</label><br>
-<span class="form-answer">{{ form.limitations_reporting or 'Not provided' }}</span>
+<label>5.5.3.12 How will data limitations be reported?</label><br>
+<span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
 
 <br><br>
 
-<label>5.5.7 Is the methodology and design aligned with secondary data use?</label><br>
-<span class="form-answer">{{ form.methodology_alignment or 'Not specified' }}</span>
+<label>5.5.3.13 Is the research methodology and design aligned with secondary data use?</label><br>
+<span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.8 How will the original owners of the data be acknowledged?</label><br>
-<span class="form-answer">{{ form.data_acknowledgment or 'Not provided' }}</span>
+<label>5.5.3.14 How will the original owners of the data be acknowledged?</label><br>
+<span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
+
    
   </section>
 
@@ -783,23 +777,20 @@
  
 <!-- Section 6 – Ethical Considerations -->
 <div class="form-section" id="section6">
-    <h2>SECTION 6 – ETHICAL CONSIDERATIONS</h2>
+    <h2>Section 6: Ethical Considerations</h2>
   
     <div class="question-block">
       <label for="informed-consent">6.1 Will informed consent be obtained? Explain the process:</label>
+      <br><span class="form-answer">{{form.informed_consent}}</span>
       <br>
     </div>
   
     <div class="question-block">
       <label>6.2 Data storage and access to data</label><br>
-      <span class="form-answer">Paper-based records must be kept in a secure location</span><br>
-      <span class="form-answer">{{form.secure_location}}</span>
-      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges<br>
-      <span class="form-answer">{{form.password_protected}}</span>
-      <span class="form-answer"> Electronic data will be kept in a protected place</span>
-      <br><span class="form-answer">{{form.protected_place}}</span>
-      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed</span>
-      <br><span class="form-answer">{{form.retention}}</span>
+      <span class="form-answer">Paper-based records must be kept in a secure location: {{'Yes' if form.secure_location else 'No'}}</span>
+      <span class="form-answer">Computer-based records must only be available to personnel involved in the study through access privileges: {{'Yes' if form.password_protected else 'No'}}</span>
+      <span class="form-answer"> Electronic data will be kept in a protected place: {{'Yes' if form.protected_place else 'No'}}</span>
+      <span class="form-answer">Paper-based data will be kept for 5 years and then destroyed: {{'Yes' if form.retention else 'No'}}</span>
     </div>
   
     <div class="question-block">
@@ -839,14 +830,14 @@
   
     <div class="question-block">
       <label>6.8 Select all data privacy practices applied:
+          <br>
+        <span class="form-answer">Personal identifiers will be removed: {{'Yes' if formA.remove_identifiers else 'No'}}</span>
         <br>
-        <span class="form-answer">{{form.remove_identifiers}}</span>
+        <span class="form-answer">Data encryption will be applied: {{'Yes' if formA.encryption else 'No'}}</span>
         <br>
-        <span class="form-answer">{{form.encryption}}</span>
+        <span class="form-answer">Use of Pseudonyms: {{'Yes' if formA.pseudonyms else 'No'}}</span>
         <br>
-        <span class="form-answer">{{form.pseudonyms}}</span>
-        <br>
-        <span class="form-answer">{{form.focus_group_warning}}</span>
+        <span class="form-answer">Participants in focus groups will be advised confidentiality cannot be assured: {{'Yes' if formA.focus_group_warning else 'No'}}</span>
       </label>
     </div>
   
@@ -909,14 +900,14 @@
   
     <div class="question-block">
       <label for="participant-comp">6.13 Describe compensation to participants (if applicable):
-        <br><span class="form-answer">{{form.participants_comp}}</span>
+        <br><span class="form-answer">{{form.participant_comp}}</span>
       </label>
 
     </div>
   
     <div class="question-block">
       <label for="participant-costs">6.14 Describe any financial costs to participants (if applicable):
-        <span class="form-answer">{{form.participants_costs}}</span>
+        <span class="form-answer">{{form.participant_costs}}</span>
       </label>
 
     </div>
@@ -937,8 +928,8 @@
 
 
 
-    <h3>SECTION 7: Declaration</h3>
-    <p><strong>STATEMENT AGREEING TO COMPLY WITH ETHICAL PRINCIPLES SET OUT IN UJ POLICY ON RESEARCH ETHICS</strong></p>
+    <h2>Section 7: Declaration</h2>
+    <p><strong>Statement Agreeing To Comply With Ethical Principles Set Out In UJ Policy On Research Ethics</strong></p>
 
     <div class="form-group">
       <label for="declaration-name" style="text-align: justify;">

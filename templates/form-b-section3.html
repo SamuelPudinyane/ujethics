@@ -76,18 +76,10 @@
   <!-- Main Content -->
   <main class="main-content">
     <form id="formBFinal" action="{{url_for('form_b_sec3')}}" method="post" enctype="multipart/form-data">
-      <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
+      
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <h2>Ethical Considerations</h2>
+      <h2>Section 3: Ethical Considerations</h2>
 
       <div class="question-block">
         <label>3.1 Was ethical clearance granted for the original data gathering phase?</label>
@@ -112,10 +104,10 @@
 
       <hr>
 
-      <h2>Risk Assessment</h2>
+      <h3>3.4 Risk Assessment</h3>
 
       <div class="question-block">
-        <label>The study presents:</label>
+        <label>3.4.1 The study presents:</label>
         <div class="yes-no">
           <input type="radio" name="risk_level" value="Low Risk" required> Low Risk
           <input type="radio" name="risk_level" value="Medium Risk" required> Medium Risk
@@ -123,15 +115,15 @@
         </div>
       </div>
 
-      <label>Comments:</label>
+      <label>3.4.2 Comments:</label>
       <textarea name="risk_comments" rows="3" placeholder="Justify the risk assessment"></textarea>
    
 
       <hr>
 
-      <h2>Declaration</h2>
+      <h2>Section 4: Declaration</h2>
 
-      <p class="form-note">
+      <p class="form-note" style="text-align: justify;">
         I, <input type="text" id="declaration-name" name="declaration_name" required style="display: inline-block; width: 300px;">
         (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics. 
       </p>
@@ -159,33 +151,6 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | JBS Ethics System</p>
   </footer>
-
-<!-- Confirmation Modal 
-<div id="confirmationModal" class="modal-overlay">
-  <div class="modal-content">
-    <h3>Form B Submitted Successfully!</h3>
-    <p>Your application has been received and forwarded to your supervisor.</p>
-    <button onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
-  </div>
-</div>
--->
-<!-- Script -->
-<script>
-  // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
-//
- // document.getElementById('formBFinal').addEventListener('submit', function (e) {
- //   e.preventDefault();
- //   document.getElementById('confirmationModal').style.display = 'flex';
- // });
-</script>
 
 </body>
 </html>

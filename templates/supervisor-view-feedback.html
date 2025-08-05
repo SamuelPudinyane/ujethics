@@ -10,6 +10,12 @@
   <link rel="stylesheet" href="css/supervisor.css" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/supervisor.css') }}">
+  <style>
+    .form-group {
+      line-height: 2.0;
+      font-size: 19px;
+    }
+  </style>
 </head>
 <body>
 
@@ -81,8 +87,8 @@
       <table class="table table-bordered mt-3">
         <thead class="thead-light">
           <tr>
-            <th>Document</th>
-            <th>Supervisor Comments</th>
+            <th style="width: 40%;">Document</th>
+            <th style="width: 60%;">Supervisor Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -113,6 +119,8 @@
         </tbody>
       </table>
 
+      <div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
+
       <div class="form-group">
         <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>
         <span  id="supervisor_feedback">{{view_form.supervisor_feedback}}</span>
@@ -130,6 +138,7 @@
       <span id="signature_date" >{{view_form.signature_date.strftime('%d/%m/%Y')}}</span>
     </div>
   </div>
+  </div>
 {% endif %}
     </section>
     {% if view_form.review_date %}
@@ -139,9 +148,9 @@
 <section class="admin-content">
 <div id="supervisorDeclaration" >
     
-      <h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+      <h3>JBS RESEARCH ETHICS COMMITTEE REVIEWER REPORT</h3>
 
-  <div class="section">
+  <div class="form-group">
     <label>Student Name:</label>
     <strong>{{view_form.declaration_name}}</strong>
 <br>
@@ -170,12 +179,13 @@
   {% if view_form.review_form_status %}
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <table>
-      <thead>
+    
+      <table class="table table-bordered mt-3">
+        <thead class="thead-light">
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 30%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 50%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -236,7 +246,7 @@
     </table>
   </div>
 
-  <div class="section">
+  <div class="section" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
     <h3>First Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
@@ -248,12 +258,13 @@
   
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <table>
-      <thead>
+    
+      <table class="table table-bordered mt-3">
+        <thead class="thead-light">
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 30%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 50%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -314,10 +325,11 @@
     </table>
   </div>
 
-  <div class="section">
+  <div class="section" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
     <h3>Second Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
   </div>
+  <br>
 </div>
   {% endif %}
 {% endif %}
@@ -326,6 +338,7 @@
     <!-- <footer class="footer">
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer> -->
+    <br>
   </main>
 </div>
 

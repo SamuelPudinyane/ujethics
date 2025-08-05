@@ -72,20 +72,12 @@
   <!-- Main Content -->
   <main class="main-content">
 <form  action="{{url_for('reject_or_Accept_form_c',id=formc.form_id)}}" method="POST" >
-  <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
+
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
        
    
-      <h2>SECTION 1: Researcher's Details</h2>
+      <h2>Section 1: Researcher's Details</h2>
       <label>Applicant Name
         <br><span class="form-answer">{{formc.applicant_name}}</span>
       </label>
@@ -116,8 +108,6 @@
       <label>Supervisor Email(s)
         <br><span class="form-answer">{{formc.supervisor_email}}</span>
       </label>
-
-      
     
   </main>
 
@@ -126,7 +116,7 @@
   <!-- Main Content -->
     <main class="main-content">
 
-      <h2>SECTION 2: Risk Assessment</h2>
+      <h2>Section 2: Risk Assessment</h2>
 
       <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
       <table>
@@ -162,6 +152,7 @@
      
       
       <hr>
+      <br>
 
       <h4>2.2 Research Activity Type</h4>
 <table>
@@ -202,6 +193,7 @@
 <label><strong>Comments:</strong></label>
 
       <hr>
+      <br>
 
       <h4>2.3 Additional Research Considerations</h4>
       <table>
@@ -237,25 +229,14 @@
       <br>
      
       
-      <h3>Risk Assessment</h3>
+      <h3>2.4 Risk Assessment</h3>
       
-      <label><strong>3.1 Rate your project risk level:</strong>
+      <label>2.4.1 Rate your project risk level:
       <br><span class="form-answer">{{formc.risk_level}}</span></label>
     
-      
       <br>
-      <label><strong>3.2 Justify the Risk Level</strong>
+      <label>2.4.2 Justify the Risk Level
       <br><span class="form-answer">{{formc.risk_justification}}</span></label>
-
-      
-      <label><strong>3.3 If Medium or High Risk, describe potential benefits:</strong>
-      <br><span class="form-answer">{{formc.risk_benefits}}</span>
-    </label>
-     
-      
-      <label><strong>3.4 If Medium or High Risk, describe how risks will be mitigated:</strong>
-      <br><span class="form-answer">{{formc.risk_mitigation}}</span></label>
-  
 
   </main>
 
@@ -264,7 +245,7 @@
    <!-- Main Content -->
   <main class="main-content">
 
-      <h2>SECTION 3: Proposal Summary Sheet</h2>
+      <h2>Section 3: Proposal Summary Sheet</h2>
 
       <div class="form-group">
         <label for="project_title">3.1 Title or Provisional Title of the Research Project
@@ -308,7 +289,6 @@
      
       </div>
 
-  
   </main>
 
   <!-- Section 4 -->
@@ -316,7 +296,7 @@
  <!-- Main Content -->
   <main class="main-content">
 
-      <h2>SECTION 4: Declaration</h2>
+      <h2>Section 4: Declaration</h2>
 
       <p class="form-note" style="text-align: justify;">
         I, <strong> <u>{{formc.declaration_name}}</u> </strong>
@@ -344,22 +324,22 @@
     
       <div class="form-group">
         <label for="student_name">Student Name:</label>
-        <span  id="student_name"  >{{formc.declaration_name}}</span>
+        <span class="form-answer" id="student_name"  >{{formc.declaration_name}}</span>
       </div>
 
       <div class="form-group">
         <label for="submission_date">Date of Submission:</label>
-        <span  id="submission_date" >{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
+        <span class="form-answer" id="submission_date" >{% if formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</span>
       </div>
 
       <div class="form-group">
         <label for="supervisor_name">Supervisor Name:</label>
-        <span  id="supervisor_name"  >{{formc.supervisor_name}}</span>
+        <span class="form-answer" id="supervisor_name"  >{{formc.supervisor_name}}</span>
       </div>
 
       <div class="form-group">
         <label for="research_title">Title of Research:</label>
-        <span  id="research_title" >{{formc.project_title}}</span>
+        <span class="form-answer" id="research_title" >{{formc.project_title}}</span>
       </div>
 
       <div class="form-group">

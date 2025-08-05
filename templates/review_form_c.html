@@ -65,22 +65,12 @@
     </div>
   </header>
   <form action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM C')}}" method="post"  enctype="multipart/form-data">
-    <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
-
+  
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <!-- Main Content -->
   <main class="main-content">
 
-   
-      <h2>SECTION 1: Researcher's Details</h2>
+      <h2>Section 1: Researcher's Details</h2>
       <label>Applicant Name
         <br><span class="form-answer">{{form.applicant_name}}</span>
       </label>
@@ -112,8 +102,6 @@
         <br><span class="form-answer">{{form.supervisor_email}}</span>
       </label>
 
-      
-    
   </main>
 
   
@@ -122,9 +110,7 @@
   <!-- Main Content -->
     <main class="main-content">
 
-
-
-      <h2>SECTION 2: Risk Assessment</h2>
+      <h2>Section 2: Risk Assessment</h2>
 
       <h4>2.1 Direct Involvement of Vulnerable Groups</h4>
       <table>
@@ -157,9 +143,10 @@
       </table>
       
       <label><strong>Comments (e.g. “No participants”):</strong></label>
-     
-      
+    
       <hr>
+
+      <br>
 
       <h4>2.2 Research Activity Type</h4>
 <table>
@@ -200,6 +187,7 @@
 <label><strong>Comments:</strong></label>
 
       <hr>
+      <br>
 
       <h4>2.3 Additional Research Considerations</h4>
       <table>
@@ -229,28 +217,18 @@
           
       <label><strong>Comments:</strong></label>
      
-      
       <hr>
+      <br>
       
-      <h5>Risk Assessment</h5>
+      <h3>2.4 Risk Assessment</h3>
       
-      <label><strong>Rate your project risk level:</strong>
+      <label><strong>2.4.1 Rate your project risk level:</strong>
       <br><span class="form-answer">{{form.risk_level}}</span></label>
     
       
       <br>
-      <label><strong>Justify the Risk Level</strong>
+      <label><strong>2.4.2 Justify the Risk Level</strong>
       <br><span class="form-answer">{{form.risk_justification}}</span></label>
-
-      
-      <label><strong>If Medium or High Risk, describe potential benefits:</strong>
-      <br><span class="form-answer">{{form.risk_benefits}}</span>
-    </label>
-     
-      
-      <label><strong>If Medium or High Risk, describe how risks will be mitigated:</strong>
-      <br><span class="form-answer">{{form.risk_mitigation}}</span></label>
-  
 
   </main>
 
@@ -258,55 +236,63 @@
 
    <!-- Main Content -->
   <main class="main-content">
-    
-      <h2>Ethical Considerations</h2>
+      <h2>Section 3: Proposal Summary Sheet</h2>
 
-      <div class="question-block" >
-        <label>3.1 Was ethical clearance granted for the original data gathering phase?
-            <br><span class="form-answer">{{form.original_clearance}}</span>
-        </label>
-        
-      </div>
-
-      <div class="question-block">
-        <label>3.2 Did participants in the original study grant permission for future use of the data?
-            <br><span class="form-answer">{{form.participant_permission}}</span>
+ <div class="form-group">
+        <label for="project_title">3.1 Title or Provisional Title of the Research Project
+          <br><span class="form-answer">{{form.summary_title}}</span>
         </label>
        
       </div>
 
-      <label>3.3 If the data is not in the public domain, explain how it will be safely stored and destroyed:
-        <br><span class="form-answer">{{form.data_safekeeping}}</span>
-      </label>
- 
+      <div class="form-group">
+        <label for="executive_summary">3.2 Executive Summary of the Study
+          <br><span class="form-answer">{{form.executive_summary}}</span>
+        </label>
+      
+      </div>
 
-      <hr>
+      <div class="form-group">
+        <label for="research_questions">3.3 Research Questions / Hypotheses
+          <br><span class="form-answer">{{form.research_questions}}</span>
+        </label>
 
-      <h2>Risk Assessment</h2>
+      </div>
 
-      <div class="question-block">
-        <label>The study presents:
-            <br><span class="form-answer">{{form.risk_level}}</span>
+      <div class="form-group">
+        <label for="research_purpose">3.4 Research Purpose and Objectives / Anticipated Outcomes
+          <br><span class="form-answer">{{form.research_purpose}}</span>
         </label>
         
       </div>
 
-      <label>Comments:
-        <br><span class="form-answer">{{form.risk_comments}}</span>
-      </label>
-    
+      <div class="form-group">
+        <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?
+          <br><span class="form-answer">{{form.secondary_data_info}}</span>
+        </label>
+
+      </div>
+
+      <div class="form-group">
+        <label for="exemption_reason">3.6 Why does your study meet exemption requirements?
+          <br><span class="form-answer">{{form.exemption_reason}}</span>
+        </label>
+     
+      </div>
 
       <hr>
 
-      <h2>Declaration</h2>
+      <br>
+
+      <h2>Section 4: Declaration</h2>
 
       <p class="form-note">
-        I, <strong>{{form.declaration_name}}</strong>
+        I, <strong><u>{{form.declaration_name}}</u></strong>
         (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics. 
       </p>
 
       <label>Full Name
-        <br><strong>{{form.full_name}}</strong>
+        <br><strong><u>{{form.full_name}}</u></strong>
       </label>
 
       <label>Date
@@ -397,21 +383,18 @@
       <input type="date" class="form-control" id="signature_date" name="signature_date">
     </div>
     <div class="submit-row">
-       <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button><br>
-        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button><br>
-    </div>
-    <!--<button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Committee</button>-->
-  </div>
+       <button type="submit" class="btn-approve" onclick="document.getElementById('status').value='Approved'">✔ Approve</button>
+        <button type="submit" class="btn-minor" onclick="document.getElementById('status').value='Approved with Minor Changes'">⚠ Approved with Minor Changes</button>
+   
+ 
   <div id="rejectBtn">
     <button type="submit" class="btn-resubmit" onclick="document.getElementById('status').value='Resubmission Required'">↻ Resubmission Required</button>
     <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
   </div>
   </div>
-  <!-- Reject Button (initially hidden) -->
-  <!--<div >
-    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Requires Resubmission</button>
-  </div>-->
-
+   </div>
+    </div>
+ 
 </form>
   </main>
 

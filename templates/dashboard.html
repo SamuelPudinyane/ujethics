@@ -56,35 +56,10 @@
   <!-- Main Content -->
   <main class="main-content">
 
-    <!-- Form Selection -->
-    <!-- <section>
-      <h3>Select a Form to Start</h3>
-      <div class="form-card-grid">
-        <div class="form-card" onclick="location.href='{{url_for('form_a_upload')}}'">
-          <h5>Form A</h5>
-          <p>Primary Data Collection (Human Interaction)</p><span class="info-icon" title="Use when your research involves human interaction such as interviews, surveys, or focus groups.">ℹ️</span>
-        </div>
-        <div class="form-card" onclick="location.href='{{url_for('form_b_upload')}}'">
-          <h5>Form B</h5>
-          <p>Secondary Data (No Human Interaction)</p>
-          <span class="info-icon" title="Use for secondary/existing data only. No human interaction is involved, but
-            permissions may be needed.">ℹ️</span>
-          
-        </div>
-        <div class="form-card" onclick="location.href='{{url_for('form_c_upload')}}'">
-          <h5>Form C</h5>
-          <p>Public Data – Clearance Exemption</p>
-          <span class="info-icon" title="Applies when data is publicly available and anonymized. No permissions or human
-            engagement required.">ℹ️</span>
-        
-        </div>
-
-      </div>
-    </section> -->
-
     <!-- Submission Status Table -->
-    <section style="margin-top: 2rem;">
-      <h4>Your Submissions</h4>
+    <section>
+      <h2>Submission Status</h2>
+      <p>Below is the status of your submissions. Click on the links to view details or edit your submission.</p>
       {% if (formA) or (formB) or (formC) %}
       <table class="status-table">
         <thead>
@@ -120,7 +95,7 @@
                   {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
-                  FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT
+                  FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
                   {% elif formA.rejected_or_accepted and formA.supervisor_date%}
                   FORM SUBMITTED TO ETHICS ADMIN
                   {% elif formA.submitted_at and formA.declaration_name %}
@@ -166,7 +141,7 @@
                   {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
-                  FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT
+                  FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
                   {% elif formB.rejected_or_accepted and formB.supervisor_date%}
                   FORM SUBMITTED TO ETHICS ADMIN
                   {% elif formB.submitted_at and formB.declaration_name %}
@@ -210,7 +185,7 @@
                   {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif not formC.rejected_or_accepted and formC.supervisor_date%}
-                  FORM WAS REJECTED PLEASE REVIEW THE FEEDBACK AND RESUBMIT
+                  FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
                   {% elif formC.rejected_or_accepted and formC.supervisor_date%}
                   FORM SUBMITTED TO ETHICS ADMIN
                   {% elif formC.submission_date and formC.declaration_name %}

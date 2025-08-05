@@ -8,7 +8,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
  
   <link rel="stylesheet" href="{{ url_for('static', filename='css/supervisor.css') }}">
+  <style>
+    .form-group {
+      line-height: 2.0;
+      font-size: 19px;
+    }
+  </style>
 </head>
+
 <body>
 
 <div class="admin-wrapper">
@@ -74,8 +81,8 @@
       <table class="table table-bordered mt-3">
         <thead class="thead-light">
           <tr>
-            <th>Document</th>
-            <th>Supervisor Comments</th>
+            <th style="width: 40%;">Document</th>
+            <th style="width: 60%;">Supervisor Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -107,12 +114,14 @@
         </tbody>
       </table>
 
-      <div class="form-group">
+      <div style="border: 1px solid black; border-radius: 5px; padding: 10px;">
+
+          <div class="form-group">
         <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>
         <span  id="supervisor_feedback">{{view_form.supervisor_feedback}}</span>
       </div>
 
-  <!-- Accept Fields (initially hidden) -->
+      <!-- Accept Fields (initially hidden) -->
   <div id="acceptFields" >
     <div class="form-group">
       <label for="supervisor_signature">Supervisor Signature:</label>
@@ -124,6 +133,11 @@
       <span id="signature_date" >{% if view_form.signature_date %}{{view_form.signature_date.strftime('%d-%m-%Y')}}{% endif %}</span>
     </div>
   </div>
+
+      </div>
+
+  
+
 {% endif %}
     </section>
     {% if view_form.review_date %}
@@ -132,28 +146,41 @@
   <br>
   <hr>
     
-      <h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
+      <h1>JBS RESEARCH ETHICS COMMITTEE : REVIEWER REPORT</h1>
 
   <div class="section">
-    <label>Student Name:</label>
-    <strong>{{view_form.declaration_name}}</strong>
+    <div class="form-group">
+      <label>Student Name:</label>
+      <strong>{{view_form.declaration_name}}</strong>
+    </div>
+
 <br>
-    <label>Date of Submission:</label>
-    <strong>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
+    <div class="form-group">
+      <label>Date of Submission:</label>
+      <strong>{% if view_form.submitted_at%}{{view_form.submitted_at.strftime('%d/%m/%Y')}}{% elif view_form.submission_date%}{{view_form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</strong>
+    </div>
 <br>
-    <label>Date of Re-submission:</label>
-    <strong>{% if view_form.declaration_date%}{{view_form.declaration_date}}
-        {% elif view_form.signature_date %}{{view_form.signature_date.strftime('%d/%m/%Y')}}
-        {% endif%}</strong>
+    <div class="form-group">
+      <label>Date of Re-submission:</label>
+      <strong>{% if view_form.declaration_date%}{{view_form.declaration_date}}
+          {% elif view_form.signature_date %}{{view_form.signature_date.strftime('%d/%m/%Y')}}
+          {% endif%}</strong>
+    </div>
 <br>
+    <div class="form-group">
     <label>Supervisor:</label>
     <strong>{{view_form.supervisor_name}}</strong>
+    </div>
 <br>
+    <div class="form-group">
     <label>Title of Research:</label>
     <strong>{% if view_form.study_title%}{{view_form.study_title}}{% elif view_form.project_title%}{{view_form.project_title}}{% endif%}</strong>
+    </div>
 <br>
+    <div class="form-group">
     <label>Date of Review:</label>
     <strong type="date" id="review_date">{{view_form.review_date}}</strong>
+    </div>
   </div>
 <br>
 </section>
@@ -168,12 +195,12 @@
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
     <br>
-    <table>
-      <thead>
+  <table class="table table-bordered mt-3">
+      <thead class="thead-light">
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 30%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 50%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -235,7 +262,7 @@
   </div>
   <br>
 
-  <div class="section">
+  <div class="section" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
     <h3>First Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments}}</span>
   </div>
@@ -244,16 +271,19 @@
   <br>
 </section>
 <hr>
+
+<section class="admin-content">
   {% if view_form.review_form_status1 %}
   
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <table>
-      <thead>
+    <table class="table table-bordered mt-3">
+      <thead class="bg-dark text-white">
+
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 30%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 50%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -315,11 +345,12 @@
   </div>
   <br>
 
-  <div class="section">
+  <div class="section" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
     <h3>Second Reviewer Comments</h3>
     <span id="additional_comments">{{view_form.review_additional_comments1}}</span>
   </div>
 </div>
+</section>
 </section>
 
   {% endif %}
@@ -330,7 +361,7 @@
       <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
     </footer> -->
   </main>
-</div>
+
 
 </body>
 </html>

@@ -41,18 +41,9 @@
 
   
     <form action="{{url_for('form_c_sec3')}}"  method="post" enctype="multipart/form-data">
-      <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-success alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
-
+      
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <h2>SECTION 3: Proposal Summary Sheet</h2>
+      <h2>Section 3: Proposal Summary Sheet</h2>
 
       <div class="form-group">
         <label for="summary_title">3.1 Title or Provisional Title of the Research Project</label>
@@ -75,12 +66,12 @@
       </div>
 
       <div class="form-group">
-        <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and ethical issues handled?</label>
+        <label for="secondary_data_info">3.5 Secondary Data: How was data originally collected, and how ethical aspects were handled?</label>
         <textarea id="secondary_data_info" name="secondary_data_info" rows="4" placeholder="Explain if using secondary data sources" required></textarea>
       </div>
 
       <div class="form-group">
-        <label for="exemption_reason">3.6 Why does your study meet exemption requirements?</label>
+        <label for="exemption_reason">3.6 Why does your study meet exemption requirements (Explain clearly) ?</label>
         <textarea id="exemption_reason" name="exemption_reason" rows="4" placeholder="Explain why ethical exemption applies" required></textarea>
       </div>
 
@@ -98,16 +89,6 @@
   </footer>
 
 </div>
-<script>
-  // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
-</script>
+
 </body>
 </html>

@@ -66,22 +66,13 @@
     </div>
   </header>
 <form  action="{{url_for('student_edit_formb')}}" method="post" enctype="multipart/form-data">
-      <!-- Error Messages -->
-            <!-- {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %} -->
-
+      
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="formb_id" value="{{ formB.form_id }}">
     <!-- Main Content -->
     <main class="main-content">
 
-      <h2>Researcher's Details</h2>
+      <h2>Section 1: Researcher's Details</h2>
       <label>Applicant Name
     </label><input type="text" name="applicant_name" value="{{formB.applicant_name}}">
       <label>Student/Staff Number 
@@ -123,7 +114,7 @@
     <main class="main-content">
 
     
-      <h2>Research Project and Data Information</h2>
+      <h2>Section 2: Research Project and Data Information</h2>
 
       <label>1. Short Description of the Research Project (±200 words)
         <br>
@@ -134,7 +125,6 @@
 
       <hr>
 
-      <h3>2. Details of the Data</h3>
 
       <label>2.1 Nature of the Data <br>
         <input type="text" name="data_nature" value="{{formB.data_nature}}">
@@ -188,7 +178,7 @@
        
       </div>
 
-      <label>Comment / Justification:<br>
+      <label>2.6.1 Comment / Justification:<br>
         <input type="text" name="anonymization_comment" value="{{formB.anonymization_comment}}">
     </label>
 
@@ -201,7 +191,7 @@
         </label>
       </div>
 
-      <label>Provide permission details (or attach separately):
+      <label>2.7.1 Provide permission details (or attach separately):
         <br>
         <input type="text" name="permission_details" value="{{formB.permission_details}}">
      
@@ -247,7 +237,7 @@
    <!-- Main Content -->
   <main class="main-content">
     
-      <h2>Ethical Considerations</h2>
+      <h2>Srction 3: Ethical Considerations</h2>
 
       <div class="question-block">
         <label>3.1 Was ethical clearance granted for the original data gathering phase?
@@ -272,14 +262,14 @@
         <input type="text" name="data_safekeeping" value="{{formB.data_safekeeping}}">
 
       </label>
- 
+      </main>
 
-      <hr>
+      <main class="main-content">
 
-      <h2>Risk Assessment</h2>
+      <h2>Section 4: Risk Assessment</h2>
 
       <div class="question-block">
-        <label>The study presents:
+        <label>4.1 The study presents:
             <br>
             <input type="text" name="risk_level" value="{{formB.risk_level}}">
         
@@ -287,18 +277,19 @@
         
       </div>
 
-      <label>Comments:
+      <label>4.2 Comments:
         <br>
          <input type="text" name="risk_comments" value="{{formB.risk_comments}}">
       
       </label>
+      </main>
     
 
-      <hr>
+      <main class="main-content">
 
-      <h2>Declaration</h2>
+      <h2>Section 5: Declaration</h2>
 
-      <p class="form-note">
+      <p class="form-note" style="text-align: justify;">
         I, <input type="text" name="declaration_name" value="{{formB.declaration_name}}">
         (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics. 
       </p>
@@ -359,21 +350,6 @@
   <footer class="footer">
     <p>&copy; 2025 Johannesburg Business School | University of Johannesburg</p>
   </footer>
-
-  
-<!-- Script -->
-<script>
-  // Hide alert after 3 seconds
-    setTimeout(function() {
-      const alert = document.getElementById('alertMessage');
-      if (alert) {
-        alert.classList.remove('show'); // Bootstrap fade out
-        alert.classList.add('fade'); // add fade class
-        alert.style.display = 'none'; // or use .remove() if you prefer
-      }
-    }, 3000); // 3000ms = 3 seconds
-
-</script>
 
 </body>
 </html>

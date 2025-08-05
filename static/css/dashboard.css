@@ -53,9 +53,11 @@ h2, label, input, select, textarea {
   gap: 20px;
 }
 
-.logo {
-  height: 60px;
-  object-fit: contain;
+  .logo.uj {
+  height: 55px;
+  border-radius: 8%; /* makes it round */
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* soft shadow */
 }
 
 .nav-title {
