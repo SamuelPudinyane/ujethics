@@ -114,7 +114,7 @@
                   <button type="submit" class="btn btn-success">Send certificate</button>
                   </form>
                   {% elif form.review_status and form.review_status1 and form.rejected_or_accepted and form.recommendation=='Ready for submission' and form.supervisor_feedback and ('low' in form.risk_level|lower or 'low' in form.risk_rating|lower) %}
-                  <a href="{{url_for('certificate',id=form.form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificates</a>
+                  <a href="{{url_for('certificate',id=form.form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificate</a>
                   {% set review_comment = '' %}
                   {% elif form.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                     {% set review_comment = form.form_review_comment %}
@@ -155,7 +155,7 @@
               (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
               
-              {% elif form.risk_rating and 'low' not in form.risk_rating|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved']) and
+              {% elif 'low' not in form.risk_rating|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved']) and
               (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
              
