@@ -99,6 +99,17 @@
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
+              {% elif not forma.review_status or not forma.review_status1%}
+              {{forma.review_recommendation}}
+              {{forma.review_recommendation1}}
+               {% set review_comment = '' %}
+                {% elif forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = forma.form_review_comment %}
+                {% elif forma.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = forma.form_review_comment1 %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status: {{ review_comment }}</p>
               {% elif not forma.recommendation%}
               Ready for review
               {% elif forma.certificate_issued and not forma.certificate_received%}
@@ -112,17 +123,7 @@
               Approved by both Reviewers
               {% elif forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_feedback and not forma.review_status%}
               Submitted to Reviewers
-              {% elif not forma.review_status or not forma.review_status1%}
-              {{forma.review_recommendation}}
-              {{forma.review_recommendation1}}
-               {% set review_comment = '' %}
-                {% elif forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = forma.form_review_comment %}
-                {% elif forma.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = forma.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+              
                   {% endif %}
               {% elif 'Reject' in ['forma.form_review_comment', 'forma.form_review_comment1'] %}
               Rejected
@@ -225,6 +226,17 @@
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
+              {% elif not formb.review_status or not formb.review_status1%}
+              {{formb.review_recommendation}}
+              {{formb.review_recommendation1}}
+              {% set review_comment = '' %}
+                {% elif formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formb.form_review_comment %}
+                {% elif formb.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formb.form_review_comment1 %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status: {{ review_comment }}</p>
               {% elif not formb.recommendation%}
               Ready for review
              {% elif formb.certificate_issued and not formb.certificate_received%}
@@ -238,17 +250,7 @@
               Approved by both Reviewers
               {% elif formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_feedback and not formb.review_status%}
               Submitted to Reviewers
-              {% elif not formb.review_status or not formb.review_status1%}
-              {{formb.review_recommendation}}
-              {{formb.review_recommendation1}}
-              {% set review_comment = '' %}
-                {% elif formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formb.form_review_comment %}
-                {% elif formb.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formb.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+              
                   {% endif %}
               {% elif 'Reject' in ['formb.form_review_comment', 'formb.form_review_comment1'] %}
               Rejected
@@ -336,6 +338,17 @@
               Awaiting for review
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
+              {% elif not formc.review_status or not formc.review_status1%}
+              {{formc.review_recommendation}}
+              {{formc.review_recommendation1}}
+              {% set review_comment = '' %}
+                {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formc.form_review_comment %}
+                {% elif formc.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formc.form_review_comment1 %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status: {{ review_comment }}</p>
               {% elif not formc.recommendation%}
               Ready for review
               {% elif formc.certificate_email%}
@@ -351,17 +364,7 @@
               Approved by both Reviewers
               {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_feedback and not formc.review_status%}
               Submitted to Reviewers
-              {% elif not formc.review_status or not formc.review_status1%}
-              {{formc.review_recommendation}}
-              {{formc.review_recommendation1}}
-              {% set review_comment = '' %}
-                {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formc.form_review_comment %}
-                {% elif formc.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formc.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+              
                   {% endif %}
                 
               {% elif 'Reject' in ['formc.form_review_comment', 'formc.form_review_comment1'] %}

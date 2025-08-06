@@ -94,6 +94,8 @@
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
+                  {% elif formA.certificate_issued %}
+                  Certificate was Issued
                   {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
                   FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
                   {% elif formA.rejected_or_accepted and formA.supervisor_date%}
@@ -109,6 +111,8 @@
                 </td>
             <td>
               {% if not formA.rejected_or_accepted and formA.supervisor_date %}
+              <a href="{{url_for('student_edit_forma')}}">Review</a>
+              {% elif not formA.rejected_or_accepted and not formA.declaration_name%}
               <a href="{{url_for('student_edit_forma')}}">Review</a>
               {% else %}
               <a href="{{url_for('student_form_pdf',form_id=formA.form_id,form_type='A')}}">View Form</a>
@@ -140,6 +144,8 @@
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
+                  {% elif formB.certificate_issued %}
+                  Certificate was Issued
                   {% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
                   FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
                   {% elif formB.rejected_or_accepted and formB.supervisor_date%}
@@ -155,6 +161,8 @@
             </td>
             <td>
               {% if not formB.rejected_or_accepted and formB.supervisor_date %}
+              <a href="{{url_for('student_edit_formb')}}">Review</a>
+              {% elif not formB.rejected_or_accepted and not formB.declaration_name%}
               <a href="{{url_for('student_edit_formb')}}">Review</a>
               {% else %}
               <a href="{{url_for('student_form_pdf',form_id=formB.form_id,form_type='B')}}">View Form</a>
@@ -184,6 +192,8 @@
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
+                  {% elif formC.certificate_issued %}
+                  Certificate was Issued
                   {% elif not formC.rejected_or_accepted and formC.supervisor_date%}
                   FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
                   {% elif formC.rejected_or_accepted and formC.supervisor_date%}
@@ -199,7 +209,9 @@
                 </td>
             <td>
               {% if not formC.rejected_or_accepted and formC.supervisor_date %}
-              <a href="{{url_for('student_edit_formc')}}">Edit and resubmit</a>
+              <a href="{{url_for('student_edit_formc')}}">Review</a>
+              {% elif not formC.rejected_or_accepted and not formC.declaration_name%}
+              <a href="{{url_for('student_edit_formc')}}">Review</a>
               {% else %}
               <a href="{{url_for('student_form_pdf',form_id=formC.form_id,form_type='C')}}">View Form</a>
               <br>

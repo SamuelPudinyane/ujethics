@@ -430,6 +430,7 @@ class FormA(Base):
     recommendation= Column(String(255),nullable=True)
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
+    submitted=Column(Boolean,default=False)
     #this is working on supervisor site
     supervisor_date=Column(DateTime(255),nullable=True)
     supervisor_org_permission_status=Column(String(255),nullable=True)
@@ -600,6 +601,7 @@ class FormB(Base):
     declaration_date = Column(DateTime, nullable=True)
 
     submitted_at = Column(DateTime, server_default=func.now())
+    submitted=Column(Boolean,default=False)
 
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
@@ -794,6 +796,8 @@ class FormC(Base):
     declaration_name = Column(String(200),nullable=True)
     full_name = Column(String(200),nullable=True)
     submission_date = Column(DateTime,nullable=True)
+    submitted=Column(Boolean,default=False)
+    
     
     supervisor_comments = Column(Text,nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
