@@ -107,8 +107,13 @@
         <input type="file" name="impact_assessment_path" accept=".pdf,.docx" required>
       </div>
 
+      <div class="question-block">
+        <label>7. Upload Participation Information Sheet & Consent Form</label>
+        <input type="file" name="participation_info_sheet" accept=".pdf,.docx" required>
+      </div>
+
       <div class="form-navigation">
-        <a href="{{url_for('student_dashboard')}}" class="revise-btn" id="backButton">⬅ Back</a>
+        <a href="{{url_for('ethics_pack')}}" class="revise-btn" id="backButton">⬅ Back</a>
         <button type="submit" class="approve-btn">Proceed to Form A</button>
       </div>
     </form>
@@ -116,7 +121,7 @@
 
   
 <footer class="footer">
-  <p>&copy;  Research Ethics Committee | Johannesburg Business School</p>
+  <p>&copy;  Prof. M. Munsamy & Prof. A Telukdarie</p>
 </footer>
 
   <script>

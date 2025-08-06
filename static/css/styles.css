@@ -7,10 +7,6 @@ body {
   padding: 0;
 }
 
-h2, label, input, select, textarea {
-    color: black;
-}
-
 p {
   font-style: italic;
 }
@@ -328,7 +324,7 @@ button:disabled {
 .main-content label {
   font-weight: 700;
   color: #000000;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   display: block;
 }
 
@@ -384,10 +380,6 @@ button:disabled {
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
-}
-
-.view-btn:hover {
-  background-color: #029c9c;
 }
 
 
@@ -470,13 +462,6 @@ button:disabled {
   font-size: 1rem;
 }
 
-form label {
-  font-weight: 800;
-  margin-top: 1rem;
-  display: block;
-  color: #020202;
-}
-
 .form-wrapper {
   display: flex;
   flex-direction: column;
@@ -492,10 +477,11 @@ form label {
 
 .main-content form label {
   display: block;
-  margin-top: 1.2rem;
+  /* margin-top: 1.2rem; */
   font-weight: bold;
   color: #000000;
 }
+
 
 .main-content form input, 
 .main-content form textarea, 
@@ -555,4 +541,19 @@ form label {
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/dash.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 10%;
+  z-index: -1;
 }
