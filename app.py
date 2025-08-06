@@ -3647,6 +3647,7 @@ def rec_dashboard():
     user_id = session['id']
     user = db_session.query(User).filter(User.user_id == user_id).first()
     role = user.role.value
+    
     today = date.today()
 
     # Count reviews per form_id
@@ -3655,6 +3656,9 @@ def rec_dashboard():
         .group_by(Rec.form_id)
         .all()
     )
+
+    
+
 
     # Shared filter conditions
     def get_common_filters(FormModel):
@@ -3717,6 +3721,7 @@ def rec_dashboard():
         submitted_form_b=submitted_form_b,
         submitted_form_c=submitted_form_c,
         supervisor_formA_req=supervisor_formA_req
+        
     )
 
 
@@ -3735,12 +3740,14 @@ def admin_rec_form(form_id):
     role=user.role.value
     #rec=[]
     #rec.append(Rec_team)
-   
+    all_reviewers_counter = db_session.query(User).filter(User.role == 'REVIEWER').count()
+
     return render_template(
         'chair_rec_form.html',
         Rec_team=Rec_team,
         role=role,
-        form=form
+        form=form,
+        all_reviewers_counter=all_reviewers_counter
     )
 @app.route('/rec_form_a/<string:id>', methods=['GET'])
 def rec_form_a(id):
@@ -3853,16 +3860,9 @@ def certificate(id):
                 certificate_details.certificate_end_date = request.form.get('end_date')
                 certificate_details.certificate_issuer = request.form.get('certificate_issuer')
                 certificate_details.certificate_email = request.form.get('email')
-                certificate_details.certificate_heading=request.form.get('heading')
-                certificate_details.certificate_condition_1=request.form.get('condition_1')
-                certificate_details.certificate_condition_2=request.form.get('condition_2')
-                certificate_details.certificate_condition_3=request.form.get('condition_3')
-                certificate_details.certificate_condition_4=request.form.get('condition_4')
-                certificate_details.certificate_condition_5=request.form.get('condition_5')
-                certificate_details.certificate_condition_6=request.form.get('condition_6')
-                certificate_details.certificate_condition_7=request.form.get('condition_7')
-                certificate_details.certificate_condition_8=request.form.get('condition_8')
-                certificate_details.certificate_condition_9=request.form.get('condition_9')
+                certificate_details.certificate_heading=request.form.get('certification_heading') if None else 'ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT'
+                certificate_details.certificate_condition_1=request.form.get('certification_condition_1')
+                
             
                 # Overwrite with provided issued date if present
                 issued_date = request.form.get('certificate_issued')
@@ -3950,7 +3950,10 @@ def ethics_reviewer_committee_forms(id,form_name):
             
             if reviewers:
                 formA.reviewer_name1=reviewers[0]
-                formA.reviewer_name2=reviewers[1] if reviewers[1] else None
+                formA.reviewer_name2=reviewers[1]
+            else:
+                formA.reviewer_name1=formA.reviewer_name1
+                formA.reviewer_name2=formA.reviewer_name2
             formA.supervisor_date=request.form.get('review_date')
             formA.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formA.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -3984,7 +3987,11 @@ def ethics_reviewer_committee_forms(id,form_name):
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
                 formB.reviewer_name1=reviewers[0]
-                formB.reviewer_name2=reviewers[1] if reviewers[1] else None
+                formB.reviewer_name2=reviewers[1]
+            else:
+                formB.reviewer_name1=formB.reviewer_name1
+                formB.reviewer_name2=formB.reviewer_name2
+
             formB.supervisor_date=request.form.get('review_date')
             formB.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formB.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -4022,7 +4029,10 @@ def ethics_reviewer_committee_forms(id,form_name):
           
             if reviewers:
                 formC.reviewer_name1=reviewers[0]
-                formC.reviewer_name2=reviewers[1] if reviewers[1] else None
+                formC.reviewer_name2=reviewers[1]
+            else:
+                formC.reviewer_name1=formC.reviewer_name1
+                formC.reviewer_name2=formC.reviewer_name2
             formC.supervisor_date=request.form.get('review_date')
             formC.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formC.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -4049,7 +4059,7 @@ def ethics_reviewer_committee_forms(id,form_name):
             db_session.add(formC)
             db_session.commit()
             return redirect(url_for('chair_landing'))
-        return render_template("ethics_reviewer_committee_forms.html",formC=formC)
+        return render_template("form_c_ethics.html",formc=formC)
 
 
 

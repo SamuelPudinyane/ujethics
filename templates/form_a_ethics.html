@@ -990,7 +990,7 @@
 
   <!-- Accept Fields (initially hidden) -->
   <div id="acceptFields" style="display: none;">
-  
+  {% if not formA.reviewer_name1 and not formA.reviewer_name2%}
   <label>Reviewer(s):</label>
   <div class="dropdown">
     <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -1002,6 +1002,7 @@
       {% endfor %}
     </ul>
   </div>
+  {% endif %}
   
     <div class="form-group">
       <label for="supervisor_signature">Ethics Admin Signature:</label>
