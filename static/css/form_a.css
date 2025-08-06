@@ -3,7 +3,7 @@
     --jbs-teal: #022169;
     --jbs-purple: #4F2365;
     --jbs-yellow: #FFCB05;
-    --jbs-grey: #939598;
+    --jbs-grey: #7e8085;
     --white: #ffffff;
     --black: #000000;
     --accent: #F26522;
@@ -18,7 +18,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background-color: var(--white);
+    /* background-color: var(--white); */
     color: var(--black);
     font-size: 18px;
   }
@@ -258,7 +258,7 @@
     margin-top: 3rem;
     background-color: var(--jbs-orange);
     color: var(--white);
-    padding: 1rem;
+    padding: 0.5rem;
   }
   
   /* Small devices */
@@ -338,6 +338,16 @@ body::before {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  opacity: 1;
+  opacity: 20%;
   z-index: -1;
+}
+
+/* Horizontal alignment for all radio label pairs */
+label input[type="radio"] {
+  margin-right: 5px;
+}
+
+label {
+  display: inline-block;
+  margin-right: 30px;
 }

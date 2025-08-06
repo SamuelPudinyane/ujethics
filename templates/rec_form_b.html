@@ -84,7 +84,7 @@
       <label>UJ Department and School <br>
         <span class="form-answer">{{form.department}}</span></label>
       <label>Degree Registered For <br>
-        <span class="form-answer">{{form.dregree}}</span></label>
+        <span class="form-answer">{{form.degree}}</span></label>
       <label>Title/Working Title of Project or Study <br>
         <span class="form-answer">{{form.study_title}}</span></label>
       <label>Mobile Number <br>
@@ -113,7 +113,6 @@
         <span class="form-answer">{{form.project_description}}</span>
       </label>
 
-      <hr>
 
       <label>2.1 Nature of the Data <br>
     <span class="form-answer">{{form.data_nature}}</span>
@@ -284,11 +283,11 @@
     <label>Date of Review:</label>
     <input type="date" name="review_date">
   </div>
-    <table class="table table-bordered mt-3">
+    <table>
         <thead class="thead-light">
           <tr>
-            <th>Document</th>
-            <th>Supervisor Comments</th>
+            <th style="width: 30%;">Document</th>
+            <th style="width: 70%;">Supervisor Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -329,14 +328,14 @@
   {% if form.review_form_status %}
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <h4>First Reviewer</h4>
+    <h3>First Reviewer</h3>
     <br>
-     <table class="table table-bordered mt-3">
+     <table>
         <thead class="thead-light">
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 30%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 50%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -417,13 +416,13 @@
   <section>
   <div class="section">
     <h3>Checklist of Documents Required for Ethical Clearance Process</h3>
-    <h4>Second Reviewer</h4>
-     <table class="table table-bordered mt-3">
+    <h3>Second Reviewer</h3>
+     <table>
         <thead class="thead-light">
         <tr>
-          <th>Document</th>
-          <th>Submitted (Yes or No)</th>
-          <th>Reviewer Comments</th>
+          <th style="width: 30%;">Document</th>
+          <th style="width: 20%;">Submitted (Yes or No)</th>
+          <th style="width: 50%;">Reviewer Comments</th>
         </tr>
       </thead>
       <tbody>
@@ -526,7 +525,7 @@
 
 
 <footer class="footer">
-  <p>&copy;  Research Ethics Committee | Johannesburg Business School</p>
+  <p>&copy;  Prof. M. Munsamy & Prof. A Telukdarie</p>
 </footer>
 
   

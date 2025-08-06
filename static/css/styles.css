@@ -3,10 +3,8 @@ body {
   background-color: #ffffff;
   color: #474b56;
   min-height: 100vh;
-}
-
-h2, label, input, select, textarea {
-    color: black;
+  margin: 0;
+  padding: 0;
 }
 
 p {
@@ -18,26 +16,29 @@ p {
 .navbar {
   background-color: #ef820d;
   color: white;
+  padding: 1rem;
 }
 
 .nav-content {
-  max-width: 480px;
+  /* max-width: 480px; */
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  /* gap: 50px; */
+  gap: 1rem;
 }
 
-.logo {
-  height: 60px;
-  object-fit: contain;
-  margin-left: auto;
+  .logo.uj {
+  height: 55px;
+  border-radius: 8%; /* makes it round */
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* soft shadow */
+  margin-left: 1rem;
 }
 
 .nav-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: white;
+  align-items: center;
 }
 
 /* === MAIN CONTAINER === */
@@ -45,7 +46,7 @@ p {
 .auth-container,
 .container {
   max-width: 1700px;
-  margin: 1rem 1rem;
+  margin: 2rem auto;
   background: white;
   padding: 2rem;
   border-radius: 12px;
@@ -323,7 +324,7 @@ button:disabled {
 .main-content label {
   font-weight: 700;
   color: #000000;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   display: block;
 }
 
@@ -353,10 +354,6 @@ button:disabled {
   color: #ef820d;
 }
 
-.revise-btn:hover {
-  background-color: #a5adec;
-}
-
 /* Responsive Adjustments */
 @media (max-width: 600px) {
 
@@ -383,10 +380,6 @@ button:disabled {
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
-}
-
-.view-btn:hover {
-  background-color: #029c9c;
 }
 
 
@@ -469,13 +462,6 @@ button:disabled {
   font-size: 1rem;
 }
 
-form label {
-  font-weight: 800;
-  margin-top: 1rem;
-  display: block;
-  color: #020202;
-}
-
 .form-wrapper {
   display: flex;
   flex-direction: column;
@@ -491,10 +477,11 @@ form label {
 
 .main-content form label {
   display: block;
-  margin-top: 1.2rem;
+  /* margin-top: 1.2rem; */
   font-weight: bold;
   color: #000000;
 }
+
 
 .main-content form input, 
 .main-content form textarea, 
@@ -554,4 +541,19 @@ form label {
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/dash.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 10%;
+  z-index: -1;
 }

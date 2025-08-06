@@ -70,15 +70,6 @@
     </div>
   </header>
 <form action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM B')}}" method="post"  enctype="multipart/form-data">
-  <!-- Error Messages -->
-            {% if messages %}
-                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endif %}
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <!-- Main Content -->
@@ -94,7 +85,7 @@
       <label>UJ Department and School <br>
         <span class="form-answer">{{form.department}}</span></label>
       <label>Degree Registered For <br>
-        <span class="form-answer">{{form.dregree}}</span></label>
+        <span class="form-answer">{{form.degree}}</span></label>
       <label>Title/Working Title of Project or Study <br>
         <span class="form-answer">{{form.study_title}}</span></label>
       <label>Mobile Number <br>
@@ -122,11 +113,6 @@
         <br>
         <span class="form-answer">{{form.project_description}}</span>
       </label>
-
-
-      <hr>
-
-      <h3>2. Details of the Data</h3>
 
       <label>2.1 Nature of the Data <br>
     <span class="form-answer">{{form.data_nature}}</span>
@@ -259,8 +245,8 @@
       <h2>Section 5: Declaration</h2>
 
       <p class="form-note">
-        I, <strong>{{form.declaration_name}}</strong>
-        (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics. 
+        I, <strong><u>{{form.declaration_name}}</u></strong>
+        (full name of main researcher), declare that I have read the Policy on Research Ethics of UJ and the contents of this document are a true and accurate reflection of the methodological and ethical implications of my proposed study. I shall carry out the study in strict accordance with the approved proposal and the Policy on Research Ethics of UJ. I further undertake to inform the relevant research ethics review committee of JBS in writing of any adverse events that occur arising from the research project. I shall also notify the relevant JBS research ethics review committee if any changes to the study are proposed. I shall deal with the data used in an ethical manner. I shall assimilate all data used for this research project in accordance with ethical guidelines outlined in my proposal. Paragraph 5 of the Policy on Research Ethics places huge emphasis on the integrity of the research and I shall ensure that I conduct the research with the highest integrity taking into account UJ’s Policy for Copyright Infringement and Plagiarism. Data that was gathered retrospectively will not be used. I acknowledge that as main researcher it is my responsibility to ensure that the co-researchers to this research project adhere to the ethics principles set out in the UJ Policy on Research Ethics.
       </p>
 
       <label>Full Name
@@ -387,7 +373,7 @@
 
 
 <footer class="footer">
-  <p>&copy;  Research Ethics Committee | Johannesburg Business School</p>
+  <p>&copy;  Prof. M. Munsamy & Prof. A Telukdarie</p>
 </footer>
 
   
