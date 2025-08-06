@@ -2893,10 +2893,10 @@ def chair_form_view(id,form_name):
     user_id=session['id']
     user_name=db_session.query(User).filter_by(user_id=user_id).first()
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
-
+ 
     if form_name=="FORM A":
         formA = db_session.query(FormA).filter_by(form_id=id).first()
-    
+   
         if request.method=="POST":
          
             review_date=request.form.get('review_date')
@@ -2919,10 +2919,10 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-
+ 
             if request.form.get('status') in ['Approved']:
                 if not formA.review_date:
-                    
+                   
                     formA.review_date=review_date
                     formA.status=status
                     formA.review_org_permission_status=review_org_permission_status
@@ -2944,10 +2944,10 @@ def chair_form_view(id,form_name):
                     formA.form_review_comment=form_review_comment
                     formA.form_reviewed_by=form_reviewed_by
                     formA.review_status=True
-
+ 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        
+                       
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -2956,7 +2956,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                    
+                   
                 else:
                     formA.review_date1=review_date
                     formA.status=status
@@ -2979,10 +2979,10 @@ def chair_form_view(id,form_name):
                     formA.form_review_comment1=form_review_comment
                     formA.form_reviewed_by1=form_reviewed_by
                     formA.review_status1=True
-
+ 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                      
+                     
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -2991,32 +2991,56 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                    
+                   
             else:
-                formA.review_date=review_date
-                formA.status=status
-                formA.review_org_permission_status=review_org_permission_status
-                formA.review_org_permission_comments=review_org_permission_comments
-                formA.review_waiver_status=review_waiver_status
-                formA.review_waiver_comments=review_waiver_comments
-                formA.review_form_status=review_form_status
-                formA.review_form_comments=review_form_comments
-                formA.review_questions_status=review_questions_status
-                formA.review_questions_comments=review_questions_comments
-                formA.review_consent_status=review_consent_status
-                formA.review_consent_comments=review_consent_comments
-                formA.review_proposal_status=review_proposal_status
-                formA.review_proposal_comments=review_proposal_comments
-                formA.review_additional_comments=review_additional_comments
-                formA.review_recommendation=review_recommendation
-                formA.form_review_comment=form_review_comment
-                formA.form_reviewed_by=form_reviewed_by
-                formA.review_status=False
-                formA.rejected_or_accepted=False
-
+                if not formA.review_date:
+                    formA.review_date=review_date
+                    formA.status=status
+                    formA.review_org_permission_status=review_org_permission_status
+                    formA.review_org_permission_comments=review_org_permission_comments
+                    formA.review_waiver_status=review_waiver_status
+                    formA.review_waiver_comments=review_waiver_comments
+                    formA.review_form_status=review_form_status
+                    formA.review_form_comments=review_form_comments
+                    formA.review_questions_status=review_questions_status
+                    formA.review_questions_comments=review_questions_comments
+                    formA.review_consent_status=review_consent_status
+                    formA.review_consent_comments=review_consent_comments
+                    formA.review_proposal_status=review_proposal_status
+                    formA.review_proposal_comments=review_proposal_comments
+                    formA.review_additional_comments=review_additional_comments
+                    formA.review_recommendation=review_recommendation
+                    formA.form_review_comment=form_review_comment
+                    formA.form_reviewed_by=form_reviewed_by
+                    formA.review_status=False
+                    formA.rejected_or_accepted=False
+                else:
+                    formA.review_date1=review_date
+                    formA.status=status
+                    formA.review_org_permission_status1=review_org_permission_status
+                    formA.review_org_permission_comments1=review_org_permission_comments
+                    formA.review_waiver_status1=review_waiver_status
+                    formA.review_waiver_comments1=review_waiver_comments
+                    formA.review_form_status1=review_form_status
+                    formA.review_form_comments1=review_form_comments
+                    formA.review_questions_status1=review_questions_status
+                    formA.review_questions_comments1=review_questions_comments
+                    formA.review_consent_status1=review_consent_status
+                    formA.review_consent_comments1=review_consent_comments
+                    formA.review_proposal_status1=review_proposal_status
+                    formA.review_proposal_comments1=review_proposal_comments
+                    formA.review_additional_comments1=review_additional_comments
+                    formA.review_recommendation1=review_recommendation
+                    formA.review_supervisor_signature1=review_supervisor_signature
+                    formA.review_signature_date1=review_signature_date
+                    formA.form_review_comment1=form_review_comment
+                    formA.form_reviewed_by1=form_reviewed_by
+                    formA.review_status=False
+                    formA.rejected_or_accepted=False
+ 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
-                        
+                       
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3053,9 +3077,9 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-            if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
+            if request.form.get('status') in ['Approved']:
                 if not formB.review_date:
-                
+               
                     formB.review_date=review_date
                     formB.status=status
                     formB.review_org_permission_status=review_org_permission_status
@@ -3077,10 +3101,10 @@ def chair_form_view(id,form_name):
                     formB.form_review_comment=form_review_comment
                     formB.form_reviewed_by=form_reviewed_by
                     formB.review_status=True
-
+ 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
-                        
+                       
                         form=Rec(
                         rec_id=user_id,
                         form_id=id,
@@ -3089,7 +3113,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                    
+                   
                 else:
                     formB.review_date1=review_date
                     formB.status=status
@@ -3112,7 +3136,7 @@ def chair_form_view(id,form_name):
                     formB.form_review_comment1=form_review_comment
                     formB.form_reviewed_by1=form_reviewed_by
                     formB.review_status1=True
-
+ 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -3123,29 +3147,52 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                    
+                   
             else:
-                formB.review_date=review_date
-                formB.status=status
-                formB.review_org_permission_status=review_org_permission_status
-                formB.review_org_permission_comments=review_org_permission_comments
-                formB.review_waiver_status=review_waiver_status
-                formB.review_waiver_comments=review_waiver_comments
-                formB.review_form_status=review_form_status
-                formB.review_form_comments=review_form_comments
-                formB.review_questions_status=review_questions_status
-                formB.review_questions_comments=review_questions_comments
-                formB.review_consent_status=review_consent_status
-                formB.review_consent_comments=review_consent_comments
-                formB.review_proposal_status=review_proposal_status
-                formB.review_proposal_comments=review_proposal_comments
-                formB.review_additional_comments=review_additional_comments
-                formB.review_recommendation=review_recommendation
-                formB.form_review_comment=form_review_comment
-                formB.form_reviewed_by=form_reviewed_by
-                formB.review_status=False
-                formB.rejected_or_accepted=False
-
+                if not formB.review_date:
+                    formB.review_date=review_date
+                    formB.status=status
+                    formB.review_org_permission_status=review_org_permission_status
+                    formB.review_org_permission_comments=review_org_permission_comments
+                    formB.review_waiver_status=review_waiver_status
+                    formB.review_waiver_comments=review_waiver_comments
+                    formB.review_form_status=review_form_status
+                    formB.review_form_comments=review_form_comments
+                    formB.review_questions_status=review_questions_status
+                    formB.review_questions_comments=review_questions_comments
+                    formB.review_consent_status=review_consent_status
+                    formB.review_consent_comments=review_consent_comments
+                    formB.review_proposal_status=review_proposal_status
+                    formB.review_proposal_comments=review_proposal_comments
+                    formB.review_additional_comments=review_additional_comments
+                    formB.review_recommendation=review_recommendation
+                    formB.form_review_comment=form_review_comment
+                    formB.form_reviewed_by=form_reviewed_by
+                    formB.review_status=False
+                    formB.rejected_or_accepted=False
+                else:
+                    formB.review_date1=review_date
+                    formB.status=status
+                    formB.review_org_permission_status1=review_org_permission_status
+                    formB.review_org_permission_comments1=review_org_permission_comments
+                    formB.review_waiver_status1=review_waiver_status
+                    formB.review_waiver_comments1=review_waiver_comments
+                    formB.review_form_status1=review_form_status
+                    formB.review_form_comments1=review_form_comments
+                    formB.review_questions_status1=review_questions_status
+                    formB.review_questions_comments1=review_questions_comments
+                    formB.review_consent_status1=review_consent_status
+                    formB.review_consent_comments1=review_consent_comments
+                    formB.review_proposal_status1=review_proposal_status
+                    formB.review_proposal_comments1=review_proposal_comments
+                    formB.review_additional_comments1=review_additional_comments
+                    formB.review_recommendation1=review_recommendation
+                    formB.review_supervisor_signature1=review_supervisor_signature
+                    formB.review_signature_date1=review_signature_date
+                    formB.form_review_comment1=form_review_comment
+                    formB.form_reviewed_by1=form_reviewed_by
+                    formB.review_status=False
+                    formB.rejected_or_accepted=False
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -3165,7 +3212,7 @@ def chair_form_view(id,form_name):
         formC = db_session.query(FormC).filter_by(form_id=id).first()
      
         if request.method=="POST":
-            
+           
             review_date=request.form.get('review_date')
             status=request.form.get('status')
             review_org_permission_status=request.form.get('org_permission_status')
@@ -3187,10 +3234,10 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-            if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
-                
+            if request.form.get('status') in ['Approved']:
+               
                 if not formC.review_date:
-                
+               
                     formC.review_date=review_date
                     formC.status=status
                     formC.review_org_permission_status=review_org_permission_status
@@ -3212,7 +3259,7 @@ def chair_form_view(id,form_name):
                     formC.form_review_comment=form_review_comment
                     formC.form_reviewed_by=form_reviewed_by
                     formC.review_status=True
-
+ 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -3223,8 +3270,9 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                    
+                   
                 else:
+                   
                     formC.review_date1=review_date
                     formC.status=status
                     formC.review_org_permission_status1=review_org_permission_status
@@ -3246,7 +3294,7 @@ def chair_form_view(id,form_name):
                     formC.form_review_comment1=form_review_comment
                     formC.form_reviewed_by1=form_reviewed_by
                     formC.review_status1=True
-
+ 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -3257,30 +3305,54 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                    
-                    
+                   
+                   
             else:
-                formC.review_date=review_date
-                formC.status=status
-                formC.review_org_permission_status=review_org_permission_status
-                formC.review_org_permission_comments=review_org_permission_comments
-                formC.review_waiver_status=review_waiver_status
-                formC.review_waiver_comments=review_waiver_comments
-                formC.review_form_status=review_form_status
-                formC.review_form_comments=review_form_comments
-                formC.review_questions_status=review_questions_status
-                formC.review_questions_comments=review_questions_comments
-                formC.review_consent_status=review_consent_status
-                formC.review_consent_comments=review_consent_comments
-                formC.review_proposal_status=review_proposal_status
-                formC.review_proposal_comments=review_proposal_comments
-                formC.review_additional_comments=review_additional_comments
-                formC.review_recommendation=review_recommendation
-                formC.form_review_comment=form_review_comment
-                formC.form_reviewed_by=form_reviewed_by
-                formC.review_status=False
-                formC.rejected_or_accepted=False
-
+                if not formC.review_date:
+                    formC.review_date=review_date
+                    formC.status=status
+                    formC.review_org_permission_status=review_org_permission_status
+                    formC.review_org_permission_comments=review_org_permission_comments
+                    formC.review_waiver_status=review_waiver_status
+                    formC.review_waiver_comments=review_waiver_comments
+                    formC.review_form_status=review_form_status
+                    formC.review_form_comments=review_form_comments
+                    formC.review_questions_status=review_questions_status
+                    formC.review_questions_comments=review_questions_comments
+                    formC.review_consent_status=review_consent_status
+                    formC.review_consent_comments=review_consent_comments
+                    formC.review_proposal_status=review_proposal_status
+                    formC.review_proposal_comments=review_proposal_comments
+                    formC.review_additional_comments=review_additional_comments
+                    formC.review_recommendation=review_recommendation
+                    formC.form_review_comment=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
+                    formC.review_status=False
+                    formC.rejected_or_accepted=False
+                else:
+                    formC.review_date1=review_date
+                    formC.status=status
+                    formC.review_org_permission_status1=review_org_permission_status
+                    formC.review_org_permission_comments1=review_org_permission_comments
+                    formC.review_waiver_status1=review_waiver_status
+                    formC.review_waiver_comments1=review_waiver_comments
+                    formC.review_form_status1=review_form_status
+                    formC.review_form_comments1=review_form_comments
+                    formC.review_questions_status1=review_questions_status
+                    formC.review_questions_comments1=review_questions_comments
+                    formC.review_consent_status1=review_consent_status
+                    formC.review_consent_comments1=review_consent_comments
+                    formC.review_proposal_status1=review_proposal_status
+                    formC.review_proposal_comments1=review_proposal_comments
+                    formC.review_additional_comments1=review_additional_comments
+                    formC.review_recommendation1=review_recommendation
+                    formC.review_supervisor_signature1=review_supervisor_signature
+                    formC.review_signature_date1=review_signature_date
+                    formC.form_review_comment1=form_review_comment
+                    formC.form_reviewed_by1=form_reviewed_by
+                    formC.review_status1=False
+                    formC.rejected_or_accepted=False
+ 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
                        form=Rec(
@@ -3291,7 +3363,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                
+               
             db_session.add(form)
             db_session.add(formC)
             db_session.commit()

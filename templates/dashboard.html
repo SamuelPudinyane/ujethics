@@ -95,11 +95,11 @@
                   {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
-                  FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
+                  Form Was Returned. Please Review The Feedback and Resubmit
                   {% elif formA.rejected_or_accepted and formA.supervisor_date%}
-                  FORM SUBMITTED TO ETHICS ADMIN
+                  Form Submitted To Ethics Admin
                   {% elif formA.submitted_at and formA.declaration_name %}
-                  FORM SUBMITTED TO SUPERVISOR
+                  Form Submitted To Supervisor
                  {% endif %}
                 </span>
                 <br>
@@ -109,6 +109,8 @@
                 </td>
             <td>
               {% if not formA.rejected_or_accepted and formA.supervisor_date %}
+              <a href="{{url_for('student_edit_forma')}}">Review</a>
+              {% elif not formA.rejected_or_accepted and not formA.declaration_name%}
               <a href="{{url_for('student_edit_forma')}}">Review</a>
               {% else %}
               <a href="{{url_for('student_form_pdf',form_id=formA.form_id,form_type='A')}}">View Form</a>
@@ -141,11 +143,11 @@
                   {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
-                  FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
+                  Form Was Returned. Please Review The Feedback and Resubmit
                   {% elif formB.rejected_or_accepted and formB.supervisor_date%}
-                  FORM SUBMITTED TO ETHICS ADMIN
+                  Form Submitted To Ethics Admin
                   {% elif formB.submitted_at and formB.declaration_name %}
-                  FORM SUBMITTED FOR REVIEW TO SUPERVISOR
+                  Form Submitted For Review To Supervisor
                   {% endif %}
                  </span>
                 <br>
@@ -185,11 +187,11 @@
                   {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif not formC.rejected_or_accepted and formC.supervisor_date%}
-                  FORM WAS RETURNED. PLEASE REVIEW THE FEEDBACK AND RESUBMIT
+                  Form Was Returned. Please Review The Feedback and Resubmit
                   {% elif formC.rejected_or_accepted and formC.supervisor_date%}
-                  FORM SUBMITTED TO ETHICS ADMIN
+                  Form Submitted To Ethics Admin
                   {% elif formC.submission_date and formC.declaration_name %}
-                  FORM SUBMITTED FOR REVIEW TO SUPERVISOR
+                  Form Submitted For Review To Supervisor
                   {% endif %}
 
                 </span>
