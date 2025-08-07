@@ -86,7 +86,7 @@
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
             <td>
-            <span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
+            <span class="status-pill approved">
               {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
@@ -101,7 +101,7 @@
                   {% set review_comment = forma.form_review_comment1 %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
                     {% endif %}
               {% elif not forma.recommendation%}
               Ready for review
@@ -151,7 +151,7 @@
                       <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                   {% if req.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey/Questionnire/Focus Group Questions</a></li>
+                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey/Questionnaire/Focus Group Questions</a></li>
                   {% endif %}
                   {% if req.prior_clearance %}
                   <li><a href="{{url_for('static',filename=req.prior_clearance)}}">Prior Clearance</a></li>
@@ -208,7 +208,7 @@
             <td>{{formb.supervisor}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
-            <td><span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
+            <td><span class="status-pill approved">
                {% if formb.rejected_or_accepted and not formb.reviewer_name1 and not formb.review_date%}
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
@@ -223,7 +223,7 @@
                   {% set review_comment = formb.form_review_comment1 %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
                     {% endif %}
               {% elif not formb.recommendation%}
               Ready for review
@@ -315,7 +315,7 @@
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
-              <span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
+              <span class="status-pill approved">
               
               {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
               Awaiting for review
@@ -333,7 +333,7 @@
                   {% set review_comment = formc.form_review_comment1 %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
                     {% endif %}
               {% elif not formc.recommendation%}
               Ready for review

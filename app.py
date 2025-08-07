@@ -1254,8 +1254,13 @@ def form_a_sec4():
                 # Add logic for saving file securely if uploaded
             elif form.secondary_data_type == 'public':
                 form.public_data_description = request.form.get('public_data_description')
-            else:
-                form.secondary_data_type=='both'
+
+            elif form.secondary_data_type == 'both':
+                form.private_permission = request.form.get('privatePermission') == 'Yes'
+                # Handle file upload for permission if required
+                # Add logic for saving file securely if uploaded
+                form.public_data_description = request.form.get('public_data_description')
+            
             form.data_nature=request.form.get('data_nature')
             form.data_origin=request.form.get('data_origin')
             form.access_conditions=request.form.get('access_conditions')

@@ -682,7 +682,7 @@
 <br><br>
 
 <label>5.5.2 Is the data Public or Private?</label><br>
-<span class="form-answer">{{ form.data_type }}</span>
+<span class="form-answer">{{ form.secondary_data_type }}</span>
 
 <br>
 
@@ -1180,7 +1180,7 @@
 
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label class="form-label">REC Comments</label>
-    <textarea rows="5" name="rec_comments" style="width:100%;" placeholder="Add general comments or recommendation..." required></textarea>
+    <textarea rows="5" name="rec_comments" style="width:100%;" placeholder="Add general comments or recommendation..." class="form-control" required></textarea>
 
     <input type="hidden" name="status" id="status" value="" />
 
