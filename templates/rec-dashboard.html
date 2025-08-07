@@ -280,6 +280,8 @@
             <td>
               {% if 'admin' in role|lower%}
               <a href="{{url_for('admin_rec_form',form_id=item.form_id)}}">Check Feedback</a>
+            </br>
+              
               {% else %}
                <a href="{{url_for('rec_form_c',id=item.form_id)}}" class="view-btn">Review</a>
               {% endif %}

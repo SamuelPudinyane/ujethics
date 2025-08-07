@@ -90,7 +90,7 @@
             <td>{% if form.supervisor%}{{form.supervisor}}{% elif form.supervisor_name%}{{form.supervisor_name}}{% endif%}</td>
             <td>{{form_name}}</td>
             <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date%}{{form.submission_date}}{% endif%}</td>
-            <td><span class="status-pill approved" >
+            <td><span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
                   {% if form.rejected_or_accepted and not form.supervisor_feedback %}
                   Awaiting Ethics Committee for review
                   {% elif form.submitted_to_rec and 'low' not in form.risk_level|lower and not form.certificate_issued%}
@@ -113,7 +113,7 @@
                   <form action="{{url_for('send_certificate',id=form.form_id)}}" method="post">
                   <button type="submit" class="btn btn-success">Send certificate</button>
                   </form>
-                  {% elif form.review_status and form.review_status1 and form.rejected_or_accepted and form.recommendation=='Ready for submission' and form.supervisor_feedback and ('low' in form.risk_level|lower or 'low' in form.risk_rating|lower) %}
+                  {% elif form.review_status and form.review_status1 and form.rejected_or_accepted and form.recommendation=='Ready for submission' and form.supervisor_date and ('low' in form.risk_level|lower or 'low' in form.risk_rating|lower) %}
                   <a href="{{url_for('certificate',id=form.form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificate</a>
                   {% set review_comment = '' %}
                   {% elif form.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
@@ -123,12 +123,13 @@
                   {# 🖨️ Display the result if it was matched #}
                     {% if review_comment %}
                     <p>Review Status: {{ review_comment }}</p>
-                  {% endif %}
+                    {% endif %}
+                 
                   {% elif form.rejected_or_accepted and form.review_supervisor_signature and not form.certificate_issued%}
                   Approved by Ethics Committee
-                  {% elif form.reviewer_name1 and form.reviewer_name2 and not form.supervisor_feedback%}
+                  {% elif form.reviewer_name1 and form.reviewer_name2 and not form.supervisor_date%}
                   Awaiting for Review
-                  {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_feedback and not form.review_status%}
+                  {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_date and not form.review_status and form.rejected_or_accepted%}
                   Submitted to Reviewers
                   {% elif form.review_status %}
                   Form was Approved by First Reviewer
@@ -159,10 +160,13 @@
               (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
              
-              {% elif not form.certificate_issued and not form.certificate_received and form.review_status and form.review_status1 and form.form_reviewed_by and form.form_reviewed_by1%}
+              {% elif not form.certificate_issued and not form.certificate_received and form.review_status 
+                and form.review_status1 and form.form_reviewed_by and form.form_reviewed_by1
+                and ('low' in form.risk_level or 'low' in form.risk_rating)%}
             <a href="{{ url_for('certificate', id=form.form_id) }}" class="btn btn-sm btn-success text-white">
               🎓 Issue Certificate
             </a>
+            
             {% elif form.certificate_received %}
             Certificate was issued and send
             <br>

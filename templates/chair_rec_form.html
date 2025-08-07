@@ -87,8 +87,17 @@
       <br>
       {% if form %}
      
-      {% if 'admin' in role|lower and not form.certificate_issued %}
-                   <a href="{{url_for('certificate',id=Rec_team[0].form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificates</a>
+      {% if 'admin' in role|lower and not form.certificate_issued%}
+                    {% set counter = namespace(total=0) %}
+                    {% for item in Rec_team%}
+                     {% if item.rec_status=='Approved'%}
+                     {% set counter.total = counter.total + 1 %}
+                     {% endif %}
+                    {% endfor %}
+                    {% if all_reviewers_counter > 0 and (counter.total / all_reviewers_counter * 100) > 50 %}
+                      <a href="{{url_for('certificate',id=Rec_team[0].form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificates</a>
+                    {% endif %}
+                   
               {% endif %}
              
               {% endif %}

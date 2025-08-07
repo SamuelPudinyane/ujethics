@@ -139,6 +139,9 @@
         <br>
         <div class="conditions mt-5">
             <p>The researcher may now commence with the study provided that:</p>
+            {% if certificate_details.certificate_condition_1%}
+            <h6>{{certificate_details.certificate_condition_1}}</h6>
+            {% endif %}
             <ol>
                 <li>The researcher ensures adherence to POPI Act.</li>
                 <li>The researcher ensures adherence to conditions of use of open source questionnaires.</li>

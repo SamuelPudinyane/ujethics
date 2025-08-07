@@ -21,17 +21,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-# connection_string = (
-#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-#     "driver=ODBC+Driver+17+for+SQL+Server&"
-#     "trusted_connection=yes"
-# )
-
 connection_string = (
-    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
+
+# connection_string = (
+#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
 
 engine = create_engine(connection_string, echo=True)
 
@@ -435,6 +435,7 @@ class FormA(Base):
     recommendation= Column(String(255),nullable=True)
     supervisor_signature = Column(String(255),nullable=True)
     signature_date= Column(DateTime,nullable=True)
+    submitted=Column(Boolean,default=False)
     #this is working on supervisor site
     supervisor_date=Column(DateTime(255),nullable=True)
     supervisor_org_permission_status=Column(String(255),nullable=True)
@@ -519,14 +520,7 @@ class FormA(Base):
     certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
     certificate_modified=Column(Boolean,default=False)
     certificate_condition_1=Column(String(255),nullable=True)
-    certificate_condition_2=Column(String(255),nullable=True)
-    certificate_condition_3=Column(String(255),nullable=True)
-    certificate_condition_4=Column(String(255),nullable=True)
-    certificate_condition_5=Column(String(255),nullable=True)
-    certificate_condition_6=Column(String(255),nullable=True)
-    certificate_condition_7=Column(String(255),nullable=True)
-    certificate_condition_8=Column(String(255),nullable=True)
-    certificate_condition_9=Column(String(255),nullable=True)
+    
 
     pdf_file_path=Column(String,nullable=True)
     def __repr__(self):
@@ -605,6 +599,7 @@ class FormB(Base):
     declaration_date = Column(DateTime, nullable=True)
 
     submitted_at = Column(DateTime, server_default=func.now())
+    submitted=Column(Boolean,default=False)
 
     rejected_or_accepted=Column(Boolean,default=False)
     supervisor_date = Column(DateTime,nullable=True)
@@ -703,14 +698,7 @@ class FormB(Base):
     certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
     certificate_modified=Column(Boolean,default=False)
     certificate_condition_1=Column(String(255),nullable=True)
-    certificate_condition_2=Column(String(255),nullable=True)
-    certificate_condition_3=Column(String(255),nullable=True)
-    certificate_condition_4=Column(String(255),nullable=True)
-    certificate_condition_5=Column(String(255),nullable=True)
-    certificate_condition_6=Column(String(255),nullable=True)
-    certificate_condition_7=Column(String(255),nullable=True)
-    certificate_condition_8=Column(String(255),nullable=True)
-    certificate_condition_9=Column(String(255),nullable=True)
+    
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
@@ -799,6 +787,8 @@ class FormC(Base):
     declaration_name = Column(String(200),nullable=True)
     full_name = Column(String(200),nullable=True)
     submission_date = Column(DateTime,nullable=True)
+    submitted=Column(Boolean,default=False)
+    
     
     supervisor_comments = Column(Text,nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
@@ -897,14 +887,7 @@ class FormC(Base):
     certificate_heading=Column(String,default='ETHICAL APPROVAL GRANTED FOR RESEARCH PROJECT')
     certificate_modified=Column(Boolean,default=False)
     certificate_condition_1=Column(String(255),nullable=True)
-    certificate_condition_2=Column(String(255),nullable=True)
-    certificate_condition_3=Column(String(255),nullable=True)
-    certificate_condition_4=Column(String(255),nullable=True)
-    certificate_condition_5=Column(String(255),nullable=True)
-    certificate_condition_6=Column(String(255),nullable=True)
-    certificate_condition_7=Column(String(255),nullable=True)
-    certificate_condition_8=Column(String(255),nullable=True)
-    certificate_condition_9=Column(String(255),nullable=True)
+    
 
     pdf_file_path=Column(String,nullable=True)
     def to_dict(self):
