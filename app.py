@@ -537,7 +537,20 @@ def submit_form_a_requirements():
                 return None
             
             # Save files based on form field names (corrected from request.form to request.files)
-            permission_letter = save_file('permission_letter') if needs_permission else None
+            # permission_letter = save_file('permission_letter') if needs_permission else None
+            permission_letters = []
+            if needs_permission:
+                uploaded_files = request.files.getlist('permission_letter[]')
+                for file in uploaded_files:
+                    if file and file.filename:
+                        saved_path = save_file(file)
+                        if saved_path:
+                            permission_letters.append(saved_path)
+                # Join as a comma-separated string for saving
+                permission_letter = ','.join(permission_letters)
+            else:
+                permission_letter = None
+
             #prior_clearance_path = save_file('prior_clearance_path') 
             research_tools_path = save_file('research_tools_path')
             prior_clearance = save_file('prior_clearance') if has_clearance else None
@@ -1203,19 +1216,26 @@ def form_a_sec4():
         form.conflict_explanation = request.form.get('conflict_explanation')
 
         # 5.4 Instruments
+        form.data_methods = request.form.getlist('data_methods')   #Added
         form.questionnaire_type = request.form.get('questionnaire_type')
         form.permission_obtained = 'permission_obtained' in request.form
         form.open_source= 'open_source' in request.form
         form.instrument_attachment_reason = request.form.get('instrument_attachment_reason')
         form.data_collection_procedure = request.form.get('data_collection_procedure')
-        form.interview_type = request.form.getlist('interview_type')
-        form.interview_recording = ','.join(request.form.getlist('interview_recording'))
+        form.interview_type = request.form.get('interview_type')
+        # form.interview_recording = ','.join(request.form.getlist('interview_recording'))
+        form.interview_recording = request.form.get('interview_recording')  #Added
         form.use_focus_groups = request.form.get('use_focus_groups')=='Yes'
-        form.focus_recording = ','.join(request.form.getlist('focus_recording'))
+        # form.focus_recording = ','.join(request.form.getlist('focus_recording'))
+        form.focus_recording = request.form.get('focus_recording')  #Added
+        #Added these 3 below
+        form.observation_details = request.form.get('observation_details')
+        form.documents_details = request.form.get('documents_details')
+        form.other_details = request.form.get('other_details')
         form.data_collectors = request.form.get('data_collectors')
-        form.in_depth=request.form.get("in_depth")
-        form.semi_structured=request.form.get("semi_structured")
-        form.unstructured=request.form.get("unstructured")
+        # form.in_depth=request.form.get("in_depth")
+        # form.semi_structured=request.form.get("semi_structured")
+        # form.unstructured=request.form.get("unstructured")
         form.intervention = request.form.get('intervention')=='Yes'
         form.intervention_details = request.form.get('intervention_details')
         form.sensitive_data = request.form.get('sensitive_data')
@@ -1306,19 +1326,21 @@ def form_a_sec5 ():
         
         
         form.informed_consent=request.form.get('informed_consent')
-        form.secure_location=request.form.getlist('secure_location')
-        form.password_protected=request.form.getlist('password_protected')
-        form.protected_place=request.form.getlist('protected_place')
-        form.retention=request.form.getlist('retention')
+        form.data_storage = request.form.getlist('data_storage')
+
+        # form.secure_location=request.form.getlist('secure_location')
+        # form.password_protected=request.form.getlist('password_protected')
+        # form.protected_place=request.form.getlist('protected_place')
+        # form.retention=request.form.getlist('retention')
         form.study_benefits=request.form.get('study_benefits')
         form.participant_risks=request.form.get('participant_risks')
         form.adverse_steps=request.form.get('adverse_steps')
         form.community_participation=request.form.get('community_participation')
         form.community_effects=request.form.get('community_effects')
-        form.remove_identifiers=request.form.getlist("remove_identifiers")
-        form.encryption=request.form.getlist("encryption")
-        form.pseudonyms=request.form.getlist("pseudonyms")
-        form.focus_group_warning=request.form.getlist("focus_group_warning")
+        # form.remove_identifiers=request.form.getlist("remove_identifiers")
+        # form.encryption=request.form.getlist("encryption")
+        # form.pseudonyms=request.form.getlist("pseudonyms")
+        # form.focus_group_warning=request.form.getlist("focus_group_warning")
         form.privacy=request.form.getlist('privacy[]')
         form.q6_9a= request.form.get("q6_9a")=='yes'
         form.q6_9b=request.form.get("q6_9b")=='yes'
@@ -2402,6 +2424,7 @@ def student_edit_forma():
             use_focus_groups = use_focus_groups,
             focus_recording = request.form.getlist('focus_recording'),
             data_collectors = request.form.get('data_collectors'),
+            
             in_depth=request.form.get("in_depth"),
             semi_structured=request.form.get("semi_structured"),
             unstructured=request.form.get("unstructured"),

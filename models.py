@@ -323,18 +323,23 @@ class FormA(Base):
 
 
     # 5.4 - Instruments
+    data_methods = Column(PickleType, nullable=True) # Added - Stores list of selected methods
     questionnaire_type = Column(String(20))  # Self-designed / Existing
     permission_obtained = Column(Text)
     open_source = Column(Text)
     instrument_attachment_reason = Column(Text)
     data_collection_procedure = Column(Text)
-    interview_type = Column(Text)
-    in_depth=Column(String,nullable=True)
-    semi_structured=Column(String,nullable=True)
-    unstructured=Column(String,nullable=True)
-    interview_recording = Column(String,nullable=True)
+    interview_type = Column(String(20))  # Structured / Semi-structured / Unstructured
+    # in_depth=Column(String,nullable=True) #not using
+    # semi_structured=Column(String,nullable=True) #not using
+    # unstructured=Column(String,nullable=True) #not using
+    interview_recording = Column(String)
     use_focus_groups = Column(Boolean, default=True)
-    focus_recording = Column(String, default=True)
+    focus_recording = Column(String)
+    #Added these 3 below
+    observation_details = Column(Text)
+    documents_details = Column(Text)
+    other_details = Column(Text)
     data_collectors = Column(Text)
     intervention = Column(Boolean, default=True)
     intervention_details = Column(Text)
@@ -375,10 +380,10 @@ class FormA(Base):
     community_participation = Column(Text)
     community_effects = Column(Text)
     privacy = Column(PickleType,nullable=True)  # Stores list of selected privacy practices
-    remove_identifiers=Column(String,nullable=True)
-    encryption=Column(String,nullable=True)
-    pseudonyms=Column(String,nullable=True)
-    focus_group_warning=Column(String,nullable=True)
+    # remove_identifiers=Column(String,nullable=True)
+    # encryption=Column(String,nullable=True)
+    # pseudonyms=Column(String,nullable=True)
+    # focus_group_warning=Column(String,nullable=True)
     
 
     # 6.9 checklist items

@@ -89,7 +89,7 @@
                 <br>
                   {% endif %}
             </br>
-                <span style="color:green; font-size:12px;">
+                <span style="color:green; font-size:18px;">
                   {% if formA.rec_status=='Approved'  or formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
@@ -136,8 +136,8 @@
                 <br>
                 
                   {% endif %}
-                
-                <span style="color:green; font-size:12px;">
+
+                <span style="color:green; font-size:18px;">
                   {% if formB.rec_status=='Approved'  or formB.certificate_issued and formB.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
@@ -180,7 +180,7 @@
                 <br>
                 {% endif%}
             </br>
-                <span style="color:green; font-size:12px;">
+                <span style="color:green; font-size:18px;">
     
                   {% if formC.rec_status=='Approved' or formC.certificate_issued and formC.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>

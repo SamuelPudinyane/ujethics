@@ -121,9 +121,14 @@
                   {% endif %}
 
                   {% if req.permission_letter %}
-                
-                      <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                  {% for file in req.permission_letter.split(',') %}
+                    <li><a href="{{ url_for('static', filename=file.strip()) }}" target="_blank">Permission Letter {{ loop.index }}</a></li>
+                  {% endfor %}
+                {% endif %}
+                  {% if req.ethics_evidence %}
+                      <li><a href="{{ url_for('static', filename=req.ethics_evidence) }}" target="_blank">Ethical Compliance</a></li>
                   {% endif %}
+
                   {% if req.prior_clearance_path %}
                
                       <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>

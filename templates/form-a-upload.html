@@ -64,10 +64,21 @@
         <input type="radio" name="need_permission" value="No" checked  required> No
       </div>
 
-      <div class="question-block hidden" id="companyLetterUpload">       
+      <!-- <div class="question-block hidden" id="companyLetterUpload">       
         <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
         <input type="file" name="permission_letter" accept=".pdf,.docx">
+      </div> -->
+
+      <div class="question-block hidden" id="companyLetterUpload">       
+        <label>Upload Company Permission Letter(s) <small>(with a letterhead, signed and dated)</small></label>
+        <div id="permissionFilesContainer">
+          <div class="file-input-group">
+            <input type="file" name="permission_letter[]" accept=".pdf,.docx">
+          </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addFileInput()">Add Another</button>
       </div>
+
 
       <div class="question-block">
         <label>2. Do you have prior ethical clearance from the original study?</label><br>
@@ -158,9 +169,31 @@
     });
   });
 
+    function addFileInput() {
+    const container = document.getElementById("permissionFilesContainer");
+
+    const fileGroup = document.createElement("div");
+    fileGroup.className = "file-input-group d-flex align-items-center gap-2 mt-2";
+
+    const input = document.createElement("input");
+    input.type = "file";
+    input.name = "permission_letter[]";
+    input.accept = ".pdf,.docx";
+    input.required = false;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "btn btn-sm btn-danger";
+    removeBtn.textContent = "Remove";
+    removeBtn.onclick = () => container.removeChild(fileGroup);
+
+    fileGroup.appendChild(input);
+    fileGroup.appendChild(removeBtn);
+    container.appendChild(fileGroup);
+  }
+
 </script>
 
-  </script>
 
 </body>
 

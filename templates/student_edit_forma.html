@@ -447,24 +447,17 @@
                   <label>4.2 Are any researchers affiliated with the organisations above?
                 
                   </label><input type="checkbox" name="researcher_affiliation" {% if not formA.researcher_affiliation%}checked{% endif %} value="No" />
-                        No</label
-                      >
-                      <label
-                        ><input type="checkbox" name="researcher_affiliation" {% if formA.researcher_affiliation%} checked{% endif %}value="Yes" />
-                        Yes</label
-                      >
-                      <div id="affiliation_comment" placeholfder="Please provide details of the affiliation">
+                        No</label>
+                      <label><input type="checkbox" name="researcher_affiliation" {% if formA.researcher_affiliation%} checked{% endif %}value="Yes" />
+                        Yes</label>                     
+              <div id="affiliation_comment" placeholfder="Please provide details of the affiliation">
                   <textarea name="affiliation_details" value="{{formA.affiliation_details}}" rows="3"></textarea>
                 </div>
-                      <label>4.3 Does your research involve collectives or communities?
-                        
-                      </label><input type="checkbox" {% if not formA.collective_involvement %}checked{% endif%} name="collective_involvement" value="No" />
-                            No</label
-                          >
-                          <label
-                            ><input type="checkbox" {% if formA.collective_involvement%}checked{% endif %} name="collective_involvement" value="Yes" />
-                            Yes</label
-                          >
+                      <label>4.3 Does your research involve collectives or communities?</label>
+                      <input type="checkbox" {% if not formA.collective_involvement %}checked{% endif%} name="collective_involvement" value="No" />
+                            No</label>
+                          <label><input type="checkbox" {% if formA.collective_involvement%}checked{% endif %} name="collective_involvement" value="Yes" />
+                            Yes</label>
                           <textarea name="collective_details" value="{{formA.collective_details}}" rows="3"></textarea>
 
                       
@@ -601,41 +594,48 @@
                     <h3>5.4 Research Instruments for Data Collection</h3>
                     <label>5.4.1 Indicate which data collection methods will be used</label><br>
                     <div id="data-methods">
-                            <label><input type="checkbox" {% if formA.questionnaire_type%}checked{% endif%} value="questionnaire" class="method-check"> Questionnaire</label><br>
-                            <label><input type="checkbox" {% if formA.interview %}checked{% endif%} value="interview" class="method-check"> Interview</label><br>
-                            <label><input type="checkbox" {% if formA.focus_groups %}checked{% endif %} value="focus" class="method-check"> Focus Group</label><br>
-                            <label><input type="checkbox" {% if formA.observations %}checked{% endif %} value="observation" class="method-check"> Observation</label><br>
-                            <label><input type="checkbox" {% if formA.documents %}checked{% endif %} value="documents" class="method-check"> Documents</label><br>
-                            <label><input type="checkbox" {% if formA.other %}checked{% endif %} value="other" class="method-check"> Other</label><br>
+                            <input type="checkbox" name="data_methods[]" value="questionnaire" {% if 'questionnaire' in formA.data_methods %}checked{% endif %}> Questionnaire
+                            <input type="checkbox" name="data_methods[]" value="interview" {% if 'interview' in formA.data_methods %}checked{% endif %}> Interview
+                            <input type="checkbox" name="data_methods[]" value="focus" {% if 'focus' in formA.data_methods %}checked{% endif %}> Focus Group
+                            <input type="checkbox" name="data_methods[]" value="observation" {% if 'observation' in formA.data_methods %}checked{% endif %}> Observation
+                            <input type="checkbox" name="data_methods[]" value="documents" {% if 'documents' in formA.data_methods %}checked{% endif %}> Documents
+                            <input type="checkbox" name="data_methods[]" value="other" {% if 'other' in formA.data_methods %}checked{% endif %}> Other
+
                     </div>
                     <!-- Questionnaire -->
                           <div id="questionnaire_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.1 Questionnaire(s):</label><br>
-                            <input type="checkbox" {% if formA.questionnaire_type=='Self-designed'%}checked{% endif%} name="questionnaire_type" value="Self-designed"> (a) Self-designed<br>
-                            <input type="checkbox" {% if formA.questionnaire_type=='Existing'%}checked{% endif%} name="questionnaire_type" value="Existing"> (b) Existing<br>
-                            <label>5.4.1.1.1 If existing, permission obtained?</label><br>
-                            <input type="checkbox" {% if formA.permission%}checked{% endif %} name="permission_obtained"> (a) Yes
-                            <input type="checkbox" {% if formA.open_source%}checked{% endif %} name="open_source"> (b) Open Source<br>
+                            <input type="radio" name="questionnaire_type" value="Self-designed" {% if formA.questionnaire_type == 'Self-designed' %}checked{% endif %}> Self-designed
+                            <input type="radio" name="questionnaire_type" value="Existing" {% if formA.questionnaire_type == 'Existing' %}checked{% endif %}> Existing <br>
+
+                            <label>If existing, permission obtained?</label><br>
+                            <input type="radio" {% if formA.permission%}checked{% endif %} name="permission_obtained"> Yes
+                            <input type="radio" {% if formA.open_source%}checked{% endif %} name="open_source"> Open Source<br>
                             <textarea name="instrument_attachment_reason"  rows="2" placeholder="Attach or justify">{{formA.instrument_attrachment_reason}}</textarea>
                           </div>
                     <!-- Interview -->
-                          <div id="interview_fields" style="display:none; margin-top: 1rem;">
+                           <div id="interview_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.2 Interviews</label><br>
-                            <input type="checkbox" {% if formA.interview_type=='In-depth' %}checked{% endif%} name="interview_type" value="In-depth"> (a) In-depth
-                            <input type="checkbox" {% if formA.interview_type=='Semi-structured'%}checked{% endif %} name="interview_type" value="Semi-structured"> (b) Semi-structured
-                            <input type="checkbox" {% if formA.interview_type=='Unstructured'%}checked{% endif%} name="interview_type" value="Unstructured"> (c) Unstructured<br>
-                            <label>5.4.1.2.1 Will interviews be recorded?</label><br>
-                            <input type="checkbox" {% if formA.interview_recording=='Audio'%}checked{% endif%} name="interview_recording" value="Audio"> (a) Audio
-                            <input type="checkbox" {% if formA.interview_recording=='Video'%}checked{% endif %} name="interview_recording" value="Video"> (b) Video
+                            <input type="radio" name="interview_type" value="In-depth" {% if formA.interview_type == 'In-depth' %}checked{% endif %}>
+                            <input type="radio" name="interview_type" value="Semi-structured" {% if formA.interview_type == 'Semi-structured' %}checked{% endif %}>
+                            <input type="radio" name="interview_type" value="Unstructured" {% if formA.interview_type == 'Unstructured' %}checked{% endif %}>
+                            <br>
+
+                            <label>Will interviews be recorded?</label><br>
+                            <input type="radio" name="interview_recording" value="Audio" {% if formA.interview_recording == 'Audio' %}checked{% endif %}>
+                            <input type="radio" name="interview_recording" value="Video" {% if formA.interview_recording == 'Video' %}checked{% endif %}>
+
                           </div>
-                    <!-- Focus Group -->
+
+                          <!-- Focus Group -->
                           <div id="focus_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.3 Focus Groups</label><br>
-                            <input type="checkbox" {% if formA.use_focus_groups%}checked{% endif%} name="use_focus_groups" value="Yes"> (a) Yes
-                            <input type="checkbox" {% if not formA.use_focus_groups=='Audio'%}checked{% endif%} name="use_focus_groups" value="No"> (b) No<br>
-                            <label>5.4.1.3.1 Will focus groups be recorded?</label><br>
-                            <input type="checkbox" {% if formA.focus_recording=='Audio'%}checked{% endif%} name="focus_recording" value="Audio"> (a) Audio
-                            <input type="checkbox" {% if formA.focus_recording=='Video'%}checked{% endif%} name="focus_recording" value="Video"> (b) Video
+                            <input type="radio" name="use_focus_groups" value="Yes" {% if formA.use_focus_groups %}checked{% endif %}>
+                            <input type="radio" name="use_focus_groups" value="No" {% if not formA.use_focus_groups %}checked{% endif %}>
+
+                            <label>Will focus groups be recorded?</label><br>
+                            <input type="radio" name="focus_recording" value="Audio" {% if formA.focus_recording == 'Audio' %}checked{% endif %}> Audio
+                            <input type="radio" name="focus_recording" value="Video" {% if formA.focus_recording == 'Video' %}checked{% endif %}> Video
                           </div>
                 <!-- Observation -->
                           <div id="observation_fields" style="display:none; margin-top: 1rem;">
@@ -822,8 +822,6 @@
 
     </main>
 
-                <!-- Section 5 -->
-
                 <!-- Main Content -->
               <main class="main-content">
             
@@ -838,11 +836,24 @@
                     
                       <div class="question-block">
                         <label>6.2 Data storage and access to data</label><br>
-                        <input type="checkbox" name="secure_location[]" {% if formA.secure_location %}checked{% endif%}> Paper-based records must be kept in a secure location<br>
-                        <input type="checkbox" name="password_protected[]" {% if formA.password_protected%}checked{% endif%}> Computer-based records must only be available to personnel involved in the study through access privileges<br>
-                        <input type="checkbox" name="protected_place[]" {% if formA.protected_place%}checked{% endif%}> Electronic data will be kept in a protected place<br>
-                        <input type="checkbox" name="retention[]" {% if formA.retention%}checked{% endif%}> Paper-based data will be kept for 5 years and then destroyed<br>
+
+                        <input type="checkbox" name="data_storage[]" value="secure_location" 
+                              {% if 'secure_location' in formA.data_storage %}checked{% endif %}>
+                        Paper-based records must be kept in a secure location<br>
+
+                        <input type="checkbox" name="data_storage[]" value="password_protected" 
+                              {% if 'password_protected' in formA.data_storage %}checked{% endif %}>
+                        Computer-based records must only be available to personnel involved in the study through access privileges<br>
+
+                        <input type="checkbox" name="data_storage[]" value="protected_place" 
+                              {% if 'protected_place' in formA.data_storage %}checked{% endif %}>
+                        Electronic data will be kept in a protected place<br>
+
+                        <input type="checkbox" name="data_storage[]" value="retention" 
+                              {% if 'retention' in formA.data_storage %}checked{% endif %}>
+                        Paper-based data will be kept for 5 years and then destroyed<br>
                       </div>
+
                     
                       <div class="question-block">
                         <label for="study-benefits">6.3 What are the benefits of the study?</label>
@@ -871,11 +882,24 @@
                     
                       <div class="question-block">
                         <label>6.8 Select all data privacy practices applied:</label><br>
-                        <input type="checkbox" name="remove_identifiers[]" value="remove_identifiers" {% if formA.remove_identifiers %}checked{% endif %}> Personal identifiers will be removed<br>
-                        <input type="checkbox" name="encryption[]" value="encryption" {% if formA.encryption %}checked{% endif %}> Encryption<br>
-                        <input type="checkbox" name="pseudonyms[]" value="pseudonyms" {% if formA.pseudonyms%}checked{% endif%}> Use of pseudonyms<br>
-                        <input type="checkbox" name="focus_group_warning[]" value="focus_group_warning" {% if formA.focus_group_warning%}checked{% endif %}> Participants in focus groups will be advised confidentiality cannot be assured<br>
-                      </div>
+
+                            <input type="checkbox" name="privacy[]" value="remove_identifiers" 
+                                  {% if 'remove_identifiers' in formA.privacy %}checked{% endif %}>
+                            Personal identifiers will be removed<br>
+
+                            <input type="checkbox" name="privacy[]" value="encryption" 
+                                  {% if 'encryption' in formA.privacy %}checked{% endif %}>
+                            Encryption<br>
+
+                            <input type="checkbox" name="privacy[]" value="pseudonyms" 
+                                  {% if 'pseudonyms' in formA.privacy %}checked{% endif %}>
+                            Use of pseudonyms<br>
+
+                            <input type="checkbox" name="privacy[]" value="focus_group_warning" 
+                                  {% if 'focus_group_warning' in formA.privacy %}checked{% endif %}>
+                            Participants in focus groups will be advised confidentiality cannot be assured<br>
+                          </div>
+
                     
                       <div class="question-block">
                         <label>6.9 Checklist to ensure the covering letter meets ethical requirements</label>
