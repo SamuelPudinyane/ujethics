@@ -35,11 +35,6 @@ mail = Mail(app)
 ###import dummy_data
 
 ###dummy_data
-student_number=1234
-email="pudinyanesamueltiisetso@gmail.com"
-message=f'An account was created for this student number- {student_number}, follow the link to log in ' \
-           'http://127.0.0.1:5000'
-#send_email(app,mail, message,email)
 
 
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
