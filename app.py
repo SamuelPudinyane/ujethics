@@ -2430,9 +2430,9 @@ def student_edit_forma():
             focus_recording = request.form.getlist('focus_recording'),
             data_collectors = request.form.get('data_collectors'),
             
-            in_depth=request.form.get("in_depth"),
-            semi_structured=request.form.get("semi_structured"),
-            unstructured=request.form.get("unstructured"),
+            #in_depth=request.form.get("in_depth"),
+            #semi_structured=request.form.get("semi_structured"),
+            #unstructured=request.form.get("unstructured"),
             intervention =intervention, 
             intervention_details = request.form.get('intervention_details'),
             sensitive_data = request.form.get('sensitive_data'),
@@ -2467,10 +2467,10 @@ def student_edit_forma():
             adverse_steps=request.form.get('adverse_steps'),
             community_participation=request.form.get('community_participation'),
             community_effects=request.form.get('community_effects'),
-            remove_identifiers=request.form.getlist("remove_identifiers"),
-            encryption=request.form.getlist("encryption"),
-            pseudonyms=request.form.getlist("pseudonyms"),
-            focus_group_warning=request.form.getlist("focus_group_warning"),
+            #remove_identifiers=request.form.getlist("remove_identifiers"),
+            #encryption=request.form.getlist("encryption"),
+            #pseudonyms=request.form.getlist("pseudonyms"),
+            #focus_group_warning=request.form.getlist("focus_group_warning"),
             privacy=request.form.getlist('privacy[]'),
             q6_9a= request.form.get("q6_9a")=='Yes',
             q6_9b=request.form.get("q6_9b")=='Yes',
@@ -2921,9 +2921,15 @@ def chair_form_view(id,form_name):
     user_id=session['id']
     user_name=db_session.query(User).filter_by(user_id=user_id).first()
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
- 
+    formA = db_session.query(FormA).filter_by(form_id=id).first()
+    latest_forma = db_session.query(FormA) \
+    .filter(FormA.user_id == formA.user_id) \
+    .order_by(FormA.submitted_at.asc()) \
+    .first()
+
+    
     if form_name=="FORM A":
-        formA = db_session.query(FormA).filter_by(form_id=id).first()
+        
    
         if request.method=="POST":
          
@@ -3081,9 +3087,13 @@ def chair_form_view(id,form_name):
             db_session.add(formA)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
-        return render_template("form_a_ethics.html",user_id=user_id,formA=formA,formReviewers=formReviewers)
+        return render_template("form_a_ethics.html",user_id=user_id,formA=formA,formReviewers=formReviewers,latest_forma=latest_forma)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
+        latest_formb = db_session.query(FormB) \
+        .filter(FormB.user_id == formB.user_id) \
+        .order_by(FormB.submitted_at.asc()) \
+        .first()
         if request.method=="POST":
             review_date=request.form.get('review_date')
             status=request.form.get('status')
@@ -3235,10 +3245,13 @@ def chair_form_view(id,form_name):
             db_session.add(formB)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
-        return render_template("form_b_ethics.html",user_id=user_id,formB=formB,formReviewers=formReviewers)
+        return render_template("form_b_ethics.html",user_id=user_id,formB=formB,formReviewers=formReviewers,latest_formb=latest_formb)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
-     
+        latest_formc = db_session.query(FormC) \
+        .filter(FormC.user_id == formC.user_id) \
+        .order_by(FormC.submission_date.asc()) \
+        .first()
         if request.method=="POST":
            
             review_date=request.form.get('review_date')
@@ -3371,7 +3384,7 @@ def chair_form_view(id,form_name):
             db_session.add(formC)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
-        return render_template("form_c_ethics.html",user_id=user_id,formc=formC,formReviewers=formReviewers)
+        return render_template("form_c_ethics.html",user_id=user_id,formc=formC,formReviewers=formReviewers,latest_formc=latest_formc)
 
 
 
@@ -3971,17 +3984,25 @@ def view_certificate(id):
 
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
+    formA = db_session.query(FormA).filter_by(form_id=id).first()
+    latest_forma = db_session.query(FormA) \
+        .filter(FormA.user_id == formA.user_id) \
+        .order_by(FormA.submitted_at.asc()) \
+        .first()
+    print("----latest ",latest_forma)
+    if formA:
+        formA.reviewer_name1=latest_forma.reviewer_name1
+        formA.reviewer_name2=latest_forma.reviewer_name2
     if form_name=="FORM A":
-        formA = db_session.query(FormA).filter_by(form_id=id).first()
+        
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
             
             if reviewers:
                 formA.reviewer_name1=reviewers[0]
                 formA.reviewer_name2=reviewers[1]
-            else:
-                formA.reviewer_name1=formA.reviewer_name1
-                formA.reviewer_name2=formA.reviewer_name2
+            
+                
             formA.supervisor_date=request.form.get('review_date')
             formA.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formA.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -4011,14 +4032,20 @@ def ethics_reviewer_committee_forms(id,form_name):
         return render_template("form_a_ethics.html",formA=formA)
     elif form_name=="FORM B":
         formB = db_session.query(FormB).filter_by(form_id=id).first()
+        latest_formb = db_session.query(FormB) \
+        .filter(FormB.user_id == formB.user_id) \
+        .order_by(FormB.submitted_at.asc()) \
+        .first()
+        if formB:
+            formB.reviewer_name1=latest_formb.reviewer_name1
+            formB.reviewer_name2=latest_formb.reviewer_name2
+        
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
                 formB.reviewer_name1=reviewers[0]
                 formB.reviewer_name2=reviewers[1]
-            else:
-                formB.reviewer_name1=formB.reviewer_name1
-                formB.reviewer_name2=formB.reviewer_name2
+            
 
             formB.supervisor_date=request.form.get('review_date')
             formB.supervisor_org_permission_status=request.form.get('review_org_permission_status')
@@ -4052,15 +4079,20 @@ def ethics_reviewer_committee_forms(id,form_name):
         return render_template("form_b_ethics.html",formB=formB)
     elif form_name=="FORM C":
         formC = db_session.query(FormC).filter_by(form_id=id).first()
+        latest_formc = db_session.query(FormC) \
+        .filter(FormC.user_id == formC.user_id) \
+        .order_by(FormC.submission_date.asc()) \
+        .first()
+        if formC:
+            formC.reviewer_name1=latest_formc.reviewer_name1
+            formC.reviewer_name2=latest_formc.reviewer_name2
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
           
             if reviewers:
                 formC.reviewer_name1=reviewers[0]
                 formC.reviewer_name2=reviewers[1]
-            else:
-                formC.reviewer_name1=formC.reviewer_name1
-                formC.reviewer_name2=formC.reviewer_name2
+            
             formC.supervisor_date=request.form.get('review_date')
             formC.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formC.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
