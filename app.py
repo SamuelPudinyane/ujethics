@@ -18,7 +18,7 @@ from sqlalchemy import desc,cast ,Date,func,union_all,and_, not_, or_
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from mailtrap import configure_mail, send_email
-from flask_mail import Mail
+from flask_mail import Mail, Message
 
 
 # Load environment variables from .env file

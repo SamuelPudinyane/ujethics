@@ -12,6 +12,7 @@ mail = Mail()
 def configure_mail(app):
     app.config['MAIL_SERVER'] = os.getenv("MAIL_SERVER")
     app.config['MAIL_PORT'] = int(os.getenv("MAIL_PORT"))
+    app.config['MAIL_DEFAULT_SENDER'] = 'noreply@example.com'
     app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
     app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
     app.config['MAIL_USE_TLS'] = True
@@ -25,7 +26,10 @@ def configure_mail(app):
 
 def send_email(app, mail, message, recipient):
     with app.app_context():
-        msg = Message("Test Email", sender="noreply@example.com", recipients=[recipient])
-        msg.body = message
-        mail.send(msg)
-        return "Email sent!"
+        msg = Message(
+        subject='ETHICS NOTIFICATION',
+        recipients=[recipient],
+        body=message
+    )
+    mail.send(msg)
+    return 'Email sent!'
