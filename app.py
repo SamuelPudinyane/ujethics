@@ -17,6 +17,9 @@ from datetime import date
 from sqlalchemy import desc,cast ,Date,func,union_all,and_, not_, or_
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
+from mailtrap import configure_mail, send_email
+from flask_mail import Mail
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,11 +27,20 @@ load_dotenv()
 app = Flask(__name__,static_folder='static')
 CORS(app) 
 csrf = CSRFProtect(app)
+configure_mail(app)
 app.secret_key = os.getenv('SECRET_KEY')
+
+mail = Mail(app)
 
 ###import dummy_data
 
 ###dummy_data
+student_number=1234
+email="pudinyanesamueltiisetso@gmail.com"
+message=f'An account was created for this student number- {student_number}, follow the link to log in ' \
+           'http://127.0.0.1:5000'
+#send_email(app,mail, message,email)
+
 
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
 
@@ -49,10 +61,6 @@ def index():
 def student_ethics_pack_to_dashboards():
 
     selected_form=request.form.get('selected_form')
-
-    print("selected form -------------------- ",selected_form)
-
-    
 
     if 'A' in selected_form:
 
@@ -208,10 +216,13 @@ def register():
             
             db_session.add(new_user)
             db_session.commit()
-            
-            # Debug: Verify what was stored
             stored_user = db_session.query(User).filter_by(email=email).first()
+            #sending email to the student
+            ###
+            ### uncomment the code bellow for real testing
+            """message=f'An account was created for this student number- {student_number}'
             
+            send_email(app,mail, message,email)"""
             msg = 'You have successfully registered!'
             return render_template("login.html", messages=[msg])
             
@@ -230,11 +241,17 @@ def student_choose_supervisor():
 
     supervisor_id = request.form.get('supervisors')
     user=db_session.query(User).filter_by(user_id=user_id).first()
-
+    supervisor=db_session.query(User).filter_by(user_id=supervisor_id).first()
     if request.method=='POST':
         user.supervisor_id=supervisor_id
         db_session.commit()
         if user.supervisor_id:
+            #sending email to the supervisor
+            ###
+            ### uncomment the code bellow for real testing
+
+            """message=f'You have been assigned to be the supervisor of the student with name {user.full_name} and student number- {user.student_number}'
+            send_email(app,mail, message,supervisor.email)"""
             return render_template('ethics_pack.html', name = session['name'])
     return render_template('student_choose_supervisor.html',supervisors=supervisors)
 
@@ -243,9 +260,17 @@ def student_choose_supervisor():
 def authenticate_student(id):
     if request.method=='POST':
        
-        form=db_session.query(User).filter_by(user_id=id).first()
-        if form:
-            form.authenticate_student=True
+        user=db_session.query(User).filter_by(user_id=id).first()
+        
+        if user:
+            user.authenticate_student=True
+            #sending email alert after student have been authenticated
+            ###
+            ### uncomment the code bellow for real testing
+
+            """message='Your account has been Authenticated,Please follow the link to log in ' \
+            'http://127.0.0.1:5000'
+            send_email(app,mail, message,user.email)"""
             db_session.commit()
             return redirect(url_for('all_users'))
         else:
@@ -294,7 +319,15 @@ def register_reviewer():
                 
                 db_session.add(new_user)
                 db_session.commit()
-                
+                #sending email to the reviewers
+                ###
+                ### uncomment the code bellow for real testing
+
+                """message=f'An account was created on your behalf, ' \
+                    'please follow the link http://127.0.0.1:5000 use your '\
+                    ' email as username and password = {password}'
+            
+                send_email(app,mail, message,email)"""
                 messages = 'You have successfully registered!'
                 return redirect(url_for('reviewer_list'))
                 
@@ -341,7 +374,12 @@ def edit_user(id):
                     user.password = password  # Ensure you hash passwords
                     user.specialisation = specialisation
                     user.role = role
-                    
+                    if password:
+                        """message=f'Paasword was changed on your behalf, ' \
+                        'please follow the link http://127.0.0.1:5000 use your '\
+                        ' email as username and password = {password}'
+            
+                        send_email(app,mail, message,email)"""
                     db_session.commit()
                     return redirect(url_for('reviewer_list'))
 
@@ -1395,6 +1433,7 @@ def form_a_sec6 ():
             return "Unauthorized access. Please log in.", 401
 
         form = db_session.query(FormA).filter_by(user_id=user_id).first()
+        user=db_session.query(User).filter_by(user_id=user_id).first()
         if not form:
             return "No existing Form A record found for this user.", 404
 
@@ -1411,6 +1450,13 @@ def form_a_sec6 ():
 
         db_session.add(form)
         db_session.commit()
+        
+        #Uncomment the code bellow for testing
+        ##
+        """message=f'you have Submited your Form Successfully ' \
+        'Please wait while is under review'
+            
+        send_email(app,mail, message,user.email)"""
         messages="Form A submitted successfully."
         return redirect(url_for('student_dashboard'))  # or any final confirmation route
 
@@ -1647,6 +1693,7 @@ def form_b_sec3():
     if request.method == 'POST':
         
         form = db_session.query(FormB).filter_by(user_id=user_id).first()
+        user=db_session.query(User).filter_by(user_id=user_id).first()
         if not form:
             form = FormB(user_id=user_id)
           
@@ -1662,6 +1709,13 @@ def form_b_sec3():
         form.rejected_or_accepted=False
         db_session.add(form)
         db_session.commit()
+
+        #Uncomment the code bellow for testing
+        ##
+        """message=f'you have Submited your Form Successfully ' \
+        'Please wait while is under review'
+            
+        send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
         
     return render_template('form_b_section3.html', messages=[], show_modal=False)
@@ -1742,6 +1796,7 @@ def reject_or_Accept_form_a(id):
         return jsonify({'error': 'Unauthorized'}), 401
 
     forma = db_session.query(FormA).filter_by(form_id=id).first()
+    admin=db_session.query(User).filter_by(role="Admin").all()
     if not forma:
         forma = FormA(form_id=id)
     if request.method=="POST":
@@ -1769,6 +1824,11 @@ def reject_or_Accept_form_a(id):
             forma.supervisor_signature=supervisor_signature
             forma.signature_date=signature_date
             forma.rejected_or_accepted=True
+            #Uncomment the code bellow for testing
+            ##
+            """message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
+            
+            send_email(app,mail, message,admin.email)"""
         else:
             forma.supervisor_date=supervisor_date
             forma.org_permission_comment=org_permission_comment
@@ -1793,6 +1853,7 @@ def reject_or_Accept_form_b(id):
         return jsonify({'error': 'Unauthorized'}), 401
         
     formb = db_session.query(FormB).filter_by(form_id=id).first()
+    admin=db_session.query(User).filter_by(role="Admin").all()
     if not formb:
         formb = FormB(form_id=id)
     if request.method=="POST":
@@ -1821,6 +1882,11 @@ def reject_or_Accept_form_b(id):
             formb.supervisor_signature=supervisor_signature
             formb.signature_date=signature_date
             formb.rejected_or_accepted=True
+            #Uncomment the code bellow for testing
+            ##
+            """message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
+            
+            send_email(app,mail, message,admin.email)"""
         else:
             formb.supervisor_date=supervisor_date
             formb.org_permission_comment=org_permission_comment
@@ -1846,6 +1912,7 @@ def reject_or_Accept_form_c(id):
         return jsonify({'error': 'Unauthorized'}), 401
         
     formc = db_session.query(FormC).filter_by(form_id=id).first()
+    admin=db_session.query(User).filter_by(role="Admin").all()
     if not formc:
         formc = FormC(form_id=id)
     if request.method=="POST":
@@ -1873,6 +1940,11 @@ def reject_or_Accept_form_c(id):
             formc.supervisor_signature=supervisor_signature
             formc.signature_date=signature_date
             formc.rejected_or_accepted=True
+            #Uncomment the code bellow for testing
+            ##
+            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            
+            send_email(app,mail, message,admin.email)"""
         else:
             formc.supervisor_date=supervisor_date
             formc.org_permission_comment=org_permission_comment
@@ -2001,6 +2073,7 @@ def form_c_sec4():
             return jsonify({'error': 'Unauthorized'}), 401
         
         form = db_session.query(FormC).filter_by(user_id=user_id).first()
+        user=db_session.query(User).filter_by(user_id=user_id).first()
         if not form:
             form = FormC(user_id=user_id)
         form.declaration_name=request.form.get('declaration_name')
@@ -2008,6 +2081,13 @@ def form_c_sec4():
         form.submission_date=datetime.now().strptime(request.form.get('submission_date'), '%Y-%m-%d')
         db_session.add(form)
         db_session.commit()
+
+        #Uncomment the code bellow for testing
+        ##
+        """message=f'you have Submited your Form Successfully ' \
+        'Please wait while is under review'
+            
+        send_email(app,mail, message,user.email)"""
         message="Form submitted succesfully"
         return redirect(url_for('student_dashboard'))
     return render_template("form-c-section4.html")
@@ -2505,6 +2585,14 @@ def student_edit_forma():
        
         db_session.add(form)
         db_session.commit()
+
+        #Uncomment the code bellow for testing
+        ##
+
+        """message=f'you have successfully edited and Submited your Form ' \
+        'Please wait while is under review'
+            
+        send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
     return render_template("student_edit_forma.html",formA=form)
 
@@ -2586,6 +2674,13 @@ def student_edit_formb():
       
         db_session.add(form)
         db_session.commit()
+
+        #Uncomment the code bellow for testing
+        ##
+        """message=f'you have successfully edited and Submited your Form ' \
+        'Please wait while is under review'
+            
+        send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
     return render_template("student_edit_formb.html",formB=form)
 
@@ -2679,6 +2774,13 @@ def student_edit_formc():
         )
         db_session.add(form)
         db_session.commit()
+
+        #Uncomment the code bellow for testing
+        ##
+        """message=f'you have successfully edited and Submited your Form ' \
+        'Please wait while is under review'
+            
+        send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
     return render_template('student_edit_formc.html',formc=form)
 
@@ -2854,11 +2956,19 @@ def send_certificate(id):
         for model in [FormA, FormB, FormC]:
             
             certificate_details = db_session.query(model).filter_by(form_id=id).first()
+            user=db_session.query(User).filter(certificate_details.user_id==id).first()
+
             if certificate_details:    
                 certificate_details.certificate_received=True
                 certificate_details.certificate_modified=False
                 db_session.commit()
-                print("date issue=true")
+                
+                #Uncomment the code bellow for testing
+                ##
+                """message=f'your have been issued with Ethics certificate ' \
+                'Follow the link https://127.0.0.1:5000 to view your certificate'
+            
+                send_email(app,mail, message,user.email)"""
         return redirect(url_for('chair_landing'))
 
 
@@ -2926,7 +3036,7 @@ def chair_form_view(id,form_name):
     .filter(FormA.user_id == formA.user_id) \
     .order_by(FormA.submitted_at.asc()) \
     .first()
-
+    admin=db_session.query(User).filter_by(role="Admin").all()
     
     if form_name=="FORM A":
         
@@ -2978,6 +3088,12 @@ def chair_form_view(id,form_name):
                     formA.form_review_comment=form_review_comment
                     formA.form_reviewed_by=form_reviewed_by
                     formA.review_status=True
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3013,6 +3129,12 @@ def chair_form_view(id,form_name):
                     formA.form_review_comment1=form_review_comment
                     formA.form_reviewed_by1=form_reviewed_by
                     formA.review_status1=True
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3048,6 +3170,12 @@ def chair_form_view(id,form_name):
                     formA.form_reviewed_by=form_reviewed_by
                     formA.review_status=False
                     formA.rejected_or_accepted=False
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
                 else:
                     formA.review_date1=review_date
                     formA.status=status
@@ -3071,6 +3199,12 @@ def chair_form_view(id,form_name):
                     formA.form_reviewed_by1=form_reviewed_by
                     formA.review_status=False
                     formA.rejected_or_accepted=False
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
@@ -3139,7 +3273,12 @@ def chair_form_view(id,form_name):
                     formB.form_review_comment=form_review_comment
                     formB.form_reviewed_by=form_reviewed_by
                     formB.review_status=True
- 
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
                        
@@ -3174,6 +3313,12 @@ def chair_form_view(id,form_name):
                     formB.form_review_comment1=form_review_comment
                     formB.form_reviewed_by1=form_reviewed_by
                     formB.review_status1=True
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3208,6 +3353,12 @@ def chair_form_view(id,form_name):
                     formB.form_reviewed_by=form_reviewed_by
                     formB.review_status=False
                     formB.rejected_or_accepted=False
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
                 else:
                     formB.review_date1=review_date
                     formB.status=status
@@ -3231,6 +3382,12 @@ def chair_form_view(id,form_name):
                     formB.form_reviewed_by1=form_reviewed_by
                     formB.review_status=False
                     formB.rejected_or_accepted=False
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -3300,6 +3457,12 @@ def chair_form_view(id,form_name):
                     formC.form_review_comment=form_review_comment
                     formC.form_reviewed_by=form_reviewed_by
                     formC.review_status=True
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3334,6 +3497,12 @@ def chair_form_view(id,form_name):
                     formC.form_review_comment1=form_review_comment
                     formC.form_reviewed_by1=form_reviewed_by
                     formC.review_status1=True
+
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3368,6 +3537,11 @@ def chair_form_view(id,form_name):
                 formC.form_reviewed_by=form_reviewed_by
                 formC.review_status=False
                 formC.rejected_or_accepted=False
+                #Uncomment the code bellow for testing
+                ##
+                """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+            
+                    send_email(app,mail, message,admin.email)"""
 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
@@ -3989,10 +4163,9 @@ def ethics_reviewer_committee_forms(id,form_name):
         .filter(FormA.user_id == formA.user_id) \
         .order_by(FormA.submitted_at.asc()) \
         .first()
-    print("----latest ",latest_forma)
-    if formA:
-        formA.reviewer_name1=latest_forma.reviewer_name1
-        formA.reviewer_name2=latest_forma.reviewer_name2
+    
+    Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formA.reviewer_name1, formA.reviewer_name2])).all()
+    
     if form_name=="FORM A":
         
         if request.method=="POST":
@@ -4002,7 +4175,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                 formA.reviewer_name1=reviewers[0]
                 formA.reviewer_name2=reviewers[1]
             
-                
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formA.reviewer_name1, formA.reviewer_name2])).all()
             formA.supervisor_date=request.form.get('review_date')
             formA.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formA.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -4021,10 +4194,23 @@ def ethics_reviewer_committee_forms(id,form_name):
             formA.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formA.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept')=='Accept':
-                
+                if Assigned_reviewer:
+                    reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+            
+                    send_email(app,mail, message,reviewers)"""
+                else:
+                    reviewers=[reviewers[0],reviewers[1]]
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f'You are assined as form belonging to {formA.applicant_name}' 
+            
+                    send_email(app,mail, message,reviewers)"""
                 formA.rejected_or_accepted=True
             else:
-                formA.supervisor_date=request.form.get('review_date')
+               
                 formA.rejected_or_accepted=False
             db_session.add(formA)
             db_session.commit()
@@ -4036,10 +4222,8 @@ def ethics_reviewer_committee_forms(id,form_name):
         .filter(FormB.user_id == formB.user_id) \
         .order_by(FormB.submitted_at.asc()) \
         .first()
-        if formB:
-            formB.reviewer_name1=latest_formb.reviewer_name1
-            formB.reviewer_name2=latest_formb.reviewer_name2
         
+            
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
@@ -4066,7 +4250,20 @@ def ethics_reviewer_committee_forms(id,form_name):
             formB.supervisor_signature_date=request.form.get('review_signature_date')
             
             if request.form.get('accept')=='Accept':
-               
+                if Assigned_reviewer:
+                    reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+            
+                    send_email(app,mail, message,reviewers)"""
+                else:
+                    reviewers=[reviewers[0],reviewers[1]]
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f'You are assined as reviewer for form belonging to {formB.applicant_name}' 
+            
+                    send_email(app,mail, message,reviewers)"""
                 formB.rejected_or_accepted=True
                 
             else:
@@ -4111,7 +4308,20 @@ def ethics_reviewer_committee_forms(id,form_name):
             formC.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formC.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept')=='Accept':
-
+                if Assigned_reviewer:
+                    reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+            
+                    send_email(app,mail, message,reviewers)"""
+                else:
+                    reviewers=[reviewers[0],reviewers[1]]
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
+            
+                    send_email(app,mail, message,reviewers)"""
                 formC.rejected_or_accepted=True
             else:
                 formC.supervisor_date=request.form.get('review_date')
