@@ -4,6 +4,7 @@ from utils.helpers import generate_reset_token, send_email, validate_password
 import json
 from db_queries import getFormAData, getSupervisorsList
 import os
+import pandas as pd
 import io
 import pdfkit
 from werkzeug.utils import secure_filename
@@ -152,9 +153,9 @@ def login_page():
                 elif role == 'REVIEWER':
                     session['reviewer_role']='REVIEWER'
                     return redirect(url_for('review_dashboard'))
-                elif role == 'DEAN':
-                    session['dean_role']='DEAN'
-                    return redirect(url_for('dean_dashboard'))
+                elif role == 'SUPER_ADMIN':
+                    session['super_role']='SUPER_ADMIN'
+                    return redirect(url_for('chair_landing'))
                 else:
                     return render_template( 'video.html') #default fallback 
             else:
@@ -340,7 +341,8 @@ def register_reviewer():
 @app.route('/edit_user/<string:id>', methods=['POST','GET'])
 def edit_user(id):
     user = db_session.query(User).filter_by(user_id=id).first()
- 
+    user_id=session['id']
+    user_profile= db_session.query(User).filter_by(user_id=user_id).first()
     msg="update the user information"
     if user:
         full_name = request.form.get('full_name')
@@ -400,12 +402,208 @@ def edit_user(id):
                     msg = 'Update failed. Please try again.'
                     return render_template('register_reviewer.html', messages=[msg])
 
-    return render_template('edit_user.html',user=user, messages=[msg])
+    return render_template('edit_user.html',user_profile=user_profile,user=user, messages=[msg])
 
 @app.route('/all_users', methods=['GET', 'POST'])
 def all_users():
+    user_id=session['id']
+    user_profile=db_session.query(User).filter_by(user_id=user_id).first()
     all_users = db_session.query(User).all()
-    return render_template("user-list.html",all_users=all_users)
+
+    return render_template("user-list.html",user_profile=user_profile,all_users=all_users)
+
+
+@app.route('/super_admin', methods=['GET', 'POST'])
+def super_admin():
+    user_id=session['id']
+    user_profile=db_session.query(User).filter_by(user_id=user_id).first()
+    all_users = db_session.query(User).all()
+    return render_template("superadmin_dashboard.html",user_profile=user_profile,all_users=all_users)
+
+
+
+### ploting the analytics
+### plorting form A
+from data_ploting import (plot_risk_rating_distribution_a,
+plot_review_recommendations_a,
+plot_supervisor_recommendations_a,
+plot_rec_member_distribution_a,
+plot_certificate_status_a,
+plot_submissions_over_time_a,
+plot_review_by_risk_rating_a,
+plot_top_applicants_a,
+plot_certificate_received_percentage_a,
+plot_review_recommendation_comparison_a )
+@app.route('/super_admin_form_a', methods=['GET', 'POST'])
+def super_admin_form_a():
+    forma='A'
+    forms_list = [
+    {
+        "id": form.form_id,
+        "applicant_name":form.applicant_name,
+        "submitted_at": form.submitted_at,
+        "risk_rating": form.risk_rating,
+        "supervisor_signature_date":form.supervisor_date,
+        "supervisor_recommendation":form.recommendation,
+        "review_signature_date":form.review_signature_date,
+        "review_recommendation":form.review_recommendation,
+        "review_signature_date1":form.review_signature_date1,
+        "review_recommendation1":form.review_recommendation1,
+        "certificate_issued": form.certificate_issued,
+        "certificate_received":form.certificate_received,
+        "submitted_to_rec":form.submitted_to_rec,
+        "rec_full_name": rec.full_name
+    }
+    for form, rec in (
+        db_session.query(FormA, Rec)
+        .join(Rec, FormA.form_id == Rec.form_id)
+        .limit(50)
+        .all()
+    )
+
+        ]
+    
+    if forms_list:
+        df = pd.DataFrame(forms_list)
+
+        context = {
+        "risk_rating_distribution": plot_risk_rating_distribution_a(df),
+        "review_recommendations": plot_review_recommendations_a(df),
+        "supervisor_recommendations": plot_supervisor_recommendations_a(df),
+        "rec_member_distribution": plot_rec_member_distribution_a(df),
+        "certificate_status": plot_certificate_status_a(df),
+        "submissions_over_time": plot_submissions_over_time_a(df),
+        "review_by_risk_rating": plot_review_by_risk_rating_a(df),
+        "top_applicants": plot_top_applicants_a(df),
+        "certificate_received_percentage": plot_certificate_received_percentage_a(df),
+        "review_recommendation_comparison": plot_review_recommendation_comparison_a(df),
+    }
+
+        return render_template("superadmin_dashboard.html",forma=forma, **context)
+    else:
+        return render_template("superadmin_dashboard.html")
+### Ploting form B
+from data_ploting import (plot_risk_rating_distribution_b,
+plot_review_recommendations_b,
+plot_supervisor_recommendations_b,
+plot_rec_member_distribution_b,
+plot_certificate_status_b,
+plot_submissions_over_time_b,
+plot_review_by_risk_rating_b,
+plot_top_applicants_b,
+plot_certificate_received_percentage_b,
+plot_review_recommendation_comparison_b )
+
+@app.route('/super_admin_form_b', methods=['GET', 'POST'])
+def super_admin_form_b():
+    formb='B'
+    forms_list = [
+    {
+        "id": form.form_id,
+        "applicant_name":form.applicant_name,
+        "submitted_at": form.submitted_at,
+        "risk_level": form.risk_level,
+        "supervisor_signature_date":form.supervisor_date,
+        "supervisor_recommendation":form.recommendation,
+        "review_signature_date":form.review_signature_date,
+        "review_recommendation":form.review_recommendation,
+        "review_signature_date1":form.review_signature_date1,
+        "review_recommendation1":form.review_recommendation1,
+        "certificate_issued": form.certificate_issued,
+        "certificate_received":form.certificate_received,
+        "submitted_to_rec":form.submitted_to_rec,
+        "rec_full_name": rec.full_name
+    }
+    for form, rec in (
+        db_session.query(FormB, Rec)
+        .join(Rec, FormB.form_id == Rec.form_id)
+        .limit(50)
+        .all()
+    )
+
+        ]
+    if forms_list:
+        df = pd.DataFrame(forms_list)
+
+        context = {
+        "risk_rating_distribution": plot_risk_rating_distribution_b(df),
+        "review_recommendations": plot_review_recommendations_b(df),
+        "supervisor_recommendations": plot_supervisor_recommendations_b(df),
+        "rec_member_distribution": plot_rec_member_distribution_b(df),
+        "certificate_status": plot_certificate_status_b(df),
+        "submissions_over_time": plot_submissions_over_time_b(df),
+        "review_by_risk_rating": plot_review_by_risk_rating_b(df),
+        "top_applicants": plot_top_applicants_b(df),
+        "certificate_received_percentage": plot_certificate_received_percentage_b(df),
+        "review_recommendation_comparison": plot_review_recommendation_comparison_b(df),
+    }
+
+        return render_template("superadmin_dashboard.html",formb=formb, **context)
+    
+    else:
+        return render_template("superadmin_dashboard.html")
+### Ploting form C
+
+from data_ploting import (plot_risk_rating_distribution_c,
+plot_review_recommendations_c,
+plot_supervisor_recommendations_c,
+plot_rec_member_distribution_c,
+plot_certificate_status_c,
+plot_submissions_over_time_c,
+plot_review_by_risk_rating_c,
+plot_top_applicants_c,
+plot_certificate_received_percentage_c,
+plot_review_recommendation_comparison_c )
+
+@app.route('/super_admin_form_c', methods=['GET', 'POST'])
+def super_admin_form_c():
+    formc='C'
+    forms_list = [
+    {
+        "id": form.form_id,
+        "applicant_name":form.applicant_name,
+        "submitted_at": form.submission_date,
+        "risk_level": form.risk_level,
+        "supervisor_signature_date":form.supervisor_date,
+        "supervisor_recommendation":form.recommendation,
+        "review_signature_date":form.review_signature_date,
+        "review_recommendation":form.review_recommendation,
+        "review_signature_date1":form.review_signature_date1,
+        "review_recommendation1":form.review_recommendation1,
+        "certificate_issued": form.certificate_issued,
+        "certificate_received":form.certificate_received,
+        "submitted_to_rec":form.submitted_to_rec,
+        "rec_full_name": rec.full_name
+    }
+    for form, rec in (
+        db_session.query(FormC, Rec)
+        .join(Rec, FormC.form_id == Rec.form_id)
+        .limit(50)
+        .all()
+    )
+
+        ]
+
+    if forms_list:
+        df = pd.DataFrame(forms_list)
+
+        context = {
+        "risk_rating_distribution": plot_risk_rating_distribution_c(df),
+        "review_recommendations": plot_review_recommendations_c(df),
+        "supervisor_recommendations": plot_supervisor_recommendations_c(df),
+        "rec_member_distribution": plot_rec_member_distribution_c(df),
+        "certificate_status": plot_certificate_status_c(df),
+        "submissions_over_time": plot_submissions_over_time_c(df),
+        "review_by_risk_rating": plot_review_by_risk_rating_c(df),
+        "top_applicants": plot_top_applicants_c(df),
+        "certificate_received_percentage": plot_certificate_received_percentage_c(df),
+        "review_recommendation_comparison": plot_review_recommendation_comparison_c(df),
+    }
+
+        return render_template("superadmin_dashboard.html",formc=formc, **context)
+    else:
+        return render_template("superadmin_dashboard.html")
+
 
 @app.route('/delete_user/<string:id>', methods=['GET','POST'])
 def delete_user(id):
@@ -3014,11 +3212,12 @@ def ethics_view_feedback(id):
 
 @app.route('/reviewer_list/', methods=['GET'])
 def reviewer_list():
-
+    user_id=session['id']
+    user_profile=db_session.query(User).filter_by(user_id=user_id).first()
     form = db_session.query(User).filter(User.role=="REVIEWER").all()
        
 
-    return render_template("reviewer-list.html", view_form=form)
+    return render_template("reviewer-list.html",user_profile=user_profile, view_form=form)
    
 
 @app.route('/chair_form_view/<string:id>/<string:form_name>', methods=['GET','POST'])

@@ -51,6 +51,7 @@ class UserRole(enum.Enum):
     REC = "REC" #rec commette final 
     REVIEWER = "REVIEWER" #ethics sent the form to reviwer, review send it to rec only if its high risk and medium
     DEAN = "DEAN" ##chairman, no responsibility
+    SUPER_ADMIN="SUPER_ADMIN"
 
 
 

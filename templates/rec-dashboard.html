@@ -23,7 +23,7 @@
     </div>
     <nav class="sidebar-nav">
       
-      {% if 'admin' in role|lower%}
+      {% if 'admin' == role|lower%}
       <a href="{{url_for('chair_landing')}}" class="sidebar-link">
         <i class="fas fa-clipboard-list"></i> Dashboard
       </a>
@@ -34,6 +34,24 @@
 
       <a href="{{url_for('all_users')}}" class="sidebar-link">
         <i class="fas fa-users-cog"></i> User Management
+      </a>
+      {% elif 'super_admin' == role|lower %}
+      <a href="{{url_for('chair_landing')}}" class="sidebar-link">
+        <i class="fas fa-clipboard-list"></i> Dashboard
+      </a>
+
+      <a href="{{url_for('reviewer_list')}}" class="sidebar-link">
+        <i class="fas fa-user"></i> Reviewer List
+      </a>
+
+      <a href="{{url_for('all_users')}}" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> User Management
+      </a>
+      <a href="" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> Analytics
+      </a>
+      <a href="{{url_for('super_admin')}}" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> Super Admin dashboard
       </a>
       {% else %}
       <a href="{{url_for('review_dashboard')}}" class="sidebar-link">
