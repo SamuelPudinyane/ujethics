@@ -21,17 +21,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-# connection_string = (
-#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-#     "driver=ODBC+Driver+17+for+SQL+Server&"
-#     "trusted_connection=yes"
-# )
-
 connection_string = (
-    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
+
+# connection_string = (
+#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
 
 engine = create_engine(connection_string, echo=True)
 
@@ -51,6 +51,7 @@ class UserRole(enum.Enum):
     REC = "REC" #rec commette final 
     REVIEWER = "REVIEWER" #ethics sent the form to reviwer, review send it to rec only if its high risk and medium
     DEAN = "DEAN" ##chairman, no responsibility
+    SUPER_ADMIN="SUPER_ADMIN"
 
 
 

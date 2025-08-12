@@ -40,13 +40,22 @@
   <input id="password" name="password" type="password" placeholder="Create password" >
   <input id="password2" name="password2" type="password" placeholder="comfirm password" >
   <input id="specialisation" value="{{user.specialisation}}" value type="text" name="specialisation" placeholder="Specialisation" required >
+
+  {% if user_profile.role.value=='ADMIN' and user.role.value!='SUPER_ADMIN'%}
   <select name="role" required>
   <option value="" disabled selected hidden>... Choose Role ...</option>
   <option value="SUPERVISOR" {% if user.role.value=='SUPERVISOR'%}selected{% endif %}>SUPERVISOR</option>
   <option value="ADMIN" {% if user.role.value=='ADMIN'%}selected{% endif %}>ADMIN</option>
   <option value="REVIEWER" {% if user.role.value=='REVIEWER'%}selected{% endif %}>REVIEWER</option>
-  <option value="REC" {% if user.role.value=='REC'%}selected{% endif %}>REC</option>
-  <option value="DEAN" {% if user.role.value=='DEAN'%}selected{% endif %}>DEAN</option>
+  </select>
+  {% elif user_profile.role.value=='SUPER_ADMIN' %}
+  <select name="role" required>
+  <option value="" disabled selected hidden>... Choose Role ...</option>
+  <option value="SUPER_ADMIN" {% if user.role.value=='SUPER_ADMIN'%}selected{% endif %}>SUPER ADMIN</option>
+  <option value="ADMIN" {% if user.role.value=='ADMIN'%}selected{% endif %}>ADMIN</option>
+  <option value="SUPERVISOR" {% if user.role.value=='SUPERVISOR'%}selected{% endif %}>SUPERVISOR</option>
+  <option value="REVIEWER" {% if user.role.value=='REVIEWER'%}selected{% endif %}>REVIEWER</option>
+  {% endif %}
 </select>
   
   <button type="submit">Submit</button>

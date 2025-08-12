@@ -22,6 +22,7 @@
       <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
+      {% if 'admin' == user_profile.role.value|lower%}
       <a href="{{url_for('chair_landing')}}" class="sidebar-link">
         <i class="fas fa-clipboard-list"></i> Dashboard
       </a>
@@ -33,11 +34,32 @@
       <a href="{{url_for('all_users')}}" class="sidebar-link">
         <i class="fas fa-users-cog"></i> User Management
       </a>
+      {% elif 'super_admin' == user_profile.role.value|lower %}
+      <a href="{{url_for('chair_landing')}}" class="sidebar-link">
+        <i class="fas fa-clipboard-list"></i> Dashboard
+      </a>
 
+      <a href="{{url_for('reviewer_list')}}" class="sidebar-link">
+        <i class="fas fa-user"></i> Reviewer List
+      </a>
+
+      <a href="{{url_for('all_users')}}" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> User Management
+      </a>
+      <a href="" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> Analytics
+      </a>
+      <a href="{{url_for('super_admin')}}" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> Super Admin dashboard
+      </a>
+      {% else %}
+      <a href="{{url_for('review_dashboard')}}" class="sidebar-link">
+        <i class="fas fa-clipboard-check"></i> My Reviews
+      </a>
+      {% endif %}
       <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
         <i class="fas fa-users"></i> Rec Team Dashboard
       </a>
-
       <a href="{{url_for('logout')}}" class="sidebar-link">
         <i class="fas fa-sign-out-alt"></i> Logout
       </a>
@@ -67,6 +89,54 @@
           </tr>
         </thead>
         <tbody>
+          {% if user_profile.role.value=='ADMIN'%}
+          {% for user in all_users%}
+          {% if user.role.value!='SUPER_ADMIN'%}
+          <tr>
+            <td>{{user.full_name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role.value}}</td>
+            <td>
+              {% if 'student' in user.role.value|lower and  user.authenticate_student%}
+              
+              <span>Student is authenticated</span>
+              
+              {% else %}
+              Active
+              {% endif %}
+            </td>
+            <td>
+              <a class="btn btn-primary" href="{{url_for('edit_user',id=user.user_id)}}">Edit User</a>
+              <form action="{{ url_for('delete_user', id=user.user_id) }}" method="post" style="display:inline;">
+               <!-- Error Messages -->
+            {% if messages %}
+                <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+              
+              {% if 'student' in user.role.value|lower %}
+              
+              <form action="{{url_for('authenticate_student',id=user.user_id)}}" method="post" style="display:inline;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% if not user.authenticate_student or user.authenticate_student is none %}
+                <button type="submit" class="btn btn-success"> Authenticate Student</button>
+                {% endif %}
+              </form>
+              {% endif %}
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% else %}
           {% for user in all_users%}
           <tr>
             <td>{{user.full_name}}</td>
@@ -111,6 +181,7 @@
             </td>
           </tr>
           {% endfor %}
+          {% endif %}
         </tbody>
       </table>
     </section>

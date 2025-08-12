@@ -351,6 +351,7 @@
                         <label><strong>2.4 Rate your project (Low, Medium, High Risk):</strong>
                           <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ</span>
                         </label>
+                        
                         <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
                           <option value="">-- Select Risk Level --</option>
                           <option value="low" {% if 'low' in formA.risk_rating%}selected{% endif %}>Low</option>
@@ -595,12 +596,12 @@
                     <h3>5.4 Research Instruments for Data Collection</h3>
                     <label>5.4.1 Indicate which data collection methods will be used</label><br>
                     <div id="data-methods">
-                            <input type="checkbox" name="data_methods[]" value="questionnaire" {% if 'questionnaire' in formA.data_methods %}checked{% endif %}> Questionnaire
-                            <input type="checkbox" name="data_methods[]" value="interview" {% if 'interview' in formA.data_methods %}checked{% endif %}> Interview
-                            <input type="checkbox" name="data_methods[]" value="focus" {% if 'focus' in formA.data_methods %}checked{% endif %}> Focus Group
-                            <input type="checkbox" name="data_methods[]" value="observation" {% if 'observation' in formA.data_methods %}checked{% endif %}> Observation
-                            <input type="checkbox" name="data_methods[]" value="documents" {% if 'documents' in formA.data_methods %}checked{% endif %}> Documents
-                            <input type="checkbox" name="data_methods[]" value="other" {% if 'other' in formA.data_methods %}checked{% endif %}> Other
+                            <input type="checkbox" name="data_methods[]" value="questionnaire" {% if 'questionnaire' in formA.data_methods[] %}checked{% endif %}> Questionnaire
+                            <input type="checkbox" name="data_methods[]" value="interview" {% if 'interview' in formA.data_methods[] %}checked{% endif %}> Interview
+                            <input type="checkbox" name="data_methods[]" value="focus" {% if 'focus' in formA.data_methods[] %}checked{% endif %}> Focus Group
+                            <input type="checkbox" name="data_methods[]" value="observation" {% if 'observation' in formA.data_methods[] %}checked{% endif %}> Observation
+                            <input type="checkbox" name="data_methods[]" value="documents" {% if 'documents' in formA.data_methods[] %}checked{% endif %}> Documents
+                            <input type="checkbox" name="data_methods[]" value="other" {% if 'other' in formA.data_methods[] %}checked{% endif %}> Other
 
                     </div>
                     <!-- Questionnaire -->
@@ -839,19 +840,19 @@
                         <label>6.2 Data storage and access to data</label><br>
 
                         <input type="checkbox" name="data_storage[]" value="secure_location" 
-                              {% if 'secure_location' in formA.data_storage %}checked{% endif %}>
+                              {% if 'secure_location' in formA.data_storage[] %}checked{% endif %}>
                         Paper-based records must be kept in a secure location<br>
 
                         <input type="checkbox" name="data_storage[]" value="password_protected" 
-                              {% if 'password_protected' in formA.data_storage %}checked{% endif %}>
+                              {% if 'password_protected' in formA.data_storage[] %}checked{% endif %}>
                         Computer-based records must only be available to personnel involved in the study through access privileges<br>
 
                         <input type="checkbox" name="data_storage[]" value="protected_place" 
-                              {% if 'protected_place' in formA.data_storage %}checked{% endif %}>
+                              {% if 'protected_place' in formA.data_storage[] %}checked{% endif %}>
                         Electronic data will be kept in a protected place<br>
 
                         <input type="checkbox" name="data_storage[]" value="retention" 
-                              {% if 'retention' in formA.data_storage %}checked{% endif %}>
+                              {% if 'retention' in formA.data_storage[] %}checked{% endif %}>
                         Paper-based data will be kept for 5 years and then destroyed<br>
                       </div>
 
@@ -885,19 +886,19 @@
                         <label>6.8 Select all data privacy practices applied:</label><br>
 
                             <input type="checkbox" name="privacy[]" value="remove_identifiers" 
-                                  {% if 'remove_identifiers' in formA.privacy %}checked{% endif %}>
+                                  {% if 'remove_identifiers' in formA.privacy[] %}checked{% endif %}>
                             Personal identifiers will be removed<br>
 
                             <input type="checkbox" name="privacy[]" value="encryption" 
-                                  {% if 'encryption' in formA.privacy %}checked{% endif %}>
+                                  {% if 'encryption' in formA.privacy[] %}checked{% endif %}>
                             Encryption<br>
 
                             <input type="checkbox" name="privacy[]" value="pseudonyms" 
-                                  {% if 'pseudonyms' in formA.privacy %}checked{% endif %}>
+                                  {% if 'pseudonyms' in formA.privacy[] %}checked{% endif %}>
                             Use of pseudonyms<br>
 
                             <input type="checkbox" name="privacy[]" value="focus_group_warning" 
-                                  {% if 'focus_group_warning' in formA.privacy %}checked{% endif %}>
+                                  {% if 'focus_group_warning' in formA.privacy[] %}checked{% endif %}>
                             Participants in focus groups will be advised confidentiality cannot be assured<br>
                           </div>
 
