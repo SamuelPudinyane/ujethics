@@ -353,10 +353,11 @@
                         </label>
                         <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
                           <option value="">-- Select Risk Level --</option>
-                          <option value="low">Low</option>
-                          <option value="medium">Medium</option>
-                          <option value="high">High</option>
+                          <option value="low" {% if 'low' in formA.risk_rating%}selected{% endif %}>Low</option>
+                          <option value="medium" {% if 'medium' in formA.risk_rating%}selected{% endif %}>Medium</option>
+                          <option value="high" {% if 'high' in formA.risk_rating%}selected{% endif %}>High</option>
                         </select>
+
                           <label for="risk_justification">2.4.1 Please justify your risk level (Mandatory)</label>
                           <input type="text" name="risk_justification" required>
                         <div id="risk-fields">
@@ -1003,7 +1004,7 @@
 
   <!-- Footer -->
 <footer class="footer">
-  <p>&copy;  Prof. M. Munsamy & Prof. A Telukdarie</p>
+   
 </footer>
 
 

@@ -115,13 +115,48 @@
     <label>5.4 Research Instruments for Data Collection</label>
     <label>5.4.1 Indicate which data collection methods will be used</label>
     <div id="data-methods">
-      <label><input type="checkbox" value="questionnaire" class="method-check" name="data_methods[]"> Questionnaire</label><br>
-      <label><input type="checkbox" value="interview" class="method-check" name="data_methods[]"> Interview</label><br>
-      <label><input type="checkbox" value="focus" class="method-check" name="data_methods[]"> Focus Group</label><br>
-      <label><input type="checkbox" value="observation" class="method-check" name="data_methods[]"> Observation</label><br>
-      <label><input type="checkbox" value="documents" class="method-check" name="data_methods[]"> Documents</label><br>
-      <label><input type="checkbox" value="other" class="method-check" name="data_methods[]"> Other</label><br>
-    </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Questionnaire</th>
+        <th>Interview</th>
+        <th>Focus Group</th>
+        <th>Observation</th>
+        <th>Documents</th>
+        <th>Other</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center">
+          <input id="m-questionnaire" type="checkbox" value="questionnaire" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-questionnaire">Questionnaire</label>
+        </td>
+        <td class="text-center">
+          <input id="m-interview" type="checkbox" value="interview" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-interview">Interview</label>
+        </td>
+        <td class="text-center">
+          <input id="m-focus" type="checkbox" value="focus" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-focus">Focus Group</label>
+        </td>
+        <td class="text-center">
+          <input id="m-observation" type="checkbox" value="observation" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-observation">Observation</label>
+        </td>
+        <td class="text-center">
+          <input id="m-documents" type="checkbox" value="documents" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-documents">Documents</label>
+        </td>
+        <td class="text-center">
+          <input id="m-other" type="checkbox" value="other" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-other">Other</label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
     <br>
     
     <!-- Questionnaire -->
@@ -201,7 +236,7 @@
       <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
     </div>
     <br>
-    <br>
+  
 
 <label>5.5 Secondary Data Usage</label>
 
@@ -327,7 +362,7 @@
   
     <!-- Footer -->
  <footer class="footer">
-  <p>&copy;  Prof. M. Munsamy & Prof. A Telukdarie</p>
+   
 </footer>
 
     <script>

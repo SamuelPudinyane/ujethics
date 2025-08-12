@@ -66,10 +66,12 @@
             <td><span class="badge status-pending">
               {% if item.rec_status  and item.form_reviewed_by1 == user_id and 'low' not in item.risk_rating|lower%}
               {{item.rec_status}}
-              {% elif not item.certificate_issued and not item.certificate_received and (item.form_reviewed_by!=user_id or item.form_reviewed_by1!=user_id) and 'low' not in item.risk_level|lower and item.review_status and not item.review_status1  %}
+              {% elif not item.certificate_issued and not item.certificate_received and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and 'low' not in item.risk_level|lower and item.review_status and not item.review_status1  %}
               Under Review
-              {% elif not item.certificate_received and item.certificate_issued and (item.form_reviewed_by!=user_id or item.form_reviewed_by1!=user_id) and ('low' in item.risk_level|lower or 'low' in item.risk_rating |lower) %}
+
+              {% elif not item.certificate_received and item.certificate_issued and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and ('low' in item.risk_level|lower or 'low' in item.risk_rating |lower) %}
               Certificate Will be Issued
+
               {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
               {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) and not item.form_reviewed_by1 %}

@@ -2627,7 +2627,7 @@ def student_edit_formc():
             vulnerable=True if request.form.get('vulnerable') else False,
             
             age_under_18_or_over_65=True if request.form.get('age_under_18_or_over_65') else False,
-            uj_employees=True if request.form.get('uj_employee') else False,
+            uj_employees=True if request.form.get('uj_employees') else False,
 
             non_vulnerable_context=True if request.form.get('non_vulnerable_context') else False,
             non_english=True if request.form.get('non_english')else False,
@@ -2642,13 +2642,13 @@ def student_edit_formc():
             discomfiture=True if request.form.get('discomfiture') else False,
             deception=True if request.form.get('deception') else False,
             sensitive_issues=True if request.form.get('sensitive_issues') else False,
-            prejudicial_info=True if request.form.get('prejuditial_info') else False,
+            prejudicial_info=True if request.form.get('prejudicial_info') else False,
             intrusive=True if request.form.get('intrusive') else False,
             illegal=True if request.form.get('illegal') else False,
             direct_social_info=True if request.form.get('direct_social_info') else False,
             identifiable_records=True if request.form.get('identifiable_records') else False,
             psychology_tests=True if request.form.get('psychology_tests') else False,
-            researcher_risk=True if request.form.get('reseacher_risk') else False,
+            researcher_risk=True if request.form.get('researcher_risk') else False,
             activity_other_description=request.form.get('activity_other_description'),
 
             activity_comments=request.form.get('activity_comments'),
