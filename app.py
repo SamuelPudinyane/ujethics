@@ -366,13 +366,13 @@ def super_admin_registration():
             
             try:
                 # Hash the password properly
-                hashed_password = User.hash_password(password)
+                
                 # Create new user
                 new_user = User(
                     full_name=full_name,
                     staff_number=staff_number,
                     email=email,
-                    password=hashed_password,  # Make sure this is the hashed version
+                    password=password,  # Make sure this is the hashed version
                     specialisation=specialisation,
                     role=role
                 )
