@@ -38,7 +38,6 @@
     .folder-card {
       text-align: center;
       padding: 2rem;
-      
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       cursor: pointer;
@@ -87,7 +86,6 @@
   width: 250px;           /* Fixed sidebar width */
   height: 100vh;          /* Full viewport height */
   padding: 20px;          /* Inner padding */
-
   box-sizing: border-box;
   overflow-y: auto;       /* Scroll if content overflows vertically */
 }
@@ -120,7 +118,6 @@
   margin: 0;
   border: none;
   box-shadow: none;
-  
   padding-left: 15px;
 }
 
@@ -150,29 +147,14 @@
     <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
     <h3>JBS Ethics Application</h3>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
-    <div class="container-fluid flex-column p-0">
-      <a href="{{url_for('chair_landing')}}" class="sidebar-link">
-        <i class="fas fa-clipboard-list"></i> Dashboard
-      </a>
-
-      <a href="{{url_for('reviewer_list')}}" class="sidebar-link">
-        <i class="fas fa-user"></i> Reviewer List
-      </a>
-
-      <a href="{{url_for('all_users')}}" class="sidebar-link">
-        <i class="fas fa-users-cog"></i> User Management
-      </a>
+  <nav class="sidebar-nav">
+   
       
-      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
-        <i class="fas fa-users"></i> Rec Team Dashboard
-      </a>
-      <a class="navbar-brand" href="{{ url_for('super_admin') }}">Analytics</a>
+      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link"><i class="fas fa-users"></i> Rec Team Dashboard</a>
+      <a class="navbar-brand" href="{{ url_for('super_admin') }}"><i class="fas fa-chart-line"></i> Analytics</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100">
         <li class="nav-item dropdown w-100">
-          <a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Forms
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Forms</a>
           <ul class="dropdown-menu" aria-labelledby="formsDropdown">
             <li><a class="dropdown-item" href="{{ url_for('super_admin_form_a') }}">Form A</a></li>
             <li><a class="dropdown-item" href="{{ url_for('super_admin_form_b') }}">Form B</a></li>
@@ -180,7 +162,8 @@
           </ul>
         </li>
       </ul>
-    </div>
+    
+    <a href="{{url_for('logout')}}" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </nav>
 </aside>
 
@@ -189,7 +172,6 @@
     <header class="topbar">
   <div class="d-flex justify-content-between align-items-center">
     <h2>Ethics Superadmin</h2>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
   </div>
   <p class="text-muted">Monitor submissions, certificates, review stages, and reviewer efficiency.</p>
 </header>
