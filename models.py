@@ -82,7 +82,7 @@ class User(Base):
         self.supervisor_id = supervisor_id
         self.specialisation=specialisation
         self.role = UserRole(role) if isinstance(role, str) else role
-
+        print(self.password)
     @staticmethod
     def hash_password(password: str) -> str:
         # Generate salt and hash in one step (bcrypt handles salt internally)

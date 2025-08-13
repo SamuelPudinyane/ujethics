@@ -124,7 +124,7 @@
                     {% set review_comment = form.form_review_comment1 %}
                   {# 🖨️ Display the result if it was matched #}
                     {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
+                    <p >Review Status: {{ review_comment }}</p>
                     {% endif %}
                  
                   {% elif form.rejected_or_accepted and form.review_supervisor_signature and not form.certificate_issued%}
