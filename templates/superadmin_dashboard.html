@@ -16,13 +16,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <style>
-    .navbar {
-      background: #022169;
-      color: white;
-      padding: 1rem 2rem;
-    }
+    
 .btn {
-      background-color: #022169;
+    
       color: white;
       border: none;
       padding: 0.5rem 1rem;
@@ -35,15 +31,7 @@
       gap: 2rem;
       padding: 2rem;
     }
-    .folder-card {
-      text-align: center;
-      padding: 2rem;
-      
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
+   
     .folder-card:hover {
       transform: scale(1.05);
       
@@ -150,7 +138,7 @@
     <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
     <h3>JBS Ethics Application</h3>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
+  <nav class="navbar navbar-expand-lg p-0">
     <div class="container-fluid flex-column p-0">
       <a href="{{url_for('chair_landing')}}" class="sidebar-link">
         <i class="fas fa-clipboard-list"></i> Dashboard
@@ -167,7 +155,7 @@
       <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
         <i class="fas fa-users"></i> Rec Team Dashboard
       </a>
-      <a class="navbar-brand" href="{{ url_for('super_admin') }}">Analytics</a>
+      <a  href="{{ url_for('super_admin') }}" class="sidebar-link">Analytics</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100">
         <li class="nav-item dropdown w-100">
           <a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
