@@ -15,7 +15,7 @@ from datetime import datetime, timedelta, timezone
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
 from datetime import date
-from sqlalchemy import desc,cast ,Date,func,union_all,and_, not_, or_
+from sqlalchemy import desc,asc,cast ,Date,func,union_all,and_, not_, or_
 from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from mailtrap import configure_mail, send_email
@@ -366,13 +366,13 @@ def super_admin_registration():
             
             try:
                 # Hash the password properly
-                
+                hashed_password = User.hash_password(password)
                 # Create new user
                 new_user = User(
                     full_name=full_name,
                     staff_number=staff_number,
                     email=email,
-                    password=password,  # Make sure this is the hashed version
+                    password=hashed_password,  # Make sure this is the hashed version
                     specialisation=specialisation,
                     role=role
                 )
@@ -389,7 +389,7 @@ def super_admin_registration():
             
                 send_email(app,mail, message,email)
                 messages = 'You have successfully registered!'
-                return redirect(url_for('super_admin_registration'))
+                return redirect(url_for('login'))
                 
             except Exception as e:
                 db_session.rollback()
@@ -431,10 +431,11 @@ def edit_user(id):
                     return render_template('register_reviewer.html', messages=[msg])
 
                 try:
+                    hashed_password = User.hash_password(password)
                     user.full_name = full_name
                     user.staff_number = staff_number
                     user.email = email
-                    user.password = password  # Ensure you hash passwords
+                    user.password = hashed_password  # Ensure you hash passwords
                     user.specialisation = specialisation
                     user.role = role
                     if password:
@@ -4084,7 +4085,7 @@ def submit_to_rec(id):
 @app.route('/reviewer_form_a/<string:id>', methods=['GET'])
 def reviewer_form_a(id):
     form = db_session.query(FormA).filter_by(form_id=id).first()
-    print(form)
+    
     if form:
         return render_template("review_form_a.html", form=form)
     else:
@@ -4582,6 +4583,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                     """message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
             
                     send_email(app,mail, message,reviewers)"""
+                
                 formC.rejected_or_accepted=True
             else:
                 formC.supervisor_date=request.form.get('review_date')

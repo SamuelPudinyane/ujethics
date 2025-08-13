@@ -78,8 +78,11 @@
               {% elif not forma.rejected_or_accepted and not forma.recommendation=='Ready for submission'%}
                 Submitted to ethics
               {% elif not forma.review_status or not forma.review_status1%}
+              {% if forma.review_recommendation %}
               {{forma.review_recommendation}}
+              {% elif forma.review_recommendation1 %}
               {{forma.review_recommendation1}}
+              {% endif %}
               {% set review_comment = '' %}
                 {% elif forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = forma.form_review_comment %}

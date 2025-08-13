@@ -87,11 +87,12 @@
             <td>{{forma.declaration_date}}</td>
             <td>
             <span class="status-pill approved">
+              
               {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
-              {% elif not forma.review_status and forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_date and forma.rejected_or_accepted%}
+              {% elif not forma.review_status and forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
               Submitted to Reviewers
               
                {% set review_comment = '' %}
@@ -115,7 +116,8 @@
               (forma.review_recommendation1 in ['Approved']) and not forma.certificate_received %}
               Approved by both Reviewers
               
-              
+              {% elif forma.reviewer_name1 and forma.reviewer_name2 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
+              Submitted to Reviewers
               {% elif 'Reject' in ['forma.form_review_comment', 'forma.form_review_comment1'] %}
               Rejected
               {% elif forma.certificate_issued and forma.certificate_received %}
@@ -213,7 +215,7 @@
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
-              {% elif  formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_date and not formb.review_status and formb.rejected_or_accepted%}
+              {% elif  formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_date and not formb.review_status and formb.rejected_or_accepted and formb.review_supervisor_signature %}
               Submitted to Reviewers
               
               {% set review_comment = '' %}
@@ -236,7 +238,8 @@
               {% elif (formb.review_recommendation in ['Approved']) and
               (formb.review_recommendation1 in ['Approved']) and not formb.certificate_received%}
               Approved by both Reviewers
-              
+              {% elif formb.reviewer_name1 and formb.reviewer_name2 and formb.supervisor_date and formb.rejected_or_accepted and formb.review_supervisor_signature%}
+              Submitted to Reviewers
               {% elif 'Reject' in ['formb.form_review_comment', 'formb.form_review_comment1'] %}
               Rejected
               {% elif formb.certificate_issued and formb.certificate_received %}
@@ -316,16 +319,14 @@
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               <span class="status-pill approved">
-              
+             
               {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
               Awaiting for review
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
-              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and not formc.review_status and formc.rejected_or_accepted%}
+              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and not formc.review_status and formc.rejected_or_accepted and formc.review_supervisor_signature%}
               Submitted to Reviewers
               
-              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and not formc.review_status%}
-              Submitted to Reviewers
               {% set review_comment = '' %}
               {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formc.form_review_comment %}
@@ -344,11 +345,15 @@
               
               {% elif formc.submitted_to_rec and 'low' not in formc.risk_level|lower and not formc.certificate_issued%}
               Form submitted to Rec 
+
              
               {% elif (formc.review_recommendation in ['Approved']) and
               (formc.review_recommendation1 in ['Approved']) and not formc.certificate_received %}
               Approved by both Reviewers
-              
+
+              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and formc.rejected_or_accepted and formc.review_supervisor_signature%}
+              Submitted to Reviewers
+
               {% elif 'Reject' in ['formc.form_review_comment', 'formc.form_review_comment1'] %}
               Rejected
               {% elif formc.certificate_issued and formc.certificate_received %}
