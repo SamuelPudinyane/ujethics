@@ -75,7 +75,6 @@
   width: 250px;           /* Fixed sidebar width */
   height: 100vh;          /* Full viewport height */
   padding: 20px;          /* Inner padding */
-
   box-sizing: border-box;
   overflow-y: auto;       /* Scroll if content overflows vertically */
 }
@@ -108,7 +107,6 @@
   margin: 0;
   border: none;
   box-shadow: none;
-  
   padding-left: 15px;
 }
 
@@ -158,9 +156,7 @@
       <a  href="{{ url_for('super_admin') }}" class="sidebar-link">Analytics</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100">
         <li class="nav-item dropdown w-100">
-          <a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Forms
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Forms</a>
           <ul class="dropdown-menu" aria-labelledby="formsDropdown">
             <li><a class="dropdown-item" href="{{ url_for('super_admin_form_a') }}">Form A</a></li>
             <li><a class="dropdown-item" href="{{ url_for('super_admin_form_b') }}">Form B</a></li>
@@ -168,7 +164,8 @@
           </ul>
         </li>
       </ul>
-    </div>
+    
+    <a href="{{url_for('logout')}}" class="sidebar-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </nav>
 </aside>
 
@@ -177,7 +174,6 @@
     <header class="topbar">
   <div class="d-flex justify-content-between align-items-center">
     <h2>Ethics Superadmin</h2>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
   </div>
   <p class="text-muted">Monitor submissions, certificates, review stages, and reviewer efficiency.</p>
 </header>
