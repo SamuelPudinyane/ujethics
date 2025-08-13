@@ -341,65 +341,69 @@ def register_reviewer():
 
 @app.route('/super_admin_registration', methods=['GET', 'POST'])
 def super_admin_registration():
-    
-    messages=''
+    messages = ''
+
     if request.method == 'POST':
         full_name = request.form.get('full_name', '')
         staff_number = request.form.get('staff_number', '')
         email = request.form.get('email', '').lower()
         password = request.form.get('password', '')
-        password2=request.form.get('password2')
+        password2 = request.form.get('password2')
         specialisation = request.form.get('specialisation')
-        role=request.form.get('super_admin')
-        if password == password2:
+        role = request.form.get('super_admin')
 
-            # Validate password
-            is_valid, message = validate_password(password)
-            if not is_valid:
-                return render_template('super_admin_registration.html', messages=[message])
+        if password != password2:
+            messages = "Passwords mismatch"
+            return render_template('super_admin_registration.html', messages=[messages])
 
-            # Check if user exists
-            user = db_session.query(User).filter_by(email=email).first()
-            if user:
-                messages = 'Email already registered!'
-                return render_template('super_admin_registration.html', messages=[messages])
+        # Validate password
+        is_valid, message = validate_password(password)
+        if not is_valid:
+            return render_template('super_admin_registration.html', messages=[message])
+
+        # Check if user exists
+        user = db_session.query(User).filter_by(email=email).first()
+        if user:
+            messages = 'Email already registered!'
+            return render_template('super_admin_registration.html', messages=[messages])
+
+        try:
+            # Hash the password properly (adjust to your hashing method)
             
+
+            # Create new user
+            new_user = User(
+                full_name=full_name,
+                staff_number=staff_number,
+                email=email,
+                password=password,
+                specialisation=specialisation,
+                role=role
+            )
+
+            db_session.add(new_user)
+            db_session.commit()
+
+            # Prepare and send email
+            message = (
+                f'You have successfully created an account, '
+                f'please follow the link http://127.0.0.1:5000 '
+                f'use your email as username and password = {password}'
+            )
             try:
-                # Hash the password properly
-                
-                # Create new user
-                new_user = User(
-                    full_name=full_name,
-                    staff_number=staff_number,
-                    email=email,
-                    password=password,  # Make sure this is the hashed version
-                    specialisation=specialisation,
-                    role=role
-                )
-                
-                db_session.add(new_user)
-                db_session.commit()
-                #sending email to the reviewers
-                ###
-                ### uncomment the code bellow for real testing
-
-                message=f'you have succesfully created an account, ' \
-                    'please follow the link http://127.0.0.1:5000 use your '\
-                    ' email as username and password = {password}'
-            
-                send_email(app,mail, message,email)
-                messages = 'You have successfully registered!'
-                return redirect(url_for('login'))
-                
+                send_email(app, mail, message, email)
             except Exception as e:
-                db_session.rollback()
-                print("Registration error:", str(e))
-                messages = 'Registration failed. Please try again.'
-                return render_template('super_admin_registration.html', messages=[messages])
-        else:
-            messages="Passwords mismatch"
-            render_template('super_admin_registration.html', messages=[messages])
-    messages= 'Please fill out the form completely!'
+                print("Email sending error:", str(e))
+
+            return redirect(url_for('login_page'))
+
+        except Exception as e:
+            db_session.rollback()
+            print("Registration error:", str(e))
+            messages = 'Registration failed. Please try again.'
+            return render_template('super_admin_registration.html', messages=[messages])
+
+    messages = 'Please fill out the form completely!'
     return render_template('super_admin_registration.html', messages=[messages])
 
 
@@ -439,9 +443,9 @@ def edit_user(id):
                     user.specialisation = specialisation
                     user.role = role
                     if password:
-                        """message=f'Paasword was changed on your behalf, ' \
-                        'please follow the link http://127.0.0.1:5000 use your '\
-                        ' email as username and password = {password}'
+                        """message=(f'Paasword was changed on your behalf, ' 
+                        f'please follow the link http://127.0.0.1:5000 use your '
+                        f' email as username and password = {password}')
             
                         send_email(app,mail, message,email)"""
                     db_session.commit()
@@ -1809,7 +1813,6 @@ def form_b_upload():
         db_session.add(form)
         db_session.commit()
         message="form submited succesffuly"
-        print("submited")
         return render_template("form-b-section1.html",messages=[message])
 
     return render_template("form-b-upload.html")
@@ -2100,6 +2103,9 @@ def reject_or_Accept_form_a(id):
             forma.supervisor_feedback=supervisor_feedback
             forma.recommendation=recommendation
             forma.rejected_or_accepted=False
+            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            
+            send_email(app,mail, message,forma.email)"""
 
         db_session.add(forma)
         db_session.commit()
@@ -2158,6 +2164,9 @@ def reject_or_Accept_form_b(id):
             formb.supervisor_feedback=supervisor_feedback
             formb.recommendation=recommendation
             formb.rejected_or_accepted=False
+            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            
+            send_email(app,mail, message,formb.email)"""
 
         
         db_session.add(formb)
@@ -2216,6 +2225,9 @@ def reject_or_Accept_form_c(id):
             formc.supervisor_feedback=supervisor_feedback
             formc.recommendation=recommendation
             formc.rejected_or_accepted=False
+            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            
+            send_email(app,mail, message,formc.email)"""
     db_session.add(formc)
     db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
@@ -2344,8 +2356,8 @@ def form_c_sec4():
 
         #Uncomment the code bellow for testing
         ##
-        """message=f'you have Submited your Form Successfully ' \
-        'Please wait while is under review'
+        """message=(f'you have Submited your Form Successfully '
+        f'Please wait while is under review')
             
         send_email(app,mail, message,user.email)"""
         message="Form submitted succesfully"
@@ -2849,8 +2861,8 @@ def student_edit_forma():
         #Uncomment the code bellow for testing
         ##
 
-        """message=f'you have successfully edited and Submited your Form ' \
-        'Please wait while is under review'
+        """message=(f'you have successfully edited and Submited your Form ' 
+        f'Please wait while is under review')
             
         send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
@@ -2937,8 +2949,8 @@ def student_edit_formb():
 
         #Uncomment the code bellow for testing
         ##
-        """message=f'you have successfully edited and Submited your Form ' \
-        'Please wait while is under review'
+        """message=(f'you have successfully edited and Submited your Form ' 
+        f'Please wait while is under review')
             
         send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
@@ -3037,8 +3049,8 @@ def student_edit_formc():
 
         #Uncomment the code bellow for testing
         ##
-        """message=f'you have successfully edited and Submited your Form ' \
-        'Please wait while is under review'
+        """message=(f'you have successfully edited and Submited your Form ' 
+        f'Please wait while is under review')
             
         send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
@@ -3225,8 +3237,8 @@ def send_certificate(id):
                 
                 #Uncomment the code bellow for testing
                 ##
-                """message=f'your have been issued with Ethics certificate ' \
-                'Follow the link https://127.0.0.1:5000 to view your certificate'
+                """message=(f'your have been issued with Ethics certificate '
+                f'Follow the link https://127.0.0.1:5000 to view your certificate')
             
                 send_email(app,mail, message,user.email)"""
         return redirect(url_for('chair_landing'))
@@ -3352,7 +3364,7 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}'
             
                     send_email(app,mail, message,admin.email)"""
  

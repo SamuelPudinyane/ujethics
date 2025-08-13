@@ -29,4 +29,4 @@ def send_email(app, mail, message, recipient):
         body=message
     )
     mail.send(msg)
-    return 'Email sent!'
+    
