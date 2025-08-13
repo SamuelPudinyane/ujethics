@@ -338,6 +338,72 @@ def register_reviewer():
     messages= 'Please fill out the form completely!'
     return render_template('register_reviewer.html', messages=[messages])
 
+
+@app.route('/super_admin_registration', methods=['GET', 'POST'])
+def super_admin_registration():
+    
+    messages=''
+    if request.method == 'POST':
+        full_name = request.form.get('full_name', '')
+        staff_number = request.form.get('staff_number', '')
+        email = request.form.get('email', '').lower()
+        password = request.form.get('password', '')
+        password2=request.form.get('password2')
+        specialisation = request.form.get('specialisation')
+        role=request.form.get('super_admin')
+        if password == password2:
+
+            # Validate password
+            is_valid, message = validate_password(password)
+            if not is_valid:
+                return render_template('super_admin_registration.html', messages=[message])
+
+            # Check if user exists
+            user = db_session.query(User).filter_by(email=email).first()
+            if user:
+                messages = 'Email already registered!'
+                return render_template('super_admin_registration.html', messages=[messages])
+            
+            try:
+                # Hash the password properly
+                
+                # Create new user
+                new_user = User(
+                    full_name=full_name,
+                    staff_number=staff_number,
+                    email=email,
+                    password=password,  # Make sure this is the hashed version
+                    specialisation=specialisation,
+                    role=role
+                )
+                
+                db_session.add(new_user)
+                db_session.commit()
+                #sending email to the reviewers
+                ###
+                ### uncomment the code bellow for real testing
+
+                message=f'you have succesfully created an account, ' \
+                    'please follow the link http://127.0.0.1:5000 use your '\
+                    ' email as username and password = {password}'
+            
+                send_email(app,mail, message,email)
+                messages = 'You have successfully registered!'
+                return redirect(url_for('super_admin_registration'))
+                
+            except Exception as e:
+                db_session.rollback()
+                print("Registration error:", str(e))
+                messages = 'Registration failed. Please try again.'
+                return render_template('super_admin_registration.html', messages=[messages])
+        else:
+            messages="Passwords mismatch"
+            render_template('super_admin_registration.html', messages=[messages])
+    messages= 'Please fill out the form completely!'
+    return render_template('super_admin_registration.html', messages=[messages])
+
+
+
 @app.route('/edit_user/<string:id>', methods=['POST','GET'])
 def edit_user(id):
     user = db_session.query(User).filter_by(user_id=id).first()

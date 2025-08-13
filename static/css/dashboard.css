@@ -132,11 +132,6 @@ button {
   font-size: 1rem;
 }
 
-button:hover {
-  background-color: #d9541e;
-  /* Slightly darker orange */
-}
-
 button:disabled {
   background-color: #939598;
   /* Grey */

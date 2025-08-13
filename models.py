@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import JSON, ARRAY
 from sqlalchemy.types import PickleType
@@ -13,7 +12,7 @@ import bcrypt
 import datetime
 import os
 import json
-import json
+
 
 # mySQL_string = 'mysql+pymysql://root:password@localhost/ethics'
 # sqlite_string = "sqlite+pysqlite:///ethics.db"

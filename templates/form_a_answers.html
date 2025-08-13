@@ -566,6 +566,25 @@
 
     <h3>5.4 Research Instruments for Data Collection</h3>
     <label>5.4.1 Indicate which data collection methods will be used</label><br>
+    <table id="data_methods" class="table table-bordered">
+    <tr>
+        <th>Questionnaire</th>
+        <th>Interview</th>
+        <th>Focus Group</th>
+        <th>Observation</th>
+        <th>Documents</th>
+        <th>Other</th>
+    </tr>
+    <tr>
+        <td>{{ 'Yes' if 'questionnaire' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'interview' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'focus' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'observation' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'documents' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'other' in (formA.data_methods or []) else 'No' }}</td>
+    </tr>
+</table>
+
     <label>5.4.1.1 Questionnaire(s):
       <br><span class="form-answer">{{formA.questionnaire_type}}</span>
     </label><br>

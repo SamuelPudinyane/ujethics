@@ -23,8 +23,8 @@
   <!-- Page-specific content -->
   <main class="main-content">
     <h2 class="centered-text">Register</h2>
-    <p id="message" style="color: red;"></p>
-    <form action="{{ url_for('register_reviewer') }}" id="registerForm" method="post">
+    <p id="message" style="color: rgb(180, 177, 177);"></p>
+    <form action="{{ url_for('super_admin_registration') }}" id="registerForm" method="post">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
       {% if messages %}
                 <div id="alertMessage" class="alert alert-danger alert-dismissible fade show">
@@ -40,20 +40,11 @@
   <input id="password" name="password" type="password" placeholder="Create password" required>
   <input id="password2" name="password2" type="password" placeholder="Confirm password" required>
   <input id="specialisation" type="text" name="specialisation" placeholder="Specialisation" required>
-  <select name="role" required>
-  <option value="" disabled selected hidden>Choose Role</option>
-  <option value="ADMIN" >ADMIN</option>
-  <option value="DEAN" >DEAN</option>
-  <option value="REVIEWER" >REVIEWER</option>
-  <option value="REC" >REC</option>
-  <option value="SUPERVISOR" >SUPERVISOR</option>
-  
-</select>
-
+  <input name="super_admin" value="SUPER_ADMIN" readonly>
   <button type="submit">Register</button>
 </form>
     <a class="btn btn-primary mt-1" href={{url_for('chair_landing')}}>Cancel</a>
-   
+    <p class="switch-link">Already have an account? <a href="{{url_for('login_page')}}">Login</a></p>
   </main>
 
   <!-- Footer -->
