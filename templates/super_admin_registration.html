@@ -23,7 +23,7 @@
   <!-- Page-specific content -->
   <main class="main-content">
     <h2 class="centered-text">Register</h2>
-    <p id="message" style="color: red;"></p>
+    <p id="message" style="color: rgb(180, 177, 177);"></p>
     <form action="{{ url_for('super_admin_registration') }}" id="registerForm" method="post">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
       {% if messages %}

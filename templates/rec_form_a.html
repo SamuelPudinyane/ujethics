@@ -595,15 +595,24 @@
 
     <label>5.4 Research Instruments for Data Collection</label>
     <label for="data-collection-methods">5.4.1 Indicate which data collection methods will be used</label><br>
-     <div id="data-methods">
-            <label>Questionnaire: <span class="form-answer">{{ 'Yes' if 'questionnaire' in (form.data_methods or []) else 'No' }}</span></label><br>
-            <label>Interview: <span class="form-answer">{{ 'Yes' if 'interview' in (form.data_methods or []) else 'No' }}</span></label><br>
-            <label>Focus Group: <span class="form-answer">{{ 'Yes' if 'focus' in (form.data_methods or []) else 'No' }}</span></label><br>
-            <label>Observation: <span class="form-answer">{{ 'Yes' if 'observation' in (form.data_methods or []) else 'No' }}</span></label><br>
-            <label>Documents: <span class="form-answer">{{ 'Yes' if 'documents' in (form.data_methods or []) else 'No' }}</span></label><br>
-            <label>Other: <span class="form-answer">{{ 'Yes' if 'other' in (form.data_methods or []) else 'No' }}</span></label><br>
-
-    </div>
+     <table id="data_methods" class="table table-bordered">
+    <tr>
+        <th>Questionnaire</th>
+        <th>Interview</th>
+        <th>Focus Group</th>
+        <th>Observation</th>
+        <th>Documents</th>
+        <th>Other</th>
+    </tr>
+    <tr>
+        <td>{{ 'Yes' if 'questionnaire' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'interview' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'focus' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'observation' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'documents' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'other' in (formA.data_methods or []) else 'No' }}</td>
+    </tr>
+</table>
       
     <!-- Questionnaire -->
     <label>5.4.1.1 Questionnaire(s):</label>

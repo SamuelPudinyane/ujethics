@@ -553,18 +553,33 @@
     
     <label>5.4 Research Instruments for Data Collection</label>
     <label for="data-collection-methods">5.4.1 Indicate which data collection methods will be used</label><br>
-     <div id="data-methods">
-            <label>Questionnaire: <span class="form-answer">{{ 'Yes' if 'questionnaire' in (formA.data_methods or []) else 'No' }}</span></label><br>
-            <label>Interview: <span class="form-answer">{{ 'Yes' if 'interview' in (formA.data_methods or []) else 'No' }}</span></label><br>
-            <label>Focus Group: <span class="form-answer">{{ 'Yes' if 'focus' in (formA.data_methods or []) else 'No' }}</span></label><br>
-            <label>Observation: <span class="form-answer">{{ 'Yes' if 'observation' in (formA.data_methods or []) else 'No' }}</span></label><br>
-            <label>Documents: <span class="form-answer">{{ 'Yes' if 'documents' in (formA.data_methods or []) else 'No' }}</span></label><br>
-            <label>Other: <span class="form-answer">{{ 'Yes' if 'other' in (formA.data_methods or []) else 'No' }}</span></label><br>
+     <table id="data_methods" class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>Questionnaire</th>
+      <th>Interview</th>
+      <th>Focus Group</th>
+      <th>Observation</th>
+      <th>Documents</th>
+      <th>Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       <tr>
+        <td>{{ 'Yes' if 'questionnaire' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'interview' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'focus' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'observation' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'documents' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'other' in (formA.data_methods or []) else 'No' }}</td>
+    </tr>
+  </tbody>
+</table>
 
-    </div>
       
     <!-- Questionnaire -->
-    <label>5.4.1.1 Questionnaire(s):</label>
+    <!-- <label>5.4.1.1 Questionnaire(s):</label>
       <br>
       {% if formA.questionnaire%}<span class="form-answer">Questionnaire Type: {{formA.questionnaire_type}}</span>{% endif %}
     <br>
@@ -572,7 +587,34 @@
     <br><span class="form-answer">{% if formA.permission%}{{formA.permission}}{% endif %} </span>
     <br><span class="form-answer">{% if formA.open_source%}{{formA.open_source}}{% endif %} </span>{% endif %}
     <br>
-    <label>Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span>
+    <label>Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span> -->
+
+
+  <!-- 5.4.1.1 Questionnaire(s) -->
+  <label>5.4.1.1 Questionnaire(s):</label><br>
+  {% if formA.questionnaire_type %}
+    <span class="form-answer">Questionnaire Type: {{ formA.questionnaire_type }}</span><br>
+  {% endif %}
+
+  {% if formA.questionnaire_type == 'Existing' %}
+    <label>If existing, permission obtained?</label><br>
+    {# Show only what the student actually ticked #}
+    <span class="form-answer">
+      {% if formA.permission_obtained or formA.permission in ['Yes', True, 'on'] %}Yes{% endif %}
+    </span>
+    <br>
+    <span class="form-answer">
+      {% if formA.open_source in ['Yes', True, 'on'] %}Open Source{% endif %}
+    </span>
+    <br>
+  {% endif %}
+
+
+  <!-- Justification (textarea) -->
+  <label class="d-block mb-1">Justification:</label>
+  <span class="form-answer">{{ formA.instrument_attrachment_reason or '' }}</span>
+</div>
+
 
     <!-- Interview -->
     <label>5.4.1.2 Interviews</label><br>
@@ -601,6 +643,8 @@
   <label>5.4.1.6 Please describe other data collection method(s):</label>
   <br>
   <span class="form-answer">{{formA.other_details}}</span>
+
+  
 
     <!-- General Data Collection Procedure -->
      <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>

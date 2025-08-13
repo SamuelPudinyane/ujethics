@@ -595,15 +595,29 @@
 
                     <h3>5.4 Research Instruments for Data Collection</h3>
                     <label>5.4.1 Indicate which data collection methods will be used</label><br>
-                    <div id="data-methods">
-                            <input type="checkbox" name="data_methods[]" value="questionnaire" {% if 'questionnaire' in formA.data_methods[] %}checked{% endif %}> Questionnaire
-                            <input type="checkbox" name="data_methods[]" value="interview" {% if 'interview' in formA.data_methods[] %}checked{% endif %}> Interview
-                            <input type="checkbox" name="data_methods[]" value="focus" {% if 'focus' in formA.data_methods[] %}checked{% endif %}> Focus Group
-                            <input type="checkbox" name="data_methods[]" value="observation" {% if 'observation' in formA.data_methods[] %}checked{% endif %}> Observation
-                            <input type="checkbox" name="data_methods[]" value="documents" {% if 'documents' in formA.data_methods[] %}checked{% endif %}> Documents
-                            <input type="checkbox" name="data_methods[]" value="other" {% if 'other' in formA.data_methods[] %}checked{% endif %}> Other
-
-                    </div>
+                         <table id="data_methods" class="table table-bordered">
+                          <thead class="thead-light">
+                            <tr>
+                              <th>Questionnaire</th>
+                              <th>Interview</th>
+                              <th>Focus Group</th>
+                              <th>Observation</th>
+                              <th>Documents</th>
+                              <th>Other</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                            <td><input type="checkbox" name="data_methods[]" value="questionnaire" {% if 'questionnaire' in formA.data_methods[] %}checked{% endif %}> Questionnaire </td>
+                            <td><input type="checkbox" name="data_methods[]" value="interview" {% if 'interview' in formA.data_methods[] %}checked{% endif %}> Interview</td>
+                            <td><input type="checkbox" name="data_methods[]" value="focus" {% if 'focus' in formA.data_methods[] %}checked{% endif %}> Focus Group</td>
+                            <td><input type="checkbox" name="data_methods[]" value="observation" {% if 'observation' in formA.data_methods[] %}checked{% endif %}> Observation</td>
+                            <td><input type="checkbox" name="data_methods[]" value="documents" {% if 'documents' in formA.data_methods[] %}checked{% endif %}> Documents</td>
+                            <td><input type="checkbox" name="data_methods[]" value="other" {% if 'other' in formA.data_methods[] %}checked{% endif %}> Other</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                
                     <!-- Questionnaire -->
                           <div id="questionnaire_fields" style="display:none; margin-top: 1rem;">
                             <label>5.4.1.1 Questionnaire(s):</label><br>

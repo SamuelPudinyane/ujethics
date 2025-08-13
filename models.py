@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Boolean, Enum, DateTime, LargeBinary, func, Text
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.dialects.postgresql import JSON, ARRAY
 from sqlalchemy.types import PickleType
@@ -13,7 +12,7 @@ import bcrypt
 import datetime
 import os
 import json
-import json
+
 
 # mySQL_string = 'mysql+pymysql://root:password@localhost/ethics'
 # sqlite_string = "sqlite+pysqlite:///ethics.db"
@@ -21,17 +20,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-connection_string = (
-    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-    "driver=ODBC+Driver+17+for+SQL+Server&"
-    "trusted_connection=yes"
-)
-
 # connection_string = (
-#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
 #     "driver=ODBC+Driver+17+for+SQL+Server&"
 #     "trusted_connection=yes"
 # )
+
+connection_string = (
+    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "driver=ODBC+Driver+17+for+SQL+Server&"
+    "trusted_connection=yes"
+)
 
 engine = create_engine(connection_string, echo=True)
 
