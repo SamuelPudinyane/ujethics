@@ -1,5 +1,6 @@
 :root {
-  --jbs-orange: #ef820d;
+  /* --jbs-orange: #F26522; */
+  --jbs-orange: #ed820e;
   --jbs-teal: #022169;
   --jbs-purple: #4F2365;
   --jbs-yellow: #FFCB05;
@@ -8,8 +9,8 @@
   --white: #ffffff;
   --black: #000000;
   --accent: #F26522;
-}
 
+}
 
 
 body {
@@ -73,7 +74,7 @@ select {
 }
 
 button {
-  background-color: var(--accent);
+  background-color: var(--jbs-orange);
   color: var(--white);
   padding: 1rem 1.5rem;
   border: none;
@@ -85,7 +86,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--jbs-teal);
+  background-color: var(--black);
 }
 
 .footer {
@@ -123,7 +124,7 @@ button:hover {
 }
 
 .switch-link a {
-  color: var(--jbs-teal);
+  color: var(--black);
   font-weight: bold;
   text-decoration: none;
 }
@@ -157,4 +158,111 @@ button:hover {
 
 .input-tooltip.visible {
   display: block;
+}
+
+/* Split auth layout */
+.auth-wrapper {
+  padding: 2rem 1rem;
+  min-height: 100vh;              /* fill viewport */
+  /* display: flex; */
+  align-items: center;            /* vertical center */
+  justify-content: center;        /* horizontal center */
+  padding: 2rem 1rem;             /* breathing room on small screens */
+}
+
+.auth-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(2, 33, 105, 0.12);
+  background: var(--white);
+  min-height: 520px; /* makes both sides equal height */
+}
+
+/* Form side */
+.auth-form {
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-logo {
+  height: 48px;     /* adjust to taste */
+  width: auto;      /* preserve aspect ratio */
+  display: block;
+  margin-left: auto;     /* push to the right */
+  margin-bottom: 8px;    /* space under the logo */
+  object-fit: contain;   /* safe if you ever set both w & h */
+  border-radius: 4px;
+}
+
+/* bump it up a bit on large screens if you like */
+@media (min-width: 992px){
+  .auth-logo { height: 56px; }
+}
+
+/* Image side with CTA overlay */
+.auth-side {
+  position: relative;
+  background-image: var(--auth-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+}
+
+.auth-side::after {
+  /* subtle brand overlay */
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(79,35,101,0.6), rgba(2,33,105,0.55));
+}
+
+.auth-side-overlay {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem;
+  text-align: left;
+}
+
+.auth-side .btn {
+  align-self: flex-start;
+  border-radius: 8px;
+}
+
+/* Make inputs/buttons match full width nicely in this layout */
+.auth-form input,
+.auth-form select,
+.auth-form button {
+  width: 100%;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 992px) {
+  .auth-card {
+    grid-template-columns: 1fr; /* stack */
+    min-height: unset;
+  }
+  .auth-side {
+    height: 220px;
+  }
+  .auth-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Optional: tighten your main-content card spacing on standalone pages */
+.main-content {
+  max-width: 900px; /* wider than before since we're using split */
+  margin: 2rem auto;
+  padding: 0; /* the auth-card handles padding */
+  background: transparent;
+  box-shadow: none;
 }

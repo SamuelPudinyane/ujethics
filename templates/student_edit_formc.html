@@ -69,12 +69,12 @@
         <tbody>
           <tr><td>Communities that may be considered as vulnerable</td><td><input {% if formc.vulnerable%}checked{% endif %} type="checkbox" name="vulnerable"></td></tr>
           <tr><td>People under the age of 18 or over 65</td><td><input type="checkbox" {% if formc.age_under_18_or_over_65%}checked{% endif %} name="age_under_18_or_over_65"></td></tr>
-          <tr><td>UJ employees or students</td><td><input type="checkbox" name="uj_employees" {% if formc.uj_employees%}checked{% endif %}></td></tr>
+          <tr><td>UJ employees or students</td><td><input type="checkbox" {% if formc.uj_employees%}checked{% endif %} name="uj_employees"></td></tr>
           <tr><td>Persons not usually considered vulnerable but would be in this context</td><td><input type="checkbox" {% if formc.non_vulnerable_context %}checked{% endif %} name="non_vulnerable_context"></td></tr>
           <tr><td>Non-English-speaking participants</td><td><input type="checkbox" {% if formc.non_english %}checked{% endif %} name="non_english"></td></tr>
-          <tr><td>A researcher’s own students</td><td><input type="checkbox" {% if formc.own_student %}checked{% endif %} name="own_students"></td></tr>
+          <tr><td>A researcher’s own students</td><td><input type="checkbox" {% if formc.own_students %}checked{% endif %} name="own_students"></td></tr>
           <tr><td>People living in poverty</td><td><input type="checkbox" {% if formc.poverty%}checked{% endif %} name="poverty"></td></tr>
-          <tr><td>People with little or no education</td><td><input type="checkbox" {% if formc.non_education %}checked{% endif %} name="non_education"></td></tr>
+          <tr><td>People with little or no education</td><td><input type="checkbox" {% if formc.no_education %}checked{% endif %} name="no_education"></td></tr>
           <tr><td>Other: Please describe.</td><td><textarea name="vulnerable_other_description" class="form-control" rows="2">{{formc.vulnerable_other_description}}</textarea></td></tr>
         </tbody>
       </table>
@@ -225,7 +225,7 @@
 
  </form>
 <footer class="footer">
-  <p>&copy;  Prof. M. Munsamy & Prof. A Telukdarie</p>
+   
 </footer>
 
 </div>

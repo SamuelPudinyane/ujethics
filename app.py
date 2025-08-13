@@ -339,8 +339,8 @@ def register_reviewer():
     return render_template('register_reviewer.html', messages=[messages])
 
 
-@app.route('/super_admin_registeration', methods=['GET', 'POST'])
-def super_admin_registeration():
+@app.route('/super_admin_registration', methods=['GET', 'POST'])
+def super_admin_registration():
     
     messages=''
     if request.method == 'POST':
@@ -356,13 +356,13 @@ def super_admin_registeration():
             # Validate password
             is_valid, message = validate_password(password)
             if not is_valid:
-                return render_template('register_reviewer.html', messages=[message])
+                return render_template('super_admin_registration.html', messages=[message])
 
             # Check if user exists
             user = db_session.query(User).filter_by(email=email).first()
             if user:
                 messages = 'Email already registered!'
-                return render_template('register_reviewer.html', messages=[messages])
+                return render_template('super_admin_registration.html', messages=[messages])
             
             try:
                 # Hash the password properly
@@ -389,18 +389,18 @@ def super_admin_registeration():
             
                 send_email(app,mail, message,email)
                 messages = 'You have successfully registered!'
-                return redirect(url_for('reviewer_list'))
+                return redirect(url_for('super_admin_registration'))
                 
             except Exception as e:
                 db_session.rollback()
                 print("Registration error:", str(e))
                 messages = 'Registration failed. Please try again.'
-                return render_template('register_reviewer.html', messages=[messages])
+                return render_template('super_admin_registration.html', messages=[messages])
         else:
             messages="Passwords mismatch"
-            render_template('register_reviewer.html', messages=[messages])
+            render_template('super_admin_registration.html', messages=[messages])
     messages= 'Please fill out the form completely!'
-    return render_template('register_reviewer.html', messages=[messages])
+    return render_template('super_admin_registration.html', messages=[messages])
 
 
 
@@ -2981,7 +2981,7 @@ def student_edit_formc():
             vulnerable=True if request.form.get('vulnerable') else False,
             
             age_under_18_or_over_65=True if request.form.get('age_under_18_or_over_65') else False,
-            uj_employees=True if request.form.get('uj_employee') else False,
+            uj_employees=True if request.form.get('uj_employees') else False,
 
             non_vulnerable_context=True if request.form.get('non_vulnerable_context') else False,
             non_english=True if request.form.get('non_english')else False,
@@ -2996,13 +2996,13 @@ def student_edit_formc():
             discomfiture=True if request.form.get('discomfiture') else False,
             deception=True if request.form.get('deception') else False,
             sensitive_issues=True if request.form.get('sensitive_issues') else False,
-            prejudicial_info=True if request.form.get('prejuditial_info') else False,
+            prejudicial_info=True if request.form.get('prejudicial_info') else False,
             intrusive=True if request.form.get('intrusive') else False,
             illegal=True if request.form.get('illegal') else False,
             direct_social_info=True if request.form.get('direct_social_info') else False,
             identifiable_records=True if request.form.get('identifiable_records') else False,
             psychology_tests=True if request.form.get('psychology_tests') else False,
-            researcher_risk=True if request.form.get('reseacher_risk') else False,
+            researcher_risk=True if request.form.get('researcher_risk') else False,
             activity_other_description=request.form.get('activity_other_description'),
 
             activity_comments=request.form.get('activity_comments'),
