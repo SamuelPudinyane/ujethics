@@ -607,12 +607,12 @@
         <th>Other</th>
     </tr>
     <tr>
-        <td>{{ 'Yes' if 'questionnaire' in (formA.data_methods or []) else 'No' }}</td>
-        <td>{{ 'Yes' if 'interview' in (formA.data_methods or []) else 'No' }}</td>
-        <td>{{ 'Yes' if 'focus' in (formA.data_methods or []) else 'No' }}</td>
-        <td>{{ 'Yes' if 'observation' in (formA.data_methods or []) else 'No' }}</td>
-        <td>{{ 'Yes' if 'documents' in (formA.data_methods or []) else 'No' }}</td>
-        <td>{{ 'Yes' if 'other' in (formA.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'questionnaire' in (form.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'interview' in (form.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'focus' in (form.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'observation' in (form.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'documents' in (form.data_methods or []) else 'No' }}</td>
+        <td>{{ 'Yes' if 'other' in (form.data_methods or []) else 'No' }}</td>
     </tr>
 </table>
       

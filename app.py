@@ -508,6 +508,7 @@ plot_review_recommendation_comparison_a )
 @app.route('/super_admin_form_a', methods=['GET', 'POST'])
 def super_admin_form_a():
     forma='A'
+
     forms_list = [
     {
         "id": form.form_id,
@@ -522,18 +523,16 @@ def super_admin_form_a():
         "review_recommendation1":form.review_recommendation1,
         "certificate_issued": form.certificate_issued,
         "certificate_received":form.certificate_received,
-        "submitted_to_rec":form.submitted_to_rec,
-        "rec_full_name": rec.full_name
+        "submitted_to_rec":form.submitted_to_rec if rec else None,
+        "rec_full_name": rec.full_name if rec else None
     }
     for form, rec in (
         db_session.query(FormA, Rec)
-        .join(Rec, FormA.form_id == Rec.form_id)
+        .outerjoin(Rec, FormA.form_id == Rec.form_id)
         .limit(50)
         .all()
     )
-
-        ]
-    
+    ]
     if forms_list:
         df = pd.DataFrame(forms_list)
 
@@ -582,12 +581,12 @@ def super_admin_form_b():
         "review_recommendation1":form.review_recommendation1,
         "certificate_issued": form.certificate_issued,
         "certificate_received":form.certificate_received,
-        "submitted_to_rec":form.submitted_to_rec,
-        "rec_full_name": rec.full_name
+        "submitted_to_rec":form.submitted_to_rec if rec else None,
+        "rec_full_name": rec.full_name if rec else None
     }
     for form, rec in (
         db_session.query(FormB, Rec)
-        .join(Rec, FormB.form_id == Rec.form_id)
+        .outerjoin(Rec, FormB.form_id == Rec.form_id)
         .limit(50)
         .all()
     )
@@ -643,12 +642,12 @@ def super_admin_form_c():
         "review_recommendation1":form.review_recommendation1,
         "certificate_issued": form.certificate_issued,
         "certificate_received":form.certificate_received,
-        "submitted_to_rec":form.submitted_to_rec,
-        "rec_full_name": rec.full_name
+        "submitted_to_rec":form.submitted_to_rec if rec else None,
+        "rec_full_name": rec.full_name if rec else None
     }
     for form, rec in (
         db_session.query(FormC, Rec)
-        .join(Rec, FormC.form_id == Rec.form_id)
+        .outerjoin(Rec, FormC.form_id == Rec.form_id)
         .limit(50)
         .all()
     )
@@ -674,6 +673,193 @@ def super_admin_form_c():
         return render_template("superadmin_dashboard.html",formc=formc, **context)
     else:
         return render_template("superadmin_dashboard.html")
+
+
+@app.route('/super_admin_monitoring_page_a',methods=['GET','POST'])
+def super_admin_monitoring_page_a():
+  
+    # Step 1: Subquery to get the latest submitted_at per student
+    latest_subq = (
+        db_session.query(
+            FormA.user_id,
+            func.max(FormA.submitted_at).label("latest_date")
+        )
+        .group_by(FormA.user_id)
+        .subquery()
+    )
+    
+    # Step 2: Main query to get only the latest form for each student
+    results = (
+        db_session.query(FormA, Rec)
+        .join(latest_subq,
+              (FormA.user_id == latest_subq.c.user_id) &
+              (FormA.submitted_at == latest_subq.c.latest_date))
+        .outerjoin(Rec, FormA.form_id == Rec.form_id)
+        .order_by(FormA.user_id, FormA.submitted_at.desc())
+        .all()
+    )
+
+   
+    # Step 3: Merge REC names into one form entry
+    forms_dict = {}
+    for form, rec in results:
+        first_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name1).first()
+        second_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name2).first()
+        if form.form_id not in forms_dict:
+            # Create the base form entry
+            forms_dict[form.form_id] = {
+                "id": form.form_id,
+                "applicant_name": form.applicant_name,
+                "submitted_at": form.submitted_at,
+                "risk_rating": form.risk_rating,
+                "supervisor":form.supervisor,
+                "supervisor_signature_date": form.supervisor_date,
+                "supervisor_recommendation": form.recommendation,
+                "first_reviewer_name":first_reviewer.full_name if form else None,
+                "second_reviewer_name":second_reviewer.full_name if form else None,
+                "review_signature_date": form.review_signature_date,
+                "review_recommendation": form.review_recommendation,
+                "review_signature_date1": form.review_signature_date1,
+                "review_recommendation1": form.review_recommendation1,
+                "certificate_issued": form.certificate_issued if form.certificate_issued is not None else 'Not Issued',
+                "certificate_received": form.certificate_received,
+                "submitted_to_rec": form.submitted_to_rec if rec else False,
+                "rec_full_names": []  # Store list of REC full names
+            }
+        # Add REC name if available
+        if rec and rec.full_name and rec.full_name not in forms_dict[form.form_id]["rec_full_names"]:
+            forms_dict[form.form_id]["rec_full_names"].append(rec.full_name)
+
+    # Step 4: Convert to list for output
+    forms_list = list(forms_dict.values())
+    current=datetime.utcnow()
+    return render_template('super_admin_monitoring_page_a.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
+
+
+@app.route('/super_admin_monitoring_page_b',methods=['GET','POST'])
+def super_admin_monitoring_page_b():
+  
+    # Step 1: Subquery to get the latest submitted_at per student
+    latest_subq = (
+        db_session.query(
+            FormB.user_id,
+            func.max(FormB.submitted_at).label("latest_date")
+        )
+        .group_by(FormB.user_id)
+        .subquery()
+    )
+    
+    # Step 2: Main query to get only the latest form for each student
+    results = (
+        db_session.query(FormB, Rec)
+        .join(latest_subq,
+              (FormB.user_id == latest_subq.c.user_id) &
+              (FormB.submitted_at == latest_subq.c.latest_date))
+        .outerjoin(Rec, FormB.form_id == Rec.form_id)
+        .order_by(FormB.user_id, FormB.submitted_at.desc())
+        .all()
+    )
+
+   
+    # Step 3: Merge REC names into one form entry
+    forms_dict = {}
+    for form, rec in results:
+        first_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name1).first()
+        second_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name2).first()
+        if form.form_id not in forms_dict:
+            # Create the base form entry
+            forms_dict[form.form_id] = {
+                "id": form.form_id,
+                "applicant_name": form.applicant_name,
+                "submitted_at": form.submitted_at,
+                "risk_rating": form.risk_rating,
+                "supervisor":form.supervisor,
+                "supervisor_signature_date": form.supervisor_date,
+                "supervisor_recommendation": form.recommendation,
+                "first_reviewer_name":first_reviewer.full_name if form else None,
+                "second_reviewer_name":second_reviewer.full_name if form else None,
+                "review_signature_date": form.review_signature_date,
+                "review_recommendation": form.review_recommendation,
+                "review_signature_date1": form.review_signature_date1,
+                "review_recommendation1": form.review_recommendation1,
+                "certificate_issued": form.certificate_issued if form.certificate_issued is not None else 'Not Issued',
+                "certificate_received": form.certificate_received,
+                "submitted_to_rec": form.submitted_to_rec if rec else False,
+                "rec_full_names": []  # Store list of REC full names
+            }
+        # Add REC name if available
+        if rec and rec.full_name and rec.full_name not in forms_dict[form.form_id]["rec_full_names"]:
+            forms_dict[form.form_id]["rec_full_names"].append(rec.full_name)
+
+    # Step 4: Convert to list for output
+    forms_list = list(forms_dict.values())
+    current=datetime.utcnow()
+    return render_template('super_admin_monitoring_page_b.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
+
+
+
+
+@app.route('/super_admin_monitoring_page_c',methods=['GET','POST'])
+def super_admin_monitoring_page_c():
+  
+    # Step 1: Subquery to get the latest submitted_at per student
+    latest_subq = (
+        db_session.query(
+            FormC.user_id,
+            func.max(FormC.submitted_at).label("latest_date")
+        )
+        .group_by(FormC.user_id)
+        .subquery()
+    )
+    
+    # Step 2: Main query to get only the latest form for each student
+    results = (
+        db_session.query(FormC, Rec)
+        .join(latest_subq,
+              (FormC.user_id == latest_subq.c.user_id) &
+              (FormC.submission_date == latest_subq.c.latest_date))
+        .outerjoin(Rec, FormC.form_id == Rec.form_id)
+        .order_by(FormC.user_id, FormC.submission_date.desc())
+        .all()
+    )
+
+   
+    # Step 3: Merge REC names into one form entry
+    forms_dict = {}
+    for form, rec in results:
+        first_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name1).first()
+        second_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name2).first()
+        if form.form_id not in forms_dict:
+            # Create the base form entry
+            forms_dict[form.form_id] = {
+                "id": form.form_id,
+                "applicant_name": form.applicant_name,
+                "submitted_at": form.submitted_at,
+                "risk_rating": form.risk_rating,
+                "supervisor":form.supervisor,
+                "supervisor_signature_date": form.supervisor_date,
+                "supervisor_recommendation": form.recommendation,
+                "first_reviewer_name":first_reviewer.full_name if form else None,
+                "second_reviewer_name":second_reviewer.full_name if form else None,
+                "review_signature_date": form.review_signature_date,
+                "review_recommendation": form.review_recommendation,
+                "review_signature_date1": form.review_signature_date1,
+                "review_recommendation1": form.review_recommendation1,
+                "certificate_issued": form.certificate_issued if form.certificate_issued is not None else 'Not Issued',
+                "certificate_received": form.certificate_received,
+                "submitted_to_rec": form.submitted_to_rec if rec else False,
+                "rec_full_names": []  # Store list of REC full names
+            }
+        # Add REC name if available
+        if rec and rec.full_name and rec.full_name not in forms_dict[form.form_id]["rec_full_names"]:
+            forms_dict[form.form_id]["rec_full_names"].append(rec.full_name)
+
+    # Step 4: Convert to list for output
+    forms_list = list(forms_dict.values())
+    current=datetime.utcnow()
+    return render_template('super_admin_monitoring_page_c.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
+
+
 
 
 @app.route('/delete_user/<string:id>', methods=['GET','POST'])
