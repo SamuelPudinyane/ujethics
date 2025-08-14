@@ -834,7 +834,7 @@ def super_admin_monitoring_page_c():
             forms_dict[form.form_id] = {
                 "id": form.form_id,
                 "applicant_name": form.applicant_name,
-                "submitted_at": form.submitted_at,
+                "submitted_at": form.submission_date,
                 "risk_rating": form.risk_rating,
                 "supervisor":form.supervisor,
                 "supervisor_signature_date": form.supervisor_date,
