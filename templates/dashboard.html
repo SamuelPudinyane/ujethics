@@ -77,7 +77,9 @@
             <td>{% if formA.submitted_at %}
               {{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
             <td>
+              {% if formA.supervisor_feedback%}
                 {{formA.supervisor_feedback}}
+                {% endif %}
                 <br>
                 <em>{% if formA.supervisor_date%}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
                   {% endif %}
@@ -128,6 +130,10 @@
             <td>{% if formB.submitted_at %}
               {{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
             <td>
+              {% if formB.supervisor_feedback%}
+                {{formB.supervisor_feedback}}
+                {% endif %}
+                <br>
                <em>
                   {% if formB.supervisor_date%}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
 
@@ -181,6 +187,10 @@
               </em></br>
               </td>
             <td>
+              {% if formC.supervisor_feedback%}
+                {{formC.supervisor_feedback}}
+                {% endif %}
+                <br>
               {% if formC.supervisor_date%}
                 <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
                 <br>

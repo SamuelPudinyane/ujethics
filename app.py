@@ -2089,9 +2089,12 @@ def reject_or_Accept_form_a(id):
             forma.rejected_or_accepted=True
             #Uncomment the code bellow for testing
             ##
-            """message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
-            send_email(app,mail, message,admin.email)"""
+                send_email(app,mail, message,forma.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {forma.email}: {e}")
         else:
             forma.supervisor_date=supervisor_date
             forma.org_permission_comment=org_permission_comment
@@ -2103,9 +2106,12 @@ def reject_or_Accept_form_a(id):
             forma.supervisor_feedback=supervisor_feedback
             forma.recommendation=recommendation
             forma.rejected_or_accepted=False
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
-            send_email(app,mail, message,forma.email)"""
+                send_email(app,mail, message,forma.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {forma.email}: {e}")
 
         db_session.add(forma)
         db_session.commit()
@@ -2150,9 +2156,12 @@ def reject_or_Accept_form_b(id):
             formb.rejected_or_accepted=True
             #Uncomment the code bellow for testing
             ##
-            """message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
-            send_email(app,mail, message,admin.email)"""
+                send_email(app,mail, message,formb.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formb.email}: {e}")
         else:
             formb.supervisor_date=supervisor_date
             formb.org_permission_comment=org_permission_comment
@@ -2164,9 +2173,12 @@ def reject_or_Accept_form_b(id):
             formb.supervisor_feedback=supervisor_feedback
             formb.recommendation=recommendation
             formb.rejected_or_accepted=False
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
-            send_email(app,mail, message,formb.email)"""
+                send_email(app,mail, message,formb.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formb.email}: {e}")
 
         
         db_session.add(formb)
@@ -2211,9 +2223,12 @@ def reject_or_Accept_form_c(id):
             formc.rejected_or_accepted=True
             #Uncomment the code bellow for testing
             ##
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-            send_email(app,mail, message,admin.email)"""
+                send_email(app,mail, message,formc.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formc.email}: {e}")
         else:
             formc.supervisor_date=supervisor_date
             formc.org_permission_comment=org_permission_comment
@@ -2225,9 +2240,12 @@ def reject_or_Accept_form_c(id):
             formc.supervisor_feedback=supervisor_feedback
             formc.recommendation=recommendation
             formc.rejected_or_accepted=False
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-            send_email(app,mail, message,formc.email)"""
+                send_email(app,mail, message,formc.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formc.email}: {e}")
     db_session.add(formc)
     db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
@@ -3337,7 +3355,7 @@ def chair_form_view(id,form_name):
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
  
-            if request.form.get('status') in ['Approved']:
+            if request.form.get('status') in ['Approved','Approved with Minor Changes']:
                 if not formA.review_date:
                    
                     formA.review_date=review_date
@@ -3522,7 +3540,7 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-            if request.form.get('status') in ['Approved']:
+            if request.form.get('status') in ['Approved','Approved with Minor Changes']:
                 if not formB.review_date:
                
                     formB.review_date=review_date
@@ -3788,44 +3806,65 @@ def chair_form_view(id,form_name):
                         rec_date=datetime.now()
                         )
                    
-                   
             else:
-                formC.review_date=review_date
-                formC.status=status
-                formC.review_org_permission_status=review_org_permission_status
-                formC.review_org_permission_comments=review_org_permission_comments
-                formC.review_waiver_status=review_waiver_status
-                formC.review_waiver_comments=review_waiver_comments
-                formC.review_form_status=review_form_status
-                formC.review_form_comments=review_form_comments
-                formC.review_questions_status=review_questions_status
-                formC.review_questions_comments=review_questions_comments
-                formC.review_consent_status=review_consent_status
-                formC.review_consent_comments=review_consent_comments
-                formC.review_proposal_status=review_proposal_status
-                formC.review_proposal_comments=review_proposal_comments
-                formC.review_additional_comments=review_additional_comments
-                formC.review_recommendation=review_recommendation
-                formC.form_review_comment=form_review_comment
-                formC.form_reviewed_by=form_reviewed_by
-                formC.review_status=False
-                formC.rejected_or_accepted=False
-                #Uncomment the code bellow for testing
-                ##
-                """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
-            
-                    send_email(app,mail, message,admin.email)"""
+                if not formC.review_date:
+                    formC.review_date=review_date
+                    formC.status=status
+                    formC.review_org_permission_status=review_org_permission_status
+                    formC.review_org_permission_comments=review_org_permission_comments
+                    formC.review_waiver_status=review_waiver_status
+                    formC.review_waiver_comments=review_waiver_comments
+                    formC.review_form_status=review_form_status
+                    formC.review_form_comments=review_form_comments
+                    formC.review_questions_status=review_questions_status
+                    formC.review_questions_comments=review_questions_comments
+                    formC.review_consent_status=review_consent_status
+                    formC.review_consent_comments=review_consent_comments
+                    formC.review_proposal_status=review_proposal_status
+                    formC.review_proposal_comments=review_proposal_comments
+                    formC.review_additional_comments=review_additional_comments
+                    formC.review_recommendation=review_recommendation
+                    formC.form_review_comment=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
+                    formC.review_status=False
+                    formC.rejected_or_accepted=False      
+                else:
+                    formC.review_date=review_date
+                    formC.status=status
+                    formC.review_org_permission_status=review_org_permission_status
+                    formC.review_org_permission_comments=review_org_permission_comments
+                    formC.review_waiver_status=review_waiver_status
+                    formC.review_waiver_comments=review_waiver_comments
+                    formC.review_form_status=review_form_status
+                    formC.review_form_comments=review_form_comments
+                    formC.review_questions_status=review_questions_status
+                    formC.review_questions_comments=review_questions_comments
+                    formC.review_consent_status=review_consent_status
+                    formC.review_consent_comments=review_consent_comments
+                    formC.review_proposal_status=review_proposal_status
+                    formC.review_proposal_comments=review_proposal_comments
+                    formC.review_additional_comments=review_additional_comments
+                    formC.review_recommendation=review_recommendation
+                    formC.form_review_comment=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
+                    formC.review_status=False
+                    formC.rejected_or_accepted=False
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                
+                        send_email(app,mail, message,admin.email)"""
 
-                #add coments to Rec table
-                if user_name.role.value=='REVIEWER':
-                       form=Rec(
-                        rec_id=user_id,
-                        form_id=id,
-                        full_name=user_name.full_name,
-                        rec_comments = review_additional_comments,
-                        rec_status = status,
-                        rec_date=datetime.now()
-                        )
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        form=Rec(
+                            rec_id=user_id,
+                            form_id=id,
+                            full_name=user_name.full_name,
+                            rec_comments = review_additional_comments,
+                            rec_status = status,
+                            rec_date=datetime.now()
+                            )
                
             db_session.add(form)
             db_session.add(formC)
@@ -4429,6 +4468,10 @@ def view_certificate(id):
     )
 
 
+
+###
+### Admin Review Submision
+###
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
     formA = db_session.query(FormA).filter_by(form_id=id).first()
@@ -4466,21 +4509,21 @@ def ethics_reviewer_committee_forms(id,form_name):
             formA.supervisor_recommendation=request.form.get('review_recommendation')
             formA.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formA.supervisor_signature_date=request.form.get('review_signature_date')
-            if request.form.get('accept')=='Accept':
+            if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer.email)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f'You are assined as form belonging to {formA.applicant_name}' 
+                    message=f'You are assined as form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer.email)
                 formA.rejected_or_accepted=True
             else:
                
@@ -4522,21 +4565,21 @@ def ethics_reviewer_committee_forms(id,form_name):
             formB.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formB.supervisor_signature_date=request.form.get('review_signature_date')
             
-            if request.form.get('accept')=='Accept':
+            if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer.email)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f'You are assined as reviewer for form belonging to {formB.applicant_name}' 
+                    message=f'You are assined as reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer)
                 formB.rejected_or_accepted=True
                 
             else:
@@ -4580,21 +4623,21 @@ def ethics_reviewer_committee_forms(id,form_name):
             formC.supervisor_recommendation=request.form.get('review_recommendation')
             formC.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formC.supervisor_signature_date=request.form.get('review_signature_date')
-            if request.form.get('accept')=='Accept':
+            if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
+                    message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer)
                 
                 formC.rejected_or_accepted=True
             else:

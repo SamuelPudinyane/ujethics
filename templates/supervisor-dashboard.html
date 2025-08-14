@@ -65,11 +65,11 @@
             <td>{{forma.student_number}}</td>
             <td><span class="badge status-pending">
           
-           {% if forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes' and forma.certificate_issued%}
+           {% if (forma.rec_status=='Approved' or forma.rec_status=='Approved with Minor Changes') and forma.certificate_issued and forma.certificate_received %}
                 <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
               <br>
 
-              {% elif forma.certificate_issued %}
+              {% elif forma.certificate_issued and forma.certificate_received%}
               <a href="{{url_for('view_certificate',id=forma.form_id)}}">View Certificate</a>
               {% elif forma.recommendation=='Ready for submission' and forma.rejected_or_accepted %}
              Submitted to ethics
@@ -77,11 +77,11 @@
               Awaiting for review
               {% elif not forma.rejected_or_accepted and not forma.recommendation=='Ready for submission'%}
                 Submitted to ethics
-              {% elif not forma.review_status or not forma.review_status1%}
+              {% elif (not forma.review_status or not forma.review_status1) and forma.rejected_or_accepted%}
               {% if forma.review_recommendation %}
-              {{forma.review_recommendation}}
+               1st Reviewer: {{forma.review_recommendation}}
               {% elif forma.review_recommendation1 %}
-              {{forma.review_recommendation1}}
+               2nd Reviewer: {{forma.review_recommendation1}}
               {% endif %}
               {% set review_comment = '' %}
                 {% elif forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
@@ -175,11 +175,11 @@
             
             <td>{{formb.student_number}}</td>
             <td><span class="badge status-pending">
-              {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes' and formb.certificate_issued%}
+              {% if formb.rec_status=='Approved' or formb.rec_status=='Approved with Minor Changes' and formb.certificate_issued and formb.certificate_received%}
                 <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
               <br>
 
-              {% elif formb.certificate_issued %}
+              {% elif formb.certificate_issued and formb.certificate_received%}
               <a href="{{url_for('view_certificate',id=formb.form_id)}}">View Certificate</a>
               {% elif formb.recommendation=='Ready for submission' and formb.rejected_or_accepted %}
               Submitted to ethics
@@ -187,9 +187,13 @@
               Awaiting for review
               {% elif not formb.rejected_or_accepted and not formb.recommendation=='Ready for submission'%}
               Submitted to ethics
-              {% elif not formb.review_status or not formb.review_status1%}
-              {{formb.review_recommendation}}
-              {{formb.review_recommendation1}}
+              {% elif (not formb.review_status or not formb.review_status1) and formb.rejected_or_accepted%}
+                {% if formb.review_recommendation %}
+                    1st Reviewer: {{formb.review_recommendation}}
+                    </br>
+                  {% elif formb.review_recommendation1%}
+                    2nd Reviewer: {{formb.review_recommendation1}}
+                  {% endif %}
               {% set review_comment = '' %}
                 {% elif formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formb.form_review_comment %}
@@ -264,11 +268,11 @@
             <td>{{formc.declaration_name}}</td>
             <td>{{formc.student_number}}</td>
             <td><span class="badge status-pending">
-                {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes' and formc.certificate_issued%}
+                {% if formc.rec_status=='Approved' or formc.rec_status=='Approved with Minor Changes' and formc.certificate_issued and formc.certificate_received%}
                 <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
               <br>
 
-              {% elif formc.certificate_issued %}
+              {% elif formc.certificate_issued and formc.certificate_received %}
               <a href="{{url_for('view_certificate',id=formc.form_id)}}">View Certificate</a>
               {% elif formc.recommendation=='Ready for submission' and formc.rejected_or_accepted %}
               Submitted to ethics
@@ -276,10 +280,13 @@
               Awaiting for review
               {% elif not formc.rejected_or_accepted and not formc.recommendation=='Ready for submission'%}
               Submitted to ethics
-              {% elif not formc.review_status or not formc.review_status1%}
-              1st Reviewer: {{formc.review_recommendation}}
+              {% elif ( not formc.review_status or not formc.review_status1) and formc.rejected_or_accepted%}
+                {% if formc.review_recommendation %}
+                    1st Reviewer: {{formc.review_recommendation}}
+                {% elif formc.review_recommendation1 %}
               <br>
-              2nd Reviewer: {{formc.review_recommendation1}}
+                   2nd Reviewer: {{formc.review_recommendation1}}
+                   {% endif %}
               {% set review_comment = '' %}
                 {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formc.form_review_comment %}

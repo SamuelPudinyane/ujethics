@@ -100,8 +100,8 @@
                   {% elif (form.review_recommendation in ['Resubmission Required', 'Reject'] or
                   form.review_recommendation1 in ['Resubmission Required', 'Reject']) and not form.rejected_or_accepted %}
                   Form Rejected, Review feedback
-                  {% elif (form.review_recommendation in ['Approved']) and
-                  (form.review_recommendation1 in [ 'Approved'])  and not form.submitted_to_rec%}
+                  {% elif (form.review_recommendation in ['Approved','Approved with Minor Changes']) and
+                  (form.review_recommendation1 in [ 'Approved','Approved with Minor Changes'])  and not form.submitted_to_rec%}
                    Approved by both Reviewers
                   {% elif form.review_supervisor_signature and form.reviewer_name1 is not none and form.reviewer_name2 is not none and form.review_status and not form.review_status1 %}
                   Awaiting for second reviewers feedback
@@ -174,7 +174,8 @@
             <br>
             <a href="{{url_for('ethics_form_pdf',form_id=form.form_id,form_type=form_name)}}" class="btn btn-sm btn-success text-white">View Form</a>
               
-            {% else %}
+ 
+              {% else %}
               <a href="{{url_for('chair_form_view',id=form.form_id,form_name=form_name)}}" class="btn btn-sm btn-success text-white" >Review</a>
             {% endif %}
             </td>
