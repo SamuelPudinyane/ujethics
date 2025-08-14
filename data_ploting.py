@@ -114,6 +114,25 @@ def plot_review_recommendation_comparison_a(df):
     plt.xticks(rotation=45)
     return fig_to_base64()
 
+# 1️⃣1️⃣ Number of Applications Received vs Number of Certificates Issued
+def plot_applications_vs_certificates_a(df):
+    # Deduplicate by form ID so each application is counted only once
+    df_unique = df.drop_duplicates(subset=['id'])
+    
+    applications_count = len(df_unique)  # total unique applications
+    certificates_count = df_unique['certificate_issued'].notna().sum()  # issued certificates
+    
+    data = pd.DataFrame({
+        'Category': ['Applications Received', 'Certificates Issued'],
+        'Count': [applications_count, certificates_count]
+    })
+    
+    plt.figure(figsize=(6,4))
+    sns.barplot(x='Category', y='Count', data=data, palette=random_palette(2), width=0.6)
+    plt.title("Applications Received vs Certificates Issued")
+    return fig_to_base64()
+
+
 
 ###
 ### PLOT FORM B
@@ -209,6 +228,23 @@ def plot_review_recommendation_comparison_b(df):
     return fig_to_base64()
 
 
+# 1️⃣1️⃣ Number of Applications Received vs Number of Certificates Issued
+def plot_applications_vs_certificates_b(df):
+    # Deduplicate by form ID so each application is counted only once
+    df_unique = df.drop_duplicates(subset=['id'])
+    
+    applications_count = len(df_unique)  # total unique applications
+    certificates_count = df_unique['certificate_issued'].notna().sum()  # issued certificates
+    
+    data = pd.DataFrame({
+        'Category': ['Applications Received', 'Certificates Issued'],
+        'Count': [applications_count, certificates_count]
+    })
+    
+    plt.figure(figsize=(6,4))
+    sns.barplot(x='Category', y='Count', data=data, palette=random_palette(2), width=0.6)
+    plt.title("Applications Received vs Certificates Issued")
+    return fig_to_base64()
 
 
 ###
@@ -303,4 +339,23 @@ def plot_review_recommendation_comparison_c(df):
     plt.title("Primary vs Secondary Review Recommendation")
     plt.xticks(rotation=45)
     return fig_to_base64()
+
+# 1️⃣1️⃣ Number of Applications Received vs Number of Certificates Issued
+def plot_applications_vs_certificates_c(df):
+    # Deduplicate by form ID so each application is counted only once
+    df_unique = df.drop_duplicates(subset=['id'])
+    
+    applications_count = len(df_unique)  # total unique applications
+    certificates_count = df_unique['certificate_issued'].notna().sum()  # issued certificates
+    
+    data = pd.DataFrame({
+        'Category': ['Applications Received', 'Certificates Issued'],
+        'Count': [applications_count, certificates_count]
+    })
+    
+    plt.figure(figsize=(6,4))
+    sns.barplot(x='Category', y='Count', data=data, palette=random_palette(2), width=0.6)
+    plt.title("Applications Received vs Certificates Issued")
+    return fig_to_base64()
+
 

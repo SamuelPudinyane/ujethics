@@ -504,7 +504,8 @@ plot_submissions_over_time_a,
 plot_review_by_risk_rating_a,
 plot_top_applicants_a,
 plot_certificate_received_percentage_a,
-plot_review_recommendation_comparison_a )
+plot_review_recommendation_comparison_a,
+plot_applications_vs_certificates_a )
 @app.route('/super_admin_form_a', methods=['GET', 'POST'])
 def super_admin_form_a():
     forma='A'
@@ -533,6 +534,7 @@ def super_admin_form_a():
         .all()
     )
     ]
+    
     if forms_list:
         df = pd.DataFrame(forms_list)
 
@@ -547,6 +549,7 @@ def super_admin_form_a():
         "top_applicants": plot_top_applicants_a(df),
         "certificate_received_percentage": plot_certificate_received_percentage_a(df),
         "review_recommendation_comparison": plot_review_recommendation_comparison_a(df),
+        "plot_applications_vs_certificates":plot_applications_vs_certificates_a(df),
     }
 
         return render_template("superadmin_dashboard.html",forma=forma, **context)
@@ -562,7 +565,8 @@ plot_submissions_over_time_b,
 plot_review_by_risk_rating_b,
 plot_top_applicants_b,
 plot_certificate_received_percentage_b,
-plot_review_recommendation_comparison_b )
+plot_review_recommendation_comparison_b,
+plot_applications_vs_certificates_b )
 
 @app.route('/super_admin_form_b', methods=['GET', 'POST'])
 def super_admin_form_b():
@@ -606,6 +610,7 @@ def super_admin_form_b():
         "top_applicants": plot_top_applicants_b(df),
         "certificate_received_percentage": plot_certificate_received_percentage_b(df),
         "review_recommendation_comparison": plot_review_recommendation_comparison_b(df),
+        "plot_applications_vs_certificates":plot_applications_vs_certificates_b(df)
     }
 
         return render_template("superadmin_dashboard.html",formb=formb, **context)
@@ -623,7 +628,8 @@ plot_submissions_over_time_c,
 plot_review_by_risk_rating_c,
 plot_top_applicants_c,
 plot_certificate_received_percentage_c,
-plot_review_recommendation_comparison_c )
+plot_review_recommendation_comparison_c,
+plot_applications_vs_certificates_c )
 
 @app.route('/super_admin_form_c', methods=['GET', 'POST'])
 def super_admin_form_c():
@@ -653,7 +659,7 @@ def super_admin_form_c():
     )
 
         ]
-
+    
     if forms_list:
         df = pd.DataFrame(forms_list)
 
@@ -668,6 +674,7 @@ def super_admin_form_c():
         "top_applicants": plot_top_applicants_c(df),
         "certificate_received_percentage": plot_certificate_received_percentage_c(df),
         "review_recommendation_comparison": plot_review_recommendation_comparison_c(df),
+        "plot_applications_vs_certificates":plot_applications_vs_certificates_c(df)
     }
 
         return render_template("superadmin_dashboard.html",formc=formc, **context)
@@ -806,7 +813,7 @@ def super_admin_monitoring_page_c():
     latest_subq = (
         db_session.query(
             FormC.user_id,
-            func.max(FormC.submitted_at).label("latest_date")
+            func.max(FormC.submission_date).label("latest_date")
         )
         .group_by(FormC.user_id)
         .subquery()
