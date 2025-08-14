@@ -504,10 +504,12 @@ plot_submissions_over_time_a,
 plot_review_by_risk_rating_a,
 plot_top_applicants_a,
 plot_certificate_received_percentage_a,
-plot_review_recommendation_comparison_a )
+plot_review_recommendation_comparison_a,
+plot_applications_vs_certificates_a )
 @app.route('/super_admin_form_a', methods=['GET', 'POST'])
 def super_admin_form_a():
     forma='A'
+
     forms_list = [
     {
         "id": form.form_id,
@@ -522,17 +524,16 @@ def super_admin_form_a():
         "review_recommendation1":form.review_recommendation1,
         "certificate_issued": form.certificate_issued,
         "certificate_received":form.certificate_received,
-        "submitted_to_rec":form.submitted_to_rec,
-        "rec_full_name": rec.full_name
+        "submitted_to_rec":form.submitted_to_rec if rec else None,
+        "rec_full_name": rec.full_name if rec else None
     }
     for form, rec in (
         db_session.query(FormA, Rec)
-        .join(Rec, FormA.form_id == Rec.form_id)
+        .outerjoin(Rec, FormA.form_id == Rec.form_id)
         .limit(50)
         .all()
     )
-
-        ]
+    ]
     
     if forms_list:
         df = pd.DataFrame(forms_list)
@@ -548,6 +549,7 @@ def super_admin_form_a():
         "top_applicants": plot_top_applicants_a(df),
         "certificate_received_percentage": plot_certificate_received_percentage_a(df),
         "review_recommendation_comparison": plot_review_recommendation_comparison_a(df),
+        "plot_applications_vs_certificates":plot_applications_vs_certificates_a(df),
     }
 
         return render_template("superadmin_dashboard.html",forma=forma, **context)
@@ -563,7 +565,8 @@ plot_submissions_over_time_b,
 plot_review_by_risk_rating_b,
 plot_top_applicants_b,
 plot_certificate_received_percentage_b,
-plot_review_recommendation_comparison_b )
+plot_review_recommendation_comparison_b,
+plot_applications_vs_certificates_b )
 
 @app.route('/super_admin_form_b', methods=['GET', 'POST'])
 def super_admin_form_b():
@@ -582,12 +585,12 @@ def super_admin_form_b():
         "review_recommendation1":form.review_recommendation1,
         "certificate_issued": form.certificate_issued,
         "certificate_received":form.certificate_received,
-        "submitted_to_rec":form.submitted_to_rec,
-        "rec_full_name": rec.full_name
+        "submitted_to_rec":form.submitted_to_rec if rec else None,
+        "rec_full_name": rec.full_name if rec else None
     }
     for form, rec in (
         db_session.query(FormB, Rec)
-        .join(Rec, FormB.form_id == Rec.form_id)
+        .outerjoin(Rec, FormB.form_id == Rec.form_id)
         .limit(50)
         .all()
     )
@@ -607,6 +610,7 @@ def super_admin_form_b():
         "top_applicants": plot_top_applicants_b(df),
         "certificate_received_percentage": plot_certificate_received_percentage_b(df),
         "review_recommendation_comparison": plot_review_recommendation_comparison_b(df),
+        "plot_applications_vs_certificates":plot_applications_vs_certificates_b(df)
     }
 
         return render_template("superadmin_dashboard.html",formb=formb, **context)
@@ -624,7 +628,8 @@ plot_submissions_over_time_c,
 plot_review_by_risk_rating_c,
 plot_top_applicants_c,
 plot_certificate_received_percentage_c,
-plot_review_recommendation_comparison_c )
+plot_review_recommendation_comparison_c,
+plot_applications_vs_certificates_c )
 
 @app.route('/super_admin_form_c', methods=['GET', 'POST'])
 def super_admin_form_c():
@@ -643,18 +648,18 @@ def super_admin_form_c():
         "review_recommendation1":form.review_recommendation1,
         "certificate_issued": form.certificate_issued,
         "certificate_received":form.certificate_received,
-        "submitted_to_rec":form.submitted_to_rec,
-        "rec_full_name": rec.full_name
+        "submitted_to_rec":form.submitted_to_rec if rec else None,
+        "rec_full_name": rec.full_name if rec else None
     }
     for form, rec in (
         db_session.query(FormC, Rec)
-        .join(Rec, FormC.form_id == Rec.form_id)
+        .outerjoin(Rec, FormC.form_id == Rec.form_id)
         .limit(50)
         .all()
     )
 
         ]
-
+    
     if forms_list:
         df = pd.DataFrame(forms_list)
 
@@ -669,11 +674,199 @@ def super_admin_form_c():
         "top_applicants": plot_top_applicants_c(df),
         "certificate_received_percentage": plot_certificate_received_percentage_c(df),
         "review_recommendation_comparison": plot_review_recommendation_comparison_c(df),
+        "plot_applications_vs_certificates":plot_applications_vs_certificates_c(df)
     }
 
         return render_template("superadmin_dashboard.html",formc=formc, **context)
     else:
         return render_template("superadmin_dashboard.html")
+
+
+@app.route('/super_admin_monitoring_page_a',methods=['GET','POST'])
+def super_admin_monitoring_page_a():
+  
+    # Step 1: Subquery to get the latest submitted_at per student
+    latest_subq = (
+        db_session.query(
+            FormA.user_id,
+            func.max(FormA.submitted_at).label("latest_date")
+        )
+        .group_by(FormA.user_id)
+        .subquery()
+    )
+    
+    # Step 2: Main query to get only the latest form for each student
+    results = (
+        db_session.query(FormA, Rec)
+        .join(latest_subq,
+              (FormA.user_id == latest_subq.c.user_id) &
+              (FormA.submitted_at == latest_subq.c.latest_date))
+        .outerjoin(Rec, FormA.form_id == Rec.form_id)
+        .order_by(FormA.user_id, FormA.submitted_at.desc())
+        .all()
+    )
+
+   
+    # Step 3: Merge REC names into one form entry
+    forms_dict = {}
+    for form, rec in results:
+        first_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name1).first()
+        second_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name2).first()
+        if form.form_id not in forms_dict:
+            # Create the base form entry
+            forms_dict[form.form_id] = {
+                "id": form.form_id,
+                "applicant_name": form.applicant_name,
+                "submitted_at": form.submitted_at,
+                "risk_rating": form.risk_rating,
+                "supervisor":form.supervisor,
+                "supervisor_signature_date": form.supervisor_date,
+                "supervisor_recommendation": form.recommendation,
+                "first_reviewer_name":first_reviewer.full_name if form else None,
+                "second_reviewer_name":second_reviewer.full_name if form else None,
+                "review_signature_date": form.review_signature_date,
+                "review_recommendation": form.review_recommendation,
+                "review_signature_date1": form.review_signature_date1,
+                "review_recommendation1": form.review_recommendation1,
+                "certificate_issued": form.certificate_issued if form.certificate_issued is not None else 'Not Issued',
+                "certificate_received": form.certificate_received,
+                "submitted_to_rec": form.submitted_to_rec if rec else False,
+                "rec_full_names": []  # Store list of REC full names
+            }
+        # Add REC name if available
+        if rec and rec.full_name and rec.full_name not in forms_dict[form.form_id]["rec_full_names"]:
+            forms_dict[form.form_id]["rec_full_names"].append(rec.full_name)
+
+    # Step 4: Convert to list for output
+    forms_list = list(forms_dict.values())
+    current=datetime.utcnow()
+    return render_template('super_admin_monitoring_page_a.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
+
+
+@app.route('/super_admin_monitoring_page_b',methods=['GET','POST'])
+def super_admin_monitoring_page_b():
+  
+    # Step 1: Subquery to get the latest submitted_at per student
+    latest_subq = (
+        db_session.query(
+            FormB.user_id,
+            func.max(FormB.submitted_at).label("latest_date")
+        )
+        .group_by(FormB.user_id)
+        .subquery()
+    )
+    
+    # Step 2: Main query to get only the latest form for each student
+    results = (
+        db_session.query(FormB, Rec)
+        .join(latest_subq,
+              (FormB.user_id == latest_subq.c.user_id) &
+              (FormB.submitted_at == latest_subq.c.latest_date))
+        .outerjoin(Rec, FormB.form_id == Rec.form_id)
+        .order_by(FormB.user_id, FormB.submitted_at.desc())
+        .all()
+    )
+
+   
+    # Step 3: Merge REC names into one form entry
+    forms_dict = {}
+    for form, rec in results:
+        first_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name1).first()
+        second_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name2).first()
+        if form.form_id not in forms_dict:
+            # Create the base form entry
+            forms_dict[form.form_id] = {
+                "id": form.form_id,
+                "applicant_name": form.applicant_name,
+                "submitted_at": form.submitted_at,
+                "risk_rating": form.risk_rating,
+                "supervisor":form.supervisor,
+                "supervisor_signature_date": form.supervisor_date,
+                "supervisor_recommendation": form.recommendation,
+                "first_reviewer_name":first_reviewer.full_name if form else None,
+                "second_reviewer_name":second_reviewer.full_name if form else None,
+                "review_signature_date": form.review_signature_date,
+                "review_recommendation": form.review_recommendation,
+                "review_signature_date1": form.review_signature_date1,
+                "review_recommendation1": form.review_recommendation1,
+                "certificate_issued": form.certificate_issued if form.certificate_issued is not None else 'Not Issued',
+                "certificate_received": form.certificate_received,
+                "submitted_to_rec": form.submitted_to_rec if rec else False,
+                "rec_full_names": []  # Store list of REC full names
+            }
+        # Add REC name if available
+        if rec and rec.full_name and rec.full_name not in forms_dict[form.form_id]["rec_full_names"]:
+            forms_dict[form.form_id]["rec_full_names"].append(rec.full_name)
+
+    # Step 4: Convert to list for output
+    forms_list = list(forms_dict.values())
+    current=datetime.utcnow()
+    return render_template('super_admin_monitoring_page_b.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
+
+
+
+
+@app.route('/super_admin_monitoring_page_c',methods=['GET','POST'])
+def super_admin_monitoring_page_c():
+  
+    # Step 1: Subquery to get the latest submitted_at per student
+    latest_subq = (
+        db_session.query(
+            FormC.user_id,
+            func.max(FormC.submission_date).label("latest_date")
+        )
+        .group_by(FormC.user_id)
+        .subquery()
+    )
+    
+    # Step 2: Main query to get only the latest form for each student
+    results = (
+        db_session.query(FormC, Rec)
+        .join(latest_subq,
+              (FormC.user_id == latest_subq.c.user_id) &
+              (FormC.submission_date == latest_subq.c.latest_date))
+        .outerjoin(Rec, FormC.form_id == Rec.form_id)
+        .order_by(FormC.user_id, FormC.submission_date.desc())
+        .all()
+    )
+
+   
+    # Step 3: Merge REC names into one form entry
+    forms_dict = {}
+    for form, rec in results:
+        first_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name1).first()
+        second_reviewer=db_session.query(User).filter(User.user_id==form.reviewer_name2).first()
+        if form.form_id not in forms_dict:
+            # Create the base form entry
+            forms_dict[form.form_id] = {
+                "id": form.form_id,
+                "applicant_name": form.applicant_name,
+                "submitted_at": form.submission_date,
+                "risk_rating": form.risk_rating,
+                "supervisor":form.supervisor,
+                "supervisor_signature_date": form.supervisor_date,
+                "supervisor_recommendation": form.recommendation,
+                "first_reviewer_name":first_reviewer.full_name if form else None,
+                "second_reviewer_name":second_reviewer.full_name if form else None,
+                "review_signature_date": form.review_signature_date,
+                "review_recommendation": form.review_recommendation,
+                "review_signature_date1": form.review_signature_date1,
+                "review_recommendation1": form.review_recommendation1,
+                "certificate_issued": form.certificate_issued if form.certificate_issued is not None else 'Not Issued',
+                "certificate_received": form.certificate_received,
+                "submitted_to_rec": form.submitted_to_rec if rec else False,
+                "rec_full_names": []  # Store list of REC full names
+            }
+        # Add REC name if available
+        if rec and rec.full_name and rec.full_name not in forms_dict[form.form_id]["rec_full_names"]:
+            forms_dict[form.form_id]["rec_full_names"].append(rec.full_name)
+
+    # Step 4: Convert to list for output
+    forms_list = list(forms_dict.values())
+    current=datetime.utcnow()
+    return render_template('super_admin_monitoring_page_c.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
+
+
 
 
 @app.route('/delete_user/<string:id>', methods=['GET','POST'])
@@ -2089,9 +2282,12 @@ def reject_or_Accept_form_a(id):
             forma.rejected_or_accepted=True
             #Uncomment the code bellow for testing
             ##
-            """message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
-            send_email(app,mail, message,admin.email)"""
+                send_email(app,mail, message,forma.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {forma.email}: {e}")
         else:
             forma.supervisor_date=supervisor_date
             forma.org_permission_comment=org_permission_comment
@@ -2103,9 +2299,12 @@ def reject_or_Accept_form_a(id):
             forma.supervisor_feedback=supervisor_feedback
             forma.recommendation=recommendation
             forma.rejected_or_accepted=False
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
-            send_email(app,mail, message,forma.email)"""
+                send_email(app,mail, message,forma.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {forma.email}: {e}")
 
         db_session.add(forma)
         db_session.commit()
@@ -2150,9 +2349,12 @@ def reject_or_Accept_form_b(id):
             formb.rejected_or_accepted=True
             #Uncomment the code bellow for testing
             ##
-            """message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
-            send_email(app,mail, message,admin.email)"""
+                send_email(app,mail, message,formb.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formb.email}: {e}")
         else:
             formb.supervisor_date=supervisor_date
             formb.org_permission_comment=org_permission_comment
@@ -2164,9 +2366,12 @@ def reject_or_Accept_form_b(id):
             formb.supervisor_feedback=supervisor_feedback
             formb.recommendation=recommendation
             formb.rejected_or_accepted=False
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
-            send_email(app,mail, message,formb.email)"""
+                send_email(app,mail, message,formb.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formb.email}: {e}")
 
         
         db_session.add(formb)
@@ -2211,9 +2416,12 @@ def reject_or_Accept_form_c(id):
             formc.rejected_or_accepted=True
             #Uncomment the code bellow for testing
             ##
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-            send_email(app,mail, message,admin.email)"""
+                send_email(app,mail, message,formc.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formc.email}: {e}")
         else:
             formc.supervisor_date=supervisor_date
             formc.org_permission_comment=org_permission_comment
@@ -2225,9 +2433,12 @@ def reject_or_Accept_form_c(id):
             formc.supervisor_feedback=supervisor_feedback
             formc.recommendation=recommendation
             formc.rejected_or_accepted=False
-            """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+            try:
+                message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-            send_email(app,mail, message,formc.email)"""
+                send_email(app,mail, message,formc.email)
+            except Exception as e:
+                app.logger.error(f"Failed to send email to {formc.email}: {e}")
     db_session.add(formc)
     db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
@@ -3337,7 +3548,7 @@ def chair_form_view(id,form_name):
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
  
-            if request.form.get('status') in ['Approved']:
+            if request.form.get('status') in ['Approved','Approved with Minor Changes']:
                 if not formA.review_date:
                    
                     formA.review_date=review_date
@@ -3522,7 +3733,7 @@ def chair_form_view(id,form_name):
             review_signature_date=request.form.get('signature_date')
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
-            if request.form.get('status') in ['Approved']:
+            if request.form.get('status') in ['Approved','Approved with Minor Changes']:
                 if not formB.review_date:
                
                     formB.review_date=review_date
@@ -3788,44 +3999,65 @@ def chair_form_view(id,form_name):
                         rec_date=datetime.now()
                         )
                    
-                   
             else:
-                formC.review_date=review_date
-                formC.status=status
-                formC.review_org_permission_status=review_org_permission_status
-                formC.review_org_permission_comments=review_org_permission_comments
-                formC.review_waiver_status=review_waiver_status
-                formC.review_waiver_comments=review_waiver_comments
-                formC.review_form_status=review_form_status
-                formC.review_form_comments=review_form_comments
-                formC.review_questions_status=review_questions_status
-                formC.review_questions_comments=review_questions_comments
-                formC.review_consent_status=review_consent_status
-                formC.review_consent_comments=review_consent_comments
-                formC.review_proposal_status=review_proposal_status
-                formC.review_proposal_comments=review_proposal_comments
-                formC.review_additional_comments=review_additional_comments
-                formC.review_recommendation=review_recommendation
-                formC.form_review_comment=form_review_comment
-                formC.form_reviewed_by=form_reviewed_by
-                formC.review_status=False
-                formC.rejected_or_accepted=False
-                #Uncomment the code bellow for testing
-                ##
-                """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
-            
-                    send_email(app,mail, message,admin.email)"""
+                if not formC.review_date:
+                    formC.review_date=review_date
+                    formC.status=status
+                    formC.review_org_permission_status=review_org_permission_status
+                    formC.review_org_permission_comments=review_org_permission_comments
+                    formC.review_waiver_status=review_waiver_status
+                    formC.review_waiver_comments=review_waiver_comments
+                    formC.review_form_status=review_form_status
+                    formC.review_form_comments=review_form_comments
+                    formC.review_questions_status=review_questions_status
+                    formC.review_questions_comments=review_questions_comments
+                    formC.review_consent_status=review_consent_status
+                    formC.review_consent_comments=review_consent_comments
+                    formC.review_proposal_status=review_proposal_status
+                    formC.review_proposal_comments=review_proposal_comments
+                    formC.review_additional_comments=review_additional_comments
+                    formC.review_recommendation=review_recommendation
+                    formC.form_review_comment=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
+                    formC.review_status=False
+                    formC.rejected_or_accepted=False      
+                else:
+                    formC.review_date=review_date
+                    formC.status=status
+                    formC.review_org_permission_status=review_org_permission_status
+                    formC.review_org_permission_comments=review_org_permission_comments
+                    formC.review_waiver_status=review_waiver_status
+                    formC.review_waiver_comments=review_waiver_comments
+                    formC.review_form_status=review_form_status
+                    formC.review_form_comments=review_form_comments
+                    formC.review_questions_status=review_questions_status
+                    formC.review_questions_comments=review_questions_comments
+                    formC.review_consent_status=review_consent_status
+                    formC.review_consent_comments=review_consent_comments
+                    formC.review_proposal_status=review_proposal_status
+                    formC.review_proposal_comments=review_proposal_comments
+                    formC.review_additional_comments=review_additional_comments
+                    formC.review_recommendation=review_recommendation
+                    formC.form_review_comment=form_review_comment
+                    formC.form_reviewed_by=form_reviewed_by
+                    formC.review_status=False
+                    formC.rejected_or_accepted=False
+                    #Uncomment the code bellow for testing
+                    ##
+                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                
+                        send_email(app,mail, message,admin.email)"""
 
-                #add coments to Rec table
-                if user_name.role.value=='REVIEWER':
-                       form=Rec(
-                        rec_id=user_id,
-                        form_id=id,
-                        full_name=user_name.full_name,
-                        rec_comments = review_additional_comments,
-                        rec_status = status,
-                        rec_date=datetime.now()
-                        )
+                    #add coments to Rec table
+                    if user_name.role.value=='REVIEWER':
+                        form=Rec(
+                            rec_id=user_id,
+                            form_id=id,
+                            full_name=user_name.full_name,
+                            rec_comments = review_additional_comments,
+                            rec_status = status,
+                            rec_date=datetime.now()
+                            )
                
             db_session.add(form)
             db_session.add(formC)
@@ -4429,6 +4661,10 @@ def view_certificate(id):
     )
 
 
+
+###
+### Admin Review Submision
+###
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
     formA = db_session.query(FormA).filter_by(form_id=id).first()
@@ -4466,21 +4702,21 @@ def ethics_reviewer_committee_forms(id,form_name):
             formA.supervisor_recommendation=request.form.get('review_recommendation')
             formA.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formA.supervisor_signature_date=request.form.get('review_signature_date')
-            if request.form.get('accept')=='Accept':
+            if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer.email)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f'You are assined as form belonging to {formA.applicant_name}' 
+                    message=f'You are assined as form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer.email)
                 formA.rejected_or_accepted=True
             else:
                
@@ -4522,21 +4758,21 @@ def ethics_reviewer_committee_forms(id,form_name):
             formB.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formB.supervisor_signature_date=request.form.get('review_signature_date')
             
-            if request.form.get('accept')=='Accept':
+            if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer.email)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f'You are assined as reviewer for form belonging to {formB.applicant_name}' 
+                    message=f'You are assined as reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer)
                 formB.rejected_or_accepted=True
                 
             else:
@@ -4580,21 +4816,21 @@ def ethics_reviewer_committee_forms(id,form_name):
             formC.supervisor_recommendation=request.form.get('review_recommendation')
             formC.supervisor_supervisor_signature=request.form.get('supervisor_signature')
             formC.supervisor_signature_date=request.form.get('review_signature_date')
-            if request.form.get('accept')=='Accept':
+            if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
+                    message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
             
-                    send_email(app,mail, message,reviewers)"""
+                    send_email(app,mail, message,Assigned_reviewer)
                 
                 formC.rejected_or_accepted=True
             else:

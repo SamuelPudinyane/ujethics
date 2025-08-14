@@ -112,8 +112,8 @@
               Awaiting second reviewer
               {% elif forma.submitted_to_rec and 'low' not in forma.risk_rating|lower and not forma.certificate_issued%}
               Form submitted to Rec 
-              {% elif (forma.review_recommendation in ['Approved']) and
-              (forma.review_recommendation1 in ['Approved']) and not forma.certificate_received %}
+              {% elif (forma.review_recommendation in ['Approved','Approved with Minor Changes']) and
+              (forma.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not forma.certificate_received %}
               Approved by both Reviewers
               
               {% elif forma.reviewer_name1 and forma.reviewer_name2 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
@@ -176,7 +176,8 @@
             <td>
               
               <a href="{{url_for('chair_forma_view',id=forma.user_id)}}" class="btn btn-sm btn-success text-white" >Review</a>
-           
+          
+          
             </td>
           </tr>
           {% endfor %}
@@ -235,8 +236,8 @@
               Awaiting second reviewer
               {% elif formb.submitted_to_rec and 'low' not in formb.risk_level|lower and not formb.certificate_issued%}
               Form submitted to Rec 
-              {% elif (formb.review_recommendation in ['Approved']) and
-              (formb.review_recommendation1 in ['Approved']) and not formb.certificate_received%}
+              {% elif (formb.review_recommendation in ['Approved','Approved with Minor Changes']) and
+              (formb.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formb.certificate_received%}
               Approved by both Reviewers
               {% elif formb.reviewer_name1 and formb.reviewer_name2 and formb.supervisor_date and formb.rejected_or_accepted and formb.review_supervisor_signature%}
               Submitted to Reviewers
@@ -282,9 +283,8 @@
             </td>
             
             <td>
-             
               <a href="{{url_for('chair_formb_view',id=formb.user_id)}}" class="btn btn-sm btn-success text-white" >Review</a>
-             
+            
             </td>
           </tr>
           {% endfor %}
@@ -347,8 +347,8 @@
               Form submitted to Rec 
 
              
-              {% elif (formc.review_recommendation in ['Approved']) and
-              (formc.review_recommendation1 in ['Approved']) and not formc.certificate_received %}
+              {% elif (formc.review_recommendation in ['Approved','Approved with Minor Changes']) and
+              (formc.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formc.certificate_received %}
               Approved by both Reviewers
 
               {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and formc.rejected_or_accepted and formc.review_supervisor_signature%}
@@ -375,7 +375,7 @@
               
             </td>
             <td>
-              
+             
               <a href="{{url_for('chair_formc_view',id=formc.user_id)}}" class="btn btn-sm btn-success text-white">Review</a>
              
             </td>

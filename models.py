@@ -20,17 +20,17 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
-# connection_string = (
-#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-#     "driver=ODBC+Driver+17+for+SQL+Server&"
-#     "trusted_connection=yes"
-# )
-
 connection_string = (
-    "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "trusted_connection=yes"
 )
+
+# connection_string = (
+#     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+#)
 
 engine = create_engine(connection_string, echo=True)
 
@@ -82,7 +82,7 @@ class User(Base):
         self.supervisor_id = supervisor_id
         self.specialisation=specialisation
         self.role = UserRole(role) if isinstance(role, str) else role
-        print(" encrypted ---------",self.password)
+      
     @staticmethod
     def hash_password(password: str) -> str:
         # Generate salt and hash in one step (bcrypt handles salt internally)
