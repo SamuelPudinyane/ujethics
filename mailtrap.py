@@ -25,7 +25,7 @@ def send_email(app, mail, message, recipient):
     with app.app_context():
         msg = Message(
         subject='ETHICS NOTIFICATION',
-        recipients=[recipient],
+        recipients=recipient,
         body=message
     )
     mail.send(msg)

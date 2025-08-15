@@ -132,9 +132,11 @@
                 <td><input type="text" name="org_contact[]" placeholder="e.g., Dr. Smith, dr.smith@example.com" /></td>
                 <td><input type="text" name="org_role[]" placeholder="e.g., Site Supervisor" /></td>
                 <td>
-                  <label><input type="radio" name="org_permission" value="Yes">Yes</label>
-                  <label><input type="radio" name="org_permission" value="No">No</label>
-                  <label><input type="radio" name="org_permission" value="Pending">Pending</label>
+                  <select name="org_permission[]">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Pending">Pending</option>
+                  </select>
                 </td>
               </tr>
             </tbody>
