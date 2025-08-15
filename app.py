@@ -3209,10 +3209,10 @@ def student_edit_formc():
 
             non_vulnerable_context=True if request.form.get('non_vulnerable_context') else False,
             non_english=True if request.form.get('non_english')else False,
-            own_students=True if request.form.get('own_student') else False,
+            own_students=True if request.form.get('own_students') else False,
 
             poverty=True if request.form.get('poverty') else False,
-            no_education=True if request.form.get('non_education') else False,
+            no_education=True if request.form.get('no_education') else False,
             vulnerable_other_description=True if request.form.get('vulnerable_other_description') else False,
             vulnerable_comments=request.form.get('vulnerable_comments'),
 
