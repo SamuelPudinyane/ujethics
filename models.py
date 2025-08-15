@@ -190,6 +190,7 @@ class FormARequirements(Base):
     proposal_path = Column(String(255), nullable=True)
     impact_assessment_path = Column(String(255), nullable=True)
     has_ethics_evidence=Column(Boolean,default=False,nullable=True)
+    participation_info_sheet=Column(String(255),nullable=True)
     ethics_evidence = Column(Boolean, default=False, nullable=True)
     ethics_evidence_path=Column(String,nullable=True)
     files = Column(Text, nullable=True)  # Will store JSON list containing id's of files
