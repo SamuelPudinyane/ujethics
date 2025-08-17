@@ -3004,7 +3004,7 @@ def student_edit_forma():
             personal_info_comment=personal_info_comment,
             data_anonymized=data_anonymized,
             anonymization_comment=anonymization_comment,
-            org_permission=org_permission,
+            # org_permission=org_permission,
             permission_details=permission_details,
             shortcomings_reported=shortcomings_reported,
             limitations_reporting=limitations_reporting,
