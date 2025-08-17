@@ -2847,7 +2847,7 @@ def student_edit_forma():
         personal_info_comment=request.form.get('personal_info_comment')
         data_anonymized=request.form.get('data_anonymized')
         anonymization_comment=request.form.get('anonymization_comment')
-        org_permission=request.form.get('org_permission')
+      
         permission_details=request.form.get('permission_details')
         public_data_description=request.form.get('public_data_description')
         shortcomings_reported=request.form.get('shortcomings_reported')
@@ -3004,7 +3004,6 @@ def student_edit_forma():
             personal_info_comment=personal_info_comment,
             data_anonymized=data_anonymized,
             anonymization_comment=anonymization_comment,
-            org_permission=org_permission,
             permission_details=permission_details,
             shortcomings_reported=shortcomings_reported,
             limitations_reporting=limitations_reporting,
@@ -4668,11 +4667,17 @@ def ethics_reviewer_committee_forms(id,form_name):
         .first()
     
     Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formA.reviewer_name1, formA.reviewer_name2])).all()
-    
+ 
     list_of_revewers=[]
     
     if Assigned_reviewer:
         for item in Assigned_reviewer:
+            list_of_revewers.append(item.email)
+    else:
+        reviewers=request.form.getlist('reviewer_names[]')
+        Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
+        for item in Assigned_reviewer:
+            
             list_of_revewers.append(item.email)
     
     if form_name=="FORM A":
@@ -4707,6 +4712,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
+                    
                     message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
