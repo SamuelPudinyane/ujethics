@@ -78,12 +78,13 @@ def student_dashboard():
     if not user_id:
         return "Unauthorized access. Please log in.", 401
     
+    user=db_session.query(User).filter_by(user_id=user_id).first()
     formA = db_session.query(FormA).filter_by(user_id=user_id).first()
     formB = db_session.query(FormB).filter_by(user_id=user_id).first()
     formC = db_session.query(FormC).filter_by(user_id=user_id).first()
     formD = db_session.query(FormD).filter_by(user_id=user_id).first()
-  
-    return render_template('dashboard.html',formA=formA,formB=formB,formC=formC,formD=formD)
+    full_name=user.full_name
+    return render_template('dashboard.html',full_name=full_name,formA=formA,formB=formB,formC=formC,formD=formD)
 
 @app.route('/quiz', methods=['GET'])
 def quiz():
@@ -3446,6 +3447,13 @@ def send_certificate(id):
             
                 send_email(app,mail, message,certificate_details.email)
         return redirect(url_for('chair_landing'))
+
+
+
+@app.route("/faq",methods=['GET','POST'])
+def faq():
+    return render_template("faq.html")
+
 
 
 @app.route('/student_view_feedback/<string:id>', methods=['GET'])
