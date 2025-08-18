@@ -3432,7 +3432,7 @@ def send_certificate(id):
         for model in [FormA, FormB, FormC]:
             
             certificate_details = db_session.query(model).filter_by(form_id=id).first()
-            user=db_session.query(User).filter(certificate_details.user_id==id).first()
+            #user=db_session.query(User).filter(certificate_details.user_id==id).first()
 
             if certificate_details:    
                 certificate_details.certificate_received=True
@@ -3441,10 +3441,10 @@ def send_certificate(id):
                 
                 #Uncomment the code bellow for testing
                 ##
-                """message=(f'your have been issued with Ethics certificate '
+                message=(f'your have been issued with Ethics certificate '
                 f'Follow the link https://127.0.0.1:5000 to view your certificate')
             
-                send_email(app,mail, message,user.email)"""
+                send_email(app,mail, message,certificate_details.email)
         return redirect(url_for('chair_landing'))
 
 
