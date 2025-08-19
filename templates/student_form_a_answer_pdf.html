@@ -168,48 +168,48 @@
       </thead>
              <tbody>
         <tr>
-          <td>Communities that may be considered as vulnerable</td>
+          <td>a) Communities that may be considered as vulnerable</td>
           <td><span class="form-answer">{{formA.vulnerable_communities}}</span></td>
 
         </tr>
         <tr>
-          <td>People under the age of 18 or over 65</td>
+          <td>b) People under the age of 18 or over 65</td>
           <td><span class="form-answer">{{formA.age_range}}</span></td>
 
         </tr>
         <tr>
-          <td>UJ employees or students</td>
+          <td>c) UJ employees or students</td>
           <td><span class="form-answer">{{formA.uj_employees}}</span></td>
 
         </tr>
         <tr>
-          <td>Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this
+          <td>d) Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this
             research project</td>
           <td><span class="form-answer">{{formA.vulnerable}}</span></td>
 
         </tr>
         <tr>
-          <td>Non-English-speaking participants</td>
+          <td>e) Non-English-speaking participants</td>
           <td><span class="form-answer">{{formA.non_english}}</span></td>
 
         </tr>
         <tr>
-          <td>A researcher’s own students</td>
+          <td>f) A researcher’s own students</td>
           <td><span class="form-answer">{{formA.own_students}}</span></td>
 
         </tr>
         <tr>
-          <td>People living in poverty</td>
+          <td>g) People living in poverty</td>
           <td><span class="form-answer">{{formA.poverty}}</span></td>
 
         </tr>
         <tr>
-          <td>People with little or no education </td>
+          <td>h) People with little or no education </td>
           <td><span class="form-answer">{{formA.no_education}}</span></td>
 
         </tr>
         <tr>
-          <td>Other: Provide a description</td>
+          <td>i) Other: Provide a description</td>
           <td><span class="form-answer">{{formA.assessment_other_specify}}</span>
           </td>
 
@@ -230,70 +230,72 @@
       </thead>
       <tbody>
         <tr>
-          <td>Collection, use or disclosure of informAtion WITHOUT the consent of the individual whose informAtion it
+          <td>a) Collection, use or disclosure of informAtion WITHOUT the consent of the individual whose informAtion it
             is, with the exception of aggregated data or data from official databases such as StatsSA, SARS, etc.</td>
           <td><span class="form-answer">{{formA.disclosure}}</span></td>
 
         </tr>
         <tr>
-          <td>Causing discomfiture to participants beyond normal levels of inconvenience</td>
+          <td>b) Causing discomfiture to participants beyond normal levels of inconvenience</td>
           <td><span class="form-answer">{{formA.discomfiture}}</span></td>
 
         </tr>
         <tr>
-          <td>Deception of participants, concealment or covert observation</td>
+          <td>c) Deception of participants, concealment or covert observation</td>
           <td><span class="form-answer">{{formA.deception}}</span></td>
 
         </tr>
         <tr>
-          <td>Examining potentially sensitive or contentious issues</td>
+          <td>d) Examining potentially sensitive or contentious issues</td>
           <td><span class="form-answer">{{formA.sensitive}}</span></td>
 
         </tr>
         <tr>
-          <td>Seeking disclosure of informAtion which may be prejudicial to participants</td>
+          <td>e) Seeking disclosure of informAtion which may be prejudicial to participants</td>
           <td><span class="form-answer">{{formA.prejudice}}</span></td>
 
         </tr>
         <tr>
-          <td>Using intrusive techniques</td>
+          <td>f) Using intrusive techniques</td>
           <td><span class="form-answer">{{formA.intrusive_techniques}}</span></td>
 
         </tr>
         <tr>
-          <td>Study of or participation in illegal activities</td>
+          <td>g) Study of or participation in illegal activities</td>
           <td><span class="form-answer">{{formA.illegal_activities}}</span></td>
 
         </tr>
         <tr>
-          <td>Personal and social informAtion collected directly from participants</td>
+          <td>h) Personal and social informAtion collected directly from participants</td>
           <td><span class="form-answer">{{formA.personal}}</span></td>
 
         </tr>
         <tr>
-          <td>Identifiable informAtion to be collected about people from available records (e.g., staff records, student
+          <td>i) Identifiable informAtion to be collected about people from available records (e.g., staff records, student
             records, etc.)</td>
           <td><span class="form-answer">{{formA.available_records}}</span></td>
 
         </tr>
         <tr>
-          <td>Psychology inventories / scales / tests</td>
+          <td>j) Psychology inventories / scales / tests</td>
           <td><span class="form-answer">{{formA.inventories}}</span></td>
 
         </tr>
         <tr>
-          <td>Activities which may place the researcher(s) / data collector at risk</td>
+          <td>k) Activities which may place the researcher(s) / data collector at risk</td>
           <td><span class="form-answer">{{formA.risk_activities}}</span></td>
 
         </tr>
         <tr>
-          <td>Other: Provide a description</td>
+          <td>l) Other: Provide a description</td>
           <td><span class="form-answer">{{formA.activity_specify}}</span></td>
 
         </tr>
 
       </tbody>
     </table>
+    <label for="vulnerable_comments">Comments</label>
+    <span name="vulnerable_comments" class="form-answer">{{formA.vulnerable_comments}}</span>
 
     <hr>
 
@@ -345,7 +347,7 @@
         </tr>
          <tr>
           <td>
-          <label>Other (Specify)</label>
+          <label>h) Other (Specify)</label>
           </td>
           <td>
             <span class="form-answer">{{formA.vulnerable_comments_3}}</span>
@@ -353,6 +355,8 @@
         </tr>
       </tbody>
     </table>
+    <label for="apply_comments">Comments</label>
+    <span name="apply_comments" class="form-answer">{{formA.apply_comments}}</span>
 
     <div class="mb-3">
       <label><strong>2.4 Rate your project (Negligible, Low, Medium, High Risk):
@@ -507,7 +511,6 @@
     
 
     <label>5.3 Details of the participants</label>
-    <br>
 
     <label>5.3.1 Participant Group Description</label>
 <br><span class="form-answer">{{formA.participants_description}}</span>
@@ -600,7 +603,7 @@
     <label>If existing, permission obtained?</label><br>
     {# Show only what the student actually ticked #}
     <span class="form-answer">
-      {% if formA.permission_obtained or formA.permission in ['Yes', True, 'on'] %}Yes{% endif %}
+      {% if formA.permission_obtained in ['Yes', True, 'on'] %}Yes{% endif %}
     </span>
     <br>
     <span class="form-answer">
@@ -612,7 +615,7 @@
 
   <!-- Justification (textarea) -->
   <label class="d-block mb-1">Justification:</label>
-  <span class="form-answer">{{ formA.instrument_attrachment_reason or '' }}</span>
+  <span class="form-answer">{{ formA.instrument_attachment_reason }}</span>
 </div>
 
 

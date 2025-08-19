@@ -223,48 +223,48 @@
       </thead>
              <tbody>
         <tr>
-          <td>Communities that may be considered as vulnerable</td>
+          <td>a) Communities that may be considered as vulnerable</td>
           <td><span class="form-answer">{{'Yes' if formA.vulnerable_communities else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>People under the age of 18 or over 65</td>
+          <td>b) People under the age of 18 or over 65</td>
           <td><span class="form-answer">{{'Yes' if formA.age_range else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>UJ employees or students</td>
+          <td>c) UJ employees or students</td>
           <td><span class="form-answer">{{'Yes' if formA.uj_employees else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this
+          <td>d) Persons not usually considered to be vulnerable but would be considered vulnerable in the context of this
             research project</td>
           <td><span class="form-answer">{{'Yes' if formA.vulnerable else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Non-English-speaking participants</td>
+          <td>e) Non-English-speaking participants</td>
           <td><span class="form-answer">{{'Yes' if formA.non_english else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>A researcher’s own students</td>
+          <td>f) A researcher’s own students</td>
           <td><span class="form-answer">{{'Yes' if formA.own_students else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>People living in poverty</td>
+          <td>g) People living in poverty</td>
           <td><span class="form-answer">{{'Yes' if formA.poverty else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>People with little or no education </td>
+          <td>h) People with little or no education </td>
           <td><span class="form-answer">{{'Yes' if formA.no_education else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Other: Provide a description</td>
+          <td>i) Other: Provide a description</td>
           <td><span class="form-answer">{{formA.assessment_other_specify}}</span>
           </td>
 
@@ -285,71 +285,71 @@
       </thead>
       <tbody>
         <tr>
-          <td>Collection, use or disclosure of informAtion WITHOUT the consent of the individual whose informAtion it
+          <td>a) Collection, use or disclosure of informAtion WITHOUT the consent of the individual whose informAtion it
             is, with the exception of aggregated data or data from official databases such as StatsSA, SARS, etc.</td>
           <td><span class="form-answer">{{'Yes' if formA.disclosure else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Causing discomfiture to participants beyond normal levels of inconvenience</td>
+          <td>b) Causing discomfiture to participants beyond normal levels of inconvenience</td>
           <td><span class="form-answer">{{'Yes' if formA.discomfiture else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Deception of participants, concealment or covert observation</td>
+          <td>c) Deception of participants, concealment or covert observation</td>
           <td><span class="form-answer">{{'Yes' if formA.deception else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Examining potentially sensitive or contentious issues</td>
+          <td>d) Examining potentially sensitive or contentious issues</td>
           <td><span class="form-answer">{{'Yes' if formA.sensitive else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Seeking disclosure of informAtion which may be prejudicial to participants</td>
+          <td>e) Seeking disclosure of informAtion which may be prejudicial to participants</td>
           <td><span class="form-answer">{{'Yes' if formA.prejudice else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Using intrusive techniques</td>
+          <td>f) Using intrusive techniques</td>
           <td><span class="form-answer">{{'Yes' if formA.intrusive_techniques else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Study of or participation in illegal activities</td>
+          <td>g) Study of or participation in illegal activities</td>
           <td><span class="form-answer">{{'Yes' if formA.illegal_activities else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Personal and social informAtion collected directly from participants</td>
+          <td>h) Personal and social informAtion collected directly from participants</td>
           <td><span class="form-answer">{{'Yes' if formA.personal else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Identifiable informAtion to be collected about people from available records (e.g., staff records, student
+          <td>i) Identifiable informAtion to be collected about people from available records (e.g., staff records, student
             records, etc.)</td>
           <td><span class="form-answer">{{'Yes' if formA.available_records else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Psychology inventories / scales / tests</td>
+          <td>j) Psychology inventories / scales / tests</td>
           <td><span class="form-answer">{{'Yes' if formA.inventories else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Activities which may place the researcher(s) / data collector at risk</td>
+          <td>k) Activities which may place the researcher(s) / data collector at risk</td>
           <td><span class="form-answer">{{'Yes' if formA.risk_activities else 'No'}}</span></td>
 
         </tr>
         <tr>
-          <td>Other: Provide a description</td>
+          <td>l) Other: Provide a description</td>
           <td><span class="form-answer">{{formA.activity_specify}}</span></td>
 
         </tr>
 
       </tbody>
     </table>
-   <label>Comments: <span class="form-answer">{{formA.vulnerable_comments}}</span></label>
+   <label for="vulnerable_comments">Comments: <span class="form-answer">{{formA.vulnerable_comments}}</span></label>
     <hr>
 
     <table>
@@ -400,7 +400,7 @@
         </tr>
         <tr>
           <td>
-          <label>Other (Specify)</label>
+          <label>h) Other (Specify)</label>
           </td>
           <td>
             <span class="form-answer">{{formA.vulnerable_comments_3}}</span>
@@ -408,7 +408,7 @@
         </tr>
       </tbody>
     </table>
-   <label>Comments: <span class="form-answer">{{formA.apply_comments}}</span></label>
+   <label for="apply_comments">Comments: <span class="form-answer">{{formA.apply_comments}}</span></label>
     <div class="mb-3">
       <label><strong>2.4 Rate your project (Negligible, Low, Medium, High Risk):
         <br><span class="form-answer">{{formA.risk_rating}}</span>
@@ -623,16 +623,25 @@
 </table>
 
       
-    <!-- Questionnaire -->
-    <label>5.4.1.1 Questionnaire(s):</label>
-      <br>
-      {% if formA.questionnaire%}<span class="form-answer">Questionnaire Type: {{formA.questionnaire_type}}</span>{% endif %}
+     <!-- 5.4.1.1 Questionnaire(s) -->
+  <label>5.4.1.1 Questionnaire(s):</label><br>
+  {% if formA.questionnaire_type %}
+    <span class="form-answer">Questionnaire Type: {{ formA.questionnaire_type }}</span><br>
+  {% endif %}
+
+  {% if formA.questionnaire_type == 'Existing' %}
+    <label>If existing, permission obtained?</label><br>
+    {# Show only what the student actually ticked #}
+    <span class="form-answer">
+      {% if formA.permission_obtained in ['Yes', True, 'on'] %}Yes{% endif %}
+    </span>
     <br>
-    {% if formA.questionnaire_type=='Existing'%}<label>Permission obtained? </label>
-    <br><span class="form-answer">{% if formA.permission%}{{formA.permission}}{% endif %} </span>
-    <br><span class="form-answer">{% if formA.open_source%}{{formA.open_source}}{% endif %} </span>{% endif %}
+    <span class="form-answer">
+      {% if formA.open_source in ['Yes', True, 'on'] %}Open Source{% endif %}
+    </span>
     <br>
-    <label>Justification: </label><span class="form-answer">{{formA.instrument_attrachment_reason}}</span>
+  {% endif %}
+    <label>Justification: </label><span class="form-answer">{{formA.instrument_attachment_reason}}</span>
 
     <!-- Interview -->
     <label>5.4.1.2 Interviews</label><br>

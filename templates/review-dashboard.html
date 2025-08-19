@@ -106,18 +106,23 @@
                   {% endif %}
 
                   {% if req.permission_letter %}
-                
-                      <li><a href="{{ url_for('static', filename=req.permission_letter) }}" target="_blank">Permission Letter</a></li>
+                  {% for file in req.permission_letter.split(',') %}
+                    <li><a href="{{ url_for('static', filename=file.strip()) }}" target="_blank">Permission Letter {{ loop.index }}</a></li>
+                  {% endfor %}
+                {% endif %}
+                  {% if req.ethics_evidence %}
+                      <li><a href="{{ url_for('static', filename=req.ethics_evidence) }}" target="_blank">Ethical Compliance</a></li>
                   {% endif %}
+
                   {% if req.prior_clearance_path %}
                
                       <li><a href="{{ url_for('static', filename=req.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                   {% if req.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey/Questionnaire/Focus Group Questions</a></li>
+                      <li><a href="{{ url_for('static', filename=req.research_tools_path) }}" target="_blank">Survey/Interview/Focus Group Questions</a></li>
                   {% endif %}
                   {% if req.impact_assessment_path %}
-                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">Personal Impact Assessment Form</a></li>
+                      <li><a href="{{ url_for('static', filename=req.impact_assessment_path) }}" target="_blank">Personal Assessment Impact Form</a></li>
                   {% endif %}
                   {% if req.prior_clearance %}
                   <li><a href="{{url_for('static',filename=req.prior_clearance)}}">Prior Clearance</a></li>
@@ -125,15 +130,12 @@
                   {% if req.prior_clearance1 %}
                   <li><a href="{{url_for('static',filename=req.prior_clearance1)}}">Ethical Clearance</a></li>
                   {% endif %}
-                  {% if req.need_jbs_clearance%}
-                  <li><a href="{{url_for('static',filename=req.need_jbs_clearance)}}">JBS Clearance</a></li>
+                  {% if req.participation_info_sheet%}
+                  <li><a href="{{url_for('static',filename=req.participation_info_sheet)}}">Participation Info Sheet</a></li>
                   {% endif %}
-                  {% if req.need_jbs_clearance1%}
-                  <li><a href="{{url_for('static',filename=req.need_jbs_clearance1)}}">JBS clearance 2</a></li>
-                  {% endif %}
+                  
                 <br>
-                
-              </ul>
+              </ul>
             </td>
             <td>
               <a href="{{url_for('reviewer_form_a',id=item.form_id)}}" class="view-btn">Review</a>

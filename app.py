@@ -44,9 +44,9 @@ migrate = Migrate(app, db)
 
 
 
-###import dummy_data
+##import dummy_data
 
-###dummy_data
+##dummy_data
 
 
 ALLOWED_EXTENSIONS = {'pdf', 'docx'}
@@ -1831,7 +1831,7 @@ def form_a_sec5 ():
         
         
         form.informed_consent=request.form.get('informed_consent')
-        form.data_storage = request.form.getlist('data_storage')
+        form.data_storage = request.form.getlist('data_storage[]')
 
         # form.secure_location=request.form.getlist('secure_location')
         # form.password_protected=request.form.getlist('password_protected')
@@ -2216,7 +2216,7 @@ def form_c_sec1():
         form.department=request.form.get('department')
         form.degree=request.form.get('degree')
         form.project_title=request.form.get('project_title')
-        form.mobile_number=request.form.get('mobile')
+        form.mobile_number=request.form.get('mobile_number')
         form.email_address=user.email
         form.supervisor_name=supervisor.full_name
         form.supervisor_email=supervisor.email

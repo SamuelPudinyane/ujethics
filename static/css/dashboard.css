@@ -50,7 +50,7 @@ h2, label, input, select, textarea {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 40px;
 }
 
   .logo.uj {

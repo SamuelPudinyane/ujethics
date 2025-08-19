@@ -148,13 +148,12 @@
                   {% if req.prior_clearance1 %}
                   <li><a href="{{url_for('static',filename=req.prior_clearance1)}}">Ethical Clearance</a></li>
                   {% endif %}
-                  {% if req.need_jbs_clearance%}
-                  <li><a href="{{url_for('static',filename=req.need_jbs_clearance)}}">JBS Clearance</a></li>
+                  {% if req.participation_info_sheet%}
+                  <li><a href="{{url_for('static',filename=req.participation_info_sheet)}}">Participation Info Sheet</a></li>
                   {% endif %}
-                  {% if req.need_jbs_clearance1%}
+                  <!-- {% if req.need_jbs_clearance1%}
                   <li><a href="{{url_for('static',filename=req.need_jbs_clearance1)}}">JBS Clearance 2</a></li>
-                  {% endif %}
-               
+                  {% endif %} -->
                 <br>
               </ul>
             </td>
