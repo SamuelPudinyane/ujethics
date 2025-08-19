@@ -20,7 +20,11 @@ from sqlalchemy.orm import joinedload
 from collections import defaultdict
 from mailtrap import configure_mail, send_email
 from flask_mail import Mail, Message
-
+from sqlalchemy import create_engine
+import time
+from sqlalchemy.exc import OperationalError
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 # Load environment variables from .env file
 load_dotenv()
@@ -32,6 +36,13 @@ configure_mail(app)
 app.secret_key = os.getenv('SECRET_KEY')
 
 mail = Mail(app)
+
+app.config.from_object('config.Config')  # your config
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+
 
 ###import dummy_data
 
@@ -5076,5 +5087,6 @@ def validate_reset_token(token):
 # =====================================================================================================
 
 if __name__ == '__main__':
-    port = int(os.getenv("PORT", 5000))  
+    
+    port = int(os.getenv("PORT", 5010))  
     app.run(host='0.0.0.0', port=port, debug=True)

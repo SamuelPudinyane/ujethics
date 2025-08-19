@@ -12,6 +12,10 @@ import bcrypt
 import datetime
 import os
 import json
+import time
+from sqlalchemy.exc import OperationalError
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 # mySQL_string = 'mysql+pymysql://root:password@localhost/ethics'
@@ -20,11 +24,31 @@ import json
 # db_path = os.path.join(os.path.dirname(__file__), "ethics.db")
 # sqlite_string = f"sqlite+pysqlite:///{db_path}"
 
+# DB_SERVER = os.getenv("DB_SERVER", "sqlserver")
+# DB_PORT = os.getenv("DB_PORT", "1433")
+# DB_NAME = os.getenv("DB_NAME", "ethics")
+# DB_USER = os.getenv("DB_USER", "sa")
+# DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
+
+DB_SERVER = os.getenv("DB_SERVER", "ethics-db")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "ethics")
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
+
+
 connection_string = (
-    "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
-    "driver=ODBC+Driver+17+for+SQL+Server&"
-    "trusted_connection=yes"
+    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_NAME}"
 )
+
+
+
+
+# connection_string = (
+#     "mssql+pyodbc://@APB-JBS02-113L\\SQLEXPRESS/ethics?"
+#     "driver=ODBC+Driver+17+for+SQL+Server&"
+#     "trusted_connection=yes"
+# )
 
 # connection_string = (
 #     "mssql+pyodbc://@MOOSE\\SQLEXPRESS/ethics?"
@@ -33,7 +57,6 @@ connection_string = (
 # )
 
 engine = create_engine(connection_string, echo=True)
-
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
@@ -41,6 +64,7 @@ Base = declarative_base()
 
 def generate_uuid():
     return str(uuid.uuid4())
+
 
 # Create an enum class for roles, makes it easy to change at one place if there be additional roles.
 class UserRole(enum.Enum):
