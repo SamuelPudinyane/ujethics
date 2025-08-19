@@ -22,6 +22,7 @@
       <h3>JBS Ethics Application</h3>
     </div>
     <nav class="sidebar-nav">
+      {% if user_profile%}
       {% if 'admin' == user_profile.role.value|lower%}
       <a href="{{url_for('chair_landing')}}" class="sidebar-link">
         <i class="fas fa-clipboard-list"></i> Dashboard
@@ -63,7 +64,7 @@
       <a href="{{url_for('logout')}}" class="sidebar-link">
         <i class="fas fa-sign-out-alt"></i> Logout
       </a>
-
+      {% endif %}
     </nav>
   </aside>
 
@@ -97,10 +98,11 @@
             <td>{{user.email}}</td>
             <td>{{user.role.value}}</td>
             <td>
-              {% if 'student' in user.role.value|lower and  user.authenticate_student%}
+              {% if 'student' in user.role.value|lower and  not (user.authenticate_student or user.authenticate_student is none)%}
               
-              <span>Student is authenticated</span>
-              
+              <form action="{{ url_for('authenticate_student', id=user.user_id) }}" method="post" style="display:inline;">
+              <button type="submit" class="btn btn-success">Authenticate</button>
+              </fom>
               {% else %}
               Active
               {% endif %}
@@ -123,11 +125,11 @@
                 <button type="submit" class="delete-btn">Delete</button>
               </form>
               
-              {% if 'student' in user.role.value|lower %}
+              {% if 'student' in user.role.value|lower and  not (user.authenticate_student or user.authenticate_student is none)%}
               
               <form action="{{url_for('authenticate_student',id=user.user_id)}}" method="post" style="display:inline;">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                {% if not user.authenticate_student or user.authenticate_student is none %}
+                {% if not user.authenticate_student or user.authenticate_student is none and 'student' in user.role.value|lower%}
                 <button type="submit" class="btn btn-success"> Authenticate Student</button>
                 {% endif %}
               </form>
@@ -143,9 +145,11 @@
             <td>{{user.email}}</td>
             <td>{{user.role.value}}</td>
             <td>
-              {% if 'student' in user.role.value|lower and  user.authenticate_student%}
+              {% if 'student' in user.role.value|lower and  not user.authenticate_student%}
               
-              <span>Student is authenticated</span>
+              <form action="{{ url_for('authenticate_student', id=user.user_id) }}" method="post" style="display:inline;">
+              <button type="submit" class="btn btn-success">Authenticate</button>
+              </fom>
               
               {% else %}
               Active
@@ -169,11 +173,11 @@
                 <button type="submit" class="delete-btn">Delete</button>
               </form>
               
-              {% if 'student' in user.role.value|lower %}
+              {% if 'student' in user.role.value|lower and user.authenticate_student %}
               
               <form action="{{url_for('authenticate_student',id=user.user_id)}}" method="post" style="display:inline;">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                {% if not user.authenticate_student or user.authenticate_student is none %}
+                {% if not user.authenticate_student and user.authenticate_student is none %}
                 <button type="submit" class="btn btn-success"> Authenticate Student</button>
                 {% endif %}
               </form>

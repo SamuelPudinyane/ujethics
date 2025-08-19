@@ -228,10 +228,13 @@ def register():
             #sending email to the student
             ###
             ### uncomment the code bellow for real testing
-            """message=f'An account was created for this student number- {student_number}'
-            
-            send_email(app,mail, message,email)"""
-            msg = 'You have successfully registered!'
+            message=f'An account was created for this student number- {student_number}, await for your account to be Authenticated before login'
+            try:
+                send_email(app,mail, message,email)
+                msg = 'You have successfully registered!'
+            except Exception as e:
+                print("Email sending error:", str(e))
+            flash("Account created succesfully")
             return render_template("login.html", messages=[msg])
             
         except Exception as e:
@@ -257,9 +260,12 @@ def student_choose_supervisor():
             #sending email to the supervisor
             ###
             ### uncomment the code bellow for real testing
+            try:
+                message=f'You have been assigned to be the supervisor of the student with name {user.full_name} and student number- {user.student_number}'
+                send_email(app,mail, message,supervisor.email)
+            except Exception as e:
+                print("Email sending error:", str(e))
 
-            """message=f'You have been assigned to be the supervisor of the student with name {user.full_name} and student number- {user.student_number}'
-            send_email(app,mail, message,supervisor.email)"""
             return render_template('ethics_pack.html', name = session['name'])
     return render_template('student_choose_supervisor.html',supervisors=supervisors)
 
@@ -276,9 +282,13 @@ def authenticate_student(id):
             ###
             ### uncomment the code bellow for real testing
 
-            """message='Your account has been Authenticated,Please follow the link to log in ' \
-            'http://127.0.0.1:5000'
-            send_email(app,mail, message,user.email)"""
+            message=(f'Your account has been Authenticated,Please follow the link to log in '
+            f'http://127.0.0.1:5000')
+
+            try:
+                send_email(app,mail, message,user.email)
+            except Exception as e:
+                print("Email sending error:", str(e))
             db_session.commit()
             return redirect(url_for('all_users'))
         else:
@@ -331,12 +341,14 @@ def register_reviewer():
                 ###
                 ### uncomment the code bellow for real testing
 
-                """message=f'An account was created on your behalf, ' \
-                    'please follow the link http://127.0.0.1:5000 use your '\
-                    ' email as username and password = {password}'
-            
-                send_email(app,mail, message,email)"""
-                messages = 'You have successfully registered!'
+                message=(f'An account was created on your behalf, ' 
+                    f'please follow the link http://127.0.0.1:5000 use your '
+                    f' email as username and password = {password}')
+                try:
+                    send_email(app,mail, message,email)
+                    messages = 'You have successfully registered!'
+                except Exception as e:
+                    print("Email sending error:", str(e))
                 return redirect(url_for('reviewer_list'))
                 
             except Exception as e:
