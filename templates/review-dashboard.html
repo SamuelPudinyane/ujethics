@@ -274,8 +274,9 @@
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
               
-              {% elif not item.review_status1 and item.review_status and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) %}
+              {% elif item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) %}
               Awaiting for Review
+              
               {% set review_comment = '' %}
                 {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = item.form_review_comment %}

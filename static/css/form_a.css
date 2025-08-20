@@ -230,26 +230,26 @@
 
 /* Approve Button */
 .btn-approve {
-  background-color: #27ae60; 
+  background-color: #218f4f; 
   color: white;
 }
 
 /* Minor Changes */
 .btn-minor {
-  background-color: #caa228; 
+  background-color: #7D7008;
   color: #212529;
 }
 
 
 /* Resubmission */
 .btn-resubmit {
-  background-color: #0d6efd; 
+  background-color: #173d75; 
 }
 
 
 /* Reject */
 .btn-reject {
-  background-color: #dc3545;
+  background-color: #c90808;
 }
   
   /* Footer */

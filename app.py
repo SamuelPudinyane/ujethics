@@ -2244,19 +2244,19 @@ def form_c_sec1():
 
 @app.route('/form_a_supervisor/<string:id>',methods=['GET','POST'])
 def form_a_supervisor(id):
-    form = db_session.query(FormA).filter_by(form_id=id).order_by(FormA.submitted_at.asc()).first()
+    form = db_session.query(FormA).filter_by(user_id=id).order_by(FormA.submitted_at.desc()).first()
     
     return render_template("form_a_supervisor.html",formA=form)
     
 @app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
 def form_b_supervisor(id):
-    form = db_session.query(FormB).filter_by(form_id=id).order_by(FormB.submitted_at.asc()).first()
+    form = db_session.query(FormB).filter_by(user_id=id).order_by(FormB.submitted_at.desc()).first()
 
     return render_template("form_b_supervisor.html",formB=form)
 
 @app.route('/form_c_supervisor/<string:id>',methods=['GET','POST'])
 def form_c_supervisor(id):
-    form = db_session.query(FormC).filter_by(form_id=id).order_by(FormC.submission_date.asc()).first()
+    form = db_session.query(FormC).filter_by(user_id=id).order_by(FormC.submission_date.desc()).first()
 
     return render_template("form_c_supervisor.html",formc=form)
 
@@ -4720,11 +4720,13 @@ def ethics_reviewer_committee_forms(id,form_name):
             list_of_revewers.append(item.email)
     else:
         reviewers=request.form.getlist('reviewer_names[]')
-        Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
-        for item in Assigned_reviewer:
+        if reviewers:
             
-            list_of_revewers.append(item.email)
-    
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
+            for item in Assigned_reviewer:
+
+                list_of_revewers.append(item.email)
+
     if form_name=="FORM A":
         
         if request.method=="POST":
@@ -4757,17 +4759,22 @@ def ethics_reviewer_committee_forms(id,form_name):
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    
-                    message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
-            
-                    send_email(app,mail, message,list_of_revewers)
+                    try:
+                        message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
+
+                        send_email(app,mail, message,list_of_revewers)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")  
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f'You are assined as form belonging to {forma.applicant_name}' 
-            
-                    send_email(app,mail, message,list_of_revewers)
+                    try:
+                        message=f'You are assined as form belonging to {forma.applicant_name}' 
+
+                        send_email(app,mail, message,list_of_revewers)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")  
                 forma.rejected_or_accepted=True
             else:
                
@@ -4794,7 +4801,8 @@ def ethics_reviewer_committee_forms(id,form_name):
                 list_of_revewers.append(item.email)
         else:
             reviewers=request.form.getlist('reviewer_names[]')
-            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
+            if reviewers:
+                Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
             for item in Assigned_reviewer:
             
                 list_of_revewers.append(item.email)
@@ -4830,16 +4838,23 @@ def ethics_reviewer_committee_forms(id,form_name):
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
-            
-                    send_email(app,mail, message,list_of_revewers)
+                    try:
+                        message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
+
+                        send_email(app,mail, message,list_of_revewers)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")  
                 else:
-                    reviewers=[reviewers[0],reviewers[1]]
+                    if reviewers:
+                        reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f'You are assined as reviewer for form belonging to {formb.applicant_name}' 
+                    try:
+                        message=f'You are assined as reviewer for form belonging to {formb.applicant_name}' 
             
-                    send_email(app,mail, message,list_of_revewers)
+                        send_email(app,mail, message,list_of_revewers)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")
                 formb.rejected_or_accepted=True
                 
             else:
@@ -4868,7 +4883,8 @@ def ethics_reviewer_committee_forms(id,form_name):
                 list_of_revewers.append(item.email)
         else:
             reviewers=request.form.getlist('reviewer_names[]')
-            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
+            if reviewers:
+                Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
             for item in Assigned_reviewer:
             
                 list_of_revewers.append(item.email)
@@ -4901,17 +4917,24 @@ def ethics_reviewer_committee_forms(id,form_name):
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+                    try:
+                        message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-                    send_email(app,mail, message,list_of_revewers)
+                        send_email(app,mail, message,list_of_revewers)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")
                 else:
-                    reviewers=[reviewers[0],reviewers[1]]
+                    if reviewers:
+                        reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f'You are assined as reviewer for form belonging to {formc.applicant_name}' 
+                    try:
+                        message=f'You are assined as reviewer for form belonging to {formc.applicant_name}' 
             
-                    send_email(app,mail, message,list_of_revewers)
-                
+                        send_email(app,mail, message,list_of_revewers)
+                    except Exception as e:
+                        print(f"Error sending email: {e}")
+
                 formc.rejected_or_accepted=True
             else:
                 formc.supervisor_date=request.form.get('review_date')

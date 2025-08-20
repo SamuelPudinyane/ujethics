@@ -616,19 +616,19 @@
       
     <!-- 5.4.1.1 Questionnaire(s) -->
   <label>5.4.1.1 Questionnaire(s):</label><br>
-  {% if formA.questionnaire_type %}
-    <span class="form-answer">Questionnaire Type: {{ formA.questionnaire_type }}</span><br>
+  {% if form.questionnaire_type %}
+    <span class="form-answer">Questionnaire Type: {{ form.questionnaire_type }}</span><br>
   {% endif %}
 
-  {% if formA.questionnaire_type == 'Existing' %}
+  {% if form.questionnaire_type == 'Existing' %}
     <label>If existing, permission obtained?</label><br>
     {# Show only what the student actually ticked #}
     <span class="form-answer">
-      {% if formA.permission_obtained in ['Yes', True, 'on'] %}Yes{% endif %}
+      {% if form.permission_obtained in ['Yes', True, 'on'] %}Yes{% endif %}
     </span>
     <br>
     <span class="form-answer">
-      {% if formA.open_source in ['Yes', True, 'on'] %}Open Source{% endif %}
+      {% if form.open_source in ['Yes', True, 'on'] %}Open Source{% endif %}
     </span>
     <br>
   {% endif %}
@@ -1085,12 +1085,10 @@
     </table>
   </div>
 
-  <br>
-  <br>
 
   <div class="section">
     <h3>First Reviewer Comments</h3>
-    <span id="additional_comments">{{form.review_additional_comments}}</span>
+    <span class="form-answer" id="additional_comments">{{form.review_additional_comments}}</span>
   </div>
   {% endif %}
 </div>
@@ -1172,12 +1170,10 @@
     </table>
   </div>
 
-  <br>
-  <br>
 
   <div class="section">
     <h3>Second Reviewer Comments</h3>
-    <span id="additional_comments">{{form.review_additional_comments1}}</span>
+    <span class="form-answer" id="additional_comments">{{form.review_additional_comments1}}</span>
   </div>
 </div>
 </section>
