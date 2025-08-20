@@ -2244,19 +2244,19 @@ def form_c_sec1():
 
 @app.route('/form_a_supervisor/<string:id>',methods=['GET','POST'])
 def form_a_supervisor(id):
-    form = db_session.query(FormA).filter_by(form_id=id).first()
+    form = db_session.query(FormA).filter_by(form_id=id).order_by(FormA.submitted_at.asc()).first()
     
     return render_template("form_a_supervisor.html",formA=form)
     
 @app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
 def form_b_supervisor(id):
-    form = db_session.query(FormB).filter_by(form_id=id).first()
+    form = db_session.query(FormB).filter_by(form_id=id).order_by(FormB.submitted_at.asc()).first()
 
     return render_template("form_b_supervisor.html",formB=form)
 
 @app.route('/form_c_supervisor/<string:id>',methods=['GET','POST'])
 def form_c_supervisor(id):
-    form = db_session.query(FormC).filter_by(form_id=id).first()
+    form = db_session.query(FormC).filter_by(form_id=id).order_by(FormC.submission_date.asc()).first()
 
     return render_template("form_c_supervisor.html",formc=form)
 
