@@ -17,14 +17,14 @@ users = [
         supervisor_id="",
         role="ADMIN"
     ),
-    # User(
-    #     full_name="Dr. Ayanda Dlamini",
-    #     email="ayanda.dlamini@uj.ac.za",
-    #     password="supervisor3",
-    #     student_number=645645,
-    #     supervisor_id="",
-    #     role="ADMIN"
-    # ),
+     User(
+        full_name="Dr. Ayanda Dlamini",
+         email="ayanda.dlamini@uj.ac.za",
+         password="supervisor3",
+         student_number=645645,
+         supervisor_id="",
+         role="ADMIN"
+     ),
     User(
         full_name="Prof. Neo Masemola",
         email="neo.masemola@uj.ac.za",

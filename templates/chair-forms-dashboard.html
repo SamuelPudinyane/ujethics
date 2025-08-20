@@ -158,13 +158,13 @@
               (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
               
-              {% elif 'low' not in form.risk_rating|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved']) and
+              {% elif form.risk_rating and 'low' not in form.risk_rating|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved']) and
               (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
              
               {% elif not form.certificate_issued and not form.certificate_received and form.review_status 
                 and form.review_status1 and form.form_reviewed_by and form.form_reviewed_by1
-                and ('low' in form.risk_level or 'low' in form.risk_rating)%}
+                and ('low' in form.risk_level|lower or 'low' in form.risk_rating|lower)%}
             <a href="{{ url_for('certificate', id=form.form_id) }}" class="btn btn-sm btn-success text-white">
               🎓 Issue Certificate
             </a>

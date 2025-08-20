@@ -64,25 +64,23 @@
             <td>{{item.risk_rating}}</td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {% if item.rec_status  and item.form_reviewed_by1 == user_id and 'low' not in item.risk_rating|lower%}
+              {% if item.rec_status  and item.form_reviewed_by1 == user_id and 'low' not in item.risk_level|lower%}
               {{item.rec_status}}
               {% elif not item.certificate_issued and not item.certificate_received and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and 'low' not in item.risk_level|lower and item.review_status and not item.review_status1  %}
               Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and item.review_status1 %}
+              Under Review
               {% elif not item.certificate_received and item.certificate_issued and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and ('low' in item.risk_level|lower or 'low' in item.risk_rating |lower) %}
               Certificate Will be Issued
-
               {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
-              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) and not item.form_reviewed_by1 %}
-              Awaiting for review
-              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id)%}
+              
+              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
               Under Review
+              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
+              Awaiting for review
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
-              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and item.review_status1 and not item.certificate_received%}
-              Under Review
-              {% elif not item.review_status1 and item.review_status and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) %}
-              Awaiting for Review
                {% set review_comment = '' %}
                 {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = item.form_review_comment %}
@@ -169,24 +167,23 @@
             <td>{{item.risk_level}}</span></td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {% if item.rec_status  and item.form_reviewed_by1 == user_id and 'low' not in item.risk_rating|lower%}
+              {% if item.rec_status  and item.form_reviewed_by1 == user_id and 'low' not in item.risk_level|lower%}
               {{item.rec_status}}
               {% elif not item.certificate_issued and not item.certificate_received and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and 'low' not in item.risk_level|lower and item.review_status and not item.review_status1  %}
+              Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and item.review_status1 %}
               Under Review
               {% elif not item.certificate_received and item.certificate_issued and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and ('low' in item.risk_level|lower or 'low' in item.risk_rating |lower) %}
               Certificate Will be Issued
               {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
-              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) and not item.form_reviewed_by1 %}
-              Awaiting for review
-              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id)%}
+              
+              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
               Under Review
+              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
+              Awaiting for review
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
-              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and item.review_status1 and item.form_review_comment=='Approved' and item.form_review_comment1=='Approved' and not item.certificate_received%}
-              Under Review
-              {% elif not item.review_status1 and item.review_status and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) %}
-              Awaiting for Review
                {% set review_comment = '' %}
                 {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = item.form_review_comment %}
@@ -263,19 +260,21 @@
               {{item.rec_status}}
               {% elif not item.certificate_issued and not item.certificate_received and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and 'low' not in item.risk_level|lower and item.review_status and not item.review_status1  %}
               Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and item.review_status1 %}
+              Under Review
               {% elif not item.certificate_received and item.certificate_issued and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and ('low' in item.risk_level|lower or 'low' in item.risk_rating |lower) %}
               Certificate Will be Issued
               {% elif item.review_status and item.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
-              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) and not item.form_reviewed_by1 %}
-              Awaiting for review
-              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id)%}
+              
+              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
               Under Review
+              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
+              Awaiting for review
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
-              {% elif not item.certificate_issued and not item.certificate_received and item.review_status and item.review_status1 and not item.certificate_received%}
-              Under Review
-              {% elif not item.review_status1 and item.review_status and (item.form_reviewed_by != user_id or item.form_reviewed_by1 != user_id) %}
+              
+              {% elif not item.review_status1 and item.review_status and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) %}
               Awaiting for Review
               {% set review_comment = '' %}
                 {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}

@@ -2269,7 +2269,7 @@ def reject_or_Accept_form_a(id):
         return jsonify({'error': 'Unauthorized'}), 401
 
     forma = db_session.query(FormA).filter_by(form_id=id).first()
-    admin=db_session.query(User).filter_by(role="Admin").all()
+    #admin=db_session.query(User).filter_by(role="Admin").all()
     if not forma:
         forma = FormA(form_id=id)
     if request.method=="POST":
@@ -2335,7 +2335,7 @@ def reject_or_Accept_form_b(id):
         return jsonify({'error': 'Unauthorized'}), 401
         
     formb = db_session.query(FormB).filter_by(form_id=id).first()
-    admin=db_session.query(User).filter_by(role="Admin").all()
+    #admin=db_session.query(User).filter_by(role="Admin").all()
     if not formb:
         formb = FormB(form_id=id)
     if request.method=="POST":
@@ -2403,7 +2403,7 @@ def reject_or_Accept_form_c(id):
         return jsonify({'error': 'Unauthorized'}), 401
         
     formc = db_session.query(FormC).filter_by(form_id=id).first()
-    admin=db_session.query(User).filter_by(role="Admin").all()
+    #admin=db_session.query(User).filter_by(role="Admin").all()
     if not formc:
         formc = FormC(form_id=id)
     if request.method=="POST":
@@ -3540,11 +3540,12 @@ def chair_form_view(id,form_name):
     user_name=db_session.query(User).filter_by(user_id=user_id).first()
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
     forma = db_session.query(FormA).filter_by(form_id=id).first()
-    latest_forma = db_session.query(FormA) \
-    .filter(FormA.user_id == forma.user_id) \
-    .order_by(FormA.submitted_at.asc()) \
-    .first()
-    admin=db_session.query(User).filter_by(role="Admin").all()
+    if forma:
+        latest_forma = db_session.query(FormA) \
+        .filter(FormA.user_id == forma.user_id) \
+        .order_by(FormA.submitted_at.asc()) \
+        .first()
+    #admin=db_session.query(User).filter_by(role="Admin").all()
     
     if form_name=="FORM A":
         
@@ -3732,10 +3733,11 @@ def chair_form_view(id,form_name):
         return render_template("form_a_ethics.html",user_id=user_id,formA=forma,formReviewers=formReviewers,latest_forma=latest_forma)
     elif form_name=="FORM B":
         formb = db_session.query(FormB).filter_by(form_id=id).first()
-        latest_formb = db_session.query(FormB) \
-        .filter(FormB.user_id == formb.user_id) \
-        .order_by(FormB.submitted_at.asc()) \
-        .first()
+        if formb:
+            latest_formb = db_session.query(FormB) \
+            .filter(FormB.user_id == formb.user_id) \
+            .order_by(FormB.submitted_at.asc()) \
+            .first()
         if request.method=="POST":
             review_date=request.form.get('review_date')
             status=request.form.get('status')
@@ -3913,10 +3915,11 @@ def chair_form_view(id,form_name):
         return render_template("form_b_ethics.html",user_id=user_id,formB=formb,formReviewers=formReviewers,latest_formb=latest_formb)
     elif form_name=="FORM C":
         formc = db_session.query(FormC).filter_by(form_id=id).first()
-        latest_formc = db_session.query(FormC) \
-        .filter(FormC.user_id == formc.user_id) \
-        .order_by(FormC.submission_date.asc()) \
-        .first()
+        if formc:
+            latest_formc = db_session.query(FormC) \
+            .filter(FormC.user_id == formc.user_id) \
+            .order_by(FormC.submission_date.asc()) \
+            .first()
         if request.method=="POST":
            
             review_date=request.form.get('review_date')
@@ -4691,13 +4694,15 @@ def view_certificate(id):
 ###
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
-    formA = db_session.query(FormA).filter_by(form_id=id).first()
-    latest_forma = db_session.query(FormA) \
-        .filter(FormA.user_id == formA.user_id) \
+    forma = db_session.query(FormA).filter_by(form_id=id).first()
+    Assigned_reviewer=''
+    if forma:
+        latest_forma = db_session.query(FormA) \
+        .filter(FormA.user_id == forma.user_id) \
         .order_by(FormA.submitted_at.asc()) \
         .first()
     
-    Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formA.reviewer_name1, formA.reviewer_name2])).all()
+        Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([forma.reviewer_name1, forma.reviewer_name2])).all()
  
     list_of_revewers=[]
     
@@ -4717,166 +4722,195 @@ def ethics_reviewer_committee_forms(id,form_name):
             reviewers=request.form.getlist('reviewer_names[]')
             
             if reviewers:
-                formA.reviewer_name1=reviewers[0]
-                formA.reviewer_name2=reviewers[1]
+                forma.reviewer_name1=reviewers[0]
+                forma.reviewer_name2=reviewers[1]
             
-            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formA.reviewer_name1, formA.reviewer_name2])).all()
-            formA.supervisor_date=request.form.get('review_date')
-            formA.supervisor_org_permission_status=request.form.get('review_org_permission_status')
-            formA.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
-            formA.supervisor_waiver_status=request.form.get('review_waiver_status')
-            formA.supervisor_waiver_comments=request.form.get('review_waiver_comments')
-            formA.supervisor_form_status=request.form.get('review_form_status')
-            formA.supervisor_form_comments=request.form.get('review_form_comments')
-            formA.supervisor_questions_status=request.form.get('review_questions_status')
-            formA.supervisor_questions_comments=request.form.get('review_questions_comments')
-            formA.supervisor_consent_status=request.form.get('review_consent_status')
-            formA.supervisor_consent_comments=request.form.get('review_consent_comments')
-            formA.supervisor_proposal_status=request.form.get('review_proposal_status')
-            formA.supervisor_proposal_comments=request.form.get('review_proposal_comments')
-            formA.supervisor_additional_comments=request.form.get('review_additional_comments')
-            formA.supervisor_recommendation=request.form.get('review_recommendation')
-            formA.supervisor_supervisor_signature=request.form.get('supervisor_signature')
-            formA.supervisor_signature_date=request.form.get('review_signature_date')
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([forma.reviewer_name1, forma.reviewer_name2])).all()
+            forma.supervisor_date=request.form.get('review_date')
+            forma.supervisor_org_permission_status=request.form.get('review_org_permission_status')
+            forma.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
+            forma.supervisor_waiver_status=request.form.get('review_waiver_status')
+            forma.supervisor_waiver_comments=request.form.get('review_waiver_comments')
+            forma.supervisor_form_status=request.form.get('review_form_status')
+            forma.supervisor_form_comments=request.form.get('review_form_comments')
+            forma.supervisor_questions_status=request.form.get('review_questions_status')
+            forma.supervisor_questions_comments=request.form.get('review_questions_comments')
+            forma.supervisor_consent_status=request.form.get('review_consent_status')
+            forma.supervisor_consent_comments=request.form.get('review_consent_comments')
+            forma.supervisor_proposal_status=request.form.get('review_proposal_status')
+            forma.supervisor_proposal_comments=request.form.get('review_proposal_comments')
+            forma.supervisor_additional_comments=request.form.get('review_additional_comments')
+            forma.supervisor_recommendation=request.form.get('review_recommendation')
+            forma.supervisor_supervisor_signature=request.form.get('supervisor_signature')
+            forma.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
                     
-                    message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f'You are assined as form belonging to {formA.applicant_name}' 
+                    message=f'You are assined as form belonging to {forma.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
-                formA.rejected_or_accepted=True
+                forma.rejected_or_accepted=True
             else:
                
-                formA.rejected_or_accepted=False
-            db_session.add(formA)
+                forma.rejected_or_accepted=False
+            db_session.add(forma)
             db_session.commit()
             return redirect(url_for('chair_landing'))
-        return render_template("form_a_ethics.html",formA=formA)
+        return render_template("form_a_ethics.html",formA=forma)
     elif form_name=="FORM B":
-        formB = db_session.query(FormB).filter_by(form_id=id).first()
-        latest_formb = db_session.query(FormB) \
-        .filter(FormB.user_id == formB.user_id) \
-        .order_by(FormB.submitted_at.asc()) \
-        .first()
+        formb = db_session.query(FormB).filter_by(form_id=id).first()
+        Assigned_reviewer=''
+        if formb:
+            latest_formb = db_session.query(FormB) \
+            .filter(FormB.user_id == formb.user_id) \
+            .order_by(FormB.submitted_at.asc()) \
+            .first()
+    
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formb.reviewer_name1, formb.reviewer_name2])).all()
+ 
+        list_of_revewers=[]
+    
+        if Assigned_reviewer:
+            for item in Assigned_reviewer:
+                list_of_revewers.append(item.email)
+        else:
+            reviewers=request.form.getlist('reviewer_names[]')
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
+            for item in Assigned_reviewer:
+            
+                list_of_revewers.append(item.email)
         
             
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
-                formB.reviewer_name1=reviewers[0]
-                formB.reviewer_name2=reviewers[1]
+                formb.reviewer_name1=reviewers[0]
+                formb.reviewer_name2=reviewers[1]
             
 
-            formB.supervisor_date=request.form.get('review_date')
-            formB.supervisor_org_permission_status=request.form.get('review_org_permission_status')
-            formB.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
-            formB.supervisor_waiver_status=request.form.get('review_waiver_status')
-            formB.supervisor_waiver_comments=request.form.get('review_waiver_comments')
-            formB.supervisor_form_status=request.form.get('review_form_status')
-            formB.supervisor_form_comments=request.form.get('review_form_comments')
-            formB.supervisor_questions_status=request.form.get('review_questions_status')
-            formB.supervisor_questions_comments=request.form.get('review_questions_comments')
-            formB.supervisor_consent_status=request.form.get('review_consent_status')
-            formB.supervisor_consent_comments=request.form.get('review_consent_comments')
-            formB.supervisor_proposal_status=request.form.get('review_proposal_status')
-            formB.supervisor_proposal_comments=request.form.get('review_proposal_comments')
-            formB.supervisor_additional_comments=request.form.get('review_additional_comments')
-            formB.supervisor_recommendation=request.form.get('review_recommendation')
-            formB.supervisor_supervisor_signature=request.form.get('supervisor_signature')
-            formB.supervisor_signature_date=request.form.get('review_signature_date')
+            formb.supervisor_date=request.form.get('review_date')
+            formb.supervisor_org_permission_status=request.form.get('review_org_permission_status')
+            formb.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
+            formb.supervisor_waiver_status=request.form.get('review_waiver_status')
+            formb.supervisor_waiver_comments=request.form.get('review_waiver_comments')
+            formb.supervisor_form_status=request.form.get('review_form_status')
+            formb.supervisor_form_comments=request.form.get('review_form_comments')
+            formb.supervisor_questions_status=request.form.get('review_questions_status')
+            formb.supervisor_questions_comments=request.form.get('review_questions_comments')
+            formb.supervisor_consent_status=request.form.get('review_consent_status')
+            formb.supervisor_consent_comments=request.form.get('review_consent_comments')
+            formb.supervisor_proposal_status=request.form.get('review_proposal_status')
+            formb.supervisor_proposal_comments=request.form.get('review_proposal_comments')
+            formb.supervisor_additional_comments=request.form.get('review_additional_comments')
+            formb.supervisor_recommendation=request.form.get('review_recommendation')
+            formb.supervisor_supervisor_signature=request.form.get('supervisor_signature')
+            formb.supervisor_signature_date=request.form.get('review_signature_date')
             
             if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f'You are assined as reviewer for form belonging to {formB.applicant_name}' 
+                    message=f'You are assined as reviewer for form belonging to {formb.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
-                formB.rejected_or_accepted=True
+                formb.rejected_or_accepted=True
                 
             else:
-                formB.supervisor_date=request.form.get('review_date')
-                formB.rejected_or_accepted=False
+                formb.supervisor_date=request.form.get('review_date')
+                formb.rejected_or_accepted=False
                
-            db_session.add(formB)
+            db_session.add(formb)
             db_session.commit()
             return redirect(url_for('chair_landing'))
-        return render_template("form_b_ethics.html",formB=formB)
+        return render_template("form_b_ethics.html",formB=formb)
     elif form_name=="FORM C":
-        formC = db_session.query(FormC).filter_by(form_id=id).first()
-        latest_formc = db_session.query(FormC) \
-        .filter(FormC.user_id == formC.user_id) \
-        .order_by(FormC.submission_date.asc()) \
-        .first()
-        if formC:
-            formC.reviewer_name1=latest_formc.reviewer_name1
-            formC.reviewer_name2=latest_formc.reviewer_name2
+        formc = db_session.query(FormC).filter_by(form_id=id).first()
+        Assigned_reviewer=''
+        if formc:
+            latest_formb = db_session.query(FormC) \
+            .filter(FormC.user_id == formc.user_id) \
+            .order_by(FormC.submission_date.asc()) \
+            .first()
+    
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formc.reviewer_name1, formc.reviewer_name2])).all()
+ 
+        list_of_revewers=[]
+    
+        if Assigned_reviewer:
+            for item in Assigned_reviewer:
+                list_of_revewers.append(item.email)
+        else:
+            reviewers=request.form.getlist('reviewer_names[]')
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
+            for item in Assigned_reviewer:
+            
+                list_of_revewers.append(item.email)
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
           
             if reviewers:
-                formC.reviewer_name1=reviewers[0]
-                formC.reviewer_name2=reviewers[1]
+                formc.reviewer_name1=reviewers[0]
+                formc.reviewer_name2=reviewers[1]
             
-            formC.supervisor_date=request.form.get('review_date')
-            formC.supervisor_org_permission_status=request.form.get('review_org_permission_status')
-            formC.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
-            formC.supervisor_waiver_status=request.form.get('review_waiver_status')
-            formC.supervisor_waiver_comments=request.form.get('review_waiver_comments')
-            formC.supervisor_form_status=request.form.get('review_form_status')
-            formC.supervisor_form_comments=request.form.get('review_form_comments')
-            formC.supervisor_questions_status=request.form.get('review_questions_status')
-            formC.supervisor_questions_comments=request.form.get('review_questions_comments')
-            formC.supervisor_consent_status=request.form.get('review_consent_status')
-            formC.supervisor_consent_comments=request.form.get('review_consent_comments')
-            formC.supervisor_proposal_status=request.form.get('review_proposal_status')
-            formC.supervisor_proposal_comments=request.form.get('review_proposal_comments')
-            formC.supervisor_additional_comments=request.form.get('review_additional_comments')
-            formC.supervisor_recommendation=request.form.get('review_recommendation')
-            formC.supervisor_supervisor_signature=request.form.get('supervisor_signature')
-            formC.supervisor_signature_date=request.form.get('review_signature_date')
+            formc.supervisor_date=request.form.get('review_date')
+            formc.supervisor_org_permission_status=request.form.get('review_org_permission_status')
+            formc.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
+            formc.supervisor_waiver_status=request.form.get('review_waiver_status')
+            formc.supervisor_waiver_comments=request.form.get('review_waiver_comments')
+            formc.supervisor_form_status=request.form.get('review_form_status')
+            formc.supervisor_form_comments=request.form.get('review_form_comments')
+            formc.supervisor_questions_status=request.form.get('review_questions_status')
+            formc.supervisor_questions_comments=request.form.get('review_questions_comments')
+            formc.supervisor_consent_status=request.form.get('review_consent_status')
+            formc.supervisor_consent_comments=request.form.get('review_consent_comments')
+            formc.supervisor_proposal_status=request.form.get('review_proposal_status')
+            formc.supervisor_proposal_comments=request.form.get('review_proposal_comments')
+            formc.supervisor_additional_comments=request.form.get('review_additional_comments')
+            formc.supervisor_recommendation=request.form.get('review_recommendation')
+            formc.supervisor_supervisor_signature=request.form.get('supervisor_signature')
+            formc.supervisor_signature_date=request.form.get('review_signature_date')
             if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                    message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
                 else:
                     reviewers=[reviewers[0],reviewers[1]]
                     #Uncomment the code bellow for testing
                     ##
-                    message=f'You are assined as reviewer for form belonging to {formC.applicant_name}' 
+                    message=f'You are assined as reviewer for form belonging to {formc.applicant_name}' 
             
                     send_email(app,mail, message,list_of_revewers)
                 
-                formC.rejected_or_accepted=True
+                formc.rejected_or_accepted=True
             else:
-                formC.supervisor_date=request.form.get('review_date')
-                formC.rejected_or_accepted=False
-            db_session.add(formC)
+                formc.supervisor_date=request.form.get('review_date')
+                formc.rejected_or_accepted=False
+            db_session.add(formc)
             db_session.commit()
             return redirect(url_for('chair_landing'))
-        return render_template("form_c_ethics.html",formc=formC)
+        return render_template("form_c_ethics.html",formc=formc)
 
 
 
