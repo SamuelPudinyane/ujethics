@@ -3465,10 +3465,15 @@ def send_certificate(id):
                 
                 #Uncomment the code bellow for testing
                 ##
-                message=(f'your have been issued with Ethics certificate '
-                f'Follow the link https://127.0.0.1:5000 to view your certificate')
-            
-                send_email(app,mail, message,certificate_details.email)
+                try:
+                    message=(f'your have been issued with Ethics certificate '
+                    f'Follow the link https://127.0.0.1:5000 to view your certificate')
+                    if certificate_details.email:
+                        send_email(app,mail, message,certificate_details.email)
+                    elif certificate_details.email_address:
+                        send_email(app,mail, message,certificate_details.email_address)
+                except Exception as e:
+                    app.logger.error(f"Failed to send email : {e}")
         return redirect(url_for('chair_landing'))
 
 
