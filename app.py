@@ -2268,7 +2268,7 @@ def reject_or_Accept_form_a(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
 
-    forma = db_session.query(FormA).filter_by(form_id=id).first()
+    forma = db_session.query(FormA).filter_by(form_id=id).order_by(FormA.submitted_at.asc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
     if not forma:
         forma = FormA(form_id=id)
@@ -2334,7 +2334,7 @@ def reject_or_Accept_form_b(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
         
-    formb = db_session.query(FormB).filter_by(form_id=id).first()
+    formb = db_session.query(FormB).filter_by(form_id=id).order_by(FormB.submitted_at.asc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
     if not formb:
         formb = FormB(form_id=id)
@@ -2402,7 +2402,7 @@ def reject_or_Accept_form_c(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
         
-    formc = db_session.query(FormC).filter_by(form_id=id).first()
+    formc = db_session.query(FormC).filter_by(form_id=id).order_by(FormC.submission_date.asc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
     if not formc:
         formc = FormC(form_id=id)
