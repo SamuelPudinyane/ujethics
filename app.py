@@ -230,7 +230,7 @@ def register():
             ### uncomment the code bellow for real testing
             message=f'An account was created for this student number- {student_number}, await for your account to be Authenticated before login'
             try:
-                send_email(app,mail, message,email)
+                send_email(app,mail, message,[email])
                 msg = 'You have successfully registered!'
             except Exception as e:
                 print("Email sending error:", str(e))
@@ -262,7 +262,7 @@ def student_choose_supervisor():
             ### uncomment the code bellow for real testing
             try:
                 message=f'You have been assigned to be the supervisor of the student with name {user.full_name} and student number- {user.student_number}'
-                send_email(app,mail, message,supervisor.email)
+                send_email(app,mail, message,[supervisor.email])
             except Exception as e:
                 print("Email sending error:", str(e))
 
@@ -286,7 +286,7 @@ def authenticate_student(id):
             f'http://127.0.0.1:5000')
 
             try:
-                send_email(app,mail, message,user.email)
+                send_email(app,mail, message,[user.email])
             except Exception as e:
                 print("Email sending error:", str(e))
             db_session.commit()
@@ -345,7 +345,7 @@ def register_reviewer():
                     f'please follow the link http://127.0.0.1:5000 use your '
                     f' email as username and password = {password}')
                 try:
-                    send_email(app,mail, message,email)
+                    send_email(app,mail, message,[email])
                     messages = 'You have successfully registered!'
                 except Exception as e:
                     print("Email sending error:", str(e))
@@ -415,7 +415,7 @@ def super_admin_registration():
                 f'use your email as username and password = {password}'
             )
             try:
-                send_email(app, mail, message, email)
+                send_email(app, mail, message, [email])
             except Exception as e:
                 print("Email sending error:", str(e))
 
@@ -2302,7 +2302,7 @@ def reject_or_Accept_form_a(id):
             try:
                 message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
-                send_email(app,mail, message,forma.email)
+                send_email(app,mail, message,[forma.email])
             except Exception as e:
                 app.logger.error(f"Failed to send email to {forma.email}: {e}")
         else:
@@ -2319,7 +2319,7 @@ def reject_or_Accept_form_a(id):
             try:
                 message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
-                send_email(app,mail, message,forma.email)
+                send_email(app,mail, message,[forma.email])
             except Exception as e:
                 app.logger.error(f"Failed to send email to {forma.email}: {e}")
 
@@ -2369,9 +2369,10 @@ def reject_or_Accept_form_b(id):
             try:
                 message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
-                send_email(app,mail, message,formb.email)
+                send_email(app,mail, message,[formb.email])
             except Exception as e:
                 app.logger.error(f"Failed to send email to {formb.email}: {e}")
+            
         else:
             formb.supervisor_date=supervisor_date
             formb.org_permission_comment=org_permission_comment
@@ -2386,9 +2387,10 @@ def reject_or_Accept_form_b(id):
             try:
                 message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
             
-                send_email(app,mail, message,formb.email)
+                send_email(app,mail, message,[formb.email])
             except Exception as e:
                 app.logger.error(f"Failed to send email to {formb.email}: {e}")
+            
 
         
         db_session.add(formb)
@@ -2436,9 +2438,10 @@ def reject_or_Accept_form_c(id):
             try:
                 message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-                send_email(app,mail, message,formc.email_address)
+                send_email(app,mail, message,[formc.email_address])
             except Exception as e:
                 app.logger.error(f"Failed to send email to {formc.email_address}: {e}")
+             
         else:
             formc.supervisor_date=supervisor_date
             formc.org_permission_comment=org_permission_comment
@@ -2453,9 +2456,10 @@ def reject_or_Accept_form_c(id):
             try:
                 message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-                send_email(app,mail, message,formc.email_address)
+                send_email(app,mail, message,[formc.email_address])
             except Exception as e:
                 app.logger.error(f"Failed to send email to {formc.email_address}: {e}")
+                
     db_session.add(formc)
     db_session.commit()
     return redirect(url_for('supervisor_dashboard'))
