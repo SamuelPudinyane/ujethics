@@ -86,6 +86,13 @@
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
             <td>
+              {% if forma.review_supervisor_signature%}
+             {{forma.review_supervisor_signature}}: {{forma.form_review_comment}}
+             {% endif %}
+             <br>
+            {% if forma.review_supervisor_signature1%}
+            {{forma.review_supervisor_signature1}}: {{forma.form_review_comment1}}
+            {% endif %}
             <span class="status-pill approved">
               
               {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
@@ -212,7 +219,14 @@
             <td>{{formb.supervisor}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
-            <td><span class="status-pill approved">
+            <td>{% if formb.review_supervisor_signature%}
+             {{formb.review_supervisor_signature}}: {{formb.form_review_comment}}
+             {% endif %}
+             <br>
+            {% if formb.review_supervisor_signature1%}
+            {{formb.review_supervisor_signature1}}: {{formb.form_review_comment1}}
+            {% endif %}
+              <span class="status-pill approved">
                {% if formb.rejected_or_accepted and not formb.reviewer_name1 and not formb.review_date%}
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
@@ -224,12 +238,14 @@
                 {% elif formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formb.form_review_comment %}
                 {% elif formb.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formb.form_review_comment1 %}
+                  {% set review_comment1 = formb.form_review_comment1 %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
                     <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    
                     {% endif %}
               {% elif not formb.recommendation%}
+              
               Ready for review
              {% elif formb.certificate_issued and not formb.certificate_received%}
               Certificate issued but not send
@@ -319,6 +335,13 @@
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
+              {% if formc.review_supervisor_signature%}
+             {{formc.review_supervisor_signature}}: {{formc.form_review_comment}}
+             {% endif %}
+             <br>
+            {% if formc.review_supervisor_signature1%}
+            {{formc.review_supervisor_signature1}}: {{formc.form_review_comment1}}
+            {% endif %}
               <span class="status-pill approved">
              
               {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
@@ -332,10 +355,12 @@
               {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formc.form_review_comment %}
               {% elif formc.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formc.form_review_comment1 %}
+                  {% set review_comment1 = formc.form_review_comment1 %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
                     <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    {% elif review_comment1 %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
                     {% endif %}
               {% elif not formc.recommendation%}
               Ready for review
