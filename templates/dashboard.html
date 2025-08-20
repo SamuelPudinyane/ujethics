@@ -100,12 +100,13 @@
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif formA.certificate_issued %}
                   Certificate was Issued
-                  {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
-                  Form Was Returned. Please Review The Feedback and Resubmit
+                  
                   {% elif formA.rejected_or_accepted and formA.supervisor_date%}
                   Form Submitted To Ethics Admin
                   {% elif formA.submitted_at and formA.declaration_name %}
                   Form Submitted To Supervisor
+                  {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
+                  Form Was Returned. Please Review The Feedback and Resubmit
                  {% endif %}
                 </span>
                 <br>
@@ -154,12 +155,13 @@
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif formB.certificate_issued %}
                   Certificate was Issued
-                  {% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
-                  Form Was Returned. Please Review The Feedback and Resubmit
+                  
                   {% elif formB.rejected_or_accepted and formB.supervisor_date%}
                   Form Submitted To Ethics Admin
                   {% elif formB.submitted_at and formB.declaration_name %}
                   Form Submitted For Review To Supervisor
+                  {% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
+                  Form Was Returned. Please Review The Feedback and Resubmit
                   {% endif %}
                  </span>
                 <br>
@@ -206,12 +208,13 @@
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif formC.certificate_issued %}
                   Certificate was Issued
-                  {% elif not formC.rejected_or_accepted and formC.supervisor_date%}
-                  Form Was Returned. Please Review The Feedback and Resubmit
+                  
                   {% elif formC.rejected_or_accepted and formC.supervisor_date%}
                   Form Submitted To Ethics Admin
                   {% elif formC.submission_date and formC.declaration_name %}
                   Form Submitted For Review To Supervisor
+                  {% elif not formC.rejected_or_accepted and formC.supervisor_date%}
+                  Form Was Returned. Please Review The Feedback and Resubmit
                   {% endif %}
 
                 </span>
