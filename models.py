@@ -9,7 +9,8 @@ from sqlalchemy.dialects import postgresql
 import enum
 import uuid
 import bcrypt
-import datetime
+from datetime import datetime 
+
 import os
 import json
 import time
@@ -30,7 +31,7 @@ from flask_migrate import Migrate
 # DB_USER = os.getenv("DB_USER", "sa")
 # DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
 
-DB_SERVER = os.getenv("DB_SERVER", "ethics-db")
+DB_SERVER = os.getenv("DB_SERVER", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "ethics")
 DB_USER = os.getenv("DB_USER", "postgres")
@@ -447,7 +448,7 @@ class FormA(Base):
     participant_costs = Column(Text,nullable=True)
     ethics_reporting = Column(Text,nullable=True)
 
-    submitted_at = Column(DateTime,server_default=func.now(),nullable=True)
+    submitted_at = Column(DateTime(timezone=True),default=datetime.utcnow,nullable=True)
 
     declaration_name = Column(String(255), nullable=True)
     applicant_signature = Column(String(255), nullable=True)
@@ -629,7 +630,7 @@ class FormB(Base):
     full_name = Column(String(150), nullable=True)
     declaration_date = Column(DateTime, nullable=True)
 
-    submitted_at = Column(DateTime, server_default=func.now())
+    submitted_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     submitted=Column(Boolean,default=False)
 
     rejected_or_accepted=Column(Boolean,default=False)
@@ -716,7 +717,7 @@ class FormB(Base):
 
     rec_comments=Column(String,nullable=True)
     rec_status=Column(String,nullable=True)
-    rec_date=Column(DateTime,server_default=func.now(),nullable=True)
+    rec_date=Column(DateTime,default=datetime.utcnow,nullable=True)
 
     certificate_code=Column(String(255),nullable=True)
     certificate_issued=Column(DateTime,nullable=True)
@@ -817,13 +818,13 @@ class FormC(Base):
     # Section 4 - Declaration
     declaration_name = Column(String(200),nullable=True)
     full_name = Column(String(200),nullable=True)
-    submission_date = Column(DateTime,nullable=True)
+    submission_date = Column(DateTime(timezone=True),default=datetime.utcnow,nullable=True)
     submitted=Column(Boolean,default=False)
     
     
     supervisor_comments = Column(Text,nullable=True)
     rejected_or_accepted=Column(Boolean,default=False)
-    supervisor_date = Column(DateTime,nullable=True)
+    supervisor_date = Column(DateTime,default=datetime.utcnow,nullable=True)
     org_permission_comment= Column(String(255),nullable=True)
     waiver_comment= Column(String(255),nullable=True)
     form_a_comment= Column(String(255),nullable=True)

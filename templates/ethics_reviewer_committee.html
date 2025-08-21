@@ -94,7 +94,22 @@
             {{forma.review_supervisor_signature1}}: {{forma.form_review_comment1}}
             {% endif %}
             <span class="status-pill approved">
-              
+              {% set review_comment = '' %}
+              {% set review_comment1 = '' %}
+                {% if forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = forma.form_review_comment %}
+                  {% endif %}
+                {% if forma.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = forma.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1 %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
+                    
+                    {% endif %}
               {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
@@ -102,15 +117,7 @@
               {% elif not forma.review_status and forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
               Submitted to Reviewers
               
-               {% set review_comment = '' %}
-                {% elif forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = forma.form_review_comment %}
-                {% elif forma.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = forma.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
-                    {% endif %}
+               
               {% elif not forma.recommendation%}
               Ready for review
               {% elif forma.certificate_issued and not forma.certificate_received%}
@@ -227,6 +234,21 @@
             {{formb.review_supervisor_signature1}}: {{formb.form_review_comment1}}
             {% endif %}
               <span class="status-pill approved">
+                {% set review_comment = '' %}
+                {% set review_comment1 = '' %}
+                {% if formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formb.form_review_comment %}
+                  {% endif %}
+                {% if formb.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formb.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1 %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
+                    {% endif %}
                {% if formb.rejected_or_accepted and not formb.reviewer_name1 and not formb.review_date%}
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
@@ -234,16 +256,7 @@
               {% elif  formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_date and not formb.review_status and formb.rejected_or_accepted and formb.review_supervisor_signature %}
               Submitted to Reviewers
               
-              {% set review_comment = '' %}
-                {% elif formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formb.form_review_comment %}
-                {% elif formb.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment1 = formb.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
-                    
-                    {% endif %}
+              
               {% elif not formb.recommendation%}
               
               Ready for review
@@ -343,7 +356,21 @@
             {{formc.review_supervisor_signature1}}: {{formc.form_review_comment1}}
             {% endif %}
               <span class="status-pill approved">
-             
+             {% set review_comment = '' %}
+             {% set review_comment1 = '' %}
+              {% if formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formc.form_review_comment %}
+                  {% endif %}
+              {% if formc.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formc.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1 %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
+                    {% endif %}
               {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
               Awaiting for review
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
@@ -351,17 +378,7 @@
               {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and not formc.review_status and formc.rejected_or_accepted and formc.review_supervisor_signature%}
               Submitted to Reviewers
               
-              {% set review_comment = '' %}
-              {% elif formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = formc.form_review_comment %}
-              {% elif formc.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment1 = formc.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
-                    {% elif review_comment1 %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
-                    {% endif %}
+              
               {% elif not formc.recommendation%}
               Ready for review
               {% elif formc.certificate_email%}

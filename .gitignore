@@ -9,3 +9,4 @@ myvenv
 __pycache__/
 *.pyc/
 *.pyc
+/static/uploads/

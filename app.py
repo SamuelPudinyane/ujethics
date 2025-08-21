@@ -90,9 +90,9 @@ def student_dashboard():
         return "Unauthorized access. Please log in.", 401
     
     user=db_session.query(User).filter_by(user_id=user_id).first()
-    formA = db_session.query(FormA).filter_by(user_id=user_id).first()
-    formB = db_session.query(FormB).filter_by(user_id=user_id).first()
-    formC = db_session.query(FormC).filter_by(user_id=user_id).first()
+    formA = db_session.query(FormA).filter_by(user_id=user_id).order_by(FormA.submitted_at.asc()).first()
+    formB = db_session.query(FormB).filter_by(user_id=user_id).order_by(FormB.submitted_at.asc()).first()
+    formC = db_session.query(FormC).filter_by(user_id=user_id).order_by(FormC.submission_date.asc()).first()
     formD = db_session.query(FormD).filter_by(user_id=user_id).first()
     full_name=user.full_name
     return render_template('dashboard.html',full_name=full_name,formA=formA,formB=formB,formC=formC,formD=formD)
@@ -2253,12 +2253,15 @@ def form_a_supervisor(id):
     
 @app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
 def form_b_supervisor(id):
-    form = db_session.query(FormB).filter_by(user_id=id).order_by(FormB.submitted_at.desc()).first()
+    form = db_session.query(FormB).filter_by(user=id).order_by(FormB.submitted_at.desc()).first()
 
     return render_template("form_b_supervisor.html",formB=form)
 
 @app.route('/form_c_supervisor/<string:id>',methods=['GET','POST'])
 def form_c_supervisor(id):
+    ##
+    ## check the user id and form id trace back the error
+    ##
     form = db_session.query(FormC).filter_by(user_id=id).order_by(FormC.submission_date.desc()).first()
 
     return render_template("form_c_supervisor.html",formc=form)
@@ -2271,7 +2274,7 @@ def reject_or_Accept_form_a(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
 
-    forma = db_session.query(FormA).filter_by(form_id=id).order_by(FormA.submitted_at.asc()).first()
+    forma = db_session.query(FormA).filter_by(form_id=id).order_by(FormA.submitted_at.desc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
     if not forma:
         forma = FormA(form_id=id)
@@ -2337,7 +2340,7 @@ def reject_or_Accept_form_b(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
         
-    formb = db_session.query(FormB).filter_by(form_id=id).order_by(FormB.submitted_at.asc()).first()
+    formb = db_session.query(FormB).filter_by(form_id=id).order_by(FormB.submitted_at.desc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
     if not formb:
         formb = FormB(form_id=id)
@@ -2407,7 +2410,7 @@ def reject_or_Accept_form_c(id):
     if not user_id:
         return jsonify({'error': 'Unauthorized'}), 401
         
-    formc = db_session.query(FormC).filter_by(form_id=id).order_by(FormC.submission_date.asc()).first()
+    formc = db_session.query(FormC).filter_by(form_id=id).order_by(FormC.submission_date.desc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
     if not formc:
         formc = FormC(form_id=id)
@@ -2614,7 +2617,7 @@ def form_a_answers():
 def student_edit_forma():
     user_id=session.get('id')
 
-    formB = db_session.query(FormB).filter_by(user_id=user_id).first()
+    formB = db_session.query(FormB).filter_by(user_id=user_id).order_by(FormA.submitted_at.asc()).first()
     if formB:
         flash("You are not permitted to fill this form", "warning")
         return redirect(url_for("student_dashboard"))
@@ -3211,7 +3214,7 @@ def student_edit_formc():
 
     user = db_session.query(User).filter(User.user_id == user_id).first()
     supervisor=db_session.query(User).filter(User.user_id == user.supervisor_id).first()
-    form = db_session.query(FormC).filter_by(user_id=user_id).first()
+    form = db_session.query(FormC).filter_by(user_id=user_id).order_by(desc(FormC.submission_date)).first()
     if request.method=="POST":
         
         form=FormC(

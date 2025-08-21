@@ -92,14 +92,30 @@
             <td>{% if form.supervisor%}{{form.supervisor}}{% elif form.supervisor_name%}{{form.supervisor_name}}{% endif%}</td>
             <td>{{form_name}}</td>
             <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date%}{{form.submission_date}}{% endif%}</td>
-            <td><span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
-                  {% if form.rejected_or_accepted and not form.supervisor_feedback %}
+            <td>
+              {% set review_comment = '' %}
+                  {% set review_comment1 = '' %}
+                {% if form.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = form.form_review_comment %}
+                  {% endif %}
+                {% if form.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = form.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1 %}
+                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
+                    
+                    {% endif %}
+              <span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
+                  
+              {% if form.rejected_or_accepted and not form.supervisor_feedback %}
                   Awaiting Ethics Committee for review
                   {% elif form.submitted_to_rec and 'low' not in form.risk_level|lower and not form.certificate_issued%}
                   Form submitted to Rec
-                  {% elif (form.review_recommendation in ['Resubmission Required', 'Reject'] or
-                  form.review_recommendation1 in ['Resubmission Required', 'Reject']) and not form.rejected_or_accepted %}
-                  Form Rejected, Review feedback
+                  
                   {% elif (form.review_recommendation in ['Approved','Approved with Minor Changes']) and
                   (form.review_recommendation1 in [ 'Approved','Approved with Minor Changes'])  and not form.submitted_to_rec%}
                    Approved by both Reviewers
@@ -129,7 +145,7 @@
                  
                   {% elif form.rejected_or_accepted and form.review_supervisor_signature and not form.certificate_issued%}
                   Approved by Ethics Committee
-                  {% elif form.reviewer_name1 and form.reviewer_name2 and not form.supervisor_date%}
+                  {% elif form.reviewer_name1 and form.reviewer_name2 %}
                   Awaiting for Review
                   {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_date and not form.review_status and form.rejected_or_accepted%}
                   Submitted to Reviewers
