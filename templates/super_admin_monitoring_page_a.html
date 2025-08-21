@@ -188,34 +188,46 @@
                     <tr>
                         <td>{{item.applicant_name}}</td>
                         <td>{{item.risk_rating}}</td>
-                        <td>{{item.submitted_at.strftime('%Y-%m-%d')}}
+                        <td>{% if item.submitted_at%}{{item.submitted_at.strftime('%Y-%m-%d')}}{% endif %}
                             <br>
+                            {% if item.submitted_at %}
                             {% set days_delayed_ = (namespace(value=(current_time - item.submitted_at).days)) %}
                             {% if days_delayed_.value > 0 %}
                                 Delay: {{ days_delayed_.value }} Day(s) ago
                             {% else %}
                                 Submitted Today
                             {% endif %}
+                            {% else %}
+                            Not Yet Reviewed
+                            {% endif%}
                         </td>
                         <td>{{item.supervisor}}</td>
                         <td>
                             {{item.first_reviewer_name}}<br>
-                            Submitted at: {{item.review_signature_date.strftime('%Y-%m-%d')}}<br>
+                            Submitted at: {% if item.review_signature_date%}{{item.review_signature_date.strftime('%Y-%m-%d')}}{% endif %}<br>
+                            {% if item.review_signature_date%}
                             {% set days_delayed = (namespace(value=(current_time - item.review_signature_date).days)) %}
                             {% if days_delayed.value > 0 %}
                                 Delay: {{ days_delayed.value }} Day(s) ago
                             {% else %}
                                 Submitted Today
                             {% endif %}
+                            {% else%}
+                            Not Yet Reviewed
+                            {% endif%}
                         </td>
                         <td>
                             {{item.second_reviewer_name}}<br>
-                            Submitted at: {{item.review_signature_date1.strftime('%Y-%m-%d')}}<br>
+                            Submitted at: {% if item.review_signature_date1%}{{item.review_signature_date1.strftime('%Y-%m-%d')}}{% endif %}<br>
+                            {% if item.review_signature_date1%}
                             {% set days_delayed1 = (namespace(value=(current_time - item.review_signature_date1).days)) %}
                             {% if days_delayed1.value > 0 %}
                                 Delay: {{ days_delayed1.value }} Day(s) ago
                             {% else %}
                                 Submitted Today
+                            {% endif %}
+                            {% else %}
+                            Not Yet review_dashboard
                             {% endif %}
                         </td>
                         <td>{{item.submitted_to_rec}}</td>

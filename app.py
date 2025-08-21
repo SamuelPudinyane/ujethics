@@ -764,6 +764,7 @@ def super_admin_monitoring_page_a():
     # Step 4: Convert to list for output
     forms_list = list(forms_dict.values())
     current=datetime.utcnow()
+    
     return render_template('super_admin_monitoring_page_a.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
 
 
@@ -803,7 +804,7 @@ def super_admin_monitoring_page_b():
                 "id": form.form_id,
                 "applicant_name": form.applicant_name,
                 "submitted_at": form.submitted_at,
-                "risk_rating": form.risk_rating,
+                "risk_rating": form.risk_level,
                 "supervisor":form.supervisor,
                 "supervisor_signature_date": form.supervisor_date,
                 "supervisor_recommendation": form.recommendation,
@@ -825,6 +826,7 @@ def super_admin_monitoring_page_b():
     # Step 4: Convert to list for output
     forms_list = list(forms_dict.values())
     current=datetime.utcnow()
+    
     return render_template('super_admin_monitoring_page_b.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
 
 
@@ -865,9 +867,9 @@ def super_admin_monitoring_page_c():
             forms_dict[form.form_id] = {
                 "id": form.form_id,
                 "applicant_name": form.applicant_name,
-                "submitted_at": form.submission_date,
-                "risk_rating": form.risk_rating,
-                "supervisor":form.supervisor,
+                "submission_date": form.submission_date,
+                "risk_level": form.risk_level,
+                "supervisor":form.supervisor_name,
                 "supervisor_signature_date": form.supervisor_date,
                 "supervisor_recommendation": form.recommendation,
                 "first_reviewer_name":first_reviewer.full_name if form else None,
@@ -888,6 +890,7 @@ def super_admin_monitoring_page_c():
     # Step 4: Convert to list for output
     forms_list = list(forms_dict.values())
     current=datetime.utcnow()
+    print(jsonify(forms_list))
     return render_template('super_admin_monitoring_page_c.html',current_time=current, forms_list=forms_list) #jsonify(forms_list) 
 
 
@@ -3609,9 +3612,14 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}'
+                    """
+                    try:
+                        message=f' An update from reviewer for form belonging to {formA.applicant_name}'
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")    
+                        """
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3624,6 +3632,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
+                        db_session.add(form)
                    
                 else:
                     forma.review_date1=review_date
@@ -3650,9 +3659,14 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    """
+                    try:
+                        message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")   
+                        """
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3665,6 +3679,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
+                        db_session.add(form)
                    
             else:
                 if not forma.review_date:
@@ -3691,9 +3706,14 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    """
+                    try:
+                        message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")
+                        """
                 else:
                     forma.review_date1=review_date
                     forma.status=status
@@ -3720,9 +3740,14 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                    """
+                    try:
+                        message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")    
+                    """
 
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
@@ -3735,7 +3760,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-            db_session.add(form)
+                        db_session.add(form)
             db_session.add(forma)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -3795,9 +3820,14 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    """
+                    try:
+                        message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")
+                        """
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
                        
@@ -3809,7 +3839,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                   
+                        db_session.add(form)
                 else:
                     formb.review_date1=review_date
                     formb.status=status
@@ -3835,9 +3865,14 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    """
+                    try:
+                        message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")
+                    """
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3849,6 +3884,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
+                        db_session.add(form)
                    
             else:
                 if not formb.review_date:
@@ -3875,9 +3911,13 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    """
+                    try:
+                    message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")"""
                 else:
                     formb.review_date1=review_date
                     formb.status=status
@@ -3904,9 +3944,12 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
+                    """try:
+                    message=f' An update from reviewer for form belonging to {formB.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")"""
                 #add coments to Rec table
                 if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -3917,7 +3960,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-            db_session.add(form)
+                        db_session.add(form)
             db_session.add(formb)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
@@ -3980,9 +4023,13 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                    """
+                    try:
+                    message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
+                    send_email(app,mail, message,admin.email)
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")"""
  
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -3994,7 +4041,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
-                   
+                        db_session.add(form)
                 else:
                     formc.review_date1=review_date
                     formc.status=status
@@ -4020,10 +4067,12 @@ def chair_form_view(id,form_name):
 
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+                    """try:
+                        message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
             
-                    send_email(app,mail, message,admin.email)"""
- 
+                        send_email(app,mail, message,[admin.email])
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")"""
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
                         form=Rec(
@@ -4034,6 +4083,7 @@ def chair_form_view(id,form_name):
                         rec_status = status,
                         rec_date=datetime.now()
                         )
+                        db_session.add(form)
                    
             else:
                 if not formc.review_date:
@@ -4058,31 +4108,34 @@ def chair_form_view(id,form_name):
                     formc.review_status=False
                     formc.rejected_or_accepted=False      
                 else:
-                    formc.review_date=review_date
+                    formc.review_date1=review_date
                     formc.status=status
-                    formc.review_org_permission_status=review_org_permission_status
-                    formc.review_org_permission_comments=review_org_permission_comments
-                    formc.review_waiver_status=review_waiver_status
-                    formc.review_waiver_comments=review_waiver_comments
-                    formc.review_form_status=review_form_status
-                    formc.review_form_comments=review_form_comments
-                    formc.review_questions_status=review_questions_status
-                    formc.review_questions_comments=review_questions_comments
-                    formc.review_consent_status=review_consent_status
-                    formc.review_consent_comments=review_consent_comments
-                    formc.review_proposal_status=review_proposal_status
-                    formc.review_proposal_comments=review_proposal_comments
-                    formc.review_additional_comments=review_additional_comments
-                    formc.review_recommendation=review_recommendation
-                    formc.form_review_comment=form_review_comment
-                    formc.form_reviewed_by=form_reviewed_by
-                    formc.review_status=False
+                    formc.review_org_permission_status1=review_org_permission_status
+                    formc.review_org_permission_comments1=review_org_permission_comments
+                    formc.review_waiver_status1=review_waiver_status
+                    formc.review_waiver_comments1=review_waiver_comments
+                    formc.review_form_status1=review_form_status
+                    formc.review_form_comments1=review_form_comments
+                    formc.review_questions_status1=review_questions_status
+                    formc.review_questions_comments1=review_questions_comments
+                    formc.review_consent_status1=review_consent_status
+                    formc.review_consent_comments1=review_consent_comments
+                    formc.review_proposal_status1=review_proposal_status
+                    formc.review_proposal_comments1=review_proposal_comments
+                    formc.review_additional_comments1=review_additional_comments
+                    formc.review_recommendation1=review_recommendation
+                    formc.form_review_comment1=form_review_comment
+                    formc.form_reviewed_by1=form_reviewed_by
+                    formc.review_status1=False
                     formc.rejected_or_accepted=False
                     #Uncomment the code bellow for testing
                     ##
-                    """message=f' An update from reviewer for form belonging to {formC.applicant_name}' 
+                    """try:
+                        message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
                 
-                        send_email(app,mail, message,admin.email)"""
+                        send_email(app,mail, message,[formc.email_address])
+                    except Exception as e:
+                        app.logger.error(f"Failed to send email")"""
 
                     #add coments to Rec table
                     if user_name.role.value=='REVIEWER':
@@ -4095,10 +4148,11 @@ def chair_form_view(id,form_name):
                             rec_date=datetime.now()
                             )
                
-            db_session.add(form)
+                        db_session.add(form)
             db_session.add(formc)
             db_session.commit()
             return redirect(url_for('review_dashboard'))
+    
         return render_template("form_c_ethics.html",user_id=user_id,formc=formc,formReviewers=formReviewers,latest_formc=latest_formc)
 
 
@@ -4313,7 +4367,7 @@ def review_dashboard():
     submitted_form_a = db_session.query(FormA, FormARequirements)\
         .join(User, FormA.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormA.user_id)\
-        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted == True,
+        .filter(FormA.submitted_at != None,
                 or_(
             FormA.reviewer_name1 == user_id,
             FormA.reviewer_name2 == user_id
@@ -4325,7 +4379,7 @@ def review_dashboard():
     submitted_form_b = db_session.query(FormB, FormARequirements) \
         .join(User, FormB.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
-        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted == True,
+        .filter(FormB.submitted_at != None,
                 or_(
             FormB.reviewer_name1 == user_id,
             FormB.reviewer_name2 == user_id
@@ -4336,7 +4390,7 @@ def review_dashboard():
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id)\
         .join(FormARequirements, FormARequirements.user_id == FormC.user_id)\
-        .filter(FormC.submission_date != None,FormC.rejected_or_accepted == True,
+        .filter(FormC.submission_date != None,
                 or_(
             FormC.reviewer_name1 == user_id,
             FormC.reviewer_name2 == user_id
@@ -4704,8 +4758,10 @@ def view_certificate(id):
 @app.route('/ethics_reviewer_committee_forms/<string:id>/<string:form_name>', methods=['GET','POST'])
 def ethics_reviewer_committee_forms(id,form_name):
     forma = db_session.query(FormA).filter_by(form_id=id).first()
+    
     Assigned_reviewer=''
     if forma:
+        
         latest_forma = db_session.query(FormA) \
         .filter(FormA.user_id == forma.user_id) \
         .order_by(FormA.submitted_at.asc()) \
@@ -4867,6 +4923,7 @@ def ethics_reviewer_committee_forms(id,form_name):
         return render_template("form_b_ethics.html",formB=formb)
     elif form_name=="FORM C":
         formc = db_session.query(FormC).filter_by(form_id=id).first()
+        
         Assigned_reviewer=''
         if formc:
             latest_formb = db_session.query(FormC) \

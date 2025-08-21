@@ -94,6 +94,21 @@
                   {% endif %}
             </br>
                 <span style="color:green; font-size:18px;">
+                  {% set review_comment = '' %}
+              {% set review_comment1 = '' %}
+                {% if formA.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formA.form_review_comment %}
+                  {% endif %}
+                {% if formA.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formA.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status 1: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1%}
+                    <p>Review Status 2: {{ review_comment1 }}</p>
+                  {% endif %}
                   {% if formA.rec_status=='Approved'  or formA.certificate_issued and formA.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
                   {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
@@ -103,9 +118,9 @@
                   
                   {% elif formA.rejected_or_accepted and formA.supervisor_date%}
                   Form Submitted To Ethics Admin
-                  {% elif formA.submitted_at and formA.declaration_name %}
+                  {% elif formA.rejected_or_accepted and formA.submitted_at and formA.declaration_name and 'Resubmission Required' not in [formA.form_review_comment,formA.form_review_comment1]%}
                   Form Submitted To Supervisor
-                  {% elif not formA.rejected_or_accepted and formA.supervisor_date%}
+                  {% elif not formA.rejected_or_accepted and formA.supervisor_date and 'Resubmission Required' not in [formA.form_review_comment,formA.form_review_comment1]%}
                   Form Was Returned. Please Review The Feedback and Resubmit
                  {% endif %}
                 </span>
@@ -149,6 +164,21 @@
                   {% endif %}
 
                 <span style="color:green; font-size:18px;">
+                  {% set review_comment = '' %}
+                {% set review_comment1 = '' %}
+                {% if formB.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formB.form_review_comment %}
+                  {% endif %}
+                {% if formB.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formB.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status 1: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1%}
+                    <p>Review Status 2: {{ review_comment1 }}</p>
+                  {% endif %}
                   {% if formB.rec_status=='Approved'  or formB.certificate_issued and formB.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
                   {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
@@ -158,9 +188,9 @@
                   
                   {% elif formB.rejected_or_accepted and formB.supervisor_date%}
                   Form Submitted To Ethics Admin
-                  {% elif formB.submitted_at and formB.declaration_name %}
+                  {% elif formB.rejected_or_accepted and formB.submitted_at and formB.declaration_name and 'Resubmission Required' not in [formB.form_review_comment,formB.form_review_comment1]%}
                   Form Submitted For Review To Supervisor
-                  {% elif not formB.rejected_or_accepted  and formB.supervisor_date%}
+                  {% elif not formB.rejected_or_accepted  and formB.supervisor_date and 'Resubmission Required' not in [formB.form_review_comment,formB.form_review_comment1]%}
                   Form Was Returned. Please Review The Feedback and Resubmit
                   {% endif %}
                  </span>
@@ -201,7 +231,21 @@
                 {% endif%}
             </br>
                 <span style="color:green; font-size:18px;">
-    
+                  {% set review_comment = '' %}
+              {% set review_comment1 = '' %}
+                {% if formC.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formC.form_review_comment %}
+                  {% endif %}
+                {% if formC.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formC.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status 1: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1%}
+                    <p>Review Status 2: {{ review_comment1 }}</p>
+                  {% endif %}
                   {% if formC.rec_status=='Approved' or formC.certificate_issued and formC.certificate_received%}
                   <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
                   {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
@@ -211,9 +255,9 @@
                   
                   {% elif formC.rejected_or_accepted and formC.supervisor_date%}
                   Form Submitted To Ethics Admin
-                  {% elif formC.submission_date and formC.declaration_name %}
+                  {% elif formC.rejected_or_accepted and formC.submission_date and formC.declaration_name and 'Resubmission Required' not in [formC.form_review_comment,formC.form_review_comment1]%}
                   Form Submitted For Review To Supervisor
-                  {% elif not formC.rejected_or_accepted and formC.supervisor_date%}
+                  {% elif not formC.rejected_or_accepted and formC.supervisor_date and 'Resubmission Required' not in [formC.form_review_comment,formC.form_review_comment1]%}
                   Form Was Returned. Please Review The Feedback and Resubmit
                   {% endif %}
 

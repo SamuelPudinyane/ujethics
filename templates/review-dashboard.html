@@ -77,25 +77,21 @@
               
               {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and not item.form_reviewed_by1  and not (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and item.form_reviewed_by1  and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and not (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
               Awaiting for review
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
-               {% set review_comment = '' %}
-                {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = item.form_review_comment %}
-                {% elif item.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = item.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
-                  {% endif %}
-              {% elif 'Reject' in ['Approved with Minor Changes', 'Resubmission Required'] %}
-              Rejected
-              {% elif not item.certificate_issued and not item.certificate_received and not (item.reviewed_by and item.reviewed_by1 )%}
+               
+              {% elif not item.certificate_issued and not item.certificate_received and not item.reviewed_by and not item.reviewed_by1 %}
               Awaiting for review
               {% endif %}
-            </span></td>
+            </span>
+          
+            </td>
             <td>
               <ul class="doc-link">
                   {% if req.proposal_path %}
@@ -180,25 +176,21 @@
               
               {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and not item.form_reviewed_by1  and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and item.form_reviewed_by1  and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and not (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
               Awaiting for review
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
-               {% set review_comment = '' %}
-                {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = item.form_review_comment %}
-                {% elif item.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = item.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
-                  {% endif %}
-              {% elif 'Reject' in ['Approved with Minor Changes', 'Resubmission Required'] %}
-              Rejected
-              {% elif not item.certificate_issued and not item.certificate_received and not (item.reviewed_by and item.reviewed_by1 )%}
+               
+              {% elif not item.certificate_issued and not item.certificate_received and not item.reviewed_by and not item.reviewed_by1 %}
               Awaiting for review
               {% endif %}
-            </span></td>
+            </span>
+          
+            </td>
             <td>
               <ul class="doc-link">
                 
@@ -256,6 +248,7 @@
             <td>{{item.risk_level}}</td>
             <td>{% if item.signature_date%}{{item.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
+              
               {% if item.rec_status  and item.form_reviewed_by1 == user_id and 'low' not in item.risk_level|lower%}
               {{item.rec_status}}
               {% elif not item.certificate_issued and not item.certificate_received and (item.form_reviewed_by==user_id or item.form_reviewed_by1==user_id) and 'low' not in item.risk_level|lower and item.review_status and not item.review_status1  %}
@@ -269,29 +262,23 @@
               
               {% elif not item.certificate_issued and not item.certificate_received and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
               Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and not item.form_reviewed_by1  and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and item.form_reviewed_by1  and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id)%}
+              Under Review
               {% elif item.rejected_or_accepted and item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) and not item.form_reviewed_by1 %}
               Awaiting for review
               {% elif item.certificate_issued and item.certificate_received %}
               Certificate was issued
               
-              {% elif item.review_status and not item.review_status1 and (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) %}
+              {% elif not item.certificate_issued and not item.certificate_received and item.form_reviewed_by and not item.form_reviewed_by1 and not (item.form_reviewed_by == user_id or item.form_reviewed_by1 == user_id) %}
               Awaiting for Review
               
-              {% set review_comment = '' %}
-                {% elif item.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = item.form_review_comment %}
-                {% elif item.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
-                  {% set review_comment = item.form_review_comment1 %}
-                {# 🖨️ Display the result if it was matched #}
-                  {% if review_comment %}
-                    <p>Review Status: {{ review_comment }}</p>
-                  {% endif %}
-              {% elif 'Reject' in ['Approved with Minor Changes', 'Resubmission Required'] %}
-              Rejected
-              {% elif not item.certificate_issued and not item.certificate_received and not (item.reviewed_by and item.reviewed_by1 )%}
+              {% elif not item.certificate_issued and not item.certificate_received and not item.form_reviewed_by and not item.form_reviewed_by1 %}
               Awaiting for review
               {% endif %}
-            </span></td>
+            </span>
+              </td>
             <td>
               <ul class="doc-link">
                 
