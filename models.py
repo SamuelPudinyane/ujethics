@@ -561,7 +561,6 @@ class FormA(Base):
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
-Base.metadata.create_all(engine)
 
 
 class FormB(Base):
@@ -999,3 +998,4 @@ class Watched(Base):
 #     db_session.commit()
 # except Exception as e:
 #     print("Failed to store user. \n", e)
+Base.metadata.create_all(engine)
