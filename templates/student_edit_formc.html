@@ -141,9 +141,9 @@
       <label><strong>2.4.1 Rate your project risk level:</strong></label>
       <select name="risk_level" class="form-select">
         <option value="">-- Select Risk Level --</option>
-        <option value="Low">Low Risk</option>
-        <option value="Medium">Medium Risk</option>
-        <option value="High">High Risk</option>
+        <option value="Low" {% if 'low' in formc.risk_level%}selected{% endif %}>Low Risk</option>
+        <option value="Medium" {% if 'medium' in formc.risk_level%}selected{% endif %}>Medium Risk</option>
+        <option value="High" {% if 'high' in formc.risk_level%}selected{% endif %}>High Risk</option>
       </select>
       
       <br>

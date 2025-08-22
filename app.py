@@ -4430,8 +4430,11 @@ def review_dashboard():
             FormA.reviewer_name2 == user_id
         ))\
         .order_by(FormA.submitted_at.desc()) \
-        .all()
-    
+        .first()
+    if submitted_form_a:
+        form_a, requirementsa = submitted_form_a
+    else:
+        form_a, requirementsa = None, None
     
     submitted_form_b = db_session.query(FormB, FormARequirements) \
         .join(User, FormB.user_id == User.user_id) \
@@ -4442,7 +4445,11 @@ def review_dashboard():
             FormB.reviewer_name2 == user_id
         ))\
         .order_by(FormB.submitted_at.desc()) \
-        .all()
+        .first()
+    if submitted_form_b:
+        form_b, requirementsb = submitted_form_b
+    else:
+        form_b, requirementsb = None, None
     # Form C
     submitted_form_c = db_session.query(FormC, FormARequirements) \
         .join(User, FormC.user_id == User.user_id)\
@@ -4453,10 +4460,19 @@ def review_dashboard():
             FormC.reviewer_name2 == user_id
         ))\
         .order_by(FormC.submission_date.desc()) \
-        .all()
+        .first()
+    
+    if submitted_form_c:
+        form_c, requirementsc = submitted_form_c
+    else:
+        form_c, requirementsc = None, None
     print("------------------ ", submitted_form_c)
     today = date.today()
-    return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
+    return render_template('review-dashboard.html',
+                user_id=user_id,today=today,
+                submitted_form_a=form_a,requirementsa=requirementsa,
+                submitted_form_b=form_b,requirementsb=requirementsb,
+                submitted_form_c=form_c,requirementsc=requirementsc)
 
 @app.route('/submit_to_rec/<string:id>', methods=['GET'])
 def submit_to_rec(id):
