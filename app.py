@@ -2263,7 +2263,6 @@ def form_c_supervisor(id):
     ## check the user id and form id trace back the error
     ##
     form = db_session.query(FormC).filter_by(user_id=id).order_by(FormC.submission_date.desc()).first()
-
     return render_template("form_c_supervisor.html",formc=form)
 
 
@@ -3455,6 +3454,7 @@ def chair_formb_view(id):
 def chair_formc_view(id):
     form = db_session.query(FormC).filter_by(user_id=id).order_by(desc(FormC.submission_date)).all()
     form_name="FORM C"
+    
     today = date.today()
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
@@ -3555,11 +3555,18 @@ def chair_form_view(id,form_name):
     user_name=db_session.query(User).filter_by(user_id=user_id).first()
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
     forma = db_session.query(FormA).filter_by(form_id=id).first()
+    list_of_revewers=[]
+    id_of_reviewers=[]
     if forma:
         latest_forma = db_session.query(FormA) \
         .filter(FormA.user_id == forma.user_id) \
         .order_by(FormA.submitted_at.asc()) \
         .first()
+        Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([latest_forma.reviewer_name1, latest_forma.reviewer_name2])).all()
+        if Assigned_reviewer:
+            for item in Assigned_reviewer:
+                list_of_revewers.append(item.email)
+                id_of_reviewers.append(item.user_id)
     #admin=db_session.query(User).filter_by(role="Admin").all()
     
     if form_name=="FORM A":
@@ -3590,7 +3597,9 @@ def chair_form_view(id,form_name):
  
             if request.form.get('status') in ['Approved','Approved with Minor Changes']:
                 if not forma.review_date:
-                   
+                    if id_of_reviewers:
+                        forma.reviewer_name1=id_of_reviewers[0]
+                        forma.reviewer_name2=id_of_reviewers[1]
                     forma.review_date=review_date
                     forma.status=status
                     forma.review_org_permission_status=review_org_permission_status
@@ -3638,6 +3647,9 @@ def chair_form_view(id,form_name):
                         db_session.add(form)
                    
                 else:
+                    if id_of_reviewers:
+                        forma.reviewer_name1=id_of_reviewers[0]
+                        forma.reviewer_name2=id_of_reviewers[1]
                     forma.review_date1=review_date
                     forma.status=status
                     forma.review_org_permission_status1=review_org_permission_status
@@ -3686,6 +3698,9 @@ def chair_form_view(id,form_name):
                    
             else:
                 if not forma.review_date:
+                    if id_of_reviewers:
+                        forma.reviewer_name1=id_of_reviewers[0]
+                        forma.reviewer_name2=id_of_reviewers[1]
                     forma.review_date=review_date
                     forma.status=status
                     forma.review_org_permission_status=review_org_permission_status
@@ -3718,6 +3733,9 @@ def chair_form_view(id,form_name):
                         app.logger.error(f"Failed to send email")
                         """
                 else:
+                    if id_of_reviewers:
+                        forma.reviewer_name1=id_of_reviewers[0]
+                        forma.reviewer_name2=id_of_reviewers[1]
                     forma.review_date1=review_date
                     forma.status=status
                     forma.review_org_permission_status1=review_org_permission_status
@@ -3775,6 +3793,11 @@ def chair_form_view(id,form_name):
             .filter(FormB.user_id == formb.user_id) \
             .order_by(FormB.submitted_at.asc()) \
             .first()
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([latest_formb.reviewer_name1, latest_formb.reviewer_name2])).all()
+            if Assigned_reviewer:
+                for item in Assigned_reviewer:
+                    list_of_revewers.append(item.email)
+                    id_of_reviewers.append(item.user_id)
         if request.method=="POST":
             review_date=request.form.get('review_date')
             status=request.form.get('status')
@@ -3798,7 +3821,9 @@ def chair_form_view(id,form_name):
             form_reviewed_by=user_id
             if request.form.get('status') in ['Approved','Approved with Minor Changes']:
                 if not formb.review_date:
-               
+                    if id_of_reviewers:
+                        formb.reviewer_name1=id_of_reviewers[0]
+                        formb.reviewer_name2=id_of_reviewers[1]
                     formb.review_date=review_date
                     formb.status=status
                     formb.review_org_permission_status=review_org_permission_status
@@ -3844,6 +3869,9 @@ def chair_form_view(id,form_name):
                         )
                         db_session.add(form)
                 else:
+                    if id_of_reviewers:
+                        formb.reviewer_name1=id_of_reviewers[0]
+                        formb.reviewer_name2=id_of_reviewers[1]
                     formb.review_date1=review_date
                     formb.status=status
                     formb.review_org_permission_status1=review_org_permission_status
@@ -3891,6 +3919,9 @@ def chair_form_view(id,form_name):
                    
             else:
                 if not formb.review_date:
+                    if id_of_reviewers:
+                        formb.reviewer_name1=id_of_reviewers[0]
+                        formb.reviewer_name2=id_of_reviewers[1]
                     formb.review_date=review_date
                     formb.status=status
                     formb.review_org_permission_status=review_org_permission_status
@@ -3922,6 +3953,9 @@ def chair_form_view(id,form_name):
                     except Exception as e:
                         app.logger.error(f"Failed to send email")"""
                 else:
+                    if id_of_reviewers:
+                        formb.reviewer_name1=id_of_reviewers[0]
+                        formb.reviewer_name2=id_of_reviewers[1]
                     formb.review_date1=review_date
                     formb.status=status
                     formb.review_org_permission_status1=review_org_permission_status
@@ -3970,13 +4004,22 @@ def chair_form_view(id,form_name):
         return render_template("form_b_ethics.html",user_id=user_id,formB=formb,formReviewers=formReviewers,latest_formb=latest_formb)
     elif form_name=="FORM C":
         formc = db_session.query(FormC).filter_by(form_id=id).first()
+        list_of_revewers=[]
+        id_of_reviewers=[]
         if formc:
             latest_formc = db_session.query(FormC) \
             .filter(FormC.user_id == formc.user_id) \
             .order_by(FormC.submission_date.asc()) \
             .first()
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([latest_formc.reviewer_name1, latest_formc.reviewer_name2])).all()
+            
+            if Assigned_reviewer:
+                for item in Assigned_reviewer:
+                    list_of_revewers.append(item.email)
+                    id_of_reviewers.append(item.user_id)
+        
         if request.method=="POST":
-           
+            
             review_date=request.form.get('review_date')
             status=request.form.get('status')
             review_org_permission_status=request.form.get('org_permission_status')
@@ -4001,7 +4044,9 @@ def chair_form_view(id,form_name):
             if request.form.get('status') in ['Approved', 'Approved with Minor Changes']:
                 
                 if not formc.review_date:
-               
+                    if id_of_reviewers:
+                        formc.reviewer_name1=id_of_reviewers[0]
+                        formc.reviewer_name2=id_of_reviewers[1]
                     formc.review_date=review_date
                     formc.status=status
                     formc.review_org_permission_status=review_org_permission_status
@@ -4046,6 +4091,9 @@ def chair_form_view(id,form_name):
                         )
                         db_session.add(form)
                 else:
+                    if id_of_reviewers:
+                        formc.reviewer_name1=id_of_reviewers[0]
+                        formc.reviewer_name2=id_of_reviewers[1]
                     formc.review_date1=review_date
                     formc.status=status
                     formc.review_org_permission_status1=review_org_permission_status
@@ -4090,6 +4138,9 @@ def chair_form_view(id,form_name):
                    
             else:
                 if not formc.review_date:
+                    if id_of_reviewers:
+                        formc.reviewer_name1=id_of_reviewers[0]
+                        formc.reviewer_name2=id_of_reviewers[1]
                     formc.review_date=review_date
                     formc.status=status
                     formc.review_org_permission_status=review_org_permission_status
@@ -4111,6 +4162,9 @@ def chair_form_view(id,form_name):
                     formc.review_status=False
                     formc.rejected_or_accepted=False      
                 else:
+                    if id_of_reviewers:
+                        formc.reviewer_name1=id_of_reviewers[0]
+                        formc.reviewer_name2=id_of_reviewers[1]
                     formc.review_date1=review_date
                     formc.status=status
                     formc.review_org_permission_status1=review_org_permission_status
@@ -4375,7 +4429,7 @@ def review_dashboard():
             FormA.reviewer_name1 == user_id,
             FormA.reviewer_name2 == user_id
         ))\
-        .distinct()\
+        .order_by(FormA.submitted_at.desc()) \
         .all()
     
     
@@ -4387,7 +4441,7 @@ def review_dashboard():
             FormB.reviewer_name1 == user_id,
             FormB.reviewer_name2 == user_id
         ))\
-        .distinct()\
+        .order_by(FormB.submitted_at.desc()) \
         .all()
     # Form C
     submitted_form_c = db_session.query(FormC, FormARequirements) \
@@ -4398,8 +4452,9 @@ def review_dashboard():
             FormC.reviewer_name1 == user_id,
             FormC.reviewer_name2 == user_id
         ))\
-        .distinct()\
+        .order_by(FormC.submission_date.desc()) \
         .all()
+    print("------------------ ", submitted_form_c)
     today = date.today()
     return render_template('review-dashboard.html',user_id=user_id,today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
@@ -4770,21 +4825,19 @@ def ethics_reviewer_committee_forms(id,form_name):
         .order_by(FormA.submitted_at.asc()) \
         .first()
     
-        Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([forma.reviewer_name1, forma.reviewer_name2])).all()
+        Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([latest_forma.reviewer_name1, latest_forma.reviewer_name2])).all()
  
     list_of_revewers=[]
-    
+    id_of_reviewers=[]
     if Assigned_reviewer:
         for item in Assigned_reviewer:
+            id_of_reviewers.append(item.user_id)
             list_of_revewers.append(item.email)
     else:
         reviewers=request.form.getlist('reviewer_names[]')
         if reviewers:
-            
             Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
-            for item in Assigned_reviewer:
-
-                list_of_revewers.append(item.email)
+            
 
     if form_name=="FORM A":
         
@@ -4794,8 +4847,9 @@ def ethics_reviewer_committee_forms(id,form_name):
             if reviewers:
                 forma.reviewer_name1=reviewers[0]
                 forma.reviewer_name2=reviewers[1]
-            
-            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([forma.reviewer_name1, forma.reviewer_name2])).all()
+            else:
+                forma.reviewer_name1=id_of_reviewers[0]
+                forma.reviewer_name2=id_of_reviewers[1]
             forma.supervisor_date=request.form.get('review_date')
             forma.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             forma.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -4851,29 +4905,28 @@ def ethics_reviewer_committee_forms(id,form_name):
             .order_by(FormB.submitted_at.asc()) \
             .first()
     
-            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formb.reviewer_name1, formb.reviewer_name2])).all()
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([latest_formb.reviewer_name1, latest_formb.reviewer_name2])).all()
  
         list_of_revewers=[]
-    
+        id_of_reviewers=[]
         if Assigned_reviewer:
             for item in Assigned_reviewer:
+                id_of_reviewers.append(item.user_id)
                 list_of_revewers.append(item.email)
         else:
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
                 Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
-            for item in Assigned_reviewer:
-            
-                list_of_revewers.append(item.email)
-        
-            
+  
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
                 formb.reviewer_name1=reviewers[0]
                 formb.reviewer_name2=reviewers[1]
             
-
+            else:
+                formb.reviewer_name1=id_of_reviewers[0]
+                formb.reviewer_name2=id_of_reviewers[1]
             formb.supervisor_date=request.form.get('review_date')
             formb.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formb.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
@@ -4925,36 +4978,38 @@ def ethics_reviewer_committee_forms(id,form_name):
             return redirect(url_for('chair_landing'))
         return render_template("form_b_ethics.html",formB=formb)
     elif form_name=="FORM C":
+       
         formc = db_session.query(FormC).filter_by(form_id=id).first()
         
         Assigned_reviewer=''
         if formc:
-            latest_formb = db_session.query(FormC) \
+            latest_formc = db_session.query(FormC) \
             .filter(FormC.user_id == formc.user_id) \
             .order_by(FormC.submission_date.asc()) \
             .first()
-    
-            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([formc.reviewer_name1, formc.reviewer_name2])).all()
+           
+            Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([latest_formc.reviewer_name1, latest_formc.reviewer_name2])).all()
  
         list_of_revewers=[]
-    
+        id_of_reviewers=[]
         if Assigned_reviewer:
             for item in Assigned_reviewer:
+                id_of_reviewers.append(item.user_id)
                 list_of_revewers.append(item.email)
         else:
             reviewers=request.form.getlist('reviewer_names[]')
             if reviewers:
                 Assigned_reviewer=db_session.query(User).filter(User.user_id.in_([reviewers[0], reviewers[1]])).all()
-            for item in Assigned_reviewer:
             
-                list_of_revewers.append(item.email)
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
           
             if reviewers:
                 formc.reviewer_name1=reviewers[0]
                 formc.reviewer_name2=reviewers[1]
-            
+            else:
+                formc.reviewer_name1=id_of_reviewers[0]
+                formc.reviewer_name2=id_of_reviewers[1]
             formc.supervisor_date=request.form.get('review_date')
             formc.supervisor_org_permission_status=request.form.get('review_org_permission_status')
             formc.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
