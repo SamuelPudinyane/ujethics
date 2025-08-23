@@ -19,7 +19,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: SamuelPudinyane
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: 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
 
       # Step 3: Build Docker image
       - name: Build Docker image
