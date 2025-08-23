@@ -16,7 +16,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: SamuelPudinyane
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set lowercase username
         run: echo "OWNER=$(echo $GITHUB_REPOSITORY_OWNER | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
