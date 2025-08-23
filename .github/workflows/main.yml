@@ -19,8 +19,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: SamuelPudinyane
-          password: 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
-
+          password: dckr_pat_Tut6TXXE4XucAMzVyVP_IepicsE
       # Step 3: Build Docker image
       - name: Build Docker image
         run: docker build -t samuelpudinyane/ujethics:latest .
