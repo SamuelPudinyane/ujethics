@@ -147,7 +147,7 @@
                   Approved by Ethics Committee
                   {% elif form.reviewer_name1 and form.reviewer_name2 %}
                   Awaiting for Review
-                  {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_date and not form.review_status and form.rejected_or_accepted%}
+                  {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_date %}
                   Submitted to Reviewers
                   {% elif form.review_status %}
                   Form was Approved by First Reviewer
