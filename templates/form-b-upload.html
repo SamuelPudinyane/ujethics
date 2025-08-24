@@ -66,9 +66,15 @@
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="question-block">
-        <label>1. Do you require permission to access the secondary data?</label><br>
-        <input type="radio" name="need_permission" value="Yes" required> Yes
-        <input type="radio" name="need_permission" value="No" required> No
+        <label>1. Do you require permission to access the secondary data?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="need_permission" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="need_permission" value="No" required> No
+          </label>
+        </div>
       </div>
 
       <div class="question-block hidden" id="permissionUpload">
@@ -77,9 +83,15 @@
       </div>
 
       <div class="question-block">
-        <label>2. Do you have prior ethical clearance for the original study?</label><br>
-        <input type="radio" name="has_clearance" value="Yes" required> Yes
-        <input type="radio" name="has_clearance" value="No" required> No
+        <label>2. Do you have prior ethical clearance for the original study?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="has_clearance" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="has_clearance" value="No" required> No
+          </label>
+        </div>
       </div>
 
       <div class="question-block hidden" id="clearanceUpload">
@@ -88,7 +100,6 @@
       </div>
 
     
-
       <div class="question-block">
         <label>3. Upload Approved Proposal</label>
         <input type="file" name="proposal_path" required accept=".pdf,.docx">

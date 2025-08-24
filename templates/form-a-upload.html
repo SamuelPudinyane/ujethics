@@ -59,10 +59,16 @@
     <form id="formARequirements" action="{{url_for('submit_form_a_requirements')}}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="question-block">
-        <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label><br>
-        <input type="radio" name="need_permission" value="Yes" required> Yes
-        <input type="radio" name="need_permission" value="No" checked  required> No
-      </div>
+        <label>1. Will you require permission to access the company or organisation? <span class="info-icon" title="If yes, please upload letter with company letterhead, time-stamped and signed.">ℹ️</span></label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="need_permission" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="need_permission" value="No" checked  required> No
+          </label>
+          
+        </div>
 
       <!-- <div class="question-block hidden" id="companyLetterUpload">       
         <label>Upload Company Permission Letter <small>(with a letterhead, signed and dated)</small></label>
@@ -81,22 +87,31 @@
 
 
       <div class="question-block">
-        <label>2. Do you have prior ethical clearance from the original study?</label><br>
-        <input type="radio" name="has_clearance" value="Yes" required> Yes
-        <input type="radio" name="has_clearance" value="No" checked required> No
-      </div>
+        <label>2. Do you have prior ethical clearance from the original study?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="has_clearance" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="has_clearance" value="No" checked required> No
+          </label>
+        </div>
 
-     
       <div class="question-block hidden" id="clearanceUpload">
         <label>Upload Prior Ethical Clearance Document (Original Study)</label>
         <input type="file" name="prior_clearance" accept=".pdf,.docx">
       </div>
 
       <div class="question-block">
-        <label>3. Does the company require ethical clearance from JBS to issue a permission/waiver letter?</label><br>
-        <input type="radio" name="company_requires_jbs" value="Yes" required> Yes
-        <input type="radio" name="company_requires_jbs" value="No" checked required> No
-      </div>
+        <label>3. Does the company require ethical clearance from JBS to issue a permission/waiver letter?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="company_requires_jbs" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="company_requires_jbs" value="No" checked required> No
+          </label>
+        </div>
 
       <div class="question-block hidden" id="clearanceUpload1">
         <label>Upload Ethical Clearance Document</label>
