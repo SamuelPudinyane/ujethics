@@ -86,7 +86,7 @@
               {% elif submitted_form_a.certificate_issued and submitted_form_a.certificate_received %}
               Certificate was issued
                
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and not item.reviewed_by and not item.reviewed_by1 %}
+              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and not submitted_form_a.reviewed_by and not submitted_form_a.reviewed_by1 %}
               Awaiting for review
               {% endif %}
             </span>
@@ -132,7 +132,7 @@
               </ul>
             </td>
             <td>
-              <a href="{{url_for('reviewer_form_a',id=item.form_id)}}" class="view-btn">Review</a>
+              <a href="{{url_for('reviewer_form_a',id=submitted_form_a.form_id)}}" class="view-btn">Review</a>
             </td>
           </tr>
          

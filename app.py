@@ -2253,7 +2253,7 @@ def form_a_supervisor(id):
     
 @app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
 def form_b_supervisor(id):
-    form = db_session.query(FormB).filter_by(user=id).order_by(FormB.submitted_at.desc()).first()
+    form = db_session.query(FormB).filter_by(user_id=id).order_by(FormB.submitted_at.desc()).first()
 
     return render_template("form_b_supervisor.html",formB=form)
 
@@ -3621,6 +3621,7 @@ def chair_form_view(id,form_name):
                     forma.form_review_comment=form_review_comment
                     forma.form_reviewed_by=form_reviewed_by
                     forma.review_status=True
+                    forma.rejected_or_accepted=True
 
                     #Uncomment the code bellow for testing
                     ##
@@ -3671,6 +3672,7 @@ def chair_form_view(id,form_name):
                     forma.form_review_comment1=form_review_comment
                     forma.form_reviewed_by1=form_reviewed_by
                     forma.review_status1=True
+                    forma.rejected_or_accepted=True
 
                     #Uncomment the code bellow for testing
                     ##
@@ -3845,7 +3847,7 @@ def chair_form_view(id,form_name):
                     formb.form_review_comment=form_review_comment
                     formb.form_reviewed_by=form_reviewed_by
                     formb.review_status=True
-
+                    formb.rejected_or_accepted=True
                     #Uncomment the code bellow for testing
                     ##
                     """
@@ -3893,6 +3895,7 @@ def chair_form_view(id,form_name):
                     formb.form_review_comment1=form_review_comment
                     formb.form_reviewed_by1=form_reviewed_by
                     formb.review_status1=True
+                    formb.rejected_or_accepted=True
 
                     #Uncomment the code bellow for testing
                     ##
@@ -4068,6 +4071,7 @@ def chair_form_view(id,form_name):
                     formc.form_review_comment=form_review_comment
                     formc.form_reviewed_by=form_reviewed_by
                     formc.review_status=True
+                    formc.rejected_or_accepted=True
 
                     #Uncomment the code bellow for testing
                     ##
@@ -4115,6 +4119,7 @@ def chair_form_view(id,form_name):
                     formc.form_review_comment1=form_review_comment
                     formc.form_reviewed_by1=form_reviewed_by
                     formc.review_status1=True
+                    formc.rejected_or_accepted=True
 
                     #Uncomment the code bellow for testing
                     ##
