@@ -43,6 +43,11 @@
         cursor: pointer;
         font-weight: bold;
       }
+
+      label {
+        padding-bottom: 2px;
+      }
+
     </style>
   </head>
 
@@ -56,8 +61,7 @@
           class="logo uj"
         />
         <span class="nav-title"
-          >Form A – Section 3: Proposal Summary Sheet</span
-        >
+          >Form A – Section 3: Proposal Summary Sheet</span>
 
         <!-- Logout -->
         <div style="text-align: right">
@@ -103,7 +107,7 @@
         </div>
       </main>
         
-        <hr>
+        <br>
         
 
         <main class="main-content">
@@ -112,9 +116,16 @@
         <div class="section">
           <label>4.1 Does your project involve organisations or institutions that
             need to grant permission for research activities?</label>
-          <br>
-          <input type="radio" name="grant_permission" value="No"> No
-          <input type="radio" name="grant_permission" value="Yes"> Yes
+          <div class="d-flex gap-4">  
+            <label class="form-check-label">
+              <input type="radio" name="grant_permission" value="No" class="form-check-input">
+              No
+            </label>
+            <label class="form-check-label">
+              <input type="radio" name="grant_permission" value="Yes" class="form-check-input">
+              Yes
+            </label>
+          </div>
           <div id="permission_table_wrapper" style="display:none; margin-top: 1rem;">
           <p>Please complete the table below if permission is required.</p>
           <table>
@@ -145,31 +156,48 @@
 </div>
 
           <label>4.2 Are any researchers affiliated with the organisations
-            above?</label><br>
+            above?</label>
 
-          <input type="radio" name="researcher_affiliation" value="No">
-            No
-          <input type="radio" name="researcher_affiliation" value="Yes">
-            Yes
+          <div class="d-flex gap-4">
+            <label class="form-check-label">
+              <input type="radio" name="researcher_affiliation" value="No" class="form-check-input">
+              No
+            </label>
+            <label class="form-check-label">
+              <input type="radio" name="researcher_affiliation" value="Yes" class="form-check-input">
+              Yes
+            </label>
+          </div>
 
-          <div id="affiliation_comment" style="display:none;" placeholfder="Please provide details of the affiliation">
+          <div id="affiliation_comment" style="display:none;" placeholder="Please provide details of the affiliation">
             <textarea name="affiliation_details" rows="3" placeholder="Describe researcher’s affiliation to any listed organisation..."></textarea>
           </div>
 
           <label>4.3 Does your research involve collectives or communities?</label>
-          <br>
-          <input type="radio" name="collective_involvement" value="No">
-            No
-          <input type="radio" name="collective_involvement" value="Yes">
-            Yes
+          
+          <div class="d-flex gap-4">
+            <label class="form-check-label">
+              <input type="radio" name="collective_involvement" value="No" class="form-check-input">
+              No
+            </label>
+            <label class="form-check-label">
+              <input type="radio" name="collective_involvement" value="Yes" class="form-check-input">
+              Yes
+            </label>
+          </div>
             <div id="collective_comment" style="display:none;" placeholder="Please provide details of the collective/community involvement">
               <textarea name="collective_details" rows="3" placeholder="Describe the community or collective involved..."></textarea>
             </div>
 
           <label>4.4 Is your project funded or sponsored?</label>
-          <br>
-          <input type="radio" name="is_funded" value="No"> No
-          <input type="radio" name="is_funded" value="Yes"> Yes
+          <div class="d-flex gap-4">
+            <label class="form-check-label">
+              <input type="radio" name="is_funded" value="No" class="form-check-input"> No
+            </label>
+            <label class="form-check-label">
+              <input type="radio" name="is_funded" value="Yes" class="form-check-input"> Yes
+            </label>
+          </div>
           <div id="funding_table" style="display: none;">
           <p>Please complete the table below if your project is funded or sponsored.</p>
           <table>

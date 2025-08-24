@@ -108,41 +108,41 @@
 
       <h2>Section 2: Research Project and Data Information</h2>
 
-      <label>1. Short Description of the Research Project (±200 words)
+      <label>2.1 Short Description of the Research Project (±200 words)
         <br>
         <span class="form-answer">{{form.project_description}}</span>
       </label>
 
 
-      <label>2.1 Nature of the Data <br>
+      <label>2.2 Nature of the Data <br>
     <span class="form-answer">{{form.data_nature}}</span>
 </label>
  
 
-      <label>2.2 Origin/Source of Research Data
+      <label>2.3 Origin/Source of Research Data
         <br><span class="form-answer">{{form.data_origin}}</span>
       </label>
  
 
       <div class="question-block">
-        <label>2.3 Are the sources of the research data in the public domain?
+        <label>2.4 Are the sources of the research data in the public domain?
             <br><span class="form-answer">{{'Yes' if form.data_public else 'No'}}</span>
         </label>
         
       </div>
 
-      <label>Provide evidence or explanation (if applicable)
+      <label>2.4.1 Provide evidence or explanation (if applicable)
         <br><span class="form-answer">{{form.public_evidence}}</span>
       </label>
    
 
-      <label>2.4 If data is not public, what are the access conditions?
+      <label>2.5 If data is not public, what are the access conditions?
         <br><span class="form-answer">{{form.access_conditions}}</span>
       </label>
     
 
       <div class="question-block">
-        <label>2.5 Does the database contain personal information/identifiers?
+        <label>2.6 Does the database contain personal information/identifiers?
             <br><span class="form-answer">{{'Yes' if form.data_public else 'No'}}</span>
         </label>
         
@@ -150,47 +150,47 @@
       </div>
 
       <div class="question-block">
-        <label>2.6 If yes, has the data been anonymized?
+        <label>2.7 If yes, has the data been anonymized?
             <br><span class="form-answer">{{form.data_anonymized}}</span>
         </label>
        
       </div>
 
-      <label>2.6.1 Comment / Justification:<br>
+      <label>2.7.1 Comment / Justification:<br>
     <span class="form-answer">{{form.anonymization_comment}}</span></label>
 
      
       <div class="question-block">
-        <label>2.7 Private database: does it contain confidential private company data requiring permission?
+        <label>2.8 Private database: does it contain confidential private company data requiring permission?
             <br><span class="form-answer">{{'Yes' if form.private_permission else 'No'}}<span class="form-answer">
         </label>
       </div>
 
-      <label>2.7.1 Provide permission details (or attach separately):
+      <label>2.8.1 Provide permission details (or attach separately):
         <br><span class="form-answer">{{form.permission_details}}</span>
       </label>
      
 
       <div class="question-block">
-        <label>2.8 Will data shortcomings/incompleteness be reported?
+        <label>2.9 Will data shortcomings/incompleteness be reported?
             <br><span class="form-answer">{{'Yes' if form.shortcommings_report else 'No'}}</span>
         </label>
        
       </div>
 
-      <label>2.9 How will data limitations be reported?
+      <label>2.10 How will data limitations be reported?
         <br><span class="form-answer">{{form.limitations_reporting}}</span>
       </label>
     
 
       <div class="question-block">
-        <label>2.10 Are the research methodology and design aligned with secondary data use?
+        <label>2.11 Are the research methodology and design aligned with secondary data use?
             <br><span class="form-answer">{{'Yes' if form.methodology_alighnment else 'No'}}</span>
         </label>
        
       </div>
 
-      <label>2.11 How will original owners of the data be acknowledged?
+      <label>2.12 How will original owners of the data be acknowledged?
         <br><span class="form-answer">{{form.data_acknowledgment}}</span>
       </label>
     

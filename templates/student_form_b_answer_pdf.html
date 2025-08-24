@@ -95,7 +95,7 @@
       <label>Title/Working Title of Project or Study <br>
         <span class="form-answer">{{formB.study_title}}</span></label>
       <label>Mobile Number <br>
-        <span class="form-answer">{{formB.mobile_number}}</span></label>
+        <span class="form-answer">{{formB.mobile}}</span></label>
       <label>Email Address <br>
         <span class="form-answer">{{formB.email}}</span></label>
       <label>Supervisor(s) <br>
@@ -120,12 +120,7 @@
         <br>
         <span class="form-answer">{{formB.project_description}}</span>
       </label>
-
-
-      <hr>
-
-   
-
+  
       <label>2.2 Nature of the Data <br>
     <span class="form-answer">{{formB.data_nature}}</span>
 </label>
@@ -143,66 +138,65 @@
         
       </div>
 
-      <label>2.4.1 Provide evidence or explanation (if applicable)
+      <label>2.4.1 Provide evidence or explanation
         <br><span class="form-answer">{{formB.public_evidence}}</span>
       </label>
    
 
-      <label>2.5 If data is not public, what are the access conditions?
+      <label>2.4.2 If data is not public, what are the access conditions?
         <br><span class="form-answer">{{formB.access_conditions}}</span>
       </label>
     
 
       <div class="question-block">
-        <label>2.6 Does the database contain personal information/identifiers?
+        <label>2.5 Does the database contain personal information/identifiers?
             <br><span class="form-answer">{{'Yes' if formB.data_public else 'No'}}</span>
         </label>
-        
       
       </div>
 
       <div class="question-block">
-        <label>2.7 If yes, has the data been anonymized?
+        <label>2.6 If yes, has the data been anonymized?
             <br><span class="form-answer">{{formB.data_anonymized}}</span>
         </label>
        
       </div>
 
-      <label>2.7.1 Comment / Justification:<br>
+      <label>2.6.1 Comment / Justification:<br>
     <span class="form-answer">{{formB.anonymization_comment}}</span></label>
 
      
       <div class="question-block">
-        <label>2.8 Private database: does it contain confidential private company data requiring permission?
-            <br><span class="form-answer">{{'Yes' if formB.private_permission else 'No'}}<span class="form-answer">
+        <label>2.7 Private database: does it contain confidential private company data requiring permission?
+            <br><span class="form-answer">{{'Yes' if formB.private_permission else 'No'}}</span>
         </label>
       </div>
 
-      <label>2.8.1 Provide permission details (or attach separately):
+      <label>2.7.1 Provide permission details (or attach separately):
         <br><span class="form-answer">{{formB.permission_details}}</span>
       </label>
      
 
       <div class="question-block">
-        <label>2.9 Will data shortcomings/incompleteness be reported?
+        <label>2.8 Will data shortcomings/incompleteness be reported?
             <br><span class="form-answer">{{'Yes' if formB.shortcommings_report else 'No'}}</span>
         </label>
        
       </div>
 
-      <label>2.10 How will data limitations be reported?
+      <label>2.9 How will data limitations be reported?
         <br><span class="form-answer">{{formB.limitations_reporting}}</span>
       </label>
     
 
       <div class="question-block">
-        <label>2.11 Are the research methodology and design aligned with secondary data use?
+        <label>2.10 Are the research methodology and design aligned with secondary data use?
             <br><span class="form-answer">{{'Yes' if formB.methodology_alighnment else 'No'}}</span>
         </label>
        
       </div>
 
-      <label>2.12 How will original owners of the data be acknowledged?
+      <label>2.11 How will original owners of the data be acknowledged?
         <br><span class="form-answer">{{formB.data_acknowledgment}}</span>
       </label>
     

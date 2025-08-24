@@ -51,41 +51,49 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <h2>Section 2: Research Project and Data Information</h2>
 
-      <label>1. Short Description of the Research Project (±200 words)</label>
+      <label>2.1 Short Description of the Research Project (±200 words)</label>
       <textarea name="project_description" rows="5" required placeholder="Summarize your project aims, scope, and relevance."></textarea>
 
 
-      <label>2.1 Nature of the Data</label>
+      <label>2.2 Nature of the Data</label>
       <input type="text" name="data_nature" required placeholder="Describe the type of data you will collect (e.g., survey, interviews, secondary data).">
 
-      <label>2.2 Origin/Source of Research Data</label>
+      <label>2.3 Origin/Source of Research Data</label>
       <input type="text" name="data_origin" required placeholder="Specify where the data will come from (e.g., primary collection, existing databases, public records).">
 
       <div class="question-block">
-        <label>2.3 Are the sources of the research data in the public domain?</label>
-        <br>
-        <div class="yes-no">
-          <input type="radio" name="data_public" value="Yes" required onchange="togglePublicData()"> Yes
-          <input type="radio" name="data_public" value="No" required onchange="togglePublicData()"> No
+        <label>2.4 Are the sources of the research data in the public domain?</label>
+        
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="data_public" value="Yes" required onchange="togglePublicData()"> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="data_public" value="No" required onchange="togglePublicData()"> No
+          </label>
         </div>
       </div>
 
       <!-- Shown only if data_public = No -->
         <div id="public_data_fields" style="display: none;">
-          <label>2.3.1 Provide evidence or explanation (if applicable)</label>
+          <label>2.4.1 Provide evidence or explanation</label>
           <textarea name="public_evidence" rows="3" placeholder="Explain why the data is not publicly accessible."></textarea>
 
-          <label>2.3.2 If data is not public, what are the access conditions?</label>
+          <label>2.4.2 If data is not public, what are the access conditions?</label>
           <textarea name="access_conditions" rows="3" placeholder="Mention access terms, restrictions, or data agreements."></textarea>
         </div>
 
       <div class="question-block">
-        <label>2.4 Does the database contain personal information/identifiers?</label>
-        <br>
-        <div class="yes-no">
-          <input type="radio" name="personal_info" value="Yes" required onchange="togglePersonalInfo()"> Yes
-          <input type="radio" name="personal_info" value="No" required onchange="togglePersonalInfo()"> No
+        <label>2.5 Does the database contain personal information/identifiers?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="personal_info" value="Yes" required onchange="togglePersonalInfo()"> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="personal_info" value="No" required onchange="togglePersonalInfo()"> No
+          </label>
         </div>
+      </div>
 
         <div id="personalInfoComment" style="display: none; margin-top: 1rem;">
           <textarea name="personal_info_comment" rows="3"
@@ -94,55 +102,69 @@
 
 
       <div class="question-block">
-        <label>2.5 If yes, has the data been anonymized?</label>
-        <div class="yes-no">
-          <br>
-          <input type="radio" name="data_anonymized" value="Yes"> Yes
-          <input type="radio" name="data_anonymized" value="No"> No
-          <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
+        <label>2.6 If yes, has the data been anonymized?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="data_anonymized" value="Yes"> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="data_anonymized" value="No"> No
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
+          </label>
         </div>
       </div>
 
-      <label>2.5.1 Comment / Justification:</label>
+      <label>2.6.1 Comment / Justification:</label>
       <textarea name="anonymization_comment" rows="3" placeholder="Provide justification for anonymization or not"></textarea>
      
       <div class="question-block">
-        <label>2.6 Private database: does it contain confidential private company data requiring permission?</label>
-        <div class="yes-no">
-          <br>
-          <input type="radio" name="private_permission" value="Yes" onchange="togglePrivatePermission()" required> Yes
-          <input type="radio" name="private_permission" value="No" onchange="togglePrivatePermission()" required> No
+        <label>2.7 Private database: does it contain confidential private company data requiring permission?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="private_permission" value="Yes" onchange="togglePrivatePermission()" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="private_permission" value="No" onchange="togglePrivatePermission()" required> No
+          </label>
         </div>
       </div>
 
       <div id="permission_details_box" style="display: none;">
-        <label>2.6.1 Provide permission details (or attach separately):</label>
+        <label>2.7.1 Provide permission details (or attach separately):</label>
         <textarea name="permission_details" rows="3"
           placeholder="Describe the permission granted or attach documentation."></textarea>
       </div>
 
       <div class="question-block">
-        <label>2.7 Will data shortcomings/incompleteness be reported?</label>
-        <div class="yes-no">
-          <br>
-          <input type="radio" name="shortcomings_reported" value="Yes" required> Yes
-          <input type="radio" name="shortcomings_reported" value="No" required> No
+        <label>2.8 Will data shortcomings/incompleteness be reported?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="shortcomings_reported" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="shortcomings_reported" value="No" required> No
+          </label>
         </div>
       </div>
 
-      <label>2.8 How will data limitations be reported?</label>
+      <label>2.9 How will data limitations be reported?</label>
       <textarea name="limitations_reporting" rows="3" placeholder="Describe how you'll address or disclose any gaps or limitations."></textarea>
 
       <div class="question-block">
-        <label>2.9 Are the research methodology and design aligned with secondary data use?</label>
-        <div class="yes-no">
-          <br>
-          <input type="radio" name="methodology_alignment" value="Yes" required> Yes
-          <input type="radio" name="methodology_alignment" value="No" required> No
+        <label>2.10 Are the research methodology and design aligned with secondary data use?</label>
+        <div class="d-flex gap-4">
+          <label class="form-check-label">
+            <input type="radio" name="methodology_alignment" value="Yes" required> Yes
+          </label>
+          <label class="form-check-label">
+            <input type="radio" name="methodology_alignment" value="No" required> No
+          </label>
         </div>
       </div>
 
-      <label>2.10 How will original owners of the data be acknowledged?</label>
+      <label>2.11 How will original owners of the data be acknowledged?</label>
       <textarea name="data_acknowledgment" rows="3" placeholder="Mention citation, attribution in publications, or formal agreements."></textarea>
 
       <!-- Navigation Buttons -->
@@ -152,8 +174,6 @@
       </div>
     </form>
   </main>
-
-
 
 </div>
 <footer class="footer">

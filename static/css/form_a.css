@@ -348,9 +348,8 @@ label input[type="radio"] {
   word-spacing: 15px;
 }
 
-
-
 label {
   display: inline-block;
   margin-right: 30px;
+  padding-bottom: 2px;
 }
