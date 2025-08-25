@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | JBS Ethics System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/dashboard.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-wrapper {
+      flex: 1;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-wrapper">
+
+  <!-- Navbar -->
+<header class="navbar">
+  <div class="nav-content">
+    
+    <div class="nav-left">
+      <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Ethics Application System</span>
+    </div>
+
+    <div class="nav-right" style="margin-left: 700px;">
+      <h5>Welcome, {{full_name}}</h5>
+      <a href="{{ url_for('faq') }}" class="btn-logout">FAQ</a>
+      <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+      
+    </div>
+
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Submission Status Table -->
+    <section>
+      <h2>Submission Status</h2>
+      <p>Below is the status of your submissions. Click on the links to view details or edit your submission.</p>
+      {% if (formA) or (formB) or (formC) %}
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>Form Type</th>
+            <th>Date Submitted</th>
+            <th>Status</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if formA %}
+          <tr>
+            <td>Form A</td>
+            <td>{% if formA.submitted_at %}
+              {{formA.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
+            <td>
+              {% if formA.supervisor_feedback%}
+                {{formA.supervisor_feedback}}
+                {% endif %}
+                <br>
+                <em>{% if formA.supervisor_date%}{{formA.supervisor_date.strftime('%d/%m/%Y')}}
+                  {% endif %}
+                </em>
+              </br>
+              {% if formA.supervisor_date %}
+                <span>Feedback: </span>
+                <a href="{{url_for('student_view_feedback',id=formA.form_id)}}">View Feedback</a>
+                <br>
+                  {% endif %}
+            </br>
+                <span style="color:green; font-size:18px;">
+                  {% set review_comment = '' %}
+              {% set review_comment1 = '' %}
+                {% if formA.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formA.form_review_comment %}
+                  {% endif %}
+                {% if formA.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formA.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status 1: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1%}
+                    <p>Review Status 2: {{ review_comment1 }}</p>
+                  {% endif %}
+                  {% if formA.rec_status=='Approved'  or formA.certificate_issued and formA.certificate_received%}
+                  <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
+                  {% elif 'low' in formA.risk_rating|lower and formA.certificate_issued and formA.certificate_received%}
+                  <br><a href="{{url_for('view_certificate',id=formA.form_id)}}">View Certificate</a>
+                  {% elif formA.certificate_issued %}
+                  Certificate was Issued
+                  
+                  {% elif formA.rejected_or_accepted and formA.supervisor_date%}
+                  Form Submitted To Ethics Admin
+                  {% elif not formA.rejected_or_accepted and formA.submitted_at and formA.declaration_name and 'Resubmission Required' not in [formA.form_review_comment,formA.form_review_comment1]%}
+                  Form Submitted To Supervisor
+                  {% elif not formA.rejected_or_accepted and formA.supervisor_date and 'Resubmission Required' not in [formA.form_review_comment,formA.form_review_comment1]%}
+                  Form Was Returned. Please Review The Feedback and Resubmit
+                 {% endif %}
+                </span>
+                <br>
+                
+                
+                
+                </td>
+            <td>
+              {% if not formA.rejected_or_accepted and formA.supervisor_date %}
+              <a href="{{url_for('student_edit_forma')}}">Review</a>
+              {% elif not formA.rejected_or_accepted and not formA.declaration_name%}
+              <a href="{{url_for('student_edit_forma')}}">Review</a>
+              {% else %}
+              <a href="{{url_for('student_form_pdf',form_id=formA.form_id,form_type='A')}}">View Form</a>
+              <br>
+              No action to be executed at this stage
+              {% endif %}
+            </td>
+          </tr>
+          {% endif %}
+          {% if formB %}
+          <tr>
+            <td>Form B</td>
+            <td>{% if formB.submitted_at %}
+              {{formB.submitted_at.strftime('%d/%m/%Y')}}{% endif %}</td>
+            <td>
+              {% if formB.supervisor_feedback%}
+                {{formB.supervisor_feedback}}
+                {% endif %}
+                <br>
+               <em>
+                  {% if formB.supervisor_date%}{{formB.supervisor_date.strftime('%d/%m/%Y')}}
+
+                {% endif %}</em>
+                <br>
+                {% if formB.supervisor_date %}
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formB.form_id)}}">View Feedback</a>
+                <br>
+                
+                  {% endif %}
+
+                <span style="color:green; font-size:18px;">
+                  {% set review_comment = '' %}
+                {% set review_comment1 = '' %}
+                {% if formB.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formB.form_review_comment %}
+                  {% endif %}
+                {% if formB.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formB.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status 1: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1%}
+                    <p>Review Status 2: {{ review_comment1 }}</p>
+                  {% endif %}
+                  {% if formB.rec_status=='Approved'  or formB.certificate_issued and formB.certificate_received%}
+                  <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
+                  {% elif 'low' in formB.risk_level|lower and formB.certificate_issued and formb.certificate_received%}
+                  <br><a href="{{url_for('view_certificate',id=formB.form_id)}}">View Certificate</a>
+                  {% elif formB.certificate_issued %}
+                  Certificate was Issued
+                  
+                  {% elif formB.rejected_or_accepted and formB.supervisor_date%}
+                  Form Submitted To Ethics Admin
+                  {% elif not formB.rejected_or_accepted and formB.submitted_at and formB.declaration_name and 'Resubmission Required' not in [formB.form_review_comment,formB.form_review_comment1]%}
+                  Form Submitted For Review To Supervisor
+                  {% elif not formB.rejected_or_accepted  and formB.supervisor_date and 'Resubmission Required' not in [formB.form_review_comment,formB.form_review_comment1]%}
+                  Form Was Returned. Please Review The Feedback and Resubmit
+                  {% endif %}
+                 </span>
+                <br>
+                
+                
+                
+            </td>
+            <td>
+              {% if not formB.rejected_or_accepted and formB.supervisor_date %}
+              <a href="{{url_for('student_edit_formb')}}">Review</a>
+              {% elif not formB.rejected_or_accepted and not formB.declaration_name%}
+              <a href="{{url_for('student_edit_formb')}}">Review</a>
+              {% else %}
+              <a href="{{url_for('student_form_pdf',form_id=formB.form_id,form_type='B')}}">View Form</a>
+              <br>
+              No action to be executed at this stage
+              {% endif %}
+            </td>
+          </tr>
+         {% endif %}
+          {% if formC %}
+          <tr>
+            
+            <td>Form C</td>
+            <td>
+              <em>{% if formC.submission_date %}{{formC.submission_date.strftime('%d/%m/%Y')}} {% endif %}
+              </em></br>
+              </td>
+            <td>
+              {% if formC.supervisor_feedback%}
+                {{formC.supervisor_feedback}}
+                {% endif %}
+                <br>
+              {% if formC.supervisor_date%}
+                <span>Feedback: </span><a href="{{url_for('student_view_feedback',id=formC.form_id)}}">View Feedback</a>
+                <br>
+                {% endif%}
+            </br>
+                <span style="color:green; font-size:18px;">
+                  {% set review_comment = '' %}
+              {% set review_comment1 = '' %}
+                {% if formC.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment = formC.form_review_comment %}
+                  {% endif %}
+                {% if formC.form_review_comment1 in ['Approved with Minor Changes', 'Resubmission Required'] %}
+                  {% set review_comment1 = formC.form_review_comment1 %}
+                  {% endif %}
+                {# 🖨️ Display the result if it was matched #}
+                  {% if review_comment %}
+                    <p>Review Status 1: {{ review_comment }}</p>
+                    {% endif %}
+                    {% if review_comment1%}
+                    <p>Review Status 2: {{ review_comment1 }}</p>
+                  {% endif %}
+                  {% if formC.rec_status=='Approved' or formC.certificate_issued and formC.certificate_received%}
+                  <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
+                  {% elif 'low' in formC.risk_level|lower and formC.certificate_issued and formc.certificate_received%}
+                  <br><a href="{{url_for('view_certificate',id=formC.form_id)}}">View Certificate</a>
+                  {% elif formC.certificate_issued %}
+                  Certificate was Issued
+                  
+                  {% elif formC.rejected_or_accepted and formC.supervisor_date%}
+                  Form Submitted To Ethics Admin
+                  {% elif not formC.rejected_or_accepted and formC.submission_date and formC.declaration_name and 'Resubmission Required' not in [formC.form_review_comment,formC.form_review_comment1]%}
+                  Form Submitted For Review To Supervisor
+                  {% elif not formC.rejected_or_accepted and formC.supervisor_date and 'Resubmission Required' not in [formC.form_review_comment,formC.form_review_comment1]%}
+                  Form Was Returned. Please Review The Feedback and Resubmit
+                  {% endif %}
+
+                </span>
+                <br>
+                
+                
+                </td>
+            <td>
+              {% if not formC.rejected_or_accepted and formC.supervisor_date %}
+              <a href="{{url_for('student_edit_formc')}}">Review</a>
+              {% elif not formC.rejected_or_accepted and not formC.declaration_name%}
+              <a href="{{url_for('student_edit_formc')}}">Review</a>
+              {% else %}
+              <a href="{{url_for('student_form_pdf',form_id=formC.form_id,form_type='C')}}">View Form</a>
+              <br>
+              No action to be executed at this stage
+              {% endif %}
+            </td>
+
+          </tr>
+
+         
+           {% endif %}
+        </tbody>
+      </table>
+      {% else %}
+    <Strong>There are currently no submissions made</strong>
+       {% endif %}
+    </section>
+
+  </main>
+
+</div>
+
+  <!-- Footer -->
+<footer class="footer">
+   
+</footer>
+
+</body>
+
+</html>

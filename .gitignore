@@ -1,0 +1,12 @@
+backend/__pycache__
+backend/venv
+backend/.env
+myvenv/
+.env
+.env/
+.venv
+myvenv
+__pycache__/
+*.pyc/
+*.pyc
+/static/uploads/

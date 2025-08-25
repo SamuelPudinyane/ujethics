@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: flask run --host=0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - DB_SERVER=ethics-db
+      - DB_USER=postgres
+      - DB_PASSWORD=malvapudding78*
+      - DB_NAME=ethics
+      - DB_PORT=5432
+    depends_on:
+      - ethics-db
+      - rabbitmq
+
+  ethics-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: malvapudding78*
+      POSTGRES_DB: ethics
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+volumes:
+  pgdata:

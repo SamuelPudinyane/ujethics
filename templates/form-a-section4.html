@@ -1,0 +1,539 @@
+<!-- FORM A: SECTION 1-5 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form A – Human Research Ethics | JBS Ethics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/form_a.css">
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/form_a.css') }}"> -->
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-content">
+      <!-- <img src="{{ url_for('static',filename='img/image.png')}}" alt="UJ JBS Logo" class="logo uj"> -->
+       <img src="/static/img/image.png" alt="UJ JBS Logo" class="logo uj">
+      <span class="nav-title">Form A – Section 5: Methodology</span>
+
+                <!-- Logout -->
+    <div style="text-align: right;">
+
+      <a href="{{url_for('logout')}}" class="btn-logout">Logout</a>
+    </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <form action="{{url_for('form_a_sec4')}}" method="post">
+ 
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <!-- Top Bar -->
+    <div class="form-header">
+      <button class="approve-btn">Save Draft</button>
+      <strong>Step 5 of 7</strong>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 70%">70%</div>
+    </div>
+
+
+  <!-- Section 5: Methodology -->
+  <section id="section-5">
+    <h2>Section 5: Methodology</h2>
+
+    <label>5.1 Research Paradigm (Substantiate your choice of paradigm)</label><br>
+    <table id="methodTypeTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Quantitative Methods</th>
+          <th>Qualitative Methods</th>
+          <th>Mixed Methods</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center"><input type="checkbox" name="quantitative[]" value="Yes"></td>
+          <td class="text-center"><input type="checkbox" name="qualitative[]" value="Yes"></td>
+          <td class="text-center"><input type="checkbox" name="mixed_methods[]" value="Yes"></td>
+        </tr>
+      </tbody>
+    </table>
+    <textarea name="paradigm_explanation" rows="3" placeholder="Explain your paradigm selection"></textarea>
+
+    <label>5.2 Research Design / Approach</label>
+    <textarea name="design" rows="4" placeholder="Name & describe the research design you intend to use, e.g. descriptive correlation, case study, grounded theory, etc. If your research will proceed in different phases, describe each phase sequentially"></textarea>
+
+    <br>
+    <label>5.3 Details of the Participants</label>
+
+    <label>5.3.1 Participant Group Description</label>
+    <textarea name="participants_description" rows="3" placeholder="Describe the participant group(s) you will be studying, e.g. age,"></textarea>
+    <br>
+
+    <table id="participantsTable" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Population</th>
+          <th>Sampling Method</th>
+          <th>Sample Size</th>
+          <th>Inclusion Criteria</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" name="population[]" class="form-control" /></td>
+          <td><input type="text" name="sampling_method[]" class="form-control" /></td>
+          <td><input type="number" name="sample_size[]" class="form-control" /></td>
+          <td><textarea name="inclusion_criteria[]" rows="2" class="form-control"></textarea></td>
+          <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <button type="button" class="btn btn-secondary" onclick="addRow()">Add Row</button>
+
+
+    <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.</label>
+    <textarea name="duration_timing" rows="2" placeholder="Explain how much time you require from participants and when data collection will occur"></textarea>
+
+    <label>5.3.3 Explain how you will obtain the contact details of participants<label>
+    <textarea name="contact_details_method" rows="2" placeholder="Explain how you will obtain the contact details of participants"></textarea>
+    <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?</label>
+    <div class="d-flex gap-4">  
+            <label class="form-check-label">
+              <input type="radio" name="conflict_interest" value="No"> No
+            </label>
+            <label class="form-check-label">
+              <input type="radio" name="conflict_interest" value="Yes"> Yes
+            </label>
+    </div>
+    <div id="conflict_explanation_box" style="display: none;">
+            <textarea name="conflict_explanation" rows="2"
+              placeholder="If yes, give details and explain how it will be mitigated"></textarea>
+          </div>
+          <br>
+    <label>5.4 Research Instruments for Data Collection</label>
+    <label>5.4.1 Indicate which data collection methods will be used</label>
+    <div id="data_methods">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Questionnaire</th>
+        <th>Interview</th>
+        <th>Focus Group</th>
+        <th>Observation</th>
+        <th>Documents</th>
+        <th>Other</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center">
+          <input id="m-questionnaire" type="checkbox" value="questionnaire" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-questionnaire">Questionnaire</label>
+        </td>
+        <td class="text-center">
+          <input id="m-interview" type="checkbox" value="interview" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-interview">Interview</label>
+        </td>
+        <td class="text-center">
+          <input id="m-focus" type="checkbox" value="focus" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-focus">Focus Group</label>
+        </td>
+        <td class="text-center">
+          <input id="m-observation" type="checkbox" value="observation" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-observation">Observation</label>
+        </td>
+        <td class="text-center">
+          <input id="m-documents" type="checkbox" value="documents" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-documents">Documents</label>
+        </td>
+        <td class="text-center">
+          <input id="m-other" type="checkbox" value="other" class="method-check" name="data_methods[]">
+          <label class="visually-hidden" for="m-other">Other</label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    <br>
+    
+    <!-- Questionnaire -->
+          <div id="questionnaire_fields" style="display:none; margin-top: 1rem;">
+            <label>5.4.1.1 Questionnaire(s):</label>
+            <div class="d-flex gap-4">
+              <label class="form-check-label">
+                <input type="radio" name="questionnaire_type" value="Self-designed"> Self-designed
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="questionnaire_type" value="Existing"> Existing
+              </label>
+            </div>
+            <label>If existing, permission obtained?</label>
+            <div class="d-flex gap-4">
+              <label class="form-check-label">
+                <input type="radio" name="permission_obtained" value="permission_obtained"> Yes
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="open_source" value="open_source"> Open Source
+              </label>
+            </div>
+            <textarea name="instrument_attachment_reason" rows="2" placeholder="Justify"></textarea>
+          </div>
+    <!-- Interview -->
+          <div id="interview_fields" style="display:none; margin-top: 1rem;">
+            <label>5.4.1.2 Interviews</label>
+            <div class="d-flex gap-4">
+              <label class="form-check-label">
+                <input type="radio" name="interview_type" value="In-depth"> In-depth
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="interview_type" value="Semi-structured"> Semi-structured
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="interview_type" value="Unstructured"> Unstructured
+              </label>
+            </div>
+            <label>Will interviews be recorded?</label>
+            <div class="d-flex gap-4">
+              <label class="form-check-label">
+                <input type="radio" name="interview_recording" value="Audio"> Audio
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="interview_recording" value="Video"> Video
+              </label>
+            </div>
+            </div>
+
+          <!-- Focus Group -->
+          <div id="focus_fields" style="display:none; margin-top: 1rem;">
+            <label>5.4.1.3 Focus Groups</label>
+            <div class="d-flex gap-4">
+              <label class="form-check-label">
+                <input type="radio" name="use_focus_groups" value="Yes"> Yes
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="use_focus_groups" value="No"> No
+              </label>
+            </div>
+            <label>Will focus groups be recorded?</label>
+            <div class="d-flex gap-4">
+              <label class="form-check-label">
+                <input type="radio" name="focus_recording" value="Audio"> Audio
+              </label>
+              <label class="form-check-label">
+                <input type="radio" name="focus_recording" value="Video"> Video
+              </label>
+            </div>
+            </div>
+
+          <!-- Observation -->
+          <div id="observation_fields" style="display:none; margin-top: 1rem;">
+            <label>5.4.1.4 Please describe your observation protocol:</label>
+            <textarea name="observation_details" rows="3"
+              placeholder="Explain how observations will be conducted."></textarea>
+          </div>
+
+          <!-- Documents -->
+          <div id="documents_fields" style="display:none; margin-top: 1rem;">
+            <label>5.4.1.5 What type of documents will be analyzed?</label>
+            <textarea name="documents_details" rows="3"
+              placeholder="E.g. reports, archives, publications..."></textarea>
+          </div>
+
+          <!-- Other -->
+          <div id="other_fields" style="display:none; margin-top: 1rem;">
+            <label>5.4.1.6 Please describe other data collection method(s):</label>
+            <textarea name="other_details" rows="3" placeholder="Describe any other data collection methods you plan to use"></textarea>
+          </div>
+
+          <!-- General Data Collection Procedure -->
+          <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
+          <textarea name="data_collection_procedure" rows="3" placeholder="Describe the data collection procedure in detail"></textarea>
+
+          <br><br>
+
+
+    <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?</label>
+    <textarea name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
+
+    <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?</label>
+    <div class="d-flex gap-4">
+      <label class="form-check-label">
+        <input type="radio" name="intervention" value="No" onchange="toggleIntervention()"> No
+      </label>
+      <label class="form-check-label">
+        <input type="radio" name="intervention" value="Yes" onchange="toggleIntervention()"> Yes
+      </label>
+    </div>
+    <div id="intervention_details_box" style="display:none; margin-top: 1rem;">
+      <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea>
+    </div>
+
+    <label>5.4.5 Will sensitive data be used or vulnerable populations be questioned?</label>
+    <textarea name="sensitive_data" rows="2" placeholder="If yes, explain how you will handle sensitive data or vulnerable populations"></textarea>
+
+    <label>5.4.6 Will a translator be required?</label>
+    <div class="d-flex gap-4">
+      <label class="form-check-label">
+        <input type="radio" name="translator" value="No" onclick="toggleTranslatorBox()"> No
+      </label>
+      <label class="form-check-label">
+        <input type="radio" name="translator" value="Yes" onclick="toggleTranslatorBox()"> Yes
+      </label>
+    </div>
+
+    <div id="translator_details_box" style="display:none; margin-top: 1rem;">
+      <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
+    </div>
+    <br>
+  
+
+<label>5.5 Secondary Data Usage</label>
+
+<!-- 5.5.1 -->
+<label>5.5.1 Will secondary data be used?</label><br>
+<select id="secondaryData" name="secondary_data" class="form-select" onchange="handleSecondaryData()">
+  <option value="">-- Select --</option>
+  <option value="Yes">Yes</option>
+  <option value="No">No</option>
+</select>
+
+<div id="secondaryDetails" style="display: none; margin-top: 1rem;">
+
+  <!-- 5.5.2 -->
+  <label>5.5.2 Is the data Public or Private?</label><br>
+  <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
+    <option value="">-- Select --</option>
+    <option value="public">Public</option>
+    <option value="private">Private</option>
+    <option value="both">Both</option>
+  </select>
+
+  <!-- 5.5.3.1 -->
+  <label>5.5.3 Nature of the Data</label>
+  <input type="text" name="data_nature" class="form-control"  placeholder="e.g., survey, interviews, reports">
+
+  <!-- 5.5.3.2 -->
+  <label>5.5.4 Origin/Source of Research Data</label>
+  <input type="text" name="data_origin" class="form-control"  placeholder="e.g., academic articles, organizational data">
+
+  <!-- 5.5.3.3 -->
+  <label>5.5.5 What are the access conditions?</label>
+  <textarea name="access_conditions" class="form-control" rows="3" placeholder="Access terms, licenses, restrictions, etc."></textarea>
+
+  <!-- 5.5.3.4 -->
+  <label>5.5.6 Does the database contain personal information/identifiers?</label>
+  <div class="d-flex gap-4">
+    <label class="form-check-label">
+      <input type="radio" name="personal_info" value="Yes" onchange="togglePersonalInfo()"> Yes
+    </label>
+    <label class="form-check-label">
+      <input type="radio" name="personal_info" value="No" onchange="togglePersonalInfo()"> No
+    </label>
+  </div>
+
+  <!-- 5.5.3.5 -->
+  <div id="personalInfoComment" style="display: none; margin-top: 1rem;">
+    <label>5.5.6.1 Specify the personal info/identifiers:</label>
+    <textarea name="personal_info_comment" class="form-control" rows="3" placeholder="List the types of identifiers."></textarea>
+  </div>
+
+  <!-- 5.5.3.6 -->
+  <label>5.5.7 Has the data been anonymized?</label>
+  <div class="d-flex gap-4">
+    <label class="form-check-label">
+      <input type="radio" name="data_anonymized" value="Yes"> Yes
+    </label>
+    <label class="form-check-label">
+      <input type="radio" name="data_anonymized" value="No"> No
+    </label>
+    <label class="form-check-label">
+      <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
+    </label>
+  </div>
+
+  <!-- 5.5.3.7 -->
+  <label>5.5.7.1 Comment / Justification:</label>
+  <textarea name="anonymization_comment" class="form-control" rows="3" placeholder="Justify anonymization or explain why not applicable."></textarea>
+
+  <!-- PRIVATE SECTION -->
+  <div id="privateDataSection" style="display: none; margin-top: 1rem;">
+    <!-- 5.5.3.8 -->
+    <label>5.5.8 Is the data from a company that has provided permission?</label>
+    <select id="privatePermission" name="org_permision" class="form-select" onchange="handlePrivatePermission()">
+      <option value="">-- Select --</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <!-- 5.5.3.9 -->
+    <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
+      <label>5.5.8.1 Upload the permission document from the organization:</label>
+      <input type="file" name="private_permission_file" class="form-control">
+
+      <label>5.5.8.2 Provide permission details (if any):</label>
+      <textarea name="permission_details" class="form-control" rows="3"
+        placeholder="Describe permission terms."></textarea>
+    </div>
+  </div>
+
+  <!-- PUBLIC SECTION -->
+  <div id="publicDataSection" style="display: none; margin-top: 1rem;">
+    <!-- 5.5.3.10 -->
+    <label>5.5.9 What type of public data will be used?</label>
+    <textarea name="public_data_description" class="form-control" rows="3" placeholder="e.g., Government stats, open access articles, datasets."></textarea>
+  </div>
+
+  <!-- 5.5.3.11 -->
+  <label>5.5.10 Will data shortcomings/incompleteness be reported?</label>
+  <div class="d-flex gap-4">
+    <label class="form-check-label">
+      <input type="radio" name="shortcomings_reported" value="Yes"> Yes
+    </label>
+    <label class="form-check-label">
+      <input type="radio" name="shortcomings_reported" value="No"> No
+    </label>
+  </div>
+
+  <!-- 5.5.3.12 -->
+  <label>5.5.11 How will data limitations be reported?</label>
+  <textarea name="limitations_reporting" class="form-control" rows="3" placeholder="Explain methods to manage missing or incomplete data."></textarea>
+
+  <!-- 5.5.3.13 -->
+  <label>5.5.12 Is the research methodology and design aligned with secondary data use?</label>
+  <div class="d-flex gap-4">
+    <label class="form-check-label">
+      <input type="radio" name="methodology_alignment" value="Yes"> Yes
+    </label>
+    <label class="form-check-label">
+      <input type="radio" name="methodology_alignment" value="No"> No
+    </label>
+  </div>
+
+  <!-- 5.5.3.14 -->
+  <label>5.5.13 How will the original owners of the data be acknowledged?</label>
+  <textarea name="data_acknowledgment" class="form-control" rows="3"
+    placeholder="e.g., citations, credits, license acknowledgments."></textarea>
+
+</div>
+</section>
+
+        <!-- Navigation Buttons -->
+        <div class="form-navigation">
+          <a href="{{url_for('form_a_sec3')}}" class="revise-btn">⬅ Section 3</a>
+          <button type="submit"  class="approve-btn">Next ➔ Section 4</button>
+        </div>
+      </form>
+  
+    </main>
+  
+    <!-- Footer -->
+ <footer class="footer">
+   
+</footer>
+
+    <script>
+  function addRow() {
+    const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
+    const newRow = table.rows[0].cloneNode(true);
+    Array.from(newRow.querySelectorAll('input, textarea')).forEach(input => input.value = '');
+    table.appendChild(newRow);
+  }
+
+  function removeRow(button) {
+    const row = button.closest('tr');
+    const table = document.getElementById('participantsTable').getElementsByTagName('tbody')[0];
+    if (table.rows.length > 1) {
+      row.remove();
+    } else {
+      alert("You must have at least one row.");
+    }
+  }
+
+  function toggleTranslatorBox() {
+    const radios = document.getElementsByName("translator");
+    const box = document.getElementById("translator_details_box");
+    box.style.display = Array.from(radios).some(r => r.checked && r.value === "Yes") ? "block" : "none";
+  }
+
+  function toggleIntervention() {
+    const selected = document.querySelector('input[name="intervention"]:checked')?.value;
+    document.getElementById("intervention_details_box").style.display = selected === "Yes" ? "block" : "none";
+  }
+
+  function handleSecondaryData() {
+    const val = document.getElementById("secondaryData").value;
+    document.getElementById("secondaryDetails").style.display = val === "Yes" ? "block" : "none";
+  }
+
+  function handleDataType() {
+    const type = document.getElementById("dataType").value;
+    document.getElementById("privateDataSection").style.display = (type === "private" || type === "both") ? "block" : "none";
+    document.getElementById("publicDataSection").style.display = (type === "public" || type === "both") ? "block" : "none";
+  }
+
+  function handlePrivatePermission() {
+    const val = document.getElementById("privatePermission").value;
+    document.getElementById("uploadPrivatePermission").style.display = val === "No" ? "block" : "none";
+  }
+
+  function resetFields() {
+    document.getElementById('dataType').value = "";
+    document.getElementById('privatePermission').value = "";
+    document.getElementById('privateDataSection').style.display = 'none';
+    document.getElementById('publicDataSection').style.display = 'none';
+    document.getElementById('uploadPrivatePermission').style.display = 'none';
+  }
+
+  function togglePersonalInfo() {
+    const radios = document.getElementsByName("personal_info");
+    const commentBox = document.getElementById("personalInfoComment");
+    commentBox.style.display = Array.from(radios).some(r => r.checked && r.value === "Yes") ? "block" : "none";
+  }
+
+  // Conflict of interest logic
+  document.querySelectorAll('input[name="conflict_interest"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      document.getElementById('conflict_explanation_box').style.display = this.value === 'Yes' ? 'block' : 'none';
+    });
+  });
+
+  // Method logic
+  const methodMap = {
+    'questionnaire': 'questionnaire_fields',
+    'interview': 'interview_fields',
+    'focus': 'focus_fields',
+    'observation': 'observation_fields',
+    'documents': 'documents_fields',
+    'other': 'other_fields',
+  };
+
+  document.querySelectorAll('.method-check').forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      const targetId = methodMap[this.value];
+      if (targetId) {
+        const target = document.getElementById(targetId);
+        target.style.display = this.checked ? 'block' : 'none';
+      }
+    });
+  });
+
+  // Toggle public data fallback field
+  function togglePublicData() {
+    const radios = document.getElementsByName("data_public");
+    const field = document.getElementById("public_data_fields");
+    field.style.display = Array.from(radios).some(r => r.checked && r.value === "No") ? "block" : "none";
+  }
+</script>
+
+</body>
+</html>
