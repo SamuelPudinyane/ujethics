@@ -31,17 +31,30 @@ from flask_migrate import Migrate
 # DB_USER = os.getenv("DB_USER", "sa")
 # DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
 
+<<<<<<< HEAD
 DB_SERVER = os.getenv("DB_SERVER", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "ethics")
 DB_USER = os.getenv("DB_USER", "postgres")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
 
+=======
+>>>>>>> 342f279bd866e97dd0d8adde39888048b36bf23b
 # DB_SERVER = os.getenv("DB_SERVER", "localhost")
 # DB_PORT = os.getenv("DB_PORT", "5432")
 # DB_NAME = os.getenv("DB_NAME", "ethics")
 # DB_USER = os.getenv("DB_USER", "postgres")
+<<<<<<< HEAD
 # DB_PASSWORD = os.getenv("DB_PASSWORD", "Musa")
+=======
+# DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
+
+DB_SERVER = os.getenv("DB_SERVER", "localhost")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "ethics")
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "Musa")
+>>>>>>> 342f279bd866e97dd0d8adde39888048b36bf23b
 
 
 connection_string = (
