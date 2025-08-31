@@ -575,7 +575,7 @@
     <!-- 5.4.1.1 Questionnaire(s) -->
   <label>5.4.1.1 Questionnaire(s):</label><br>
   {% if formA.questionnaire_type %}
-    <span class="form-answer">Questionnaire Type: {{ formA.questionnaire_type }}</span><br>
+    <span class="form-answer">Questionnaire Type: {{ formA.questionnaire_type or 'Not provided' }}</span><br>
   {% endif %}
 
   {% if formA.questionnaire_type == 'Existing' %}
@@ -590,35 +590,35 @@
     </span>
     <br>
   {% endif %}
-    <label>Justification: </label><span class="form-answer">{{formA.instrument_attachment_reason}}</span>
+    <label>Justification: </label><span class="form-answer">{{formA.instrument_attachment_reason or 'Not provided'}}</span>
 
     <!-- Interview -->
     <label>5.4.1.2 Interviews</label><br>
-    <span class="form-answer">{{formA.interview_type}}</span>
-    <label>Will interviews be recorded?</label><br>
+    <span class="form-answer">{{formA.interview_type or 'Not provided'}}</span>
+    <label>How will the interviews be recorded?</label><br>
     <span class="form-answer">{% if formA.interview_recording=='Audio'%}{{formA.interview_recording}}{% endif%}</span>
     <br>
     <span class="form-answer">{% if formA.interview_recording=='Video'%}{{formA.interview_recording}}{% endif%}</span>
     
     <!-- Focus Group -->
     <label>5.4.1.3 Focus Groups: </label>
-    <br><span class="form-answer">{{formA.use_focus_groups}}</span>
-   <label>Will focus groups be recorded?</label><br>
+    <!-- <br><span class="form-answer">{{formA.use_focus_groups}}</span> -->
+   <label>How will the focus groups be recorded?</label><br>
    <span class="form-answer">{% if formA.focus_recording=='Audio'%}{{formA.focus_recording}}{% endif%}</span>
    <span class="form-answer">{% if formA.focus_recording=='Video'%}{{formA.focus_recording}}{% endif%}</span>
    <br>
    <!-- Observation -->
     <label>5.4.1.4 Please describe your observation protocol:</label>
-    <br><span class="form-answer">{{formA.observation_details}}</span>
+    <br><span class="form-answer">{{formA.observation_details or 'Not provided'}}</span>
     <br>
   <!-- Documents -->
     <label>5.4.1.5 What type of documents will be analyzed?</label><br>
-    <span class="form-answer">{{formA.documents_details}}</span>
+    <span class="form-answer">{{formA.documents_details or 'Not provided'}}</span>
     <br>
   <!-- Other -->
   <label>5.4.1.6 Please describe other data collection method(s):</label>
   <br>
-  <span class="form-answer">{{formA.other_details}}</span>
+  <span class="form-answer">{{formA.other_details or 'Not provided'}}</span>
 
     <!-- General Data Collection Procedure -->
      <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
@@ -697,7 +697,7 @@
 
 <br><br>
 
-<label>5.5.8 Is the data from a company that has provided permission?</label><br>
+<!-- <label>5.5.8 Is the data from a company that has provided permission?</label><br>
 <span class="form-answer">{{ formA.org_permision or 'Not specified' }}</span>
 
 <br><br>
@@ -709,29 +709,29 @@
   <span class="form-answer">No file uploaded</span>
 {% endif %}
 
-<br><br>
+<br><br> -->
 
-<label>5.5.9 What type of public data will be used?</label><br>
+<label>5.5.8 What type of public data will be used?</label><br>
 <span class="form-answer">{{ formA.public_data_description or 'None specified' }}</span>
 
 <br><br>
 
-<label>5.5.10 Will data shortcomings/incompleteness be reported?</label><br>
+<label>5.5.9 Will data shortcomings/incompleteness be reported?</label><br>
 <span class="form-answer">{{ formA.shortcomings_reported or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.11 How will data limitations be reported?</label><br>
+<label>5.5.10 How will data limitations be reported?</label><br>
 <span class="form-answer">{{ formA.limitations_reporting or 'Not provided' }}</span>
 
 <br><br>
 
-<label>5.5.12 Is the research methodology and design aligned with secondary data use?</label><br>
+<label>5.5.11 Is the research methodology and design aligned with secondary data use?</label><br>
 <span class="form-answer">{{ formA.methodology_alignment or 'Not specified' }}</span>
 
 <br><br>
 
-<label>5.5.13 How will the original owners of the data be acknowledged?</label><br>
+<label>5.5.12 How will the original owners of the data be acknowledged?</label><br>
 <span class="form-answer">{{ formA.data_acknowledgment or 'Not provided' }}</span>
 
 </section>

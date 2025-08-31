@@ -282,7 +282,7 @@ def authenticate_student(id):
             ###
             ### uncomment the code bellow for real testing
 
-            message=(f'Your account has been Authenticated,Please follow the link to log in '
+            message=(f'Your account has been Authenticated. Please follow the link to log in '
             f'http://127.0.0.1:5000')
 
             try:
@@ -342,7 +342,7 @@ def register_reviewer():
                 ### uncomment the code bellow for real testing
 
                 message=(f'An account was created on your behalf, ' 
-                    f'please follow the link http://127.0.0.1:5000 use your '
+                    f'please follow the link http://127.0.0.1:5000 and use your '
                     f' email as username and password = {password}')
                 try:
                     send_email(app,mail, message,[email])
@@ -3125,7 +3125,7 @@ def student_edit_forma():
         ##
 
         """message=(f'you have successfully edited and Submited your Form ' 
-        f'Please wait while is under review')
+        f'Please wait while its under review')
             
         send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
@@ -3213,7 +3213,7 @@ def student_edit_formb():
         #Uncomment the code bellow for testing
         ##
         """message=(f'you have successfully edited and Submited your Form ' 
-        f'Please wait while is under review')
+        f'Please wait while its under review')
             
         send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
@@ -3313,7 +3313,7 @@ def student_edit_formc():
         #Uncomment the code bellow for testing
         ##
         """message=(f'you have successfully edited and Submited your Form ' 
-        f'Please wait while is under review')
+        f'Please wait while its under review')
             
         send_email(app,mail, message,user.email)"""
         return redirect(url_for('student_dashboard'))
@@ -3502,7 +3502,7 @@ def send_certificate(id):
                 #Uncomment the code bellow for testing
                 ##
                 try:
-                    message=(f'your have been issued with Ethics certificate '
+                    message=(f'You have been issued with the Ethics Certificate. '
                     f'Follow the link https://127.0.0.1:5000 to view your certificate')
                     if certificate_details.email:
                         send_email(app,mail, message,[certificate_details.email])

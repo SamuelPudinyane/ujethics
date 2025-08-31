@@ -88,15 +88,9 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="section">
           <label>3.1 Title or provisional title of the research project:</label>
-          <input
-            type="text"
-            name="title_provision"
-            placeholder="10 –16 words"
-            required
-          />
+          <input type="text" name="title_provision" placeholder="10 –16 words" required/>
 
-          <label>3.2 Proposal abstract in nontechnical language and statement of
-            research problem:</label>
+          <label>3.2 Proposal abstract in nontechnical language and statement of research problem:</label>
           <textarea name="abstract" rows="5" required placeholder="Provide a non-technical summary and state the research problem..."></textarea>
 
           <label>3.3 Research Questions / Hypotheses:</label>
@@ -114,15 +108,14 @@
 
         <h2>Section 4: Details of Proposed Research</h2>
         <div class="section">
-          <label>4.1 Does your project involve organisations or institutions that
-            need to grant permission for research activities?</label>
+          <label>4.1 Does your project involve organisations or institutions that need to grant permission for research activities?</label>
           <div class="d-flex gap-4">  
             <label class="form-check-label">
-              <input type="radio" name="grant_permission" value="No" class="form-check-input">
+              <input type="radio" name="grant_permission" value="No" class="form-check-input" required>
               No
             </label>
             <label class="form-check-label">
-              <input type="radio" name="grant_permission" value="Yes" class="form-check-input">
+              <input type="radio" name="grant_permission" value="Yes" class="form-check-input" required>
               Yes
             </label>
           </div>
@@ -155,16 +148,15 @@
           <button type="button" class="btn btn-secondary mt-2" onclick="addPermissionRow()">Add Another Organisation</button>
 </div>
 
-          <label>4.2 Are any researchers affiliated with the organisations
-            above?</label>
+          <label>4.2 Are any researchers affiliated with the organisations above?</label>
 
           <div class="d-flex gap-4">
             <label class="form-check-label">
-              <input type="radio" name="researcher_affiliation" value="No" class="form-check-input">
+              <input type="radio" name="researcher_affiliation" value="No" class="form-check-input" required>
               No
             </label>
             <label class="form-check-label">
-              <input type="radio" name="researcher_affiliation" value="Yes" class="form-check-input">
+              <input type="radio" name="researcher_affiliation" value="Yes" class="form-check-input" required>
               Yes
             </label>
           </div>
@@ -173,29 +165,31 @@
             <textarea name="affiliation_details" rows="3" placeholder="Describe researcher’s affiliation to any listed organisation..."></textarea>
           </div>
 
-          <label>4.3 Does your research involve collectives or communities?</label>
+          <label>4.3 Does your research involve collectives or communities?
+            <p style="font-weight: normal;">(Group of people sharing social ties, similar interests and a geographic location)</p>
+          </label>
           
           <div class="d-flex gap-4">
             <label class="form-check-label">
-              <input type="radio" name="collective_involvement" value="No" class="form-check-input">
+              <input type="radio" name="collective_involvement" value="No" class="form-check-input" required>
               No
             </label>
             <label class="form-check-label">
-              <input type="radio" name="collective_involvement" value="Yes" class="form-check-input">
+              <input type="radio" name="collective_involvement" value="Yes" class="form-check-input" required>
               Yes
             </label>
           </div>
             <div id="collective_comment" style="display:none;" placeholder="Please provide details of the collective/community involvement">
-              <textarea name="collective_details" rows="3" placeholder="Describe the community or collective involved..."></textarea>
+              <textarea name="collective_details" rows="3" placeholder="Explain what measures you have taken to consult and engage with those communities and / or representative groups regarding your research project."></textarea>
             </div>
 
           <label>4.4 Is your project funded or sponsored?</label>
           <div class="d-flex gap-4">
             <label class="form-check-label">
-              <input type="radio" name="is_funded" value="No" class="form-check-input"> No
+              <input type="radio" name="is_funded" value="No" class="form-check-input" required> No
             </label>
             <label class="form-check-label">
-              <input type="radio" name="is_funded" value="Yes" class="form-check-input"> Yes
+              <input type="radio" name="is_funded" value="Yes" class="form-check-input" required> Yes
             </label>
           </div>
           <div id="funding_table" style="display: none;">
@@ -226,13 +220,11 @@
           </table>
           </div>
 
-          <label>4.5 Describe your arrangements regarding indemnity/compensation for
-            adverse events:</label>
-          <textarea name="indemnity_arrangements" rows="3" placeholder="Describe plans for indemnity or compensation in case of adverse events..."></textarea>
+          <label>4.5 Describe your arrangements regarding indemnity/compensation for adverse events:</label>
+          <textarea name="indemnity_arrangements" rows="3" required placeholder="Describe plans for indemnity or compensation in case of adverse events..."></textarea>
 
-          <label>4.6 Has this proposal been submitted to another ethics
-            committee?</label>
-          <textarea name="other_committee" rows="3" placeholder="Mention any previous ethics committee submissions and their outcomes..."></textarea>
+          <label>4.6 Has this proposal been submitted to another ethics committee?</label>
+          <textarea name="other_committee" rows="3" required placeholder="If yes, indicate the name of the institution and the outcome.  If previously rejected, provide the reasons"></textarea>
         </div>
 
         <!-- Navigation Buttons -->

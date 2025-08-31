@@ -158,17 +158,16 @@ input[type="checkbox"]:checked::after {
       <h5>2.4 Risk Assessment</h5>
       
       <label><strong>Rate your project risk level:</strong></label>
-      <select name="risk_level" class="form-select">
+      <select name="risk_level" class="form-select" required>
         <option value="">-- Select Risk Level --</option>
         <option value="Low">Low Risk</option>
-        <option value="Medium">Medium Risk</option>
-        <option value="High">High Risk</option>
+        <!-- <option value="Medium">Medium Risk</option>
+        <option value="High">High Risk</option> -->
       </select>
       
       <br>
       <label><strong>2.4.1 Justify the Risk Level</strong></label>
       <textarea name="risk_justification" class="form-control" rows="3" placeholder="Explain why you selected this risk level" required></textarea>
-      
  
       <!-- Navigation -->
       <div class="form-navigation">

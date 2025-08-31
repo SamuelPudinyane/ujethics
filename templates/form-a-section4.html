@@ -64,16 +64,16 @@
         </tr>
       </tbody>
     </table>
-    <textarea name="paradigm_explanation" rows="3" placeholder="Explain your paradigm selection"></textarea>
+    <textarea name="paradigm_explanation" rows="3" required placeholder="Explain your paradigm selection"></textarea>
 
     <label>5.2 Research Design / Approach</label>
-    <textarea name="design" rows="4" placeholder="Name & describe the research design you intend to use, e.g. descriptive correlation, case study, grounded theory, etc. If your research will proceed in different phases, describe each phase sequentially"></textarea>
+    <textarea name="design" rows="4" required placeholder="Name & describe the research design you intend to use, e.g. descriptive correlation, case study, grounded theory, etc. If your research will proceed in different phases, describe each phase sequentially"></textarea>
 
     <br>
     <label>5.3 Details of the Participants</label>
 
     <label>5.3.1 Participant Group Description</label>
-    <textarea name="participants_description" rows="3" placeholder="Describe the participant group(s) you will be studying, e.g. age,"></textarea>
+    <textarea name="participants_description" rows="3" required placeholder="Describe the participant group(s) you will be studying, e.g. age,"></textarea>
     <br>
 
     <table id="participantsTable" class="table table-bordered">
@@ -88,10 +88,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" name="population[]" class="form-control" /></td>
-          <td><input type="text" name="sampling_method[]" class="form-control" /></td>
-          <td><input type="number" name="sample_size[]" class="form-control" /></td>
-          <td><textarea name="inclusion_criteria[]" rows="2" class="form-control"></textarea></td>
+          <td><input type="text" name="population[]" class="form-control" required /></td>
+          <td><input type="text" name="sampling_method[]" class="form-control" required /></td>
+          <td><input type="number" name="sample_size[]" class="form-control" required /></td>
+          <td><textarea name="inclusion_criteria[]" rows="2" class="form-control" required></textarea></td>
           <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
         </tr>
       </tbody>
@@ -101,17 +101,18 @@
 
 
     <label>5.3.2 Describe how much time you require of participants in each group and when the data will be collected/ interviews will take place.</label>
-    <textarea name="duration_timing" rows="2" placeholder="Explain how much time you require from participants and when data collection will occur"></textarea>
+    <textarea name="duration_timing" rows="2" required placeholder="Explain how much time you require from participants and when data collection will occur"></textarea>
 
-    <label>5.3.3 Explain how you will obtain the contact details of participants<label>
-    <textarea name="contact_details_method" rows="2" placeholder="Explain how you will obtain the contact details of participants"></textarea>
-    <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?</label>
+    <label>5.3.3 Explain how you will obtain the contact details of participants</label>
+    <textarea name="contact_details_method" rows="2" required placeholder="Explain how you will obtain the contact details of participants"></textarea>
+    
+    <label>5.3.4 Conflict of interest or unequal relationship between researcher and participants?<span class="info-icon" title="A conflict of interest may arise where financial, personal or other considerations could directly and significantly affect, or appear to affect, a researcher's research conduct and judgement.">ℹ</span></label>
     <div class="d-flex gap-4">  
             <label class="form-check-label">
-              <input type="radio" name="conflict_interest" value="No"> No
+              <input type="radio" name="conflict_interest" value="No" required> No
             </label>
             <label class="form-check-label">
-              <input type="radio" name="conflict_interest" value="Yes"> Yes
+              <input type="radio" name="conflict_interest" value="Yes" required> Yes
             </label>
     </div>
     <div id="conflict_explanation_box" style="display: none;">
@@ -202,7 +203,7 @@
                 <input type="radio" name="interview_type" value="Unstructured"> Unstructured
               </label>
             </div>
-            <label>Will interviews be recorded?</label>
+            <label>How will the interviews be recorded?</label>
             <div class="d-flex gap-4">
               <label class="form-check-label">
                 <input type="radio" name="interview_recording" value="Audio"> Audio
@@ -216,15 +217,7 @@
           <!-- Focus Group -->
           <div id="focus_fields" style="display:none; margin-top: 1rem;">
             <label>5.4.1.3 Focus Groups</label>
-            <div class="d-flex gap-4">
-              <label class="form-check-label">
-                <input type="radio" name="use_focus_groups" value="Yes"> Yes
-              </label>
-              <label class="form-check-label">
-                <input type="radio" name="use_focus_groups" value="No"> No
-              </label>
-            </div>
-            <label>Will focus groups be recorded?</label>
+            <label>How will the focus groups be recorded?</label>
             <div class="d-flex gap-4">
               <label class="form-check-label">
                 <input type="radio" name="focus_recording" value="Audio"> Audio
@@ -257,49 +250,48 @@
 
           <!-- General Data Collection Procedure -->
           <label style="margin-top: 1.5rem;">5.4.2 Describe the data collection procedure</label>
-          <textarea name="data_collection_procedure" rows="3" placeholder="Describe the data collection procedure in detail"></textarea>
+          <textarea name="data_collection_procedure" rows="3" required placeholder="Describe the data collection procedure in detail"></textarea>
 
           <br><br>
 
 
     <label>5.4.3 Who will collect the data (Researcher and/or field workers/external company)?</label>
-    <textarea name="data_collectors" rows="2" placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
+    <textarea name="data_collectors" rows="2" required placeholder="Explain any measures that you will take to prepare yourself or field workers to optimise data collection activities (Provide a confidentiality agreement form for fieldworkers/ external party"></textarea>
 
     <label>5.4.4 Will participants be subjected to any form of intervention (manipulation of the participant or the participants' environment)?</label>
     <div class="d-flex gap-4">
       <label class="form-check-label">
-        <input type="radio" name="intervention" value="No" onchange="toggleIntervention()"> No
+        <input type="radio" name="intervention" value="No" required onchange="toggleIntervention()"> No
       </label>
       <label class="form-check-label">
-        <input type="radio" name="intervention" value="Yes" onchange="toggleIntervention()"> Yes
+        <input type="radio" name="intervention" value="Yes" required onchange="toggleIntervention()"> Yes
       </label>
     </div>
     <div id="intervention_details_box" style="display:none; margin-top: 1rem;">
-      <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention"></textarea>
+      <textarea name="intervention_details" rows="2" placeholder="If yes, explain the intervention in full"></textarea>
     </div>
 
     <label>5.4.5 Will sensitive data be used or vulnerable populations be questioned?</label>
-    <textarea name="sensitive_data" rows="2" placeholder="If yes, explain how you will handle sensitive data or vulnerable populations"></textarea>
+    <textarea name="sensitive_data" rows="2" required placeholder="If yes, explain how you will handle sensitive data or vulnerable populations"></textarea>
 
     <label>5.4.6 Will a translator be required?</label>
     <div class="d-flex gap-4">
       <label class="form-check-label">
-        <input type="radio" name="translator" value="No" onclick="toggleTranslatorBox()"> No
+        <input type="radio" name="translator" value="No" required onclick="toggleTranslatorBox()"> No
       </label>
       <label class="form-check-label">
-        <input type="radio" name="translator" value="Yes" onclick="toggleTranslatorBox()"> Yes
+        <input type="radio" name="translator" value="Yes" required onclick="toggleTranslatorBox()"> Yes
       </label>
     </div>
 
     <div id="translator_details_box" style="display:none; margin-top: 1rem;">
-      <textarea name="translator_procedure" rows="2" placeholder="Explain how translator will be used"></textarea>
+      <textarea name="translator_procedure" rows="2" placeholder="If yes, explain in which way and the procedure that will be followed"></textarea>
     </div>
     <br>
   
 
 <label>5.5 Secondary Data Usage</label>
 
-<!-- 5.5.1 -->
 <label>5.5.1 Will secondary data be used?</label><br>
 <select id="secondaryData" name="secondary_data" class="form-select" onchange="handleSecondaryData()">
   <option value="">-- Select --</option>
@@ -309,7 +301,6 @@
 
 <div id="secondaryDetails" style="display: none; margin-top: 1rem;">
 
-  <!-- 5.5.2 -->
   <label>5.5.2 Is the data Public or Private?</label><br>
   <select id="dataType" name="data_type" class="form-select" onchange="handleDataType()">
     <option value="">-- Select --</option>
@@ -318,19 +309,15 @@
     <option value="both">Both</option>
   </select>
 
-  <!-- 5.5.3.1 -->
   <label>5.5.3 Nature of the Data</label>
   <input type="text" name="data_nature" class="form-control"  placeholder="e.g., survey, interviews, reports">
 
-  <!-- 5.5.3.2 -->
   <label>5.5.4 Origin/Source of Research Data</label>
   <input type="text" name="data_origin" class="form-control"  placeholder="e.g., academic articles, organizational data">
 
-  <!-- 5.5.3.3 -->
   <label>5.5.5 What are the access conditions?</label>
   <textarea name="access_conditions" class="form-control" rows="3" placeholder="Access terms, licenses, restrictions, etc."></textarea>
 
-  <!-- 5.5.3.4 -->
   <label>5.5.6 Does the database contain personal information/identifiers?</label>
   <div class="d-flex gap-4">
     <label class="form-check-label">
@@ -341,13 +328,11 @@
     </label>
   </div>
 
-  <!-- 5.5.3.5 -->
   <div id="personalInfoComment" style="display: none; margin-top: 1rem;">
     <label>5.5.6.1 Specify the personal info/identifiers:</label>
     <textarea name="personal_info_comment" class="form-control" rows="3" placeholder="List the types of identifiers."></textarea>
   </div>
 
-  <!-- 5.5.3.6 -->
   <label>5.5.7 Has the data been anonymized?</label>
   <div class="d-flex gap-4">
     <label class="form-check-label">
@@ -361,40 +346,19 @@
     </label>
   </div>
 
-  <!-- 5.5.3.7 -->
+
   <label>5.5.7.1 Comment / Justification:</label>
   <textarea name="anonymization_comment" class="form-control" rows="3" placeholder="Justify anonymization or explain why not applicable."></textarea>
 
-  <!-- PRIVATE SECTION -->
-  <div id="privateDataSection" style="display: none; margin-top: 1rem;">
-    <!-- 5.5.3.8 -->
-    <label>5.5.8 Is the data from a company that has provided permission?</label>
-    <select id="privatePermission" name="org_permision" class="form-select" onchange="handlePrivatePermission()">
-      <option value="">-- Select --</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
 
-    <!-- 5.5.3.9 -->
-    <div id="uploadPrivatePermission" style="display: none; margin-top: 1rem;">
-      <label>5.5.8.1 Upload the permission document from the organization:</label>
-      <input type="file" name="private_permission_file" class="form-control">
-
-      <label>5.5.8.2 Provide permission details (if any):</label>
-      <textarea name="permission_details" class="form-control" rows="3"
-        placeholder="Describe permission terms."></textarea>
-    </div>
-  </div>
 
   <!-- PUBLIC SECTION -->
   <div id="publicDataSection" style="display: none; margin-top: 1rem;">
-    <!-- 5.5.3.10 -->
-    <label>5.5.9 What type of public data will be used?</label>
+    <label>5.5.8 What type of public data will be used?</label>
     <textarea name="public_data_description" class="form-control" rows="3" placeholder="e.g., Government stats, open access articles, datasets."></textarea>
   </div>
 
-  <!-- 5.5.3.11 -->
-  <label>5.5.10 Will data shortcomings/incompleteness be reported?</label>
+  <label>5.5.9 Will data shortcomings/incompleteness be reported?</label>
   <div class="d-flex gap-4">
     <label class="form-check-label">
       <input type="radio" name="shortcomings_reported" value="Yes"> Yes
@@ -404,12 +368,10 @@
     </label>
   </div>
 
-  <!-- 5.5.3.12 -->
-  <label>5.5.11 How will data limitations be reported?</label>
+  <label>5.5.10 How will data limitations be reported?</label>
   <textarea name="limitations_reporting" class="form-control" rows="3" placeholder="Explain methods to manage missing or incomplete data."></textarea>
 
-  <!-- 5.5.3.13 -->
-  <label>5.5.12 Is the research methodology and design aligned with secondary data use?</label>
+  <label>5.5.11 Is the research methodology and design aligned with secondary data use?</label>
   <div class="d-flex gap-4">
     <label class="form-check-label">
       <input type="radio" name="methodology_alignment" value="Yes"> Yes
@@ -419,8 +381,7 @@
     </label>
   </div>
 
-  <!-- 5.5.3.14 -->
-  <label>5.5.13 How will the original owners of the data be acknowledged?</label>
+  <label>5.5.12 How will the original owners of the data be acknowledged?</label>
   <textarea name="data_acknowledgment" class="form-control" rows="3"
     placeholder="e.g., citations, credits, license acknowledgments."></textarea>
 
