@@ -305,12 +305,14 @@ def plot_submissions_over_time_c(df):
 
 # 7️⃣ Review Recommendation by Risk Rating (stacked bar)
 def plot_review_by_risk_rating_c(df):
+    
     plt.figure(figsize=(8,4))
-    review_risk = pd.crosstab(df['risk_rating'], df['review_recommendation'])
+    review_risk = pd.crosstab(df['risk_level'], df['review_recommendation'])
     colors = random_palette(review_risk.shape[1])
     review_risk.plot(kind='bar', stacked=True, ax=plt.gca(), color=colors, width=0.6)
     plt.title("Review Recommendation by Risk Rating")
     return fig_to_base64()
+    
 
 # 8️⃣ Top Applicants by Submission Count
 def plot_top_applicants_c(df):

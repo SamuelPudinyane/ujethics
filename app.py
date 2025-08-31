@@ -282,8 +282,8 @@ def authenticate_student(id):
             ###
             ### uncomment the code bellow for real testing
 
-            message=(f'Your account has been Authenticated. Please follow the link to log in '
-            f'http://127.0.0.1:5000')
+            message=(f'Your account has been Authenticated,Please follow the link to log in '
+            f'http://152.106.35.11:8080/')
 
             try:
                 send_email(app,mail, message,[user.email])
@@ -342,7 +342,7 @@ def register_reviewer():
                 ### uncomment the code bellow for real testing
 
                 message=(f'An account was created on your behalf, ' 
-                    f'please follow the link http://127.0.0.1:5000 and use your '
+                    f'please follow the link http://127.0.0.1:5000 use your '
                     f' email as username and password = {password}')
                 try:
                     send_email(app,mail, message,[email])
@@ -411,7 +411,7 @@ def super_admin_registration():
             # Prepare and send email
             message = (
                 f'You have successfully created an account, '
-                f'please follow the link http://127.0.0.1:5000 '
+                f'please follow the link http://152.106.35.11:8080/ '
                 f'use your email as username and password = {password}'
             )
             try:
@@ -469,7 +469,7 @@ def edit_user(id):
                     user.role = role
                     if password:
                         """message=(f'Paasword was changed on your behalf, ' 
-                        f'please follow the link http://127.0.0.1:5000 use your '
+                        f'please follow the link http://152.106.35.11:8080/ use your '
                         f' email as username and password = {password}')
             
                         send_email(app,mail, message,email)"""
