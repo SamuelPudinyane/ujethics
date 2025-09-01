@@ -342,7 +342,7 @@ def register_reviewer():
                 ### uncomment the code bellow for real testing
 
                 message=(f'An account was created on your behalf, ' 
-                    f'please follow the link http://127.0.0.1:5000 use your '
+                    f'please follow the link http://152.106.35.11:8080/ use your '
                     f' email as username and password = {password}')
                 try:
                     send_email(app,mail, message,[email])
