@@ -105,34 +105,34 @@
         <label>2.6 If yes, has the data been anonymized?</label>
         <div class="d-flex gap-4">
           <label class="form-check-label">
-            <input type="radio" name="data_anonymized" value="Yes"> Yes
+            <input type="radio" name="data_anonymized" required value="Yes"> Yes
           </label>
           <label class="form-check-label">
-            <input type="radio" name="data_anonymized" value="No"> No
+            <input type="radio" name="data_anonymized" required value="No"> No
           </label>
           <label class="form-check-label">
-            <input type="radio" name="data_anonymized" value="Not Applicable"> Not Applicable
+            <input type="radio" name="data_anonymized" required value="Not Applicable"> Not Applicable
           </label>
         </div>
       </div>
 
       <label>2.6.1 Comment / Justification:</label>
-      <textarea name="anonymization_comment" rows="3" placeholder="Provide justification for anonymization or not"></textarea>
+      <textarea name="anonymization_comment" rows="3" required placeholder="Provide justification for anonymization or not"></textarea>
      
       <div class="question-block">
         <label>2.7 Private database: does it contain confidential private company data requiring permission?</label>
         <div class="d-flex gap-4">
           <label class="form-check-label">
-            <input type="radio" name="private_permission" value="Yes" onchange="togglePrivatePermission()" required> Yes
+            <input type="radio" name="private_permission" value="Yes" required onchange="togglePrivatePermission()" required> Yes
           </label>
           <label class="form-check-label">
-            <input type="radio" name="private_permission" value="No" onchange="togglePrivatePermission()" required> No
+            <input type="radio" name="private_permission" value="No" required onchange="togglePrivatePermission()" required> No
           </label>
         </div>
       </div>
 
       <div id="permission_details_box" style="display: none;">
-        <label>2.7.1 Provide permission details (or attach separately):</label>
+        <label>2.7.1 Provide permission details:</label>
         <textarea name="permission_details" rows="3"
           placeholder="Describe the permission granted or attach documentation."></textarea>
       </div>
@@ -150,7 +150,7 @@
       </div>
 
       <label>2.9 How will data limitations be reported?</label>
-      <textarea name="limitations_reporting" rows="3" placeholder="Describe how you'll address or disclose any gaps or limitations."></textarea>
+      <textarea name="limitations_reporting" rows="3" required placeholder="Describe how you'll address or disclose any gaps or limitations."></textarea>
 
       <div class="question-block">
         <label>2.10 Are the research methodology and design aligned with secondary data use?</label>
@@ -165,7 +165,7 @@
       </div>
 
       <label>2.11 How will original owners of the data be acknowledged?</label>
-      <textarea name="data_acknowledgment" rows="3" placeholder="Mention citation, attribution in publications, or formal agreements."></textarea>
+      <textarea name="data_acknowledgment" rows="3" required placeholder="Mention citation, attribution in publications, or formal agreements."></textarea>
 
       <!-- Navigation Buttons -->
       <div class="form-navigation">

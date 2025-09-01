@@ -313,7 +313,7 @@ input[type="checkbox"]:checked::after {
                         <label><strong>2.4 Rate your project (Low, Medium, High Risk):</strong>
                           <span class="info-icon" title="Low risk: ; Medium risk: ' High risk:">ℹ</span>
                         </label>
-                        <select name="risk_rating" id="risk-rating" class="form-select" onchange="toggleRiskFields()">
+                        <select name="risk_rating" id="risk-rating" class="form-select" required onchange="toggleRiskFields()">
                           <option value="">-- Select Risk Level --</option>
                           <option value="low">Low</option>
                           <option value="medium">Medium</option>

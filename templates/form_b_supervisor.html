@@ -87,7 +87,7 @@
       <label>Title of Project or Study <br>
         <span class="form-answer">{{formB.study_title}}</span></label>
       <label>Mobile Number <br>
-        <span class="form-answer">{{formB.mobile_number}}</span></label>
+        <span class="form-answer">{{formB.mobile}}</span></label>
       <label>Email Address <br>
         <span class="form-answer">{{formB.email}}</span></label>
       <label>Supervisor(s) <br>
@@ -159,11 +159,11 @@
      
       <div class="question-block">
         <label>2.8 Private database: does it contain confidential private company data requiring permission?
-            <br><span class="form-answer">{{'Yes' if formB.private_permission else 'No'}}<span class="form-answer">
+            <br><span class="form-answer">{{'Yes' if formB.private_permission else 'No'}}</span>
         </label>
       </div>
 
-      <label>2.8.1 Provide permission details (or attach separately):
+      <label>2.8.1 Provide permission details:
         <br><span class="form-answer">{{formB.permission_details}}</span>
       </label>
      

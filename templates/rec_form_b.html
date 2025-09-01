@@ -162,11 +162,11 @@
      
       <div class="question-block">
         <label>2.8 Private database: does it contain confidential private company data requiring permission?
-            <br><span class="form-answer">{{'Yes' if form.private_permission else 'No'}}<span class="form-answer">
+            <br><span class="form-answer">{{'Yes' if form.private_permission else 'No'}}</span>
         </label>
       </div>
 
-      <label>2.8.1 Provide permission details (or attach separately):
+      <label>2.8.1 Provide permission details:
         <br><span class="form-answer">{{form.permission_details}}</span>
       </label>
      
@@ -280,8 +280,6 @@
     <label>Title of Research:</label>
     <span class="form-answer">{{form.study_title}}</span>
 
-    <label>Date of Review:</label>
-    <input type="date" name="review_date">
   </div>
 
   <br>
@@ -294,27 +292,27 @@
         </thead>
         <tbody>
           <tr>
-            <td>Organisational Permission<br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
+            <td><strong>Organisational Permission</strong><br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
             <td><span id="org_permission_comment">{{form.org_permission_comment}}</span></td>
           </tr>
           <tr>
-            <td>Signed Waiver from Business<br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
+            <td><strong>Signed Waiver from Business</strong><br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
             <td><span id="waiver_comment">{{form.waiver_comment}}</span></td>
           </tr>
           <tr>
-            <td>Form – Ethics Application Form<br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
+            <td><strong>Form – Ethics Application Form</strong><br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
             <td><span id="form_a_comment">{{form.form_a_comment}}</span></td>
           </tr>
           <tr>
-            <td>Interview Questions and/or Questionnaire<br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
+            <td><strong>Interview Questions and/or Questionnaire</strong><br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
             <td><span id="questions_comment">{{form.questions_comment}}</span></td>
           </tr>
           <tr>
-            <td>Participant Information Sheet and Informed Consent Form<br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
+            <td><strong>Participant Information Sheet and Informed Consent Form</strong><br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
             <td><span id="consent_comment">{{form.consent_comment}}</span></td>
           </tr>
           <tr>
-            <td>Refined Concept Proposal<br><small>This should match the approved version with the literature review.</small></td>
+            <td><strong>Refined Concept Proposal</strong><br><small>This should match the approved version with the literature review.</small></td>
             <td><span id="proposal_comment">{{form.proposal_comment}}</span></td>
           </tr>
         </tbody>
@@ -403,7 +401,7 @@
 
   <div class="section">
     <h3>First Reviewer Comments</h3>
-    <span id="additional_comments">{{form.review_additional_comments}}</span>
+    <span class="form-answer" id="additional_comments">{{form.review_additional_comments}}</span>
   </div>
   {% endif %}
 </div>
@@ -490,7 +488,7 @@
 
   <div class="section">
     <h3>Second Reviewer Comments</h3>
-    <span id="additional_comments">{{form.review_additional_comments1}}</span>
+    <span class="form-answer" id="additional_comments">{{form.review_additional_comments1}}</span>
   </div>
 </div>
 </section>

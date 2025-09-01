@@ -126,7 +126,7 @@
             <th>Form Type</th>
             <th>Date Submitted</th>
             <th>Review Status</th>
-            <td>Risk Level</td>
+            <th>Risk Level</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -232,7 +232,7 @@
             </a>
             
             {% elif form.certificate_received %}
-            Certificate was issued and send
+            Certificate was issued and sent
             <br>
             <a href="{{url_for('ethics_form_pdf',form_id=form.form_id,form_type=form_name)}}" class="btn btn-sm btn-success text-white">View Form</a>
               

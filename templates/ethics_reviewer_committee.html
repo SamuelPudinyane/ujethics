@@ -20,9 +20,37 @@
 <body>
 
 <div class="admin-wrapper">
+   <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
+      <h3>Ethics Admin</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="{{url_for('chair_landing')}}" class="sidebar-link">
+        <i class="fas fa-clipboard-list"></i> Dashboard
+      </a>
+
+      <a href="{{url_for('reviewer_list')}}" class="sidebar-link">
+        <i class="fas fa-user"></i> Reviewer List
+      </a>
+
+      <a href="{{url_for('all_users')}}" class="sidebar-link">
+        <i class="fas fa-users-cog"></i> User Management
+      </a>
+
+      <a href="{{url_for('rec_dashboard')}}" class="sidebar-link">
+        <i class="fas fa-users"></i> Rec Team Dashboard
+      </a>
+
+      <a href="{{url_for('logout')}}" class="sidebar-link">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+
+    </nav>
+  </aside>
 
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <!-- <aside class="sidebar">
     <div class="sidebar-header">
       <img src="/static/img/image.png" alt="UJ JBS Logo" class="sidebar-logo">
       <h3>Ethics Admin</h3>
@@ -88,7 +116,7 @@
       </a>
 
     </nav>
-  </aside>
+  </aside> -->
 
   <!-- Main Content -->
   <main class="admin-main">
@@ -142,11 +170,11 @@
                   {% endif %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    <span>Review Status: {{ review_comment }}</span>
                     {% endif %}
                     {% if review_comment1 %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
-                    
+                    <span>Review Status: {{ review_comment1 }}</span>
+
                     {% endif %}
             <span class="status-pill approved">
               
@@ -155,22 +183,28 @@
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
               {% elif not forma.review_status and forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
+              <br>
+              <br>
               Submitted to Reviewers
               
                
               {% elif not forma.recommendation%}
               Ready for review
               {% elif forma.certificate_issued and not forma.certificate_received%}
-              Certificate issued but not send
+              Certificate issued but not sent
               {% elif forma.review_recommendation and not forma.review_recommendation1 %}
               Awaiting second reviewer
               {% elif forma.submitted_to_rec and 'low' not in forma.risk_rating|lower and not forma.certificate_issued%}
+              <br>
               Form submitted to Rec 
               {% elif (forma.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (forma.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not forma.certificate_received %}
+              <br>
               Approved by both Reviewers
               
               {% elif forma.reviewer_name1 and forma.reviewer_name2 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
+              <br>
+              <br>
               Submitted to Reviewers
               {% elif 'Reject' in ['forma.form_review_comment', 'forma.form_review_comment1'] %}
               Rejected
@@ -283,10 +317,10 @@
                   {% endif %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    <span>Review Status: {{ review_comment }}</span>
                     {% endif %}
                     {% if review_comment1 %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
+                    <span>Review Status: {{ review_comment1 }}</span>
                     {% endif %}
               <span class="status-pill approved">
                 
@@ -302,13 +336,15 @@
               
               Ready for review
              {% elif formb.certificate_issued and not formb.certificate_received%}
-              Certificate issued but not send
+              Certificate issued but not sent
               {% elif formb.review_recommendation and not formb.review_recommendation1 %}
               Awaiting second reviewer
               {% elif formb.submitted_to_rec and 'low' not in formb.risk_level|lower and not formb.certificate_issued%}
+              <br>
               Form submitted to Rec 
               {% elif (formb.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (formb.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formb.certificate_received%}
+              <br>
               Approved by both Reviewers
               {% elif formb.reviewer_name1 and formb.reviewer_name2 and formb.supervisor_date %}
               Submitted to Reviewers
@@ -406,10 +442,10 @@
                   {% endif %}
                 {# 🖨️ Display the result if it was matched #}
                   {% if review_comment %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment }}</p>
+                    <span>Review Status: {{ review_comment }}</span>
                     {% endif %}
                     {% if review_comment1 %}
-                    <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
+                    <span>Review Status: {{ review_comment1 }}</span>
                     {% endif %}
               <span class="status-pill approved">
 
@@ -429,11 +465,13 @@
               Awaiting second reviewer
               
               {% elif formc.submitted_to_rec and 'low' not in formc.risk_level|lower and not formc.certificate_issued%}
+              <br>
               Form submitted to Rec 
 
              
               {% elif (formc.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (formc.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formc.certificate_received %}
+              <br>
               Approved by both Reviewers
 
               {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and formc.rejected_or_accepted and formc.review_supervisor_signature%}
