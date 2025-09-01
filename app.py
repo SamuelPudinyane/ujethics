@@ -148,9 +148,12 @@ def login_page():
                         elif not user.supervisor_id and user.authenticate_student:
                             return redirect(url_for('student_choose_supervisor'))
                         else:
+
                             flash("You are not yet Authenticated","danger")
                             return redirect(url_for('login_page'))
                     else:
+                        if not user.supervisor_id and user.authenticate_student:
+                            return redirect(url_for('student_choose_supervisor'))
                         
                         return render_template('video.html')
                 elif role == 'SUPERVISOR':
@@ -1665,13 +1668,20 @@ def form_a_sec3 ():
         form.purpose_objectives = data.get('purpose_objectives', '')
 
         # Section 4: Organisational Permissions and Affiliations
-        if data.get('grant_permission')=='Yes':
-            form.grant_permission=data.get('grant_permission')
+        if data.get('grant_permission') == 'Yes':
+            form.grant_permission = data.get('grant_permission')
 
             form.org_name = ','.join(data.getlist('org_name[]'))
             form.org_contact = ','.join(data.getlist('org_contact[]'))
             form.org_role = ','.join(data.getlist('org_role[]'))
-            form.org_permission = data.getlist('org_permission[]')
+            form.org_permission = ','.join(data.getlist('org_permission[]'))
+
+            print("org_name[]      →", data.getlist("org_name[]"))
+            print("org_contact[]   →", data.getlist("org_contact[]"))
+            print("org_role[]      →", data.getlist("org_role[]"))
+            print("org_permission[]→", data.getlist("org_permission[]"))
+
+
         else:
             form.grant_permission=data.get('grant_permission')
 
@@ -2274,7 +2284,21 @@ def form_c_sec1():
 @app.route('/form_a_supervisor/<string:id>',methods=['GET','POST'])
 def form_a_supervisor(id):
     form = db_session.query(FormA).filter_by(user_id=id).order_by(FormA.submitted_at.desc()).first()
-    
+    form.org_name = form.org_name.split(',') if form and form.org_name else []
+    form.org_contact = form.org_contact.split(',') if form and form.org_contact else []
+    form.org_role = form.org_role.split(',') if form and form.org_role else []
+    form.org_permission = form.org_permission.split(',') if form and form.org_permission else []
+
+    form.fund_org = form.fund_org.split(',') if form and form.fund_org else []
+    form.fund_contact = form.fund_contact.split(',') if form and form.fund_contact else []
+    form.fund_role = form.fund_role.split(',') if form and form.fund_role else []
+    form.fund_amount = form.fund_amount.split(',') if form and form.fund_amount else []
+
+    form.population = form.population.split(',') if form and form.population else []
+    form.sampling_method = form.sampling_method.split(',') if form and form.sampling_method else []
+    form.sampling_size = form.sampling_size.split(',') if form and form.sampling_size else []
+    form.inclusion_criteria = form.inclusion_criteria.split(',') if form and form.inclusion_criteria else []
+
     return render_template("form_a_supervisor.html",formA=form)
     
 @app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
@@ -3446,15 +3470,12 @@ def get_form_c(form_id):
 def chair_dashboard():
     submitted_form_a = (db_session.query(FormA)
     .filter(FormA.submitted_at != None)
-    .distinct(FormA.user_id)
     .all())
     submitted_form_b = (db_session.query(FormB)
     .filter(FormB.submitted_at != None)
-    .distinct(FormB.user_id)
     .all())
     submitted_form_c = (db_session.query(FormC)
     .filter(FormC.submission_date != None)
-    .distinct(FormC.user_id)
     .all())
 
     today = date.today()
@@ -4335,7 +4356,7 @@ def chair_landing():
             FormA.user_id,
             func.max(FormA.submitted_at).label("latest_submission")
         )
-        .filter(FormA.submitted_at != None)
+        .filter(FormA.submitted_at != None,FormA.rejected_or_accepted==True)
         .group_by(FormA.user_id)
         .subquery()
     )
@@ -4372,7 +4393,7 @@ def chair_landing():
             FormB.user_id,
             func.max(FormB.submitted_at).label("latest_submission")
         )
-        .filter(FormB.submitted_at != None)
+        .filter(FormB.submitted_at != None,FormB.rejected_or_accepted==True)
         .group_by(FormB.user_id)
         .subquery()
     )
@@ -4409,7 +4430,7 @@ def chair_landing():
             FormC.user_id,
             func.max(FormC.submission_date).label("latest_submission")
         )
-        .filter(FormC.submission_date != None)
+        .filter(FormC.submission_date != None,FormC.rejected_or_accepted==True)
         .group_by(FormC.user_id)
         .subquery()
     )
@@ -4505,13 +4526,15 @@ def review_dashboard():
         form_c, requirementsc = submitted_form_c
     else:
         form_c, requirementsc = None, None
-    print("------------------ ", submitted_form_c)
+   
     today = date.today()
     return render_template('review-dashboard.html',
                 user_id=user_id,today=today,
                 submitted_form_a=form_a,requirementsa=requirementsa,
                 submitted_form_b=form_b,requirementsb=requirementsb,
                 submitted_form_c=form_c,requirementsc=requirementsc)
+
+
 
 @app.route('/submit_to_rec/<string:id>', methods=['GET'])
 def submit_to_rec(id):
@@ -4603,7 +4626,6 @@ def rec_dashboard():
             .join(FormARequirements, FormA.user_id == FormARequirements.user_id)
             .outerjoin(Rec, Rec.form_id == FormA.form_id)
             .filter(*get_common_filters(FormA))
-            .distinct(FormA.form_id)
             .all()
     ]
 
@@ -4614,7 +4636,6 @@ def rec_dashboard():
             .join(FormARequirements, FormB.user_id == FormARequirements.user_id)
             .outerjoin(Rec, Rec.form_id == FormB.form_id)
             .filter(*get_common_filters(FormB))
-            .distinct(FormB.form_id)
             .all()
     ]
 
@@ -4625,7 +4646,6 @@ def rec_dashboard():
             .join(FormARequirements, FormC.user_id == FormARequirements.user_id)
             .outerjoin(Rec, Rec.form_id == FormC.form_id)
             .filter(*get_common_filters(FormC))
-            .distinct(FormC.form_id)
             .all()
     ]
 

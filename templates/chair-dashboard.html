@@ -131,7 +131,7 @@
             <td>{{forma.applicant_name}}</td>
             <td>{{forma.supervisor_name}}</td>
             <td>FORM A</td>
-            <td>{{forma.declaration_date}}</td>
+            <td>{{forma.declaration_date.strftime('%d/%m/%Y')}}</td>
             <td><span class="status-pill approved">{{"Approved and awaits Ethics Committee" if forma.rejected_or_accepted}}</span></td>
             <td>{{forma.risk_rating}}</td>
             <td>{{forma.declaration_date.strftime('%d/%m/%Y')}}</td>
@@ -167,10 +167,10 @@
             <td>{{formb.applicant_name}}</td>
             <td>{{formb.supervisor_name}}</td>
             <td>FORM B</td>
-            <td>{{formb.declaration_date}}</td>
+            <td>{{formb.declaration_date.strftime('%d/%m/%Y')}}</td>
             <td><span class="status-pill approved">{{'Approved by supervisor' if formb.rejected_or_accepted and not formb.ethics_commetee_status else 'Accepted by ethics commettee' if formb.ethics_commetee_status }}</span></td>
             <td>{{formb.risk_level}}</td>
-            <td>{{formb.declaration_date}}</td>
+            <td>{{formb.declaration_date.strftime('%d/%m/%Y')}}</td>
             <td><a href="{{url_for('chair_formb_view',id=formb.user_id)}}" class="btn btn-sm btn-success text-white">Review</a></td>
           </tr>
           {% endfor %}
@@ -203,7 +203,7 @@
             <td>{{formc.applicant_name}}</td>
             <td>{{formc.supervisor_name}}</td>
             <td>FORM C</td>
-            <td>{{formc.declaration_date}}</td>
+            <td>{{formc.declaration_date.strftime('%d/%m/%Y')}}</td>
             <td><span class="status-pill approved">{{"Approved and awaits Ethics Committee" if formc.rejected_or_accepted}}</span></td>
             <td>{{formc.risk_level}}</td>
             <td>{{(today - formc.declaration_date.date()).days}}</td>

@@ -132,8 +132,7 @@
             {% if forma.review_supervisor_signature1%}
             {{forma.review_supervisor_signature1}}: {{forma.form_review_comment1}}
             {% endif %}
-            <span class="status-pill approved">
-              {% set review_comment = '' %}
+            {% set review_comment = '' %}
               {% set review_comment1 = '' %}
                 {% if forma.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = forma.form_review_comment %}
@@ -149,6 +148,8 @@
                     <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
                     
                     {% endif %}
+            <span class="status-pill approved">
+              
               {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
@@ -272,8 +273,7 @@
             {% if formb.review_supervisor_signature1%}
             {{formb.review_supervisor_signature1}}: {{formb.form_review_comment1}}
             {% endif %}
-              <span class="status-pill approved">
-                {% set review_comment = '' %}
+            {% set review_comment = '' %}
                 {% set review_comment1 = '' %}
                 {% if formb.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formb.form_review_comment %}
@@ -288,11 +288,13 @@
                     {% if review_comment1 %}
                     <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
                     {% endif %}
+              <span class="status-pill approved">
+                
                {% if formb.rejected_or_accepted and not formb.reviewer_name1 and not formb.review_date%}
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
-              {% elif  formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_date and not formb.review_status and formb.rejected_or_accepted and formb.review_supervisor_signature %}
+              {% elif  formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_date %}
               Submitted to Reviewers
               
               
@@ -308,7 +310,7 @@
               {% elif (formb.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (formb.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formb.certificate_received%}
               Approved by both Reviewers
-              {% elif formb.reviewer_name1 and formb.reviewer_name2 and formb.supervisor_date and formb.rejected_or_accepted and formb.review_supervisor_signature%}
+              {% elif formb.reviewer_name1 and formb.reviewer_name2 and formb.supervisor_date %}
               Submitted to Reviewers
               {% elif 'Reject' in ['formb.form_review_comment', 'formb.form_review_comment1'] %}
               Rejected
@@ -394,8 +396,7 @@
             {% if formc.review_supervisor_signature1%}
             {{formc.review_supervisor_signature1}}: {{formc.form_review_comment1}}
             {% endif %}
-              <span class="status-pill approved">
-             {% set review_comment = '' %}
+              {% set review_comment = '' %}
              {% set review_comment1 = '' %}
               {% if formc.form_review_comment in ['Approved with Minor Changes', 'Resubmission Required'] %}
                   {% set review_comment = formc.form_review_comment %}
@@ -410,11 +411,13 @@
                     {% if review_comment1 %}
                     <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
                     {% endif %}
+              <span class="status-pill approved">
+
               {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
               Awaiting for review
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
-              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and not formc.review_status and formc.rejected_or_accepted and formc.review_supervisor_signature%}
+              {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date%}
               Submitted to Reviewers
               
               

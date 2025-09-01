@@ -198,12 +198,6 @@
                     <tr data-degree="{{ form.degree | lower }}">
                       <td>{{ year }}</td>
                       <td>{{ month }}</td>
-                      <td>{{ form.student_number }}</td>
-                      <td>{{ form.degree }}</td>
-                      <td>
-                        {{ form.submitted_at if form_type != 'C' else form.submission_date }}
-                      </td>
-                      <td>{{ count }}</td>
                       <td>
                         <a href="{{ url_for('ethics_reviewer_committee_form_' + form_type|lower, year=year, month=month) }}">📁 View</a>
                       </td>

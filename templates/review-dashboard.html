@@ -77,7 +77,7 @@
               
               {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.review_status and not submitted_form_a.review_status1 and (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.form_reviewed_by and not submitted_form_a.form_reviewed_by1  and not (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
+              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.form_reviewed_by and not submitted_form_a.form_reviewed_by1  and (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
               Under Review
               {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.form_reviewed_by and submitted_form_a.form_reviewed_by1  and (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
               Under Review

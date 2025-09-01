@@ -137,7 +137,7 @@
             <td>{{form.applicant_name}}</td>
             <td>{% if form.supervisor%}{{form.supervisor}}{% elif form.supervisor_name%}{{form.supervisor_name}}{% endif%}</td>
             <td>{{form_name}}</td>
-            <td>{% if form.declaration_date%}{{form.declaration_date}}{% elif form.submission_date%}{{form.submission_date}}{% endif%}</td>
+            <td>{% if form.declaration_date%}{{form.declaration_date.strftime('%d/%m/%Y')}}{% elif form.submission_date%}{{form.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
               {% set review_comment = '' %}
                   {% set review_comment1 = '' %}
@@ -191,7 +191,7 @@
                  
                   {% elif form.rejected_or_accepted and form.review_supervisor_signature and not form.certificate_issued%}
                   Approved by Ethics Committee
-                  {% elif form.reviewer_name1 and form.reviewer_name2 %}
+                  {% elif not form.reviewer_name1 and not form.reviewer_name2 %}
                   Awaiting for Review
                   {% elif form.reviewer_name1 and form.reviewer_name2 and form.supervisor_date %}
                   Submitted to Reviewers
@@ -216,12 +216,12 @@
             <td>{% if form.risk_level %}{{form.risk_level}}{% elif form.risk_rating %}{{ form.risk_rating}}{% endif%}</td>
             <td>
               
-              {% if form.risk_level and 'low' not in form.risk_level|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved']) and
-              (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
+              {% if form.risk_level and 'low' not in form.risk_level|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved','Approved with Minor Changes']) and
+              (form.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
               
-              {% elif form.risk_rating and 'low' not in form.risk_rating|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved']) and
-              (form.review_recommendation1 in ['Approved']) and not form.certificate_received %}
+              {% elif form.risk_rating and 'low' not in form.risk_rating|lower  and not form.submitted_to_rec and (form.review_recommendation in ['Approved','Approved with Minor Changes']) and
+              (form.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not form.certificate_received %}
               <a href="{{url_for('submit_to_rec',id=form.form_id)}}" class="btn btn-sm btn-success text-white">Submit form to Rec</a>
              
               {% elif not form.certificate_issued and not form.certificate_received and form.review_status 
