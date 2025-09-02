@@ -417,10 +417,10 @@
         </thead>
         <tbody>
           <tr>
-            <td><span class="form-answer">{{formA.org_name}}</span></td>
-                <td><span class="form-answer">{{formA.org_contact}}</span></td>
-                <td><span class="form-answer">{{formA.org_role}}</span></td>
-                <td><span class="form-answer">{{formA.org_permission}}</span></td>
+            <td>{% for items in data.org_name%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_contact%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_permission%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
           </tr>
         </tbody>
       </table>
@@ -449,10 +449,10 @@
         </thead>
         <tbody>
           <tr>
-            <td><span class="form-answer">{{formA.fund_org}}</span></td>
-            <td><span class="form-answer">{{formA.fund_contact}}</span></td>
-            <td><span class="form-answer">{{formA.fund_role}}</span></td>
-            <td><span class="form-answer">{{formA.fund_amount}}</span></td>
+            <td>{% for items in data.fund_org%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_contact %}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_amount%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
           </tr>
           <!-- add button to add row -->
           <tr>
@@ -528,10 +528,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><br><span class="form-answer">{{formA.population}}</span></td>
-          <td><br><span class="form-answer">{{formA.sampling_method}}</span></td>
-          <td><br><span class="form-answer">{{formA.sampling_size}}</span></td>
-          <td><br><span class="form-answer">{{formA.inclusion_criteria}}</span></textarea></td>
+          <td><br>{% for items in data.population%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.sampling_method%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.sampling_size%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.inclusion_criteria%}<span class="form-answer">{{items}}</span>{% endfor %}</textarea></td>
           
         </tr>
       </tbody>

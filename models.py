@@ -321,7 +321,7 @@ class FormA(Base):
     org_name = Column(String(255),nullable=True)
     org_contact = Column(String(255),nullable=True)
     org_role = Column(String(255),nullable=True)
-    org_permission = Column(String(50),nullable=True)
+    org_permission = Column(String(255),nullable=True)
 
     researcher_affiliation = Column(String(10),nullable=True)
     affiliation_details = Column(Text,nullable=True)
@@ -333,7 +333,7 @@ class FormA(Base):
     fund_org = Column(String(255),nullable=True)
     fund_contact = Column(String(255),nullable=True)
     fund_role = Column(String(255),nullable=True)
-    fund_amount = Column(String(50),nullable=True)
+    fund_amount = Column(String(255),nullable=True)
 
     indemnity_arrangements = Column(Text,nullable=True)
     other_committee = Column(Text,nullable=True)

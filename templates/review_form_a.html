@@ -464,10 +464,10 @@
         </thead>
         <tbody>
           <tr>
-            <td><span class="form-answer">{{form.org_name}}</span></td>
-                <td><span class="form-answer">{{form.org_contact}}</span></td>
-                <td><span class="form-answer">{{form.org_role}}</span></td>
-                <td><span class="form-answer">{{form.org_permission}}</span></td>
+            <td>{% for items in data.org_name%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_contact%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_permission%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
           </tr>
         </tbody>
       </table>
@@ -495,10 +495,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{form.fund_org}}</td>
-                <td>{{form.fund_contact}}</td>
-                <td>{{form.fund_role}}</td>
-                <td>{{form.fund_amount}}</td>
+            <td>{% for items in data.fund_org%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_contact %}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_amount%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
           </tr>
           <!-- add button to add row -->
           <tr></tr>
@@ -570,10 +570,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><br><span class="form-answer">{{form.population}}</span></td>
-          <td><br><span class="form-answer">{{form.sampling_method}}</span></td>
-          <td><br><span class="form-answer">{{form.sampling_size}}</span></td>
-          <td><br><span class="form-answer">{{form.inclusion_criteria}}</span></textarea></td>
+          <td><br>{% for items in data.population%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.sampling_method%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.sampling_size%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.inclusion_criteria%}<span class="form-answer">{{items}}</span>{% endfor %}</textarea></td>
           
         </tr>
       </tbody>

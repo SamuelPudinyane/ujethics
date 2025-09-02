@@ -182,7 +182,7 @@
               Awaiting for review
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
-              {% elif not forma.review_status and forma.rejected_or_accepted and forma.reviewer_name1 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
+              {% elif forma.reviewer_name1 and forma.reviewer_name2 and forma.reviewer_name1 and forma.supervisor_date%}
               <br>
               <br>
               Submitted to Reviewers
@@ -328,7 +328,7 @@
               Awaiting for review
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
               {{formb.rec_status}}
-              {% elif  formb.rejected_or_accepted and formb.reviewer_name1 and formb.supervisor_date %}
+              {% elif  formb.reviewer_name and formb.reviewer_name2 and formb.supervisor_date %}
               Submitted to Reviewers
               
               

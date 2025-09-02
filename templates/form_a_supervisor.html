@@ -415,10 +415,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{% for items in formA.org_name%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-                <td>{% for items in formA.org_contact%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-                <td>{% for items in formA.org_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-                <td>{% for items in formA.org_permission%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.org_name%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_contact%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+                <td>{% for items in data.org_permission%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
           </tr>
         </tbody>
       </table>
@@ -447,10 +447,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{% for items in formA.fund_org%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-            <td>{% for items in formA.fund_contact %}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-            <td>{% for items in formA.fund_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-            <td>{% for items in formA.fund_amount%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_org%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_contact %}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_role%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+            <td>{% for items in data.fund_amount%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
           </tr>
           <!-- add button to add row -->
           <tr>
@@ -524,10 +524,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><br>{% for items in formA.population%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-          <td><br>{% for items in formA.sampling_method%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-          <td><br>{% for items in formA.sampling_size%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
-          <td><br>{% for items in formA.inclusion_criteria%}<span class="form-answer">{{items}}</span>{% endfor %}</textarea></td>
+          <td><br>{% for items in data.population%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.sampling_method%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.sampling_size%}<span class="form-answer">{{items}}</span>{% endfor %}</td>
+          <td><br>{% for items in data.inclusion_criteria%}<span class="form-answer">{{items}}</span>{% endfor %}</textarea></td>
           
         </tr>
       </tbody>

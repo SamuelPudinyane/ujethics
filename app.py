@@ -1678,11 +1678,6 @@ def form_a_sec3 ():
             form.org_role = ','.join(data.getlist('org_role[]'))
             form.org_permission = ','.join(data.getlist('org_permission[]'))
 
-            print("org_name[]      →", data.getlist("org_name[]"))
-            print("org_contact[]   →", data.getlist("org_contact[]"))
-            print("org_role[]      →", data.getlist("org_role[]"))
-            print("org_permission[]→", data.getlist("org_permission[]"))
-
 
         else:
             form.grant_permission=data.get('grant_permission')
@@ -2286,22 +2281,25 @@ def form_c_sec1():
 @app.route('/form_a_supervisor/<string:id>',methods=['GET','POST'])
 def form_a_supervisor(id):
     form = db_session.query(FormA).filter_by(user_id=id).order_by(FormA.submitted_at.desc()).first()
-    form.org_name = form.org_name.split(',') if form and form.org_name else []
-    form.org_contact = form.org_contact.split(',') if form and form.org_contact else []
-    form.org_role = form.org_role.split(',') if form and form.org_role else []
-    form.org_permission = form.org_permission.split(',') if form and form.org_permission else []
+    
+    data={
+        "org_name" : parse_field(form.org_name),
+        "org_contact" : parse_field(form.org_contact),
+        "org_role": parse_field(form.org_role),
+        "org_permission" : parse_field(form.org_permission),
 
-    form.fund_org = form.fund_org.split(',') if form and form.fund_org else []
-    form.fund_contact = form.fund_contact.split(',') if form and form.fund_contact else []
-    form.fund_role = form.fund_role.split(',') if form and form.fund_role else []
-    form.fund_amount = form.fund_amount.split(',') if form and form.fund_amount else []
+        "fund_org" : parse_field(form.fund_org),
+        "fund_contact" :parse_field(form.fund_contact),
+        "fund_role ": parse_field(form.fund_role),
+        "fund_amount": parse_field(form.fund_amount),
 
-    form.population = form.population.split(',') if form and form.population else []
-    form.sampling_method = form.sampling_method.split(',') if form and form.sampling_method else []
-    form.sampling_size = form.sampling_size.split(',') if form and form.sampling_size else []
-    form.inclusion_criteria = form.inclusion_criteria.split(',') if form and form.inclusion_criteria else []
+        "population" :parse_field(form.population),
+        "sampling_method" : parse_field(form.sampling_method),
+        "sampling_size": parse_field(form.sampling_size),
+        "inclusion_criteria": parse_field(form.inclusion_criteria)
+    }
 
-    return render_template("form_a_supervisor.html",formA=form)
+    return render_template("form_a_supervisor.html",formA=form,data=data)
     
 @app.route('/form_b_supervisor/<string:id>',methods=['GET','POST'])
 def form_b_supervisor(id):
@@ -2327,6 +2325,23 @@ def reject_or_Accept_form_a(id):
 
     forma = db_session.query(FormA).filter_by(form_id=id).order_by(FormA.submitted_at.desc()).first()
     #admin=db_session.query(User).filter_by(role="Admin").all()
+    data={
+        "org_name" : parse_field(forma.org_name),
+        "org_contact" : parse_field(forma.org_contact),
+        "org_role": parse_field(forma.org_role),
+        "org_permission" : parse_field(forma.org_permission),
+
+        "fund_org" : parse_field(forma.fund_org),
+        "fund_contact" :parse_field(forma.fund_contact),
+        "fund_role ": parse_field(forma.fund_role),
+        "fund_amount": parse_field(forma.fund_amount),
+
+        "population" :parse_field(forma.population),
+        "sampling_method" : parse_field(forma.sampling_method),
+        "sampling_size": parse_field(forma.sampling_size),
+        "inclusion_criteria": parse_field(forma.inclusion_criteria)
+    }
+
     if not forma:
         forma = FormA(form_id=id)
     if request.method=="POST":
@@ -2668,7 +2683,7 @@ def form_a_answers():
 def student_edit_forma():
     user_id=session.get('id')
 
-    formB = db_session.query(FormB).filter_by(user_id=user_id).order_by(FormA.submitted_at.asc()).first()
+    formB = db_session.query(FormB).filter_by(user_id=user_id).order_by(FormB.submitted_at.asc()).first()
     if formB:
         flash("You are not permitted to fill this form", "warning")
         return redirect(url_for("student_dashboard"))
@@ -3018,10 +3033,10 @@ def student_edit_forma():
 
             # Section 4: Organisational Permissions and Affiliations
             grant_permission=request.form.get('grant_permission'),
-            org_name = request.form.getlist('org_name[]'),
-            org_contact = request.form.getlist('org_contact[]'),
-            org_role = request.form.getlist('org_role[]'),
-            org_permission=request.form.getlist('org_permission[]'),
+            org_name = ','.join(request.form.getlist('org_name[]')),
+            org_contact = ','.join(request.form.getlist('org_contact[]')),
+            org_role = ','.join(request.form.getlist('org_role[]')),
+            org_permission=','.join(request.form.getlist('org_permission[]')),
             
             researcher_affiliation = researcher_affiliation,
             affiliation_details = request.form.get('affiliation_details'),
@@ -3032,10 +3047,10 @@ def student_edit_forma():
             collective_details = request.form.get('collective_details'),
             # Funding Information
             is_funded = request.form.get('is_funded'),
-            fund_org = request.form.get('fund_org[]'),
-            fund_contact = request.form.get('fund_contact[]'),
-            fund_role = request.form.get('fund_role[]'),
-            fund_amount = request.form.get('fund_amount[]'),
+            fund_org = ','.join(request.form.get('fund_org[]')),
+            fund_contact = ','.join(request.form.get('fund_contact[]')),
+            fund_role = ','.join(request.form.get('fund_role[]')),
+            fund_amount =','.join(request.form.get('fund_amount[]')),
 
             # Indemnity & Other Committee Info
             indemnity_arrangements = request.form.get('indemnity_arrangements'),
@@ -3051,10 +3066,10 @@ def student_edit_forma():
 
             # 5.3 Participant Details
             participants_description = request.form.get('participants_description'),
-            population = request.form.getlist('population[]'),
-            sampling_method = request.form.getlist('sampling_method[]'),
-            sampling_size = request.form.getlist('sample_size[]'),
-            inclusion_criteria = request.form.getlist('inclusion_criteria[]'),
+            population = ','.join(request.form.getlist('population[]')),
+            sampling_method = ','.join(request.form.getlist('sampling_method[]')),
+            sampling_size = ','.join(request.form.getlist('sample_size[]')),
+            inclusion_criteria =','.join(request.form.getlist('inclusion_criteria[]')),
             duration_timing = request.form.get('duration_timing'),
             contact_details_method = request.form.get('contact_details_method'),
             conflict_interest = conflict_interest,
@@ -3484,10 +3499,35 @@ def chair_dashboard():
     return render_template('chair-dashboard.html',today=today,submitted_form_a=submitted_form_a,submitted_form_b=submitted_form_b,submitted_form_c=submitted_form_c)
 
 
+def parse_field(field):
+        if field and isinstance(field, str):
+            return field.strip("{}").split(",")
+        return []
+
+
 @app.route('/chair_forma_view/<string:id>', methods=['GET'])
 def chair_forma_view(id):
     form = db_session.query(FormA).filter_by(user_id=id).order_by(desc(FormA.submitted_at)).all()
     form_name="FORM A"
+   
+    for f in form:
+        f.org_name = parse_field(f.org_name)
+        f.org_contact = parse_field(f.org_contact)
+        f.org_role = parse_field(f.org_role)
+        f.org_permission = parse_field(f.org_permission)
+
+        f.fund_org = parse_field(f.fund_org)
+        f.fund_contact = parse_field(f.fund_contact)
+        f.fund_role = parse_field(f.fund_role)
+        f.fund_amount = parse_field(f.fund_amount)
+
+        f.population = parse_field(f.population)
+        f.sampling_method = parse_field(f.sampling_method)
+        f.sampling_size = parse_field(f.sampling_size)
+        f.inclusion_criteria = parse_field(f.inclusion_criteria)
+
+        print("------------------ f.org_name:", f.fund_role)
+    
     today = date.today()
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
 
@@ -3604,9 +3644,30 @@ def chair_form_view(id,form_name):
     user_name=db_session.query(User).filter_by(user_id=user_id).first()
     formReviewers = db_session.query(User).filter_by(role="REVIEWER").all()
     forma = db_session.query(FormA).filter_by(form_id=id).first()
+  
+    
     list_of_revewers=[]
     id_of_reviewers=[]
     if forma:
+        data={
+        "org_name" : parse_field(forma.org_name),
+        "org_contact" : parse_field(forma.org_contact),
+        "org_role": parse_field(forma.org_role),
+        "org_permission" : parse_field(forma.org_permission),
+
+        "fund_org" : parse_field(forma.fund_org),
+        "fund_contact" :parse_field(forma.fund_contact),
+        "fund_role ": parse_field(forma.fund_role),
+        "fund_amount": parse_field(forma.fund_amount),
+
+        "population" :parse_field(forma.population),
+        "sampling_method" : parse_field(forma.sampling_method),
+        "sampling_size": parse_field(forma.sampling_size),
+        "inclusion_criteria": parse_field(forma.inclusion_criteria)
+    }
+
+        
+       
         latest_forma = db_session.query(FormA) \
         .filter(FormA.user_id == forma.user_id) \
         .order_by(FormA.submitted_at.asc()) \
@@ -3622,7 +3683,7 @@ def chair_form_view(id,form_name):
         
    
         if request.method=="POST":
-         
+           
             review_date=request.form.get('review_date')
             status=request.form.get('status')
             review_org_permission_status=request.form.get('org_permission_status')
@@ -3676,7 +3737,7 @@ def chair_form_view(id,form_name):
                     ##
                     """
                     try:
-                        message=f' An update from reviewer for form belonging to {formA.applicant_name}'
+                        message=f' An update from reviewer for form belonging to {forma.applicant_name}'
             
                         send_email(app,mail, message,admin.email)
                     except Exception as e:
@@ -3722,12 +3783,13 @@ def chair_form_view(id,form_name):
                     forma.form_reviewed_by1=form_reviewed_by
                     forma.review_status1=True
                     forma.rejected_or_accepted=True
+                  
 
                     #Uncomment the code bellow for testing
                     ##
                     """
                     try:
-                        message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                        message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
                         send_email(app,mail, message,admin.email)
                     except Exception as e:
@@ -3777,7 +3839,7 @@ def chair_form_view(id,form_name):
                     ##
                     """
                     try:
-                        message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                        message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
                         send_email(app,mail, message,admin.email)
                     except Exception as e:
@@ -3814,7 +3876,7 @@ def chair_form_view(id,form_name):
                     ##
                     """
                     try:
-                        message=f' An update from reviewer for form belonging to {formA.applicant_name}' 
+                        message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
             
                         send_email(app,mail, message,admin.email)
                     except Exception as e:
@@ -3835,8 +3897,11 @@ def chair_form_view(id,form_name):
                         db_session.add(form)
             db_session.add(forma)
             db_session.commit()
+
+            
+            
             return redirect(url_for('review_dashboard'))
-        return render_template("form_a_ethics.html",user_id=user_id,formA=forma,formReviewers=formReviewers,latest_forma=latest_forma)
+        return render_template("form_a_ethics.html",user_id=user_id,formA=forma,data=data,formReviewers=formReviewers,latest_forma=latest_forma)
     elif form_name=="FORM B":
         formb = db_session.query(FormB).filter_by(form_id=id).first()
         if formb:
@@ -4304,9 +4369,25 @@ def student_form_pdf(form_id,form_type):
         form = db_session.query(model).filter_by(form_id=form_id).first()
         if form:
             break  # Stop once the form is found
-
+    
     if form_type=='A':
-        return render_template('student_form_a_answer_pdf.html',formA=form)
+        data={
+        "org_name" : parse_field(form.org_name),
+        "org_contact" : parse_field(form.org_contact),
+        "org_role": parse_field(form.org_role),
+        "org_permission" : parse_field(form.org_permission),
+
+        "fund_org" : parse_field(form.fund_org),
+        "fund_contact" :parse_field(form.fund_contact),
+        "fund_role ": parse_field(form.fund_role),
+        "fund_amount": parse_field(form.fund_amount),
+
+        "population" :parse_field(form.population),
+        "sampling_method" : parse_field(form.sampling_method),
+        "sampling_size": parse_field(form.sampling_size),
+        "inclusion_criteria": parse_field(form.inclusion_criteria)
+    }
+        return render_template('student_form_a_answer_pdf.html',formA=form,data=data)
     elif form_type=='B':
         return render_template('student_form_b_answer_pdf.html',formB=form)
     elif form_type=='C':
@@ -4559,7 +4640,25 @@ def reviewer_form_a(id):
     form = db_session.query(FormA).filter_by(form_id=id).first()
     
     if form:
-        return render_template("review_form_a.html", form=form)
+        data={
+        "org_name" : parse_field(form.org_name),
+        "org_contact" : parse_field(form.org_contact),
+        "org_role": parse_field(form.org_role),
+        "org_permission" : parse_field(form.org_permission),
+
+        "fund_org" : parse_field(form.fund_org),
+        "fund_contact" :parse_field(form.fund_contact),
+        "fund_role ": parse_field(form.fund_role),
+        "fund_amount": parse_field(form.fund_amount),
+
+        "population" :parse_field(form.population),
+        "sampling_method" : parse_field(form.sampling_method),
+        "sampling_size": parse_field(form.sampling_size),
+        "inclusion_criteria": parse_field(form.inclusion_criteria)
+    }
+
+    if form:
+        return render_template("review_form_a.html", form=form,data=data)
     else:
         # You can pass an error message or just load the dashboard
         return redirect(url_for('review_dashboard'))
@@ -4698,9 +4797,24 @@ def admin_rec_form(form_id):
 def rec_form_a(id):
     
     form = db_session.query(FormA).filter(FormA.form_id==id).first()
+    data={
+        "org_name" : parse_field(form.org_name),
+        "org_contact" : parse_field(form.org_contact),
+        "org_role": parse_field(form.org_role),
+        "org_permission" : parse_field(form.org_permission),
 
+        "fund_org" : parse_field(form.fund_org),
+        "fund_contact" :parse_field(form.fund_contact),
+        "fund_role ": parse_field(form.fund_role),
+        "fund_amount": parse_field(form.fund_amount),
+
+        "population" :parse_field(form.population),
+        "sampling_method" : parse_field(form.sampling_method),
+        "sampling_size": parse_field(form.sampling_size),
+        "inclusion_criteria": parse_field(form.inclusion_criteria)
+    }
     if form:
-        return render_template("rec_form_a.html", form=form)
+        return render_template("rec_form_a.html", form=form,data=data)
     else:
         # You can pass an error message or just load the dashboard
         return redirect(url_for('rec_dashboard'))
@@ -4924,7 +5038,7 @@ def ethics_reviewer_committee_forms(id,form_name):
             if reviewers:
                 forma.reviewer_name1=reviewers[0]
                 forma.reviewer_name2=reviewers[1]
-            else:
+            elif id_of_reviewers:
                 forma.reviewer_name1=id_of_reviewers[0]
                 forma.reviewer_name2=id_of_reviewers[1]
             forma.supervisor_date=request.form.get('review_date')
@@ -5001,7 +5115,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                 formb.reviewer_name1=reviewers[0]
                 formb.reviewer_name2=reviewers[1]
             
-            else:
+            elif id_of_reviewers:
                 formb.reviewer_name1=id_of_reviewers[0]
                 formb.reviewer_name2=id_of_reviewers[1]
             formb.supervisor_date=request.form.get('review_date')
@@ -5084,7 +5198,7 @@ def ethics_reviewer_committee_forms(id,form_name):
             if reviewers:
                 formc.reviewer_name1=reviewers[0]
                 formc.reviewer_name2=reviewers[1]
-            else:
+            elif id_of_reviewers:
                 formc.reviewer_name1=id_of_reviewers[0]
                 formc.reviewer_name2=id_of_reviewers[1]
             formc.supervisor_date=request.form.get('review_date')
