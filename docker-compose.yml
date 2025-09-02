@@ -3,14 +3,12 @@ version: "3.9"
 services:
   web:
     build: .
-    command: flask run --host=0.0.0.0
-    volumes:
-      - .:/app
-    ports:
-      - "5000:5000"
+    command: gunicorn --bind 0.0.0.0:8080 --workers=4 app:app
+    expose:
+      - "8080"   # expose internal port for Nginx
     environment:
       - FLASK_APP=app.py
-      - FLASK_ENV=development
+      - FLASK_ENV=production
       - DB_SERVER=ethics-db
       - DB_USER=postgres
       - DB_PASSWORD=malvapudding78*
@@ -19,6 +17,17 @@ services:
     depends_on:
       - ethics-db
       - rabbitmq
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"   # public HTTP
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
+    restart: always
 
   ethics-db:
     image: postgres:15
@@ -35,8 +44,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "15672:15672"   # mgmt UI
+      - "5672:5672"     # app connections
 
 volumes:
   pgdata:

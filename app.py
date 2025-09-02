@@ -463,19 +463,21 @@ def edit_user(id):
                     return render_template('register_reviewer.html', messages=[msg])
 
                 try:
-                    hashed_password = User.hash_password(password)
                     user.full_name = full_name
                     user.staff_number = staff_number
                     user.email = email
-                    user.password = hashed_password  # Ensure you hash passwords
+                    user.password = password  # Ensure you hash passwords
                     user.specialisation = specialisation
                     user.role = role
                     if password:
-                        """message=(f'Paasword was changed on your behalf, ' 
-                        f'please follow the link http://152.106.35.11:8080/ use your '
-                        f' email as username and password = {password}')
-            
-                        send_email(app,mail, message,email)"""
+                        try:
+                            message=(f'Your Profile was changed on your behalf, ' 
+                            f'please follow the link http://152.106.35.11:80/ use your '
+                            f' email as username and password = {password}')
+                
+                            send_email(app,mail, message,[email])
+                        except Exception as e:
+                            app.logger.error(f"Failed to send email to {email}: {e}")
                     db_session.commit()
                     return redirect(url_for('reviewer_list'))
 
