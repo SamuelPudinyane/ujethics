@@ -286,7 +286,7 @@ def authenticate_student(id):
             ### uncomment the code bellow for real testing
 
             message=(f'Your account has been Authenticated,Please follow the link to log in '
-            f'http://152.106.35.11:8080/')
+            f'http://152.106.35.11:80/')
 
             try:
                 send_email(app,mail, message,[user.email])
@@ -345,7 +345,7 @@ def register_reviewer():
                 ### uncomment the code bellow for real testing
 
                 message=(f'An account was created on your behalf, ' 
-                    f'please follow the link http://152.106.35.11:8080/ use your '
+                    f'please follow the link http://152.106.35.11:80/ use your '
                     f' email as username and password = {password}')
                 try:
                     send_email(app,mail, message,[email])
@@ -414,7 +414,7 @@ def super_admin_registration():
             # Prepare and send email
             message = (
                 f'You have successfully created an account, '
-                f'please follow the link http://152.106.35.11:8080/ '
+                f'please follow the link http://152.106.35.11:80/ '
                 f'use your email as username and password = {password}'
             )
             try:
@@ -3566,7 +3566,7 @@ def send_certificate(id):
                 ##
                 try:
                     message=(f'You have been issued with the Ethics Certificate. '
-                    f'Follow the link https://127.0.0.1:5000 to view your certificate')
+                    f'Follow the link http://152.106.35.11:80 to view your certificate')
                     if certificate_details.email:
                         send_email(app,mail, message,[certificate_details.email])
                     elif certificate_details.email_address:
