@@ -4807,12 +4807,7 @@ def admin_rec_form(form_id):
     #rec=[]
     #rec.append(Rec_team)
     all_reviewers_counter = db_session.query(User).filter(User.role == 'REVIEWER').count()
-    for item in Rec_team:
-        print("------------ ",item.form_id)
-        print("------------ ",all_reviewers_counter)
-        print("------------ ",len(Rec_team))
-        print("------------ ",form)
-        print("------------ ",role)
+    
     return render_template(
         'chair_rec_form.html',
         Rec_team=Rec_team,
