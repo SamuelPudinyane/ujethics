@@ -65,10 +65,9 @@
 
   <!-- Main Content -->
   <main class="main-content">
-<form  action="{{url_for('reject_or_Accept_form_a',id=formA.form_id)}}" method="POST" >
 
 
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
        <div class="form-section">
             
             <h2>Section 1: Researcher's Details</h2>
@@ -943,90 +942,91 @@
         <input type="date" class="form-control" id="supervisor_date" name="supervisor_date" required>
       </div>
       <br>
+    <form  action="{{url_for('reject_or_Accept_form_a',id=formA.form_id)}}" method="POST" >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>
+            <br>
 
-      <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>
-      <br>
+            <table>
+              <thead class="thead-light">
+                <tr>
+                  <th style="width: 40%;">Document</th>
+                  <th style="width: 60%;">Supervisor Comments</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Organisational Permission/Signed Waiver from Business</strong><br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
+                  <td><textarea name="org_permission_comment" class="form-control" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                  <td><strong>Personal Impact Assessment Form</strong><br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
+                  <td><textarea name="waiver_comment" class="form-control" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                  <td><strong>Form – Ethics Application Form</strong><br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
+                  <td><textarea name="form_a_comment" class="form-control" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                  <td><strong>Interview Questions and/or Questionnaire</strong><br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
+                  <td><textarea name="questions_comment" class="form-control" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                  <td><strong>Participant Information Sheet and Informed Consent Form</strong><br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
+                  <td><textarea name="consent_comment" class="form-control" rows="3"></textarea></td>
+                </tr>
+                <tr>
+                  <td><strong>Refined Concept Proposal</strong><br><small>This should match the approved version with the literature review.</small></td>
+                  <td><textarea name="proposal_comment" class="form-control" rows="3"></textarea></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
 
-      <table>
-        <thead class="thead-light">
-          <tr>
-            <th style="width: 40%;">Document</th>
-            <th style="width: 60%;">Supervisor Comments</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Organisational Permission/Signed Waiver from Business</strong><br><small>Can be an email or formal letter. Ensure permission to access the organisation and relevant documents is included.</small></td>
-            <td><textarea name="org_permission_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td><strong>Personal Impact Assessment Form</strong><br><small>Template available under “Ethical Clearance Templates” in the system.</small></td>
-            <td><textarea name="waiver_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td><strong>Form – Ethics Application Form</strong><br><small>Ensure all fields are complete and the form is co-signed by you as the supervisor. Any revisions made after your proposal review must be submitted.</small></td>
-            <td><textarea name="form_a_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td><strong>Interview Questions and/or Questionnaire</strong><br><small>Review for clarity, appropriateness, and ethical sensitivity. Preliminary versions may be accepted if noted.</small></td>
-            <td><textarea name="questions_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td><strong>Participant Information Sheet and Informed Consent Form</strong><br><small>Ensure the correct template has been used and tailored to the student’s study.</small></td>
-            <td><textarea name="consent_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-          <tr>
-            <td><strong>Refined Concept Proposal</strong><br><small>This should match the approved version with the literature review.</small></td>
-            <td><textarea name="proposal_comment" class="form-control" rows="3"></textarea></td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
+          <div class="form-group">
+            <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>
+            <textarea class="form-control" id="supervisor_feedback" name="supervisor_feedback" rows="5" placeholder="Provide any feedback or required revisions..."></textarea>
+          </div>
+          <br>
 
-      <div class="form-group">
-        <label for="supervisor_feedback"><strong>Supervisor Comments & Recommendation:</strong></label>
-        <textarea class="form-control" id="supervisor_feedback" name="supervisor_feedback" rows="5" placeholder="Provide any feedback or required revisions..."></textarea>
+          <h4>Recommendation:</h4>
+          <!-- Radio Buttons -->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
+            <label class="form-check-label" for="ready">
+              ✔ Ready for submission to JBS Ethics Admin
+            </label>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="radio" name="recommendation" id="revisions" value="Revisions required" onchange="toggleFields()">
+            <label class="form-check-label" for="revisions">
+              ↻ Revisions required before submission
+            </label>
+          </div>
+
+        <!-- Accept Fields (initially hidden) -->
+        <div id="acceptFields" style="display: none;">
+          <div class="form-group">
+            <label for="supervisor_signature">Supervisor Signature:</label>
+            <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
+          </div>
+
+          <div class="form-group">
+            <label for="signature_date">Date:</label>
+            <input type="date" class="form-control" id="signature_date" name="signature_date">
+          </div>
+          <br>
+
+          <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Admin</button>
+        </div>
+
+        <!-- Reject Button (initially hidden) -->
+        <div id="rejectBtn" style="display: none;">
+          <button type="submit" name="reject" value="Reject" class="btn btn-danger">Submit back to Student (Requires Submission)</button>
+        </div>
+
       </div>
-      <br>
-
-      <h4>Recommendation:</h4>
-      <!-- Radio Buttons -->
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="recommendation" id="ready" value="Ready for submission" onchange="toggleFields()" required>
-    <label class="form-check-label" for="ready">
-      ✔ Ready for submission to JBS Ethics Admin
-    </label>
-  </div>
-
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" name="recommendation" id="revisions" value="Revisions required" onchange="toggleFields()">
-    <label class="form-check-label" for="revisions">
-      ↻ Revisions required before submission
-    </label>
-  </div>
-
-  <!-- Accept Fields (initially hidden) -->
-  <div id="acceptFields" style="display: none;">
-    <div class="form-group">
-      <label for="supervisor_signature">Supervisor Signature:</label>
-      <input type="text" class="form-control" id="supervisor_signature" name="supervisor_signature">
-    </div>
-
-    <div class="form-group">
-      <label for="signature_date">Date:</label>
-      <input type="date" class="form-control" id="signature_date" name="signature_date">
-    </div>
-    <br>
-
-    <button type="submit" name="accept" value="Accept" class="btn btn-success">Submit to Ethics Admin</button>
-  </div>
-
-  <!-- Reject Button (initially hidden) -->
-  <div id="rejectBtn" style="display: none;">
-    <button type="submit" name="reject" value="Reject" class="btn btn-danger">Submit back to Student (Requires Submission)</button>
-  </div>
-
-</div>
 
 
   </form>

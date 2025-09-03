@@ -153,6 +153,13 @@
             <td>FORM A</td>
             <td>{{forma.declaration_date}}</td>
             <td>
+              {% if forma.certificate_email%}
+              <span class="status-pill approved">
+                {% if forma.certificate_email%}
+                Certificate issued
+              {% endif %}
+              </span>
+              {% endif %}
               {% if forma.review_supervisor_signature%}
              {{forma.review_supervisor_signature}}: {{forma.form_review_comment}}
              {% endif %}
@@ -176,38 +183,39 @@
                     <span>Review Status: {{ review_comment1 }}</span>
 
                     {% endif %}
-            <span class="status-pill approved">
+                    <br>
+            
               
               {% if forma.rejected_or_accepted and not forma.reviewer_name1 and not forma.review_date and not forma.status%}
-              Awaiting for review
+              <span class="status-pill approved">Awaiting for review</span>
               {% elif forma.rec_status and 'low' not in forma.risk_rating|lower %}
               {{forma.rec_status}}
               {% elif forma.reviewer_name1 and forma.reviewer_name2 and forma.reviewer_name1 and forma.supervisor_date%}
               <br>
-              <br>
-              Submitted to Reviewers
+              
+              <span class="status-pill approved">Submitted to Reviewers</span>
               
                
               {% elif not forma.recommendation%}
-              Ready for review
+              <span class="status-pill approved">Ready for review</span>
               {% elif forma.certificate_issued and not forma.certificate_received%}
-              Certificate issued but not sent
+              <span class="status-pill approved">Certificate issued but not sent</span>
               {% elif forma.review_recommendation and not forma.review_recommendation1 %}
-              Awaiting second reviewer
+              <span class="status-pill approved">Awaiting second reviewer</span>
               {% elif forma.submitted_to_rec and 'low' not in forma.risk_rating|lower and not forma.certificate_issued%}
               <br>
-              Form submitted to Rec 
+              <span class="status-pill approved">Form submitted to Rec </span>
               {% elif (forma.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (forma.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not forma.certificate_received %}
               <br>
-              Approved by both Reviewers
+              <span class="status-pill approved">Approved by both Reviewers</span>
               
               {% elif forma.reviewer_name1 and forma.reviewer_name2 and forma.supervisor_date and forma.rejected_or_accepted and forma.review_supervisor_signature%}
               <br>
               <br>
-              Submitted to Reviewers
+              <span class="status-pill approved">Submitted to Reviewers</span>
               {% elif 'Reject' in ['forma.form_review_comment', 'forma.form_review_comment1'] %}
-              Rejected
+              <span class="status-pill approved">Rejected</span>
               {% elif forma.certificate_issued and forma.certificate_received %}
             <a href="{{url_for('view_certificate',id=forma.form_id)}}" class="btn btn-sm btn-success text-white">View Certificate</a>
             </br>
@@ -300,7 +308,16 @@
             <td>{{formb.supervisor}}</td>
             <td>FORM B</td>
             <td>{{formb.declaration_date}}</td>
-            <td>{% if formb.review_supervisor_signature%}
+            <td>
+              {% if formb.certificate_email%}
+              <span class="status-pill approved">
+                {% if formb.certificate_email%}
+                Certificate issued
+              {% endif %}
+              </span>
+              {% endif %}
+              
+              {% if formb.review_supervisor_signature%}
              {{formb.review_supervisor_signature}}: {{formb.form_review_comment}}
              {% endif %}
              <br>
@@ -322,34 +339,35 @@
                     {% if review_comment1 %}
                     <span>Review Status: {{ review_comment1 }}</span>
                     {% endif %}
-              <span class="status-pill approved">
+                    <br>
+              
                 
                {% if formb.rejected_or_accepted and not formb.reviewer_name1 and not formb.review_date%}
-              Awaiting for review
+              <span class="status-pill approved">Awaiting for review</span>
               {% elif formb.rec_status and 'low' not in formb.risk_level|lower %}
-              {{formb.rec_status}}
+              <span class="status-pill approved">{{formb.rec_status}}</span>
               {% elif  formb.reviewer_name and formb.reviewer_name2 and formb.supervisor_date %}
-              Submitted to Reviewers
+              <span class="status-pill approved">Submitted to Reviewers</span>
               
               
               {% elif not formb.recommendation%}
               
-              Ready for review
+              <span class="status-pill approved">Ready for review</span>
              {% elif formb.certificate_issued and not formb.certificate_received%}
-              Certificate issued but not sent
+              <span class="status-pill approved">Certificate issued but not sent</span>
               {% elif formb.review_recommendation and not formb.review_recommendation1 %}
-              Awaiting second reviewer
+              <span class="status-pill approved">Awaiting second reviewer</span>
               {% elif formb.submitted_to_rec and 'low' not in formb.risk_level|lower and not formb.certificate_issued%}
               <br>
-              Form submitted to Rec 
+              <span class="status-pill approved">Form submitted to Rec</span> 
               {% elif (formb.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (formb.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formb.certificate_received%}
               <br>
-              Approved by both Reviewers
+              <span class="status-pill approved">Approved by both Reviewers</span>
               {% elif formb.reviewer_name1 and formb.reviewer_name2 and formb.supervisor_date %}
-              Submitted to Reviewers
+              <span class="status-pill approved">Submitted to Reviewers</span>
               {% elif 'Reject' in ['formb.form_review_comment', 'formb.form_review_comment1'] %}
-              Rejected
+              <span class="status-pill approved">Rejected</span>
               {% elif formb.certificate_issued and formb.certificate_received %}
             <a href="{{url_for('view_certificate',id=formb.form_id)}}" class="btn btn-sm btn-success text-white">View Certificate</a>
             </br>
@@ -425,6 +443,13 @@
             <td>FORM C</td>
             <td>{% if formc.declaration_date%}{{formc.declaration_date.strftime('%d/%m/%Y')}}{% elif formc.submission_date%}{{formc.submission_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td>
+              {% if formc.certificate_email%}
+              <span class="status-pill approved">
+                {% if formc.certificate_email%}
+                Certificate issued
+              {% endif %}
+              </span>
+              {% endif %}
               {% if formc.review_supervisor_signature%}
              {{formc.review_supervisor_signature}}: {{formc.form_review_comment}}
              {% endif %}
@@ -447,38 +472,38 @@
                     {% if review_comment1 %}
                     <span>Review Status: {{ review_comment1 }}</span>
                     {% endif %}
+                    <br>
               <span class="status-pill approved">
 
               {% if formc.rejected_or_accepted and not formc.reviewer_name1 and not formc.review_date%}
-              Awaiting for review
+              <span class="status-pill approved">Awaiting for review</span>
               {% elif formc.rec_status and 'low' in formc.risk_level|lower %}
               {{formc.rec_status}}
               {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date%}
-              Submitted to Reviewers
+              <span class="status-pill approved">Submitted to Reviewers</span>
               
               
               {% elif not formc.recommendation%}
-              Ready for review
-              {% elif formc.certificate_email%}
-              Certificate issued
+              <span class="status-pill approved">Ready for review</span>
+              
               {% elif formc.review_recommendation and not formc.review_recommendation1 %}
-              Awaiting second reviewer
+              <span class="status-pill approved">Awaiting second reviewer</span>
               
               {% elif formc.submitted_to_rec and 'low' not in formc.risk_level|lower and not formc.certificate_issued%}
               <br>
-              Form submitted to Rec 
+              <span class="status-pill approved">Form submitted to Rec</span>
 
              
               {% elif (formc.review_recommendation in ['Approved','Approved with Minor Changes']) and
               (formc.review_recommendation1 in ['Approved','Approved with Minor Changes']) and not formc.certificate_received %}
               <br>
-              Approved by both Reviewers
+              <span class="status-pill approved">Approved by both Reviewers</span>
 
               {% elif formc.reviewer_name1 and formc.reviewer_name2 and formc.supervisor_date and formc.rejected_or_accepted and formc.review_supervisor_signature%}
-              Submitted to Reviewers
+              <span class="status-pill approved">Submitted to Reviewers</span>
 
               {% elif 'Reject' in ['formc.form_review_comment', 'formc.form_review_comment1'] %}
-              Rejected
+              <span class="status-pill approved">Rejected</span>
               {% elif formc.certificate_issued and formc.certificate_received %}
             <a href="{{url_for('view_certificate',id=formc.form_id)}}" class="btn btn-sm btn-success text-white">View Certificate</a>
             </br>

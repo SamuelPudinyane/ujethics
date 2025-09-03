@@ -1677,16 +1677,15 @@ def form_a_sec3 ():
             form.org_contact = ','.join(data.getlist('org_contact[]'))
             form.org_role = ','.join(data.getlist('org_role[]'))
             form.org_permission = ','.join(data.getlist('org_permission[]'))
-
-
+            
         else:
             form.grant_permission=data.get('grant_permission')
 
             form.org_name = ','.join(data.getlist('org_name[]'))
             form.org_contact = ','.join(data.getlist('org_contact[]'))
             form.org_role = ','.join(data.getlist('org_role[]'))
-            form.org_permission = data.getlist('org_permission[]')
-
+            form.org_permission = ','.join(data.getlist('org_permission[]'))
+            
         form.researcher_affiliation = data.get('researcher_affiliation')
         form.affiliation_details = data.get('affiliation_details')
 
@@ -1701,6 +1700,7 @@ def form_a_sec3 ():
             form.fund_contact = ','.join(data.getlist('fund_contact[]'))
             form.fund_role = ','.join(data.getlist('fund_role[]'))
             form.fund_amount = ','.join(data.getlist('fund_amount[]'))
+
         else:
             # Funding Information
             form.is_funded = data.get('is_funded')
@@ -1816,7 +1816,7 @@ def form_a_sec4():
             form.personal_info_comment=request.form.get('personal_info_comment')
             form.data_anonymized=request.form.get('data_anonymized')
             form.anonymization_comment=request.form.get('anonymization_comment')
-            form.org_permission=request.form.get('org_permission')
+            
             form.permission_details=request.form.get('permission_details')
             form.public_data_description=request.form.get('public_data_description')
             form.shortcomings_reported=request.form.get('shortcomings_reported')
@@ -1832,7 +1832,7 @@ def form_a_sec4():
             form.personal_info_comment=request.form.get('personal_info_comment')
             form.data_anonymized=request.form.get('data_anonymized')
             form.anonymization_comment=request.form.get('anonymization_comment')
-            form.org_permission=request.form.get('org_permission')
+           
             form.permission_details=request.form.get('permission_details')
             form.public_data_description=request.form.get('public_data_description')
             form.shortcomings_reported=request.form.get('shortcomings_reported')
@@ -3511,24 +3511,26 @@ def chair_forma_view(id):
     form_name="FORM A"
    
     for f in form:
-        f.org_name = parse_field(f.org_name)
-        f.org_contact = parse_field(f.org_contact)
-        f.org_role = parse_field(f.org_role)
-        f.org_permission = parse_field(f.org_permission)
+        data={
+        "org_name" : parse_field(f.org_name),
+        "org_contact" : parse_field(f.org_contact),
+        "org_role": parse_field(f.org_role),
+        "org_permission" : parse_field(f.org_permission),
 
-        f.fund_org = parse_field(f.fund_org)
-        f.fund_contact = parse_field(f.fund_contact)
-        f.fund_role = parse_field(f.fund_role)
-        f.fund_amount = parse_field(f.fund_amount)
+        "fund_org" : parse_field(f.fund_org),
+        "fund_contact" :parse_field(f.fund_contact),
+        "fund_role ": parse_field(f.fund_role),
+        "fund_amount": parse_field(f.fund_amount),
 
-        f.population = parse_field(f.population)
-        f.sampling_method = parse_field(f.sampling_method)
-        f.sampling_size = parse_field(f.sampling_size)
-        f.inclusion_criteria = parse_field(f.inclusion_criteria)
+        "population" :parse_field(f.population),
+        "sampling_method" : parse_field(f.sampling_method),
+        "sampling_size": parse_field(f.sampling_size),
+        "inclusion_criteria": parse_field(f.inclusion_criteria)
+    }
 
     
     today = date.today()
-    return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
+    return render_template("chair-forms-dashboard.html",data=data,today=today,form_name=form_name,submitted_form=form)
 
 
 @app.route('/chair_formb_view/<string:id>', methods=['GET'])
@@ -3676,6 +3678,7 @@ def chair_form_view(id,form_name):
             for item in Assigned_reviewer:
                 list_of_revewers.append(item.email)
                 id_of_reviewers.append(item.user_id)
+    print("---------------- ",id_of_reviewers )
     #admin=db_session.query(User).filter_by(role="Admin").all()
     
     if form_name=="FORM A":
@@ -3705,7 +3708,7 @@ def chair_form_view(id,form_name):
             form_reviewed_by=user_id
  
             if request.form.get('status') in ['Approved','Approved with Minor Changes']:
-                if not forma.review_date:
+                if not forma.form_reviewed_by:
                     if id_of_reviewers:
                         forma.reviewer_name1=id_of_reviewers[0]
                         forma.reviewer_name2=id_of_reviewers[1]
@@ -3809,7 +3812,7 @@ def chair_form_view(id,form_name):
                         db_session.add(form)
                    
             else:
-                if not forma.review_date:
+                if not forma.form_reviewed_by:
                     if id_of_reviewers:
                         forma.reviewer_name1=id_of_reviewers[0]
                         forma.reviewer_name2=id_of_reviewers[1]
@@ -3935,7 +3938,7 @@ def chair_form_view(id,form_name):
             form_review_comment=request.form.get('status')
             form_reviewed_by=user_id
             if request.form.get('status') in ['Approved','Approved with Minor Changes']:
-                if not formb.review_date:
+                if not formb.form_reviewed_by:
                     if id_of_reviewers:
                         formb.reviewer_name1=id_of_reviewers[0]
                         formb.reviewer_name2=id_of_reviewers[1]
@@ -4034,7 +4037,7 @@ def chair_form_view(id,form_name):
                         db_session.add(form)
                    
             else:
-                if not formb.review_date:
+                if not formb.form_reviewed_by:
                     if id_of_reviewers:
                         formb.reviewer_name1=id_of_reviewers[0]
                         formb.reviewer_name2=id_of_reviewers[1]
@@ -4804,7 +4807,12 @@ def admin_rec_form(form_id):
     #rec=[]
     #rec.append(Rec_team)
     all_reviewers_counter = db_session.query(User).filter(User.role == 'REVIEWER').count()
-
+    for item in Rec_team:
+        print("------------ ",item.form_id)
+        print("------------ ",all_reviewers_counter)
+        print("------------ ",len(Rec_team))
+        print("------------ ",form)
+        print("------------ ",role)
     return render_template(
         'chair_rec_form.html',
         Rec_team=Rec_team,

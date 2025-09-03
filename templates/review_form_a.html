@@ -111,11 +111,8 @@
       </div>
     </div>
   </header>
- <!-- Form -->
-    <form id="formAsection1" action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
-      
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <!-- Main Content -->
+ 
+            <!-- Main Content -->
   <main class="main-content">
    
       <div class="form-section">
@@ -956,8 +953,13 @@
     </div>
 
     <hr>
-<div id="supervisorDeclaration" >
     
+<div id="supervisorDeclaration" >
+    <!-- Form -->
+ <form id="formAsection1" action="{{url_for('chair_form_view',id=form.form_id,form_name='FORM A')}}" method="post" enctype="multipart/form-data">
+      
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
       <h1>JBS RESEARCH ETHICS COMMITTEE<br>REVIEWER REPORT</h1>
 
   <div class="section">
@@ -1079,10 +1081,10 @@
     <button type="submit" class="btn-reject" onclick="document.getElementById('status').value='Reject'">✖ Reject</button>
   </div>
     </div>
-  
+  </form>
 </main>
 
-</form>
+
 
 </div>
   <!-- Footer -->

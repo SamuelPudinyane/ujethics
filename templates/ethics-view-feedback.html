@@ -87,7 +87,7 @@
 
       <div class="form-group">
         <label for="supervisor_date">Date of Review:</label>
-        <strong id="supervisor_date">{{view_form.supervisor_date.strftime('%d/%m/%Y')}}</strong>
+        <strong id="supervisor_date">{% if view_form.supervisor_date%}{{view_form.supervisor_date.strftime('%d/%m/%Y')}}{% endif %}</strong>
       </div>
 
       <h5 class="mt-4">Checklist of Required Documents for Supervisor Review</h5>

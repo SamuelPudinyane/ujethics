@@ -155,6 +155,7 @@
                     <p class="btn btn-secondary text-white">Review Status: {{ review_comment1 }}</p>
                     
                     {% endif %}
+                    <br>
               <span class="status-pill approved" style="color:white; padding:4px; border-radius:4px;">
                   
               {% if form.rejected_or_accepted and not form.supervisor_feedback %}
@@ -177,6 +178,7 @@
                   <form action="{{url_for('send_certificate',id=form.form_id)}}" method="post">
                   <button type="submit" class="btn btn-success">Send certificate</button>
                   </form>
+                  <br>
                   {% elif form.review_status and form.review_status1 and form.rejected_or_accepted and form.recommendation=='Ready for submission' and form.supervisor_date and ('low' in form.risk_level|lower or 'low' in form.risk_rating|lower) %}
                   <a href="{{url_for('certificate',id=form.form_id)}}" class="btn btn-sm btn-success text-white" >Issue Certificate</a>
                   {% set review_comment = '' %}
@@ -188,7 +190,7 @@
                     {% if review_comment %}
                     <p >Review Status: {{ review_comment }}</p>
                     {% endif %}
-                 
+                 <br>
                   {% elif form.rejected_or_accepted and form.review_supervisor_signature and not form.certificate_issued%}
                   Approved by Ethics Committee
                   {% elif not form.reviewer_name1 and not form.reviewer_name2 %}
