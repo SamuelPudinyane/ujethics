@@ -57,85 +57,89 @@
           </tr>
         </thead>
         <tbody>
+          {% for item in submitted_form_a %}
           
           <tr>
-            <td>{{submitted_form_a.student_number}}</td>
+            <td>{{item.forma.student_number}}</td>
             <td>Form A</td>
-            <td>{{submitted_form_a.risk_rating}}</td>
-            <td>{% if submitted_form_a.signature_date%}{{submitted_form_a.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td>{{item.forma.risk_rating}}</td>
+            <td>{% if item.forma.signature_date%}{{item.forma.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {% if submitted_form_a.rec_status  and submitted_form_a.form_reviewed_by1 == user_id and 'low' not in submitted_form_a.risk_level|lower%}
-              {{submitted_form_a.rec_status}}
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and (submitted_form_a.form_reviewed_by==user_id or submitted_form_a.form_reviewed_by1==user_id) and 'low' not in submitted_form_a.risk_level|lower and submitted_form_a.review_status and not submitted_form_a.review_status1  %}
+              {% if item.forma.rec_status  and item.forma.form_reviewed_by1 == user_id and 'low' not in item.forma.risk_level|lower%}
+              {{item.forma.rec_status}}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and (item.forma.form_reviewed_by==user_id or item.forma.form_reviewed_by1==user_id) and 'low' not in item.forma.risk_level|lower and item.forma.review_status and not item.forma.review_status1  %}
               Under Review
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.review_status and submitted_form_a.review_status1 %}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and item.forma.review_status and item.forma.review_status1 %}
               Under Review
-              {% elif not submitted_form_a.certificate_received and submitted_form_a.certificate_issued and (submitted_form_a.form_reviewed_by==user_id or submitted_form_a.form_reviewed_by1==user_id) and ('low' in submitted_form_a.risk_level|lower or 'low' in submitted_form_a.risk_rating |lower) %}
+              {% elif not item.forma.certificate_received and item.forma.certificate_issued and (item.forma.form_reviewed_by==user_id or item.forma.form_reviewed_by1==user_id) and ('low' in item.forma.risk_level|lower or 'low' in item.forma.risk_rating |lower) %}
               Certificate Will be Issued
-              {% elif submitted_form_a.review_status and submitted_form_a.form_reviewed_by1==user_id%}
+              {% elif item.forma.review_status and item.forma.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
               
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.review_status and not submitted_form_a.review_status1 and (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and item.forma.review_status and not item.forma.review_status1 and (item.forma.form_reviewed_by == user_id or item.forma.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.form_reviewed_by and not submitted_form_a.form_reviewed_by1  and (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and item.forma.form_reviewed_by and not item.forma.form_reviewed_by1  and (item.forma.form_reviewed_by == user_id or item.forma.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and submitted_form_a.form_reviewed_by and submitted_form_a.form_reviewed_by1  and (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id)%}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and (item.forma.form_reviewed_by or item.forma.form_reviewed_by1)  and (item.forma.form_reviewed_by == user_id or item.forma.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif submitted_form_a.rejected_or_accepted and submitted_form_a.review_status and not submitted_form_a.review_status1 and not (submitted_form_a.form_reviewed_by == user_id or submitted_form_a.form_reviewed_by1 == user_id) and not submitted_form_a.form_reviewed_by1 %}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and item.forma.form_reviewed_by and item.forma.form_reviewed_by1  and (item.forma.form_reviewed_by == user_id or item.forma.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif item.forma.rejected_or_accepted and item.forma.review_status and not item.forma.review_status1 and not (item.forma.form_reviewed_by == user_id or item.forma.form_reviewed_by1 == user_id) and not item.forma.form_reviewed_by1 %}
               Awaiting for review
-              {% elif submitted_form_a.certificate_issued and submitted_form_a.certificate_received %}
+              {% elif item.forma.certificate_issued and item.forma.certificate_received %}
               Certificate was issued
                
-              {% elif not submitted_form_a.certificate_issued and not submitted_form_a.certificate_received and not submitted_form_a.reviewed_by and not submitted_form_a.reviewed_by1 %}
+              {% elif not item.forma.certificate_issued and not item.forma.certificate_received and not item.forma.reviewed_by and not item.forma.reviewed_by1 %}
               Awaiting for review
               {% endif %}
             </span>
           
             </td>
             <td>
+              
               <ul class="doc-link">
-                  {% if requirementsa.proposal_path %}
+                  {% if item.requirementsa.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=requirementsa.proposal_path) }}" target="_blank">Research Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsa.proposal_path) }}" target="_blank">Research Proposal</a></li>
                   {% endif %}
 
-                  {% if requirementsa.permission_letter %}
-                  {% for file in requirementsa.permission_letter.split(',') %}
+                  {% if item.requirementsa.permission_letter %}
+                  {% for file in item.requirementsa.permission_letter.split(',') %}
                     <li><a href="{{ url_for('static', filename=file.strip()) }}" target="_blank">Permission Letter {{ loop.index }}</a></li>
                   {% endfor %}
                 {% endif %}
-                  {% if requirementsa.ethics_evidence %}
-                      <li><a href="{{ url_for('static', filename=requirementsa.ethics_evidence) }}" target="_blank">Ethical Compliance</a></li>
+                  {% if item.requirementsa.ethics_evidence %}
+                      <li><a href="{{ url_for('static', filename=item.requirementsa.ethics_evidence) }}" target="_blank">Ethical Compliance</a></li>
                   {% endif %}
 
-                  {% if requirementsa.prior_clearance_path %}
+                  {% if item.requirementsa.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=requirementsa.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsa.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
-                  {% if requirementsa.research_tools_path %}
-                      <li><a href="{{ url_for('static', filename=requirementsa.research_tools_path) }}" target="_blank">Survey/Interview/Focus Group Questions</a></li>
+                  {% if item.requirementsa.research_tools_path %}
+                      <li><a href="{{ url_for('static', filename=item.requirementsa.research_tools_path) }}" target="_blank">Survey/Interview/Focus Group Questions</a></li>
                   {% endif %}
-                  {% if requirementsa.impact_assessment_path %}
-                      <li><a href="{{ url_for('static', filename=requirementsa.impact_assessment_path) }}" target="_blank">Personal Assessment Impact Form</a></li>
+                  {% if item.requirementsa.impact_assessment_path %}
+                      <li><a href="{{ url_for('static', filename=item.requirementsa.impact_assessment_path) }}" target="_blank">Personal Assessment Impact Form</a></li>
                   {% endif %}
-                  {% if requirementsa.prior_clearance %}
-                  <li><a href="{{url_for('static',filename=requirementsa.prior_clearance)}}">Prior Clearance</a></li>
+                  {% if item.requirementsa.prior_clearance %}
+                  <li><a href="{{url_for('static',filename=item.requirementsa.prior_clearance)}}">Prior Clearance</a></li>
                   {% endif %}
-                  {% if requirementsa.prior_clearance1 %}
-                  <li><a href="{{url_for('static',filename=requirementsa.prior_clearance1)}}">Ethical Clearance</a></li>
+                  {% if item.requirementsa.prior_clearance1 %}
+                  <li><a href="{{url_for('static',filename=item.requirementsa.prior_clearance1)}}">Ethical Clearance</a></li>
                   {% endif %}
-                  {% if requirementsa.participation_info_sheet%}
-                  <li><a href="{{url_for('static',filename=requirementsa.participation_info_sheet)}}">Participation Info Sheet</a></li>
+                  {% if item.requirementsa.participation_info_sheet%}
+                  <li><a href="{{url_for('static',filename=item.requirementsa.participation_info_sheet)}}">Participation Info Sheet</a></li>
                   {% endif %}
                   
                 <br>
               </ul>
             </td>
             <td>
-              <a href="{{url_for('reviewer_form_a',id=submitted_form_a.form_id)}}" class="view-btn">Review</a>
+              <a href="{{url_for('reviewer_form_a',id=item.forma.form_id)}}" class="view-btn">Review</a>
             </td>
           </tr>
-         
+         {% endfor %}
         </tbody>
       </table>
       {% endif %}
@@ -156,36 +160,38 @@
          
         </thead>
         <tbody>
-          
+          {% for item in submitted_form_b%}
           <tr>
-            <td>{{submitted_form_b.student_number}}</td>
+            <td>{{item.formb.student_number}}</td>
             <td>Form B</td>
-            <td>{{submitted_form_b.risk_level}}</span></td>
-            <td>{% if submitted_form_b.signature_date%}{{submitted_form_b.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td>{{item.formb.risk_level}}</span></td>
+            <td>{% if item.formb.signature_date%}{{item.formb.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
-              {% if submitted_form_b.rec_status  and submitted_form_b.form_reviewed_by1 == user_id and 'low' not in submitted_form_b.risk_level|lower%}
-              {{submitted_form_b.rec_status}}
-              {% elif not submitted_form_b.certificate_issued and not submitted_form_b.certificate_received and (submitted_form_b.form_reviewed_by==user_id or submitted_form_b.form_reviewed_by1==user_id) and 'low' not in submitted_form_b.risk_level|lower and submitted_form_b.review_status and not submitted_form_b.review_status1  %}
+              {% if item.formb.rec_status  and item.formb.form_reviewed_by1 == user_id and 'low' not in item.formb.risk_level|lower%}
+              {{item.formb.rec_status}}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and (item.formb.form_reviewed_by==user_id or item.formb.form_reviewed_by1==user_id) and 'low' not in item.formb.risk_level|lower and item.formb.review_status and not item.formb.review_status1  %}
               Under Review
-              {% elif not submitted_form_b.certificate_issued and not submitted_form_b.certificate_received and submitted_form_b.review_status and submitted_form_b.review_status1 %}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and item.formb.review_status and item.formb.review_status1 %}
               Under Review
-              {% elif not submitted_form_b.certificate_received and submitted_form_b.certificate_issued and (submitted_form_b.form_reviewed_by==user_id or submitted_form_b.form_reviewed_by1==user_id) and ('low' in submitted_form_b.risk_level|lower or 'low' in submitted_form_b.risk_rating |lower) %}
+              {% elif not item.formb.certificate_received and item.formb.certificate_issued and (item.formb.form_reviewed_by==user_id or item.formb.form_reviewed_by1==user_id) and ('low' in item.formb.risk_level|lower or 'low' in item.formb.risk_rating |lower) %}
               Certificate Will be Issued
-              {% elif submitted_form_b.review_status and submitted_form_b.form_reviewed_by1==user_id%}
+              {% elif item.formb.review_status and item.formb.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
               
-              {% elif not submitted_form_b.certificate_issued and not submitted_form_b.certificate_received and submitted_form_b.review_status and not submitted_form_b.review_status1 and (submitted_form_b.form_reviewed_by == user_id or submitted_form_b.form_reviewed_by1 == user_id)%}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and item.formb.review_status and not item.formb.review_status1 and (item.formb.form_reviewed_by == user_id or item.formb.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_b.certificate_issued and not submitted_form_b.certificate_received and submitted_form_b.form_reviewed_by and not submitted_form_b.form_reviewed_by1  and (submitted_form_b.form_reviewed_by == user_id or submitted_form_b.form_reviewed_by1 == user_id)%}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and item.formb.form_reviewed_by and not item.formb.form_reviewed_by1  and (item.formb.form_reviewed_by == user_id or item.formb.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_b.certificate_issued and not submitted_form_b.certificate_received and submitted_form_b.form_reviewed_by and submitted_form_b.form_reviewed_by1  and (submitted_form_b.form_reviewed_by == user_id or submitted_form_b.form_reviewed_by1 == user_id)%}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and (item.formb.form_reviewed_by or item.formb.form_reviewed_by1)  and (item.formb.form_reviewed_by == user_id or item.formb.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif submitted_form_b.rejected_or_accepted and submitted_form_b.review_status and not submitted_form_b.review_status1 and not (submitted_form_b.form_reviewed_by == user_id or submitted_form_b.form_reviewed_by1 == user_id) and not submitted_form_b.form_reviewed_by1 %}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and item.formb.form_reviewed_by and item.formb.form_reviewed_by1  and (item.formb.form_reviewed_by == user_id or item.formb.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif item.formb.rejected_or_accepted and item.formb.review_status and not item.formb.review_status1 and not (item.formb.form_reviewed_by == user_id or item.formb.form_reviewed_by1 == user_id) and not item.formb.form_reviewed_by1 %}
               Awaiting for review
-              {% elif submitted_form_b.certificate_issued and submitted_form_b.certificate_received %}
+              {% elif item.formb.certificate_issued and item.formb.certificate_received %}
               Certificate was issued
                
-              {% elif not submitted_form_b.certificate_issued and not submitted_form_b.certificate_received and not submitted_form_b.reviewed_by and not submitted_form_b.reviewed_by1 %}
+              {% elif not item.formb.certificate_issued and not item.formb.certificate_received and not item.formb.reviewed_by and not item.formb.reviewed_by1 %}
               Awaiting for review
               {% endif %}
             </span>
@@ -194,21 +200,21 @@
             <td>
               <ul class="doc-link">
                 
-                  {% if requirementsb.proposal_path %}
+                  {% if item.requirementsb.proposal_path %}
                       
-                      <li><a href="{{ url_for('static', filename=requirementsb.proposal_path) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsb.proposal_path) }}" target="_blank">Proposal</a></li>
                   {% endif %}
-                  {% if requirementsb.permission_letter %}
+                  {% if item.requirementsb.permission_letter %}
                   
-                      <li><a href="{{ url_for('static', filename=requirementsb.permission_letter) }}" target="_blank">Impact Form</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsb.permission_letter) }}" target="_blank">Impact Form</a></li>
                   {% endif %}
-                  {% if requirementsb.ethics_evidence %}
+                  {% if item.requirementsb.ethics_evidence %}
                 
-                      <li><a href="{{ url_for('static', filename=requirementsb.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsb.ethics_evidence) }}" target="_blank">Permission Letter</a></li>
                   {% endif %}
-                  {% if requirementsb.prior_clearance_path %}
+                  {% if item.requirementsb.prior_clearance_path %}
                
-                      <li><a href="{{ url_for('static', filename=requirementsb.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsb.prior_clearance_path) }}" target="_blank">Ethics Clearance</a></li>
                   {% endif %}
                  
                 <br>
@@ -216,10 +222,10 @@
               </ul>
             </td>
             <td>
-              <a href="{{url_for('reviewer_form_b',id=submitted_form_b.form_id)}}" class="view-btn">Review</a>
+              <a href="{{url_for('reviewer_form_b',id=item.formb.form_id)}}" class="view-btn">Review</a>
             </td>
           </tr>
-           
+           {% endfor %}
         </tbody>
       </table>
       {% endif %}
@@ -240,41 +246,43 @@
          
         </thead>
         <tbody>
-
+        {% for item in  submitted_form_c%}
           
           <tr>
-            <td>{{submitted_form_c.student_number}}</td>
+            <td>{{item.formc.student_number}}</td>
             <td>Form C</td>
-            <td>{{submitted_form_c.risk_level}}</td>
-            <td>{% if submitted_form_c.signature_date%}{{submitted_form_c.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
+            <td>{{item.formc.risk_level}}</td>
+            <td>{% if item.formc.signature_date%}{{item.formc.signature_date.strftime('%d/%m/%Y')}}{% endif%}</td>
             <td><span class="badge status-pending">
               
-              {% if submitted_form_c.rec_status  and submitted_form_c.form_reviewed_by1 == user_id and 'low' not in submitted_form_c.risk_level|lower%}
-              {{submitted_form_c.rec_status}}
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and (submitted_form_c.form_reviewed_by==user_id or submitted_form_c.form_reviewed_by1==user_id) and 'low' not in submitted_form_c.risk_level|lower and submitted_form_c.review_status and not submitted_form_c.review_status1  %}
+              {% if item.formc.rec_status  and item.formc.form_reviewed_by1 == user_id and 'low' not in item.formc.risk_level|lower%}
+              {{item.formc.rec_status}}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and (item.formc.form_reviewed_by==user_id or item.formc.form_reviewed_by1==user_id) and 'low' not in item.formc.risk_level|lower and item.formc.review_status and not item.formc.review_status1  %}
               Under Review
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and submitted_form_c.review_status and submitted_form_c.review_status1 %}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and item.formc.review_status and item.formc.review_status1 %}
               Under Review
-              {% elif not submitted_form_c.certificate_received and submitted_form_c.certificate_issued and (submitted_form_c.form_reviewed_by==user_id or submitted_form_c.form_reviewed_by1==user_id) and ('low' in submitted_form_c.risk_level|lower or 'low' in submitted_form_c.risk_rating |lower) %}
+              {% elif not item.formc.certificate_received and item.formc.certificate_issued and (item.formc.form_reviewed_by==user_id or item.formc.form_reviewed_by1==user_id) and ('low' in item.formc.risk_level|lower or 'low' in item.formc.risk_rating |lower) %}
               Certificate Will be Issued
-              {% elif submitted_form_c.review_status and submitted_form_c.form_reviewed_by1==user_id%}
+              {% elif item.formc.review_status and item.formc.form_reviewed_by1==user_id%}
               Submitted to Ethics Admin
               
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and submitted_form_c.review_status and not submitted_form_c.review_status1 and (submitted_form_c.form_reviewed_by == user_id or submitted_form_c.form_reviewed_by1 == user_id)%}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and item.formc.review_status and not item.formc.review_status1 and (item.formc.form_reviewed_by == user_id or item.formc.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and submitted_form_c.form_reviewed_by and not submitted_form_c.form_reviewed_by1  and (submitted_form_c.form_reviewed_by == user_id or submitted_form_c.form_reviewed_by1 == user_id)%}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and item.formc.form_reviewed_by and not item.formc.form_reviewed_by1  and (item.formc.form_reviewed_by == user_id or item.formc.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and submitted_form_c.form_reviewed_by and submitted_form_c.form_reviewed_by1  and (submitted_form_c.form_reviewed_by == user_id or submitted_form_c.form_reviewed_by1 == user_id)%}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and (item.formc.form_reviewed_by or item.formc.form_reviewed_by1)  and (item.formc.form_reviewed_by == user_id or item.formc.form_reviewed_by1 == user_id)%}
               Under Review
-              {% elif submitted_form_c.rejected_or_accepted and submitted_form_c.review_status and not submitted_form_c.review_status1 and (submitted_form_c.form_reviewed_by == user_id or submitted_form_c.form_reviewed_by1 == user_id) and not submitted_form_c.form_reviewed_by1 %}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and item.formc.form_reviewed_by and item.formc.form_reviewed_by1  and (item.formc.form_reviewed_by == user_id or item.formc.form_reviewed_by1 == user_id)%}
+              Under Review
+              {% elif item.formc.rejected_or_accepted and item.formc.review_status and not item.formc.review_status1 and (item.formc.form_reviewed_by == user_id or item.formc.form_reviewed_by1 == user_id) and not item.formc.form_reviewed_by1 %}
               Awaiting for review
-              {% elif submitted_form_c.certificate_issued and submitted_form_c.certificate_received %}
+              {% elif item.formc.certificate_issued and item.formc.certificate_received %}
               Certificate was issued
               
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and submitted_form_c.form_reviewed_by and not submitted_form_c.form_reviewed_by1 and not (submitted_form_c.form_reviewed_by == user_id or submitted_form_c.form_reviewed_by1 == user_id) %}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and item.formc.form_reviewed_by and not item.formc.form_reviewed_by1 and not (item.formc.form_reviewed_by == user_id or item.formc.form_reviewed_by1 == user_id) %}
               Awaiting for Review
               
-              {% elif not submitted_form_c.certificate_issued and not submitted_form_c.certificate_received and not submitted_form_c.form_reviewed_by and not submitted_form_c.form_reviewed_by1 %}
+              {% elif not item.formc.certificate_issued and not item.formc.certificate_received and not item.formc.form_reviewed_by and not item.formc.form_reviewed_by1 %}
               Awaiting for review
               {% endif %}
             </span>
@@ -282,19 +290,19 @@
             <td>
               <ul class="doc-link">
                 
-                  {% if requirementsc.files %}
+                  {% if item.requirementsc.files %}
                       
-                      <li><a href="{{ url_for('static', filename=requirementsc.files) }}" target="_blank">Proposal</a></li>
+                      <li><a href="{{ url_for('static', filename=item.requirementsc.files) }}" target="_blank">Proposal</a></li>
                   {% endif %}
                   
                 <br>
               </ul>
             </td>
             <td>
-              <a href="{{url_for('reviewer_form_c',id=submitted_form_c.form_id)}}" class="view-btn">Review</a>
+              <a href="{{url_for('reviewer_form_c',id=item.formc.form_id)}}" class="view-btn">Review</a>
             </td>
           </tr>
-          
+          {% endfor %}
         </tbody>
       </table>
       {% endif %}

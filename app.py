@@ -4573,12 +4573,22 @@ def review_dashboard():
             FormA.reviewer_name2 == user_id
         ))\
         .order_by(FormA.submitted_at.desc()) \
-        .first()
+        .all()
+    form_aa=[]
+    form_bb=[]
+    form_cc=[]
     if submitted_form_a:
-        form_a, requirementsa = submitted_form_a
+        
+        for form_a, requirementsa in submitted_form_a:
+        
+            form_aa.append(
+                {"forma":form_a,
+                 "requirementsa":requirementsa})
+            
+         
     else:
         form_a, requirementsa = None, None
-    
+   
     submitted_form_b = db_session.query(FormB, FormARequirements) \
         .join(User, FormB.user_id == User.user_id) \
         .join(FormARequirements, FormARequirements.user_id == FormB.user_id)\
@@ -4588,9 +4598,15 @@ def review_dashboard():
             FormB.reviewer_name2 == user_id
         ))\
         .order_by(FormB.submitted_at.desc()) \
-        .first()
+        .all()
     if submitted_form_b:
-        form_b, requirementsb = submitted_form_b
+        for form_b, requirementsb in submitted_form_b:
+
+            form_bb.append(
+                {"formb":form_b,
+                 "requirementsb":requirementsb})
+            
+            
     else:
         form_b, requirementsb = None, None
     # Form C
@@ -4603,19 +4619,23 @@ def review_dashboard():
             FormC.reviewer_name2 == user_id
         ))\
         .order_by(FormC.submission_date.desc()) \
-        .first()
-    
+        .all()
+        
     if submitted_form_c:
-        form_c, requirementsc = submitted_form_c
+        for form_c, requirementsc in submitted_form_c:
+        
+            form_cc.append(
+                {"formc":form_c,
+                 "requirementsc":requirementsc})
     else:
         form_c, requirementsc = None, None
    
     today = date.today()
     return render_template('review-dashboard.html',
                 user_id=user_id,today=today,
-                submitted_form_a=form_a,requirementsa=requirementsa,
-                submitted_form_b=form_b,requirementsb=requirementsb,
-                submitted_form_c=form_c,requirementsc=requirementsc)
+                submitted_form_a=form_aa,
+                submitted_form_b=form_bb,
+                submitted_form_c=form_cc)
 
 
 
@@ -5036,28 +5056,15 @@ def ethics_reviewer_committee_forms(id,form_name):
             reviewers=request.form.getlist('reviewer_names[]')
             
             if reviewers:
+                
                 forma.reviewer_name1=reviewers[0]
                 forma.reviewer_name2=reviewers[1]
             elif id_of_reviewers:
                 forma.reviewer_name1=id_of_reviewers[0]
                 forma.reviewer_name2=id_of_reviewers[1]
-            forma.supervisor_date=request.form.get('review_date')
-            forma.supervisor_org_permission_status=request.form.get('review_org_permission_status')
-            forma.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
-            forma.supervisor_waiver_status=request.form.get('review_waiver_status')
-            forma.supervisor_waiver_comments=request.form.get('review_waiver_comments')
-            forma.supervisor_form_status=request.form.get('review_form_status')
-            forma.supervisor_form_comments=request.form.get('review_form_comments')
-            forma.supervisor_questions_status=request.form.get('review_questions_status')
-            forma.supervisor_questions_comments=request.form.get('review_questions_comments')
-            forma.supervisor_consent_status=request.form.get('review_consent_status')
-            forma.supervisor_consent_comments=request.form.get('review_consent_comments')
-            forma.supervisor_proposal_status=request.form.get('review_proposal_status')
-            forma.supervisor_proposal_comments=request.form.get('review_proposal_comments')
-            forma.supervisor_additional_comments=request.form.get('review_additional_comments')
-            forma.supervisor_recommendation=request.form.get('review_recommendation')
-            forma.supervisor_supervisor_signature=request.form.get('supervisor_signature')
-            forma.supervisor_signature_date=request.form.get('review_signature_date')
+            forma.review_date=request.form.get('review_date')
+            forma.review_form_comments=request.form.get('additional_comments')
+            forma.supervisor_form_status=request.form.get('recommendation')
             if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
@@ -5118,23 +5125,9 @@ def ethics_reviewer_committee_forms(id,form_name):
             elif id_of_reviewers:
                 formb.reviewer_name1=id_of_reviewers[0]
                 formb.reviewer_name2=id_of_reviewers[1]
-            formb.supervisor_date=request.form.get('review_date')
-            formb.supervisor_org_permission_status=request.form.get('review_org_permission_status')
-            formb.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
-            formb.supervisor_waiver_status=request.form.get('review_waiver_status')
-            formb.supervisor_waiver_comments=request.form.get('review_waiver_comments')
-            formb.supervisor_form_status=request.form.get('review_form_status')
-            formb.supervisor_form_comments=request.form.get('review_form_comments')
-            formb.supervisor_questions_status=request.form.get('review_questions_status')
-            formb.supervisor_questions_comments=request.form.get('review_questions_comments')
-            formb.supervisor_consent_status=request.form.get('review_consent_status')
-            formb.supervisor_consent_comments=request.form.get('review_consent_comments')
-            formb.supervisor_proposal_status=request.form.get('review_proposal_status')
-            formb.supervisor_proposal_comments=request.form.get('review_proposal_comments')
-            formb.supervisor_additional_comments=request.form.get('review_additional_comments')
-            formb.supervisor_recommendation=request.form.get('review_recommendation')
-            formb.supervisor_supervisor_signature=request.form.get('supervisor_signature')
-            formb.supervisor_signature_date=request.form.get('review_signature_date')
+            formb.review_date=request.form.get('review_date')
+            formb.review_form_comments=request.form.get('additional_comments')
+            formb.supervisor_form_status=request.form.get('recommendation')
             
             if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
@@ -5183,7 +5176,7 @@ def ethics_reviewer_committee_forms(id,form_name):
  
         list_of_revewers=[]
         id_of_reviewers=[]
-        if Assigned_reviewer:
+        if reviewers:
             for item in Assigned_reviewer:
                 id_of_reviewers.append(item.user_id)
                 list_of_revewers.append(item.email)
@@ -5195,29 +5188,16 @@ def ethics_reviewer_committee_forms(id,form_name):
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
           
-            if reviewers:
+            if Assigned_reviewer:
                 formc.reviewer_name1=reviewers[0]
                 formc.reviewer_name2=reviewers[1]
             elif id_of_reviewers:
                 formc.reviewer_name1=id_of_reviewers[0]
                 formc.reviewer_name2=id_of_reviewers[1]
-            formc.supervisor_date=request.form.get('review_date')
-            formc.supervisor_org_permission_status=request.form.get('review_org_permission_status')
-            formc.supervisor_org_permission_comments=request.form.get('review_org_permission_comments')
-            formc.supervisor_waiver_status=request.form.get('review_waiver_status')
-            formc.supervisor_waiver_comments=request.form.get('review_waiver_comments')
-            formc.supervisor_form_status=request.form.get('review_form_status')
-            formc.supervisor_form_comments=request.form.get('review_form_comments')
-            formc.supervisor_questions_status=request.form.get('review_questions_status')
-            formc.supervisor_questions_comments=request.form.get('review_questions_comments')
-            formc.supervisor_consent_status=request.form.get('review_consent_status')
-            formc.supervisor_consent_comments=request.form.get('review_consent_comments')
-            formc.supervisor_proposal_status=request.form.get('review_proposal_status')
-            formc.supervisor_proposal_comments=request.form.get('review_proposal_comments')
-            formc.supervisor_additional_comments=request.form.get('review_additional_comments')
-            formc.supervisor_recommendation=request.form.get('review_recommendation')
-            formc.supervisor_supervisor_signature=request.form.get('supervisor_signature')
-            formc.supervisor_signature_date=request.form.get('review_signature_date')
+            formc.review_date=request.form.get('review_date')
+            formc.review_form_comments=request.form.get('additional_comments')
+            formc.supervisor_form_status=request.form.get('recommendation')
+            
             if request.form.get('accept') in ['Accept','Approved with Minor Changes']:
                 if Assigned_reviewer:
                     reviewers=[Assigned_reviewer[0].user_id,Assigned_reviewer[1].user_id]
