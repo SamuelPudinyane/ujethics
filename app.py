@@ -3526,7 +3526,6 @@ def chair_forma_view(id):
         f.sampling_size = parse_field(f.sampling_size)
         f.inclusion_criteria = parse_field(f.inclusion_criteria)
 
-        print("------------------ f.org_name:", f.fund_role)
     
     today = date.today()
     return render_template("chair-forms-dashboard.html",today=today,form_name=form_name,submitted_form=form)
@@ -5071,7 +5070,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                     #Uncomment the code bellow for testing
                     ##
                     try:
-                        message=f' An update from reviewer for form belonging to {forma.applicant_name}' 
+                        message=f' You are assined as reviewer for form belonging to {forma.applicant_name}' 
 
                         send_email(app,mail, message,list_of_revewers)
                     except Exception as e:
@@ -5135,7 +5134,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                     #Uncomment the code bellow for testing
                     ##
                     try:
-                        message=f' An update from reviewer for form belonging to {formb.applicant_name}' 
+                        message=f' You are assined as reviewer for form belonging to {formb.applicant_name}' 
 
                         send_email(app,mail, message,list_of_revewers)
                     except Exception as e:
@@ -5204,7 +5203,7 @@ def ethics_reviewer_committee_forms(id,form_name):
                     #Uncomment the code bellow for testing
                     ##
                     try:
-                        message=f' An update from reviewer for form belonging to {formc.applicant_name}' 
+                        message=f' You are assined as reviewer for form belonging to {formc.applicant_name}' 
             
                         send_email(app,mail, message,list_of_revewers)
                     except Exception as e:
