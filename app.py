@@ -5190,7 +5190,7 @@ def ethics_reviewer_committee_forms(id,form_name):
         if request.method=="POST":
             reviewers=request.form.getlist('reviewer_names[]')
           
-            if Assigned_reviewer:
+            if reviewers:
                 formc.reviewer_name1=reviewers[0]
                 formc.reviewer_name2=reviewers[1]
             elif id_of_reviewers:
