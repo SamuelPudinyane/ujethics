@@ -20,3 +20,6 @@ class Config:
         f"{os.getenv('DB_NAME', 'ethics')}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+    

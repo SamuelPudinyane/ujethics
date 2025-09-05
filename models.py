@@ -51,7 +51,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD", "malvapudding78*")
 
 
 connection_string = (
-    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_NAME}"
+    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_NAME}?sslmode=disable"
 )
 
 
